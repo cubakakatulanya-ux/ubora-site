@@ -28,9 +28,9 @@ const UboraDB = (() => {
   const toJob = o => ({ slug: o.id, titre: o.titre, type: o.type, lieu: o.lieu, departement: o.departement, publie_le: o.publie, cloture: o.cloture, resume: o.resume, missions: o.missions, profil: o.profil, exemple: !!o.exemple, publie: o.publie_flag !== false });
 
   const MAP = {
-    actualites: { table: "actualites", order: "date", from: fromNews, to: toNews },
-    formations: { table: "formations", order: "date", from: fromTrain, to: toTrain },
-    offres: { table: "offres", order: "publie_le", from: fromJob, to: toJob }
+    actualites: { table: "site_actualites", order: "date", from: fromNews, to: toNews },
+    formations: { table: "site_formations", order: "date", from: fromTrain, to: toTrain },
+    offres: { table: "site_offres", order: "publie_le", from: fromJob, to: toJob }
   };
 
   /* --- Chargement du contenu public --- */
@@ -39,9 +39,9 @@ const UboraDB = (() => {
     if (!c) return DATA;
     try {
       const [a, f, o] = await Promise.all([
-        c.from("actualites").select("*").eq("publie", true).order("date", { ascending: false }),
-        c.from("formations").select("*").eq("publie", true).order("date", { ascending: true }),
-        c.from("offres").select("*").eq("publie", true).order("publie_le", { ascending: false })
+        c.from("site_actualites").select("*").eq("publie", true).order("date", { ascending: false }),
+        c.from("site_formations").select("*").eq("publie", true).order("date", { ascending: true }),
+        c.from("site_offres").select("*").eq("publie", true).order("publie_le", { ascending: false })
       ]);
       if (a.data && a.data.length) DATA.actualites = a.data.map(fromNews);
       if (f.data && f.data.length) DATA.formations = f.data.map(fromTrain);
@@ -55,12 +55,12 @@ const UboraDB = (() => {
   /* --- Écritures publiques (formulaires du site) --- */
   async function sendMessage(m) {
     const c = sb(); if (!c) return { ok: false, offline: true };
-    const { error } = await c.from("messages").insert([m]);
+    const { error } = await c.from("site_messages").insert([m]);
     return { ok: !error, error };
   }
   async function subscribe(email) {
     const c = sb(); if (!c) return { ok: false, offline: true };
-    const { error } = await c.from("abonnes").insert([{ email }]);
+    const { error } = await c.from("site_abonnes").insert([{ email }]);
     return { ok: !error || error.code === "23505", error };
   }
 
@@ -69,6 +69,11 @@ const UboraDB = (() => {
     const c = sb(); if (!c) return { ok: false, message: "Base de données non configurée." };
     const { data, error } = await c.auth.signInWithPassword({ email, password });
     return error ? { ok: false, message: error.message } : { ok: true, user: data.user };
+  }
+  async function signUp(email, password) {
+    const c = sb(); if (!c) return { ok: false, message: "Base de données non configurée." };
+    const { data, error } = await c.auth.signUp({ email, password });
+    return error ? { ok: false, message: error.message } : { ok: true, session: !!data.session };
   }
   async function signOut() { const c = sb(); if (c) await c.auth.signOut(); }
   async function currentUser() {
@@ -96,9 +101,9 @@ const UboraDB = (() => {
   }
   async function listMessages() {
     const c = sb(); if (!c) return [];
-    const { data } = await c.from("messages").select("*").order("created_at", { ascending: false }).limit(200);
+    const { data } = await c.from("site_messages").select("*").order("created_at", { ascending: false }).limit(200);
     return data || [];
   }
 
-  return { configured, load, sendMessage, subscribe, signIn, signOut, currentUser, listAll, save, remove, listMessages, get ready() { return ready; } };
+  return { configured, load, sendMessage, subscribe, signIn, signUp, signOut, currentUser, listAll, save, remove, listMessages, get ready() { return ready; } };
 })();

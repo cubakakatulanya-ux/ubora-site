@@ -59,7 +59,25 @@ function renderLogin(pane) {
       <button class="btn btn-primary" type="submit">Se connecter</button>
     </form>
     <p id="loginErr" class="muted" style="margin-top:14px;color:var(--copper)" hidden></p>
+    <details class="more-info" style="margin-top:18px"><summary>Première connexion ?</summary>
+      <p class="muted" style="font-size:14.5px;margin:10px 0">Créez votre mot de passe avec l'adresse inscrite dans la liste des administrateurs du site. Vous êtes seul à le connaître.</p>
+      <form class="form" id="signupForm" style="grid-template-columns:1fr">
+        <label>Adresse e-mail<input id="s-mail" type="email" required autocomplete="username"></label>
+        <label>Mot de passe à créer (8 caractères minimum)<input id="s-pass" type="password" minlength="8" required autocomplete="new-password"></label>
+        <button class="btn btn-ghost" type="submit">Créer mon accès</button>
+      </form>
+      <p id="signupMsg" class="muted" style="margin-top:12px" hidden></p>
+    </details>
   </div>`;
+  $("#signupForm").addEventListener("submit", async e => {
+    e.preventDefault();
+    const r = await UboraDB.signUp($("#s-mail").value.trim(), $("#s-pass").value);
+    const p = $("#signupMsg"); p.hidden = false;
+    p.textContent = r.ok
+      ? (r.session ? "Accès créé, vous êtes connecté." : "Accès créé. Confirmez l'adresse depuis l'e-mail reçu, puis connectez-vous.")
+      : "Création impossible : " + r.message;
+    if (r.ok && r.session) bindAdmin();
+  });
   $("#loginForm").addEventListener("submit", async e => {
     e.preventDefault();
     const btn = $("#loginForm button"); btn.disabled = true; btn.textContent = "Connexion…";

@@ -7,8 +7,8 @@
 /* Base de données (Supabase). Laissez vide pour utiliser uniquement ce fichier.
    Project Settings → API : "Project URL" et clé "anon public". */
 const SUPABASE = {
-  url: "",       // ex. "https://xxxxxxxx.supabase.co"
-  anonKey: ""    // clé "anon public" (jamais la clé service_role)
+  url: "https://uoshpvqdszygezkuhhco.supabase.co",
+  anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVvc2hwdnFkc3p5Z2V6a3VoaGNvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAyNjYwNzQsImV4cCI6MjEwNTg0MjA3NH0.mMV8Z2dl981BGl0o_CLSAsxPsO3QzQlAAWWwT4YVVW4"
 };
 
 const CONFIG = {
