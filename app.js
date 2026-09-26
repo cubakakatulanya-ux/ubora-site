@@ -60,6 +60,19 @@ const store = {
   get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 };
+function typo(root) {
+  if (!root) return;
+  const walk = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode: n => n.parentElement && n.parentElement.closest("pre, code, input, textarea, script, style") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT
+  });
+  const NB = " ";
+  let n;
+  while ((n = walk.nextNode())) {
+    const t = n.nodeValue;
+    if (!/[ ][;:!?»]|«[ ]/.test(t)) continue;
+    n.nodeValue = t.replace(/ ([;:!?»])/g, NB + "$1").replace(/« /g, "«" + NB);
+  }
+}
 function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove("show"), 2800); }
 function allNews() {
   const local = store.get("ubora_brouillons", []).map(n => ({ ...n, brouillon: true }));
@@ -232,7 +245,7 @@ function buildFooter() {
       </div>
     </div>
     <div class="foot-big" aria-hidden="true">ubora</div>
-    <div class="foot-bottom"><span>© ${new Date().getFullYear()} Ubora Entreprise Sociale · Siège à Lubumbashi · Interventions dans toute la RDC</span><a href="#/admin">Espace équipe</a></div>
+    <div class="foot-bottom"><span>© ${new Date().getFullYear()} Ubora Entreprise Sociale · Siège à Lubumbashi · Interventions dans toute la RDC</span><span style="display:flex;gap:18px"><a href="#/mentions">Mentions légales</a><a href="#/admin">Espace équipe</a></span></div>
   </div>`;
   $("#newsForm").addEventListener("submit", async e => { e.preventDefault(); const mail = $("#nlEmail").value.trim(); e.target.reset(); const r = await UboraDB.subscribe(mail); toast(r.ok || r.offline ? "Merci ! Inscription enregistrée." : "Inscription impossible pour le moment."); });
 }
@@ -246,13 +259,12 @@ function renderTicker() {
    PAGES
    ========================================================================== */
 function pageHome() {
-  const words = ["PME", "entrepreneurs", "coopératives", "communautés", "microfinances"];
   return `
   <section class="deep hero"><canvas id="net" aria-hidden="true"></canvas><span class="glow g1"></span><span class="glow g2"></span><span class="glow g3"></span>
     <div class="wrap hero-grid">
       <div>
         <span class="pill"><b>Entreprise sociale</b> Siège à Lubumbashi · actifs dans toute la RDC</span>
-        <h1>Bâtir la résilience économique des <span class="rot" id="rot" data-words="${words.join("|")}">${words[0]}</span> de la RDC.</h1>
+        <h1>Bâtir la <span class="serif">résilience économique</span> des entreprises et des communautés congolaises.</h1>
         <p class="lead">Ubora conçoit des solutions numériques qui répondent aux contraintes réelles du terrain. Nous accompagnons aussi entrepreneurs, coopératives, microfinances et organisations d'appui par le conseil, la formation et la gestion de projets.</p>
         <div class="btn-row">
           <a class="btn btn-lime" href="#/solutions">Découvrir nos solutions ${ICON.arrow}</a>
@@ -868,6 +880,47 @@ function bindContact() {
   });
 }
 
+function pageMentions() {
+  return pageHead({ eyebrow: "Informations légales", title: "Mentions légales et données personnelles.", crumbs: [["Mentions légales"]] }) + `
+  <section><div class="wrap" style="max-width:820px;display:grid;gap:40px">
+    <div>
+      <h2 style="font-size:26px;margin-bottom:14px">Éditeur du site</h2>
+      <dl class="legal">
+        <dt>Dénomination</dt><dd>Ubora, entreprise sociale</dd>
+        <dt>Siège social</dt><dd>${esc(CONFIG.adresse)}</dd>
+        <dt>RCCM</dt><dd class="todo">à compléter</dd>
+        <dt>Identification nationale</dt><dd class="todo">à compléter</dd>
+        <dt>Numéro impôt</dt><dd class="todo">à compléter</dd>
+        <dt>Téléphone</dt><dd>${esc(CONFIG.telephone)}</dd>
+        <dt>Courriel</dt><dd><a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a></dd>
+        <dt>Directeur de publication</dt><dd class="todo">à compléter</dd>
+      </dl>
+    </div>
+    <div>
+      <h2 style="font-size:26px;margin-bottom:14px">Hébergement</h2>
+      <p class="muted">Le site est hébergé par GitHub Pages (GitHub, Inc., San Francisco, États-Unis). Les données envoyées depuis les formulaires sont stockées par Supabase, sur des serveurs situés à Francfort, en Allemagne.</p>
+    </div>
+    <div>
+      <h2 style="font-size:26px;margin-bottom:14px">Données personnelles</h2>
+      <p class="muted" style="margin-bottom:12px">Nous collectons uniquement ce que vous nous transmettez volontairement :</p>
+      <ul class="ticks" style="grid-template-columns:1fr">
+        <li>Formulaire de contact : nom, organisation, téléphone, courriel et message, pour vous répondre.</li>
+        <li>Lettre d'information : votre adresse de courriel, jusqu'à votre désinscription.</li>
+        <li>Assistant du site : le texte de vos questions, sans identifiant, pour améliorer le contenu.</li>
+      </ul>
+      <p class="muted" style="margin-top:16px">Ces données ne sont ni vendues ni transmises à des tiers à des fins commerciales. Pour y accéder, les corriger ou les supprimer, écrivez à <a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a>.</p>
+    </div>
+    <div>
+      <h2 style="font-size:26px;margin-bottom:14px">Cookies</h2>
+      <p class="muted">Ce site n'utilise aucun cookie publicitaire ni traceur d'audience. Votre navigateur conserve seulement votre préférence d'affichage (thème clair ou sombre), qui reste sur votre appareil.</p>
+    </div>
+    <div>
+      <h2 style="font-size:26px;margin-bottom:14px">Propriété intellectuelle</h2>
+      <p class="muted">Le logo, les noms Ubora AVEC, Ubora Hub, Ubora Fin, Ubora Coop et Ubora PME, ainsi que les contenus de ce site, appartiennent à Ubora. Toute reproduction sans autorisation est interdite.</p>
+    </div>
+  </div></section>`;
+}
+
 function notFound() {
   return pageHead({ eyebrow: "Erreur 404", title: "Cette page n'existe pas.", lead: "Le lien est peut-être ancien. Revenez à l'accueil ou consultez nos actualités.",
     extra: `<div class="btn-row" style="margin-top:26px"><a class="btn btn-lime" href="#/">Accueil</a><a class="btn btn-glass" href="#/actualites">Actualités</a></div>` });
@@ -908,17 +961,6 @@ function startNet() {
   window.addEventListener("resize", resize);
   netStop = () => { cancelAnimationFrame(raf); io.disconnect(); window.removeEventListener("resize", resize); netStop = null; };
 }
-let rotTimer = null;
-function startRotator() {
-  clearInterval(rotTimer);
-  const el = $("#rot"); if (!el || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-  const words = el.dataset.words.split("|"); let i = 0;
-  rotTimer = setInterval(() => {
-    if (!document.body.contains(el)) return clearInterval(rotTimer);
-    el.classList.add("out");
-    setTimeout(() => { i = (i + 1) % words.length; el.textContent = words[i]; el.classList.remove("out"); }, 350);
-  }, 2600);
-}
 function startReveal() {
   const els = $$(".reveal");
   if (!("IntersectionObserver" in window)) return els.forEach(e => e.classList.add("in"));
@@ -954,7 +996,7 @@ $("#toTop").addEventListener("click", () => scrollTo({ top: 0, behavior: "smooth
 /* ==========================================================================
    ROUTEUR
    ========================================================================== */
-const TITLES = { "": "Accueil", "a-propos": "À propos", avec: "Appui aux AVEC", services: "Expertises", solutions: "Solutions", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", diagnostic: "Diagnostic PME", contact: "Contact", approche: "Notre approche", admin: "Espace équipe" };
+const TITLES = { "": "Accueil", "a-propos": "À propos", avec: "Appui aux AVEC", services: "Expertises", solutions: "Solutions", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", diagnostic: "Diagnostic PME", contact: "Contact", approche: "Notre approche", mentions: "Mentions légales", admin: "Espace équipe" };
 function route() {
   const raw = location.hash.replace(/^#\/?/, "");
   const [pathPart, anchor] = raw.split("#");
@@ -967,6 +1009,7 @@ function route() {
     case "a-propos": html = pageAbout(); break;
     case "avec": html = pageAvec(); break;
     case "approche": html = pageApproche(); break;
+    case "mentions": html = pageMentions(); break;
     case "services": html = pageServices(); break;
     case "solutions": {
       const alias = { akiba: "ubora-avec", uborahub: "ubora-hub", "kit-gestion": "ubora-pme" }[sub];
@@ -991,7 +1034,7 @@ function route() {
   $$("#menu [data-r]").forEach(a => { const on = a.dataset.r === base; a.classList.toggle("current", on); if (a.tagName === "A") on ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"); });
   $("#menu").classList.remove("open"); $("#burger").setAttribute("aria-expanded", "false"); document.body.style.overflow = "";
   $$(".has-dd").forEach(x => x.classList.remove("open"));
-  if (base === "") { startNet(); startRotator(); bindShowcase(); }
+  if (base === "") { startNet(); bindShowcase(); }
   if (base === "services") bindSpy();
   if (base === "actualites" && !sub) bindNews();
   if (base === "formations") bindFormations();
@@ -1004,6 +1047,7 @@ function route() {
   }));
   $$("[data-scroll]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); document.getElementById(a.dataset.scroll)?.scrollIntoView({ behavior: "smooth" }); }));
   startReveal();
+  typo(app);
   const target = anchor || (base === "carrieres" && sub ? "offre-" + sub : "");
   if (target) requestAnimationFrame(() => document.getElementById(target)?.scrollIntoView({ behavior: "smooth", block: "start" }));
   else window.scrollTo(0, 0);
@@ -1022,7 +1066,7 @@ $("#themeBtn").addEventListener("click", () => {
 });
 const savedTheme = store.get("ubora_theme", null); if (savedTheme) document.documentElement.dataset.theme = savedTheme;
 $("#waFloat").href = waLink("Bonjour Ubora, je souhaite avoir des informations.");
-buildMenu(); buildFooter(); renderTicker(); route();
+buildMenu(); buildFooter(); renderTicker(); route(); typo($("#footer")); typo($(".site-header"));
 UboraDB.load().then(() => {
   renderTicker();
   const base = location.hash.replace("#", "").replace("/", "").split("/")[0].split("?")[0];
