@@ -191,6 +191,7 @@ function buildMenu() {
   const mega = AXES.map(a => `<div class="dd-col"><h5>${a.titre}</h5>${a.services.map(id => `<a href="${svc(id).lien || "#/services#" + id}">${svc(id).titre}</a>`).join("")}</div>`).join("");
   const sols = SOLUTIONS.map(s => `<a href="#/solutions/${s.id}"><span class="mk" style="background:${s.couleur}">${esc(s.initiales)}</span><span><b>${esc(s.nom)}</b><small>${esc(s.tagline)}</small></span></a>`).join("");
   $("#menu").innerHTML = `
+    <li><a href="#/" data-r="">Accueil</a></li>
     <li class="has-dd"><button class="dd-btn" data-r="a-propos" aria-expanded="false">Ubora ${ICON.chev}</button>
       <div class="dd dd-sol" style="width:340px">
         <a href="#/a-propos"><span class="mk" style="background:var(--navy)">Qs</span><span><b>Qui sommes-nous</b><small>Mission, valeurs, équipe et ambitions</small></span></a>
