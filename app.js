@@ -197,11 +197,10 @@ function buildMenu() {
         <a href="#/approche"><span class="mk" style="background:var(--green)">Ap</span><span><b>Notre approche</b><small>Méthode, principes et modèle social</small></span></a>
         <a href="#/carrieres"><span class="mk" style="background:var(--copper)">Ca</span><span><b>Carrières</b><small>Rejoindre l'équipe</small></span></a>
       </div></li>
-    <li><a class="nav-star" href="#/avec" data-r="avec">Appui aux AVEC</a></li>
     <li class="has-dd"><button class="dd-btn" data-r="services" aria-expanded="false">Expertises ${ICON.chev}</button>
-      <div class="dd dd-mega">${mega}<div class="dd-foot"><span>${SERVICES.length} expertises réparties en ${AXES.length} axes</span><a class="link" href="#/services">Tout voir ${ICON.arrow}</a></div></div></li>
-    <li class="has-dd"><button class="dd-btn" data-r="solutions" aria-expanded="false">Solutions ${ICON.chev}</button>
-      <div class="dd dd-sol">${sols}<div class="dd-foot"><span>Outils numériques Ubora</span><a class="link" href="#/solutions">Toutes ${ICON.arrow}</a></div></div></li>
+      <div class="dd dd-mega">${mega}<div class="dd-foot"><a class="link" href="#/avec">Appui aux AVEC, notre approche phare ${ICON.arrow}</a><a class="link" href="#/services">Toutes les expertises ${ICON.arrow}</a></div></div></li>
+    <li class="has-dd"><button class="dd-btn" data-r="solutions" aria-expanded="false">Nos solutions ${ICON.chev}</button>
+      <div class="dd dd-sol">${sols}<div class="dd-foot"><a class="link" href="#/avec">Appui aux AVEC ${ICON.arrow}</a><a class="link" href="#/solutions">Vue d'ensemble ${ICON.arrow}</a></div></div></li>
     <li><a href="#/formations" data-r="formations">Formations</a></li>
     <li><a href="#/actualites" data-r="actualites">Actualités</a></li>
     <li><a href="#/contact" data-r="contact">Contact</a></li>
@@ -275,6 +274,11 @@ function pageHome() {
     <div class="fact"><strong>26</strong><span>provinces où nous pouvons intervenir</span></div>
     <div class="fact"><strong>100<small>%</small></strong><span>de nos déploiements incluent formation et suivi</span></div>
   </div></div>
+
+  <div class="wrap"><nav class="rail" aria-label="Nos solutions">
+    <span class="rail-lab">Nos solutions</span>
+    ${SOLUTIONS.map(s => `<a class="rail-item" href="#/solutions/${s.id}"><span class="mk" style="background:${s.couleur}">${esc(s.initiales)}</span><span class="rail-txt"><b>${esc(s.nom)}</b><small>${esc(s.tagline)}</small></span>${ICON.arrow}</a>`).join("")}
+  </nav></div>
 
   <section><div class="wrap mission">
     <div>
