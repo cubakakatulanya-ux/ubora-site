@@ -799,6 +799,7 @@ function pageMentions() {
       <h2 style="font-size:26px;margin-bottom:14px">Éditeur du site</h2>
       <dl class="legal">
         <dt>Dénomination</dt><dd>Ubora, entreprise sociale</dd>
+        <dt>Site</dt><dd>uborardc.com</dd>
         <dt>Siège social</dt><dd>${esc(CONFIG.adresse)}</dd>
         <dt>RCCM</dt><dd class="todo">à compléter</dd>
         <dt>Identification nationale</dt><dd class="todo">à compléter</dd>
@@ -810,7 +811,7 @@ function pageMentions() {
     </div>
     <div>
       <h2 style="font-size:26px;margin-bottom:14px">Hébergement</h2>
-      <p class="muted">Le site est hébergé par GitHub Pages (GitHub, Inc., San Francisco, États-Unis). Les données envoyées depuis les formulaires sont stockées par Supabase, sur des serveurs situés à Francfort, en Allemagne.</p>
+      <p class="muted">Le site est hébergé par Cloudflare (Cloudflare, Inc., San Francisco, États-Unis), qui assure également l'enregistrement du nom de domaine et l'acheminement de la messagerie. Les données envoyées depuis les formulaires sont stockées par Supabase, sur des serveurs situés à Francfort, en Allemagne.</p>
     </div>
     <div>
       <h2 style="font-size:26px;margin-bottom:14px">Données personnelles</h2>

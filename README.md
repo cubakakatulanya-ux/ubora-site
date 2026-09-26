@@ -4,8 +4,9 @@ Site officiel d'Ubora, entreprise sociale basée à Lubumbashi et active dans to
 résilience économique, inclusion financière, structuration et digitalisation des PME,
 accompagnement entrepreneurial, coopératives et chaînes de valeur, conseil, formation et gestion de projets.
 
-**En ligne :** https://cubakakatulanya-ux.github.io/ubora-site/
-**Espace équipe :** https://cubakakatulanya-ux.github.io/ubora-site/#/admin
+**En ligne :** https://uborardc.com
+**Espace équipe :** https://uborardc.com/#/admin
+**Miroir GitHub Pages :** https://cubakakatulanya-ux.github.io/ubora-site/
 
 ## Les fichiers
 
@@ -60,13 +61,16 @@ La personne se rend ensuite sur `/#/admin`, ouvre « Première connexion ? » et
 - `site_abonnes` : inscriptions à la lettre d'information.
 - `site_admins` : personnes autorisées à publier.
 
-## Utiliser votre propre domaine (ex. ubora.cd)
+## Domaine et hébergement
 
-1. Dans ce dépôt : **Settings → Pages → Custom domain**, saisissez votre domaine.
-2. Chez votre hébergeur de domaine, créez un enregistrement `CNAME` pointant vers
-   `cubakakatulanya-ux.github.io`.
-3. Cochez **Enforce HTTPS** une fois le certificat délivré.
-4. Dans Supabase : **Authentication → URL Configuration**, ajoutez la nouvelle adresse.
+Le site est servi par **Cloudflare Workers** (projet `ubora-site`), relié à ce dépôt : chaque
+`git push` sur `main` redéploie automatiquement. Les domaines `uborardc.com` et
+`entreprisesocialeubora.com` sont enregistrés chez Cloudflare, avec Email Routing pour
+`contact@uborardc.com`. GitHub Pages reste actif comme miroir de secours.
+
+Pour rattacher un domaine ou un sous-domaine : **Workers & Pages → ubora-site → Settings →
+Domains & Routes → Add → Custom domain**. Cloudflare crée les enregistrements DNS et le
+certificat lui-même.
 
 ## Travailler en local
 
@@ -77,7 +81,6 @@ puis ouvrez http://localhost:8000 (ou tout autre serveur statique).
 
 ## À compléter
 
-- Adresse e-mail définitive dans `data.js` (`CONFIG.email`).
 - Liens d'**Ubora Fin** et d'**Ubora PME** (champ `site` des solutions).
 - Les contenus marqués « Exemple » (actualités, formations, offres), à remplacer depuis l'espace équipe.
 - Les objectifs 2028 de la page « À propos ».

@@ -12,7 +12,7 @@ const SUPABASE = {
 };
 
 const CONFIG = {
-  email: "contact@ubora.cd",          // À REMPLACER par votre vraie adresse
+  email: "contact@uborardc.com",
   telephone: "+243 998 275 144",
   whatsapp: "243998275144",           // format international sans "+"
   adresse: "Lubumbashi, Haut-Katanga, RDC",
