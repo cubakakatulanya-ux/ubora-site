@@ -25,7 +25,7 @@ const CONFIG = {
 const TICKER_MESSAGES = [
   ["Appui aux AVEC : du cahier au numérique, jusqu'à la banque", "#/avec"],
   ["Diagnostic PME gratuit : évaluez votre entreprise en 3 minutes", "#/diagnostic"],
-  ["Formations AKIBA & UboraHub : consultez le calendrier des sessions", "#/formations"],
+  ["Formations Ubora AVEC & Ubora Hub : consultez le calendrier des sessions", "#/formations"],
   ["Nous recrutons : découvrez nos offres d'emploi", "#/carrieres"],
   ["Basés à Lubumbashi, nous intervenons partout en RDC", "#/contact"]
 ];
@@ -33,13 +33,13 @@ const TICKER_MESSAGES = [
 /* ---------- Les 4 axes d'intervention (regroupent les services) ---------- */
 const AXES = [
   { id: "finance", titre: "Épargne communautaire & finance inclusive", accroche: "Des AVEC solides, digitalisées, puis connectées au financement formel.",
-    services: ["avec", "inclusion"], solutions: ["akiba", "ubora-fin"] },
+    services: ["avec", "inclusion"], solutions: ["ubora-avec", "ubora-fin"] },
   { id: "entreprises", titre: "Entreprises & entrepreneurs", accroche: "Des PME structurées, outillées et finançables.",
     services: ["pme", "entrepreneuriat", "outils"], solutions: ["ubora-pme"] },
   { id: "agri", titre: "Agriculture & filières", accroche: "Des coopératives fortes et des filières qui créent de la valeur.",
     services: ["cooperatives", "chaines-valeur"], solutions: ["ubora-coop"] },
   { id: "programmes", titre: "Conseil, formation & programmes", accroche: "Concevoir, piloter et outiller l'accompagnement.",
-    services: ["conseil", "projets", "processus", "formation"], solutions: ["uborahub"] }
+    services: ["conseil", "projets", "processus", "formation"], solutions: ["ubora-hub"] }
 ];
 
 /* ---------- Notre méthodologie d'accompagnement ----------
@@ -56,7 +56,7 @@ const METHODE = {
       pourquoi: "La majorité des conflits viennent de règles non écrites et de rôles confus, pas du manque d'argent." },
     { titre: "Former", texte: "Éducation financière pratique, gestion du crédit, et formation de formateurs relais issus de la communauté.",
       pourquoi: "Le relais local reste après notre départ : c'est lui qui forme les cycles suivants." },
-    { titre: "Digitaliser", texte: "Passage du cahier à AKIBA : saisie hors ligne, calculs automatiques, transparence pour tous les membres.",
+    { titre: "Digitaliser", texte: "Passage du cahier à Ubora AVEC : saisie hors ligne, calculs automatiques, transparence pour tous les membres.",
       pourquoi: "Réseau intermittent, double monnaie, faible alphabétisation : l'outil est conçu pour ces contraintes, pas contre elles." },
     { titre: "Connecter", texte: "L'historique d'épargne et de remboursement devient un dossier crédible auprès des IMF, COOPEC et banques partenaires.",
       pourquoi: "Un groupe discipliné reste invisible pour le système financier tant que personne ne traduit sa régularité en preuves." },
@@ -83,14 +83,14 @@ const AVEC = {
     ["Pilotage d'un programme", "Collecte de données lente et incomplète", "Tableau de bord consolidé pour l'ONG ou le bailleur"]
   ],
   passerelle: [
-    ["1 à 2 cycles documentés", "Le groupe utilise AKIBA et constitue un historique fiable de cotisations, de prêts et de remboursements."],
+    ["1 à 2 cycles documentés", "Le groupe utilise Ubora AVEC et constitue un historique fiable de cotisations, de prêts et de remboursements."],
     ["Score de discipline", "Régularité, taux de remboursement et gouvernance sont résumés en indicateurs lisibles par un financier."],
     ["Dossier et mise en relation", "Nous préparons le dossier avec le groupe et l'accompagnons auprès des IMF, COOPEC et banques partenaires."],
     ["Crédit et suivi", "Le crédit finance des activités génératrices de revenus ; nous suivons les remboursements avec le groupe et l'institution."]
   ],
   pourQui: [
     ["Groupes et réseaux d'AVEC", "Constitution, formation, digitalisation et accès au crédit.", "#/contact"],
-    ["ONG et programmes d'inclusion", "Déploiement à grande échelle, suivi des indicateurs et rapports aux bailleurs.", "#/solutions/uborahub"],
+    ["ONG et programmes d'inclusion", "Déploiement à grande échelle, suivi des indicateurs et rapports aux bailleurs.", "#/solutions/ubora-hub"],
     ["IMF, COOPEC et banques", "Un portefeuille de groupes déjà structurés et un système de gestion adapté.", "#/solutions/ubora-fin"]
   ]
 };
@@ -99,8 +99,8 @@ const AVEC = {
 const SERVICES = [
   { id:"avec", ico:"coins", titre:"Appui aux AVEC (groupes d'épargne)", lien:"#/avec",
     court:"Créer, former, digitaliser et accompagner les Associations Villageoises d'Épargne et de Crédit, jusqu'à leur ouvrir l'accès au financement formel.",
-    texte:"L'AVEC est le premier service financier accessible dans la plupart des communautés congolaises. Nous accompagnons les groupes sur tout leur cycle : mise en place et gouvernance, éducation financière, tenue des comptes avec AKIBA, puis valorisation de leur historique auprès des institutions financières. C'est notre cœur de métier.",
-    points:["Sensibilisation et constitution des groupes","Statuts, règlement intérieur et gouvernance","Éducation financière en langues locales","Formation des trésoriers et de formateurs relais","Digitalisation des comptes avec AKIBA","Passerelle vers les IMF, COOPEC et banques"],
+    texte:"L'AVEC est le premier service financier accessible dans la plupart des communautés congolaises. Nous accompagnons les groupes sur tout leur cycle : mise en place et gouvernance, éducation financière, tenue des comptes avec Ubora AVEC, puis valorisation de leur historique auprès des institutions financières. C'est notre cœur de métier.",
+    points:["Sensibilisation et constitution des groupes","Statuts, règlement intérieur et gouvernance","Éducation financière en langues locales","Formation des trésoriers et de formateurs relais","Digitalisation des comptes avec Ubora AVEC","Passerelle vers les IMF, COOPEC et banques"],
     pour:["Groupes AVEC / VSLA","Mutuelles de solidarité","Femmes et jeunes","ONG et programmes d'inclusion"] },
   { id:"inclusion", ico:"finance", titre:"Inclusion financière & microfinance",
     court:"Éducation financière, mobile money et outillage des petites institutions financières qui servent la base de la pyramide.",
@@ -144,11 +144,11 @@ const SERVICES = [
     pour:["ONG","Bailleurs","Programmes publics","Entreprises (RSE)"] },
   { id:"processus", ico:"flow", titre:"Digitalisation des processus d'accompagnement",
     court:"Pour les incubateurs, ONG et programmes : digitaliser candidatures, suivi et rapports d'impact.",
-    texte:"Beaucoup d'organisations d'appui gèrent encore leurs cohortes sur des fichiers dispersés. Avec UboraHub et notre accompagnement méthodologique, elles gagnent du temps, fiabilisent leurs données et rendent compte de leur impact plus facilement.",
-    points:["Cartographie des processus existants","Paramétrage d'UboraHub","Grilles de diagnostic et d'évaluation","Indicateurs d'impact et tableaux de bord","Formation des équipes","Rapports automatisés pour les bailleurs"],
+    texte:"Beaucoup d'organisations d'appui gèrent encore leurs cohortes sur des fichiers dispersés. Avec Ubora Hub et notre accompagnement méthodologique, elles gagnent du temps, fiabilisent leurs données et rendent compte de leur impact plus facilement.",
+    points:["Cartographie des processus existants","Paramétrage d'Ubora Hub","Grilles de diagnostic et d'évaluation","Indicateurs d'impact et tableaux de bord","Formation des équipes","Rapports automatisés pour les bailleurs"],
     pour:["Incubateurs","ONG","Programmes publics","Bailleurs de fonds"] },
   { id:"formation", ico:"school", titre:"Formation, accompagnement & suivi sur nos outils",
-    court:"Des sessions pratiques pour maîtriser AKIBA, UboraHub et nos outils, puis un suivi jusqu'à l'autonomie.",
+    court:"Des sessions pratiques pour maîtriser Ubora AVEC, Ubora Hub et nos outils, puis un suivi jusqu'à l'autonomie.",
     texte:"Un outil n'a de valeur que s'il est bien utilisé. Chaque déploiement s'accompagne donc de formations pratiques, sur place ou à distance, adaptées au niveau des utilisateurs : trésoriers de groupes d'épargne, gestionnaires de coopératives, équipes d'incubateurs, entrepreneurs. Nous assurons ensuite un suivi régulier et un support réactif jusqu'à l'autonomie complète.",
     points:["Formations de prise en main (présentiel ou en ligne)","Formation de formateurs relais","Guides pratiques et tutoriels vidéo","Accompagnement au démarrage sur le terrain","Suivi périodique et visites de contrôle","Support WhatsApp et assistance à distance"],
     pour:["Groupes d'épargne","Coopératives","Incubateurs & ONG","Entrepreneurs"] }
@@ -159,11 +159,11 @@ const SERVICES = [
    mock   : "akiba" | "hub" | "coop" | "kit"  (maquette d'écran affichée) */
 const SOLUTIONS = [
   {
-    id: "akiba", nom: "AKIBA", initiales: "Ak", couleur: "#2F8F38", statut: "dispo", mock: "akiba",
+    id: "ubora-avec", nom: "Ubora AVEC", initiales: "Av", couleur: "#2F8F38", statut: "dispo", mock: "akiba", app: "AKIBA",
     site: "https://cubakakatulanya-ux.github.io/akiba-avec/",
     tagline: "Épargne et crédit communautaires, digitalisés",
     resume: "La gestion des groupes d'épargne (AVEC, mutuelles, tontines) passe du cahier au téléphone : cotisations, prêts, remboursements et partage de fin de cycle, en toute transparence.",
-    description: "« Akiba » signifie épargne en swahili. La plateforme donne aux groupes d'épargne et de crédit un registre numérique fiable. Chaque membre voit son solde, le trésorier n'a plus de calculs à la main, et le groupe se constitue un historique financier. Cet historique ouvre ensuite l'accès au crédit auprès des institutions de microfinance partenaires.",
+    description: "Ubora AVEC — application AKIBA, de « akiba », épargne en swahili — donne aux groupes d'épargne et de crédit un registre numérique fiable. Chaque membre voit son solde, le trésorier n'a plus de calculs à la main, et le groupe se constitue un historique financier. Cet historique ouvre ensuite l'accès au crédit auprès des institutions de microfinance partenaires.",
     fonctionnalites: [
       ["Registre des cotisations", "Chaque dépôt est horodaté, attribué à un membre et visible par tout le groupe."],
       ["Prêts & remboursements", "Calcul automatique des intérêts, échéanciers et relances."],
@@ -176,11 +176,11 @@ const SOLUTIONS = [
     simulateur: true
   },
   {
-    id: "uborahub", nom: "UboraHub", initiales: "Hb", couleur: "#0B2F6E", statut: "dispo", mock: "hub",
+    id: "ubora-hub", nom: "Ubora Hub", initiales: "Hb", couleur: "#0B2F6E", statut: "dispo", mock: "hub",
     site: "https://www.uborahub.com",
     tagline: "La plateforme d'accompagnement des entrepreneurs",
     resume: "Un espace numérique qui réunit tout le parcours d'accompagnement : candidatures, diagnostics, coaching, formations, suivi des indicateurs et rapports aux bailleurs.",
-    description: "UboraHub digitalise les processus des incubateurs, des programmes d'entrepreneuriat et des organisations d'appui. Les entrepreneurs y suivent leur parcours et y trouvent leurs ressources. Les équipes pilotent leurs cohortes, et les partenaires reçoivent des rapports d'impact fiables sans ressaisie.",
+    description: "Ubora Hub digitalise les processus des incubateurs, des programmes d'entrepreneuriat et des organisations d'appui. Les entrepreneurs y suivent leur parcours et y trouvent leurs ressources. Les équipes pilotent leurs cohortes, et les partenaires reçoivent des rapports d'impact fiables sans ressaisie.",
     fonctionnalites: [
       ["Appels à candidatures", "Formulaires, présélection et grilles d'évaluation partagées."],
       ["Suivi des cohortes", "Fiche par entrepreneur : diagnostic, plan d'action, séances de coaching."],
@@ -245,12 +245,12 @@ const SOLUTIONS = [
    mode  : "Présentiel" | "En ligne" | "Hybride"
    exemple:true = session d'exemple, à remplacer */
 const FORMATIONS = [
-  { id:"akiba-tresoriers-oct", titre:"AKIBA : prise en main pour trésoriers et secrétaires", outil:"akiba", date:"2026-10-08", duree:"1 jour", mode:"Présentiel", lieu:"Lubumbashi", public:"Trésoriers et secrétaires de groupes d'épargne", places:20, exemple:true,
+  { id:"akiba-tresoriers-oct", titre:"Ubora AVEC : prise en main pour trésoriers et secrétaires", outil:"ubora-avec", date:"2026-10-08", duree:"1 jour", mode:"Présentiel", lieu:"Lubumbashi", public:"Trésoriers et secrétaires de groupes d'épargne", places:20, exemple:true,
     programme:["Créer le groupe et ses membres","Saisir cotisations, prêts et remboursements","Travailler hors ligne et synchroniser","Préparer le partage de fin de cycle"] },
-  { id:"uborahub-equipes-oct", titre:"UboraHub pour les équipes d'accompagnement", outil:"uborahub", date:"2026-10-15", duree:"2 demi-journées", mode:"En ligne", lieu:"Visioconférence", public:"Chargés de programme, coachs, incubateurs", places:30, exemple:true,
+  { id:"uborahub-equipes-oct", titre:"Ubora Hub pour les équipes d'accompagnement", outil:"ubora-hub", date:"2026-10-15", duree:"2 demi-journées", mode:"En ligne", lieu:"Visioconférence", public:"Chargés de programme, coachs, incubateurs", places:30, exemple:true,
     programme:["Paramétrer un appel à candidatures","Suivre une cohorte et ses séances de coaching","Définir et suivre les indicateurs d'impact","Générer les rapports bailleurs"] },
-  { id:"formateurs-relais-nov", titre:"Devenir formateur relais AKIBA", outil:"akiba", date:"2026-11-05", duree:"3 jours", mode:"Hybride", lieu:"Lubumbashi + en ligne", public:"Animateurs d'ONG, agents de terrain", places:15, exemple:true,
-    programme:["Pédagogie pour adultes","Maîtrise avancée d'AKIBA","Animer une session de formation","Assurer le suivi des groupes"] },
+  { id:"formateurs-relais-nov", titre:"Devenir formateur relais Ubora AVEC", outil:"ubora-avec", date:"2026-11-05", duree:"3 jours", mode:"Hybride", lieu:"Lubumbashi + en ligne", public:"Animateurs d'ONG, agents de terrain", places:15, exemple:true,
+    programme:["Pédagogie pour adultes","Maîtrise avancée d'Ubora AVEC","Animer une session de formation","Assurer le suivi des groupes"] },
   { id:"coop-gestion-nov", titre:"Ubora Coop : gérer membres, collectes et ventes", outil:"ubora-coop", date:"2026-11-19", duree:"2 jours", mode:"Présentiel", lieu:"Sur site, dans votre province", public:"Gérants et comités de coopératives", places:25, exemple:true,
     programme:["Enregistrer membres et parcelles","Suivre collectes et stocks","Organiser une vente groupée","Calculer les paiements producteurs"] },
   { id:"ubora-fin-agents-nov", titre:"Ubora Fin : guichet, crédits et suivi du portefeuille", outil:"ubora-fin", date:"2026-11-26", duree:"2 jours", mode:"Présentiel", lieu:"Lubumbashi ou dans vos locaux", public:"Agents de crédit, caissiers et gérants d'IMF / COOPEC", places:20, exemple:true,
@@ -268,14 +268,14 @@ const FORMATIONS = [
 const OFFRES = [
   { id:"charge-accompagnement-pme", titre:"Chargé·e d'accompagnement PME", type:"CDD", lieu:"Lubumbashi", departement:"Accompagnement", publie:"2026-09-15", cloture:"2026-10-15", exemple:true,
     resume:"Accompagner une cohorte de PME dans leur structuration et leur digitalisation, du diagnostic au suivi.",
-    missions:["Réaliser les diagnostics des entreprises accompagnées","Animer des formations et du coaching individuel","Suivre les indicateurs dans UboraHub","Préparer les rapports d'activité"],
+    missions:["Réaliser les diagnostics des entreprises accompagnées","Animer des formations et du coaching individuel","Suivre les indicateurs dans Ubora Hub","Préparer les rapports d'activité"],
     profil:["Bac+3 minimum en gestion, économie ou équivalent","2 ans d'expérience en appui aux PME ou entrepreneuriat","Aisance avec les outils numériques","Français courant, swahili apprécié"] },
-  { id:"formateur-terrain-akiba", titre:"Formateur·rice terrain AKIBA", type:"CDD", lieu:"Haut-Katanga (déplacements fréquents)", departement:"Inclusion financière", publie:"2026-09-10", cloture:"2026-10-10", exemple:true,
-    resume:"Former et suivre sur le terrain les groupes d'épargne qui utilisent AKIBA.",
+  { id:"formateur-terrain-akiba", titre:"Formateur·rice terrain Ubora AVEC", type:"CDD", lieu:"Haut-Katanga (déplacements fréquents)", departement:"Inclusion financière", publie:"2026-09-10", cloture:"2026-10-10", exemple:true,
+    resume:"Former et suivre sur le terrain les groupes d'épargne qui utilisent Ubora AVEC.",
     missions:["Former les trésoriers et secrétaires de groupes","Assurer le suivi et les visites de contrôle","Remonter les besoins d'amélioration de l'outil","Accompagner la connexion avec la microfinance"],
     profil:["Expérience avec les groupes AVEC / VSLA","Pédagogie et patience","Maîtrise du swahili indispensable","Permis moto apprécié"] },
   { id:"stage-developpeur", titre:"Stage : développeur·se web & mobile", type:"Stage", lieu:"Lubumbashi / hybride", departement:"Solutions numériques", publie:"2026-09-01", cloture:"2026-10-31", exemple:true,
-    resume:"Contribuer au développement de nos solutions numériques (AKIBA, UboraHub).",
+    resume:"Contribuer au développement de nos solutions numériques (Ubora AVEC, Ubora Hub).",
     missions:["Développer de nouvelles fonctionnalités","Corriger les anomalies remontées du terrain","Participer aux tests avec les utilisateurs"],
     profil:["Étudiant·e ou jeune diplômé·e en informatique","JavaScript / HTML / CSS","Curiosité et envie d'impact social"] }
 ];
@@ -284,10 +284,10 @@ const OFFRES = [
 const ACTUALITES = [
   {
     slug: "lancement-akiba-kipushi", date: "2026-09-10", categorie: "Solutions", exemple: true,
-    titre: "AKIBA déployée auprès de 40 groupes d'épargne à Kipushi",
+    titre: "Ubora AVEC déployée auprès de 40 groupes d'épargne à Kipushi",
     extrait: "Après six mois de pilote, la plateforme d'épargne communautaire passe à l'échelle dans le territoire de Kipushi.",
     contenu: [
-      "Après une phase pilote de six mois, AKIBA est désormais utilisée par quarante groupes d'épargne et de crédit dans le territoire de Kipushi. Les trésoriers, formés en deux sessions, saisissent les cotisations directement sur téléphone, même sans connexion.",
+      "Après une phase pilote de six mois, Ubora AVEC est désormais utilisée par quarante groupes d'épargne et de crédit dans le territoire de Kipushi. Les trésoriers, formés en deux sessions, saisissent les cotisations directement sur téléphone, même sans connexion.",
       "### Ce qui change pour les membres",
       "Chaque membre reçoit un récapitulatif de son épargne après chaque réunion. Les partages de fin de cycle se font en quelques minutes, contre plusieurs heures de calcul auparavant.",
       "La prochaine étape consiste à connecter les groupes les plus réguliers aux institutions de microfinance partenaires, sur la base de leur historique."
@@ -329,9 +329,9 @@ const ACTUALITES = [
   {
     slug: "partenariat-microfinance", date: "2026-05-05", categorie: "Partenariat", exemple: true,
     titre: "Vers un pont entre groupes d'épargne et microfinance",
-    extrait: "Ubora engage des discussions avec des institutions de microfinance pour valoriser l'historique financier des groupes AKIBA.",
+    extrait: "Ubora engage des discussions avec des institutions de microfinance pour valoriser l'historique financier des groupes Ubora AVEC.",
     contenu: [
-      "L'historique d'épargne et de remboursement enregistré dans AKIBA peut servir de garantie morale auprès des institutions financières. Ubora travaille à un cadre de partenariat pour faciliter l'accès au crédit des groupes les plus réguliers."
+      "L'historique d'épargne et de remboursement enregistré dans Ubora AVEC peut servir de garantie morale auprès des institutions financières. Ubora travaille à un cadre de partenariat pour faciliter l'accès au crédit des groupes les plus réguliers."
     ]
   }
 ];

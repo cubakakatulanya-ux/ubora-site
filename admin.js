@@ -44,7 +44,6 @@ function renderSetup(pane) {
       <li>Collez-les dans <code>data.js</code>, à la constante <code>SUPABASE</code>, puis mettez le site en ligne.</li>
     </ol>
     <p class="muted" style="font-size:14.5px">La clé « anon public » est prévue pour être visible dans un site web : les droits d'écriture restent protégés par les règles de sécurité définies dans <code>supabase.sql</code>. Ne collez jamais la clé <code>service_role</code>.</p>
-    <div class="btn-row" style="margin-top:20px"><a class="btn btn-primary" href="#/rediger">Rédiger une actualité sans base de données</a></div>
   </div>`;
 }
 

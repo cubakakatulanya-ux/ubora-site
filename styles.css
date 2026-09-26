@@ -712,3 +712,13 @@ table.compare tbody tr:last-child th,table.compare tbody tr:last-child td{border
 .traits svg{width:22px;height:22px;color:var(--green)}
 .traits b{display:block;font-family:var(--f-display);font-size:16px}
 .traits span{font-size:14px;color:var(--muted);line-height:1.45}
+
+/* Méthodologie — version compacte */
+.strip{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(6,1fr);gap:12px;counter-reset:m}
+@media (max-width:1080px){.strip{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:620px){.strip{grid-template-columns:1fr 1fr}}
+.strip li{display:grid;gap:6px;align-content:start;padding:18px 16px;border-radius:14px;background:var(--surface);border:1px solid var(--line);position:relative}
+.band .strip li{background:var(--bg)}
+.strip .sn{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.12em;color:var(--green)}
+.strip b{font-family:var(--f-display);font-size:18px;letter-spacing:-.02em}
+.strip .st{font-size:13.5px;color:var(--muted);line-height:1.4}
