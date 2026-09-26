@@ -158,7 +158,7 @@ const SERVICES = [
    mock   : "akiba" | "hub" | "coop" | "kit"  (maquette d'écran affichée) */
 const SOLUTIONS = [
   {
-    id: "ubora-avec", nom: "Ubora AVEC", initiales: "Av", couleur: "#2F8F38", statut: "dispo", mock: "akiba", app: "AKIBA",
+    id: "ubora-avec", raccourci: "avec.uborardc.com", nom: "Ubora AVEC", initiales: "Av", couleur: "#2F8F38", statut: "dispo", mock: "akiba", app: "AKIBA",
     site: "https://cubakakatulanya-ux.github.io/akiba-avec/",
     tagline: "Épargne et crédit communautaires, digitalisés",
     resume: "La gestion des groupes d'épargne (AVEC, mutuelles, tontines) passe du cahier au téléphone : cotisations, prêts, remboursements et partage de fin de cycle, en toute transparence.",
@@ -193,7 +193,7 @@ const SOLUTIONS = [
     ]
   },
   {
-    id: "ubora-hub", nom: "Ubora Hub", initiales: "Hb", couleur: "#0B2F6E", statut: "dispo", mock: "hub",
+    id: "ubora-hub", raccourci: "hub.uborardc.com", nom: "Ubora Hub", initiales: "Hb", couleur: "#0B2F6E", statut: "dispo", mock: "hub",
     site: "https://www.uborahub.com",
     tagline: "La plateforme d'accompagnement des entrepreneurs",
     resume: "Un espace numérique qui réunit tout le parcours d'accompagnement : candidatures, diagnostics, coaching, formations, suivi des indicateurs et rapports aux bailleurs.",
@@ -221,7 +221,7 @@ const SOLUTIONS = [
     ]
   },
   {
-    id: "ubora-coop", nom: "Ubora Coop", initiales: "Co", couleur: "#5E9E2F", statut: "pilote", mock: "coop",
+    id: "ubora-coop", raccourci: "coop.uborardc.com", nom: "Ubora Coop", initiales: "Co", couleur: "#5E9E2F", statut: "pilote", mock: "coop",
     tagline: "La gestion de coopérative agricole, de la parcelle à la vente",
     resume: "Registre des membres et parcelles, collecte des récoltes, intrants à crédit, ventes groupées et paiements aux producteurs.",
     description: "Ubora Coop outille les coopératives agricoles de toute la RDC pour professionnaliser leur gestion. La coopérative connaît ses membres et leurs volumes, la traçabilité s'améliore et les producteurs sont payés à temps. Ce sont des arguments décisifs face aux acheteurs et aux financeurs.",
@@ -249,7 +249,7 @@ const SOLUTIONS = [
     ]
   },
   {
-    id: "ubora-fin", nom: "Ubora Fin", initiales: "Fi", couleur: "#1D5FB8", statut: "dispo", mock: "fin",
+    id: "ubora-fin", raccourci: "fin.uborardc.com", nom: "Ubora Fin", initiales: "Fi", couleur: "#1D5FB8", statut: "dispo", mock: "fin",
     site: "",   // À COMPLÉTER : collez ici le lien vers Ubora Fin (ex. "https://...")
     tagline: "Le logiciel de gestion des petites institutions de microfinance",
     resume: "Membres, comptes d'épargne, crédits, remboursements, caisse et rapports réglementaires : tout ce qu'il faut pour gérer une petite microfinance, une COOPEC ou une mutuelle d'épargne et de crédit.",
@@ -278,7 +278,7 @@ const SOLUTIONS = [
     ]
   },
   {
-    id: "ubora-pme", nom: "Ubora PME", initiales: "Pm", couleur: "#B0642E", statut: "dispo", mock: "pme",
+    id: "ubora-pme", raccourci: "pme.uborardc.com", nom: "Ubora PME", initiales: "Pm", couleur: "#B0642E", statut: "dispo", mock: "pme",
     site: "",   // À COMPLÉTER si Ubora PME a son propre lien
     tagline: "Gestion quotidienne et plan d'affaires pour la petite entreprise",
     resume: "Caisse, stock, factures et tableau de bord en CDF et USD, plus un logiciel de plan d'affaires qui guide l'entrepreneur jusqu'au dossier de financement.",

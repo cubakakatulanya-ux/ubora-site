@@ -19,21 +19,21 @@ const UboraChat = (() => {
     const K = [];
     const push = (titre, texte, lien, mots) => K.push({ titre, texte, lien, mots: WORDS(titre + " " + texte + " " + (mots || "")) });
 
-    push("Qui est Ubora", "Ubora est une entreprise sociale basée à Lubumbashi et active dans toute la RDC. Nous bâtissons la résilience économique des PME, des coopératives, des groupes d'épargne et des institutions financières, par l'accompagnement humain et des outils numériques adaptés au terrain.", "#/a-propos", "presentation mission qui sommes nous entreprise sociale societe");
-    push("Notre approche et notre méthode", `${METHODE.nom} : ${METHODE.accroche} ${METHODE.etapes.map(e => e.titre).join(", ")}. ${METHODE.intro}`, "#/approche", "methodologie methode approche etapes demarche accompagnement");
-    push("L'appui aux AVEC", `Notre approche phare : constituer, former et digitaliser les Associations Villageoises d'Épargne et de Crédit, puis connecter les groupes aux institutions financières. ${AVEC.definition}`, "#/avec", "avec vsla groupe epargne credit villageoise tontine mususa caisse");
-    push("Contact", `Téléphone et WhatsApp : ${CONFIG.telephone}. E-mail : ${CONFIG.email}. Siège : ${CONFIG.adresse}. ${CONFIG.zone}. Horaires : ${CONFIG.horaires}.`, "#/contact", "contact telephone numero adresse mail bureau joindre rendez-vous horaires ou situes");
-    push("Formations", "Nous formons les utilisateurs de nos outils : prise en main, formateurs relais, accompagnement terrain et support. Le calendrier des sessions est en ligne.", "#/formations", "formation former session calendrier atelier apprendre cours");
-    push("Offres d'emploi", "Nos postes ouverts, stages et consultances sont publiés sur la page Carrières, avec les missions, le profil recherché et la date limite.", "#/carrieres", "emploi recrutement poste stage carriere candidature travailler job");
-    push("Zone d'intervention", `Notre siège est à Lubumbashi (Haut-Katanga). Nous intervenons partout en RDC, sur le terrain et à distance.`, "#/contact", "zone intervention ou province kinshasa lubumbashi katanga kivu campagne rurale pays");
-    push("Tarifs", "Nos tarifs dépendent du programme et du volume. Les prestations aux organisations financent un accès à tarif solidaire pour les groupes d'épargne et les micro-entrepreneurs. Demandez un devis adapté.", "#/contact", "prix tarif cout combien devis payer gratuit budget");
+    push("Qui est Ubora", "Ubora est une entreprise sociale basée à Lubumbashi et active dans toute la RDC. Nous bâtissons la résilience économique des PME, des coopératives, des groupes d'épargne et des institutions financières, par l'accompagnement humain et des outils numériques adaptés au terrain.", "/a-propos", "presentation mission qui sommes nous entreprise sociale societe");
+    push("Notre approche et notre méthode", `${METHODE.nom} : ${METHODE.accroche} ${METHODE.etapes.map(e => e.titre).join(", ")}. ${METHODE.intro}`, "/approche", "methodologie methode approche etapes demarche accompagnement");
+    push("L'appui aux AVEC", `Notre approche phare : constituer, former et digitaliser les Associations Villageoises d'Épargne et de Crédit, puis connecter les groupes aux institutions financières. ${AVEC.definition}`, "/avec", "avec vsla groupe epargne credit villageoise tontine mususa caisse");
+    push("Contact", `Téléphone et WhatsApp : ${CONFIG.telephone}. E-mail : ${CONFIG.email}. Siège : ${CONFIG.adresse}. ${CONFIG.zone}. Horaires : ${CONFIG.horaires}.`, "/contact", "contact telephone numero adresse mail bureau joindre rendez-vous horaires ou situes");
+    push("Formations", "Nous formons les utilisateurs de nos outils : prise en main, formateurs relais, accompagnement terrain et support. Le calendrier des sessions est en ligne.", "/formations", "formation former session calendrier atelier apprendre cours");
+    push("Offres d'emploi", "Nos postes ouverts, stages et consultances sont publiés sur la page Carrières, avec les missions, le profil recherché et la date limite.", "/carrieres", "emploi recrutement poste stage carriere candidature travailler job");
+    push("Zone d'intervention", `Notre siège est à Lubumbashi (Haut-Katanga). Nous intervenons partout en RDC, sur le terrain et à distance.`, "/contact", "zone intervention ou province kinshasa lubumbashi katanga kivu campagne rurale pays");
+    push("Tarifs", "Nos tarifs dépendent du programme et du volume. Les prestations aux organisations financent un accès à tarif solidaire pour les groupes d'épargne et les micro-entrepreneurs. Demandez un devis adapté.", "/contact", "prix tarif cout combien devis payer gratuit budget");
 
-    SOLUTIONS.forEach(s => push(s.nom, `${s.tagline}. ${s.resume} Pour : ${s.pour.join(", ")}.`, "#/solutions/" + s.id, s.nom.replace(/\s/g, "") + " " + (s.app || "") + " outil logiciel application"));
-    SERVICES.forEach(s => push(s.titre, `${s.court} ${s.points.slice(0, 4).join(", ")}.`, s.lien || "#/services#" + s.id, "service expertise accompagnement"));
-    FAQ.forEach(([q, r]) => push(q, r, "#/a-propos#faq", "question"));
-    DATA.formations.slice(0, 8).forEach(f => push(f.titre, `Session du ${fmtDate(f.date)} · ${f.mode} · ${f.lieu} · ${f.places} places. Public : ${f.public}.`, "#/formations", "formation session date calendrier"));
-    DATA.offres.forEach(o => push(o.titre, `${o.type} · ${o.lieu}. ${o.resume} Candidatures jusqu'au ${fmtDate(o.cloture)}.`, "#/carrieres/" + o.id, "emploi poste recrutement"));
-    DATA.actualites.slice(0, 5).forEach(n => push(n.titre, n.extrait, "#/actualites/" + n.slug, "actualite nouvelle article"));
+    SOLUTIONS.forEach(s => push(s.nom, `${s.tagline}. ${s.resume} Pour : ${s.pour.join(", ")}.`, "/solutions/" + s.id, s.nom.replace(/\s/g, "") + " " + (s.app || "") + " outil logiciel application"));
+    SERVICES.forEach(s => push(s.titre, `${s.court} ${s.points.slice(0, 4).join(", ")}.`, s.lien || "/services#" + s.id, "service expertise accompagnement"));
+    FAQ.forEach(([q, r]) => push(q, r, "/a-propos#faq", "question"));
+    DATA.formations.slice(0, 8).forEach(f => push(f.titre, `Session du ${fmtDate(f.date)} · ${f.mode} · ${f.lieu} · ${f.places} places. Public : ${f.public}.`, "/formations", "formation session date calendrier"));
+    DATA.offres.forEach(o => push(o.titre, `${o.type} · ${o.lieu}. ${o.resume} Candidatures jusqu'au ${fmtDate(o.cloture)}.`, "/carrieres/" + o.id, "emploi poste recrutement"));
+    DATA.actualites.slice(0, 5).forEach(n => push(n.titre, n.extrait, "/actualites/" + n.slug, "actualite nouvelle article"));
     return K;
   }
   let KB = null;
@@ -118,7 +118,7 @@ const UboraChat = (() => {
       if (!res) {
         say("bot", `Je n'ai pas trouvé de réponse sûre à cette question dans le contenu du site. Notre équipe vous répondra directement :
           <span class="chat-actions"><a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="${waLink("Bonjour Ubora, ma question : " + q)}">Demander sur WhatsApp</a>
-          <a class="btn btn-ghost btn-sm" href="#/contact">Formulaire de contact</a></span>`);
+          <a class="btn btn-ghost btn-sm" href="/contact">Formulaire de contact</a></span>`);
         logQuestion(q, false);
         return;
       }
