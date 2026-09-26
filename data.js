@@ -24,7 +24,6 @@ const CONFIG = {
 /* Messages de la bande déroulante (en plus des 4 dernières actualités) */
 const TICKER_MESSAGES = [
   ["Appui aux AVEC : du cahier au numérique, jusqu'à la banque", "#/avec"],
-  ["Diagnostic PME gratuit : évaluez votre entreprise en 3 minutes", "#/diagnostic"],
   ["Formations Ubora AVEC & Ubora Hub : consultez le calendrier des sessions", "#/formations"],
   ["Nous recrutons : découvrez nos offres d'emploi", "#/carrieres"],
   ["Basés à Lubumbashi, nous intervenons partout en RDC", "#/contact"]

@@ -180,15 +180,6 @@ function newsCard(n, feature) {
     <div style="display:grid;gap:10px"><span class="date">${fmtDate(n.date)} · ${esc(n.categorie)}</span><h3>${esc(n.titre)}</h3><p>${esc(n.extrait)}</p>
     ${feature ? `<span class="link">Lire l'article ${ICON.arrow}</span>` : ""}</div></a>`;
 }
-function gauge(pct, label) {
-  const r = 80, c = Math.PI * r, off = c * (1 - pct / 100);
-  return `<svg class="gauge" viewBox="0 0 200 128" role="img" aria-label="${label} : ${pct} sur 100">
-    <defs><linearGradient id="gg" x1="0" x2="1"><stop offset="0" stop-color="#3FA535"/><stop offset="1" stop-color="#B6EB7E"/></linearGradient></defs>
-    <path d="M20 110 A80 80 0 0 1 180 110" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="16" stroke-linecap="round"/>
-    <path d="M20 110 A80 80 0 0 1 180 110" fill="none" stroke="url(#gg)" stroke-width="16" stroke-linecap="round" stroke-dasharray="${c}" stroke-dashoffset="${off}"/>
-    <text x="100" y="98" text-anchor="middle" font-family="Outfit,sans-serif" font-weight="800" font-size="42" fill="currentColor">${pct}</text>
-    <text x="100" y="124" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9.5" letter-spacing="1.5" fill="currentColor" opacity=".6">${label.toUpperCase()}</text></svg>`;
-}
 function faq(items) { return `<div class="faq">${items.map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join("")}</div>`; }
 const FAQ = [
   ["Qui peut bénéficier de l'accompagnement d'Ubora ?", "Les PME, les porteurs de projet, les coopératives agricoles, les groupes d'épargne, les petites institutions de microfinance, ainsi que les organisations d'appui (ONG, incubateurs, programmes) qui souhaitent digitaliser leur accompagnement."],
@@ -218,7 +209,7 @@ function buildMenu() {
     <li><a href="#/formations" data-r="formations">Formations</a></li>
     <li><a href="#/actualites" data-r="actualites">Actualités</a></li>
     <li><a href="#/contact" data-r="contact">Contact</a></li>
-    <li class="m-cta"><a class="btn btn-lime" href="#/diagnostic" style="justify-content:center">Diagnostic gratuit</a></li>`;
+    <li class="m-cta"><a class="btn btn-lime" href="#/contact" style="justify-content:center">Nous contacter</a></li>`;
   $$(".dd-btn").forEach(b => b.addEventListener("click", () => {
     const li = b.parentElement, open = !li.classList.contains("open");
     $$(".has-dd").forEach(x => { x.classList.remove("open"); x.querySelector(".dd-btn").setAttribute("aria-expanded", "false"); });
@@ -235,7 +226,7 @@ function buildFooter() {
       </div>
       <div><h4>Expertises</h4><ul>${AXES.map(a => `<li><a href="#/services#axe-${a.id}">${a.titre}</a></li>`).join("")}</ul></div>
       <div><h4>Solutions</h4><ul>${SOLUTIONS.map(s => `<li><a href="#/solutions/${s.id}">${esc(s.nom)}</a></li>`).join("")}</ul></div>
-      <div><h4>Ubora</h4><ul><li><a href="#/a-propos">Qui sommes-nous</a></li><li><a href="#/approche">Notre approche</a></li><li><a href="#/avec">Appui aux AVEC</a></li><li><a href="#/formations">Formations</a></li><li><a href="#/actualites">Actualités</a></li><li><a href="#/carrieres">Carrières</a></li><li><a href="#/diagnostic">Diagnostic PME</a></li><li><a href="#/contact">Contact</a></li></ul></div>
+      <div><h4>Ubora</h4><ul><li><a href="#/a-propos">Qui sommes-nous</a></li><li><a href="#/approche">Notre approche</a></li><li><a href="#/avec">Appui aux AVEC</a></li><li><a href="#/formations">Formations</a></li><li><a href="#/actualites">Actualités</a></li><li><a href="#/carrieres">Carrières</a></li><li><a href="#/contact">Contact</a></li></ul></div>
       <div><h4>Nous joindre</h4><ul>
         <li><a href="tel:${CONFIG.telephone.replace(/\s/g, "")}">${esc(CONFIG.telephone)}</a></li>
         <li><a href="${waLink("Bonjour Ubora")}" target="_blank" rel="noopener">WhatsApp</a> · <a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a></li>
@@ -357,15 +348,6 @@ function pageHome() {
       <div class="fcard reveal"><span class="ic">${ICON.map}</span><h4>L'expérience du terrain</h4><p>Groupes d'épargne, coopératives, microfinances et PME accompagnés en ville comme en zone rurale, dans leur langue.</p></div>
       <div class="fcard reveal"><span class="ic">${ICON.handshake}</span><h4>Un modèle social</h4><p>Entreprise sociale : les revenus des prestations financent l'accès solidaire des plus fragiles.</p></div>
       <div class="fcard reveal"><span class="ic">${ICON.phoneM}</span><h4>Nos propres outils</h4><p>Ubora AVEC, Ubora Fin, Ubora Hub, Ubora Coop, Ubora PME : conçus, déployés et maintenus par nos soins.</p></div>
-    </div>
-  </div></section>
-
-  <section style="padding-top:0"><div class="wrap">
-    <div class="deep cta-diag"><span class="glow g1"></span>
-      <div><span class="eyebrow">Gratuit · 3 minutes</span><h2 style="margin-top:14px">Votre entreprise est-elle <span class="serif">résiliente</span> ?</h2>
-        <p>Huit questions pour mesurer votre maturité en formalisation, finance, gestion et digital, avec des recommandations concrètes.</p>
-        <div class="btn-row" style="margin-top:26px"><a class="btn btn-lime" href="#/diagnostic">Lancer le diagnostic ${ICON.arrow}</a></div></div>
-      <div style="color:#fff">${gauge(68, "Exemple de score")}</div>
     </div>
   </div></section>
 
@@ -761,62 +743,6 @@ function pageArticle(slug) {
   ${others.length ? `<section class="band"><div class="wrap"><div class="sec-head"><span class="eyebrow">À lire aussi</span></div><div class="news-grid">${others.map(o => newsCard(o)).join("")}</div></div></section>` : ""}`;
 }
 
-/* ---------- Diagnostic ---------- */
-const DIAG = [
-  { dim: "Formalisation", q: "Votre entreprise est-elle enregistrée (RCCM, identification nationale) ?", o: ["Non, activité informelle", "En cours ou partiellement", "Oui, entièrement en règle"] },
-  { dim: "Formalisation", q: "Avez-vous des rôles et des responsabilités clairement définis ?", o: ["Je fais tout moi-même", "Quelques rôles, mais flous", "Oui, organigramme et fiches de poste"] },
-  { dim: "Finance", q: "Séparez-vous l'argent de l'entreprise de votre argent personnel ?", o: ["Non, tout est mélangé", "Parfois", "Oui, compte ou caisse séparés"] },
-  { dim: "Finance", q: "Disposez-vous d'une épargne de précaution pour faire face à un choc ?", o: ["Aucune réserve", "Quelques jours d'activité", "Plus d'un mois de charges"] },
-  { dim: "Gestion", q: "Comment suivez-vous vos ventes et vos dépenses ?", o: ["Je ne les note pas", "Dans un cahier", "Dans un logiciel ou tableur, chaque jour"] },
-  { dim: "Gestion", q: "Avez-vous un plan d'affaires à jour ?", o: ["Non", "Une ancienne version", "Oui, avec des prévisions financières"] },
-  { dim: "Digital", q: "Acceptez-vous les paiements par mobile money ?", o: ["Non", "Oui, de manière informelle", "Oui, avec un compte marchand"] },
-  { dim: "Digital", q: "Votre entreprise est-elle visible en ligne ?", o: ["Pas du tout", "WhatsApp ou Facebook personnel", "Page professionnelle, site ou catalogue"] }
-];
-const RECOS = {
-  "Formalisation": ["Structuration & formalisation", "Nous vous guidons pas à pas vers la formalisation et une organisation claire.", "#/services#pme"],
-  "Finance": ["Inclusion financière & épargne de précaution", "Séparez vos finances, constituez des réserves et préparez l'accès au crédit.", "#/services#inclusion"],
-  "Gestion": ["Ubora PME : gestion & plan d'affaires", "Suivez caisse, stock et marge, et construisez un plan d'affaires solide.", "#/solutions/ubora-pme"],
-  "Digital": ["Digitalisation de votre PME", "Mobile money marchand, présence en ligne et outils numériques adaptés.", "#/services#pme"]
-};
-let diagState = { i: 0, a: [] };
-function pageDiag() {
-  return pageHead({ eyebrow: "Diagnostic PME · gratuit", title: 'Votre entreprise est-elle <span class="serif">résiliente</span> ?', crumbs: [["Diagnostic"]],
-    lead: "Huit questions, trois minutes. Vos réponses restent sur votre appareil." }) + `<section><div class="wrap"><div class="diag" id="diag"></div></div></section>`;
-}
-function renderDiag() {
-  const el = $("#diag"); if (!el) return;
-  const { i, a } = diagState;
-  if (i >= DIAG.length) return renderDiagResult(el);
-  const d = DIAG[i];
-  el.innerHTML = `<div class="diag-progress"><span>Question ${i + 1} sur ${DIAG.length}</span><span>${Math.round(i / DIAG.length * 100)} %</span></div>
-    <div class="progress" style="margin:0 0 22px"><i style="width:${i / DIAG.length * 100}%"></i></div>
-    <div class="q fade"><span class="dim">${d.dim}</span><h3>${d.q}</h3>
-      <div class="opts">${d.o.map((o, k) => `<button class="opt" data-k="${k}" aria-pressed="${a[i] === k}"><i></i>${o}</button>`).join("")}</div>
-      <div class="q-nav"><button class="btn btn-ghost" id="dPrev" ${i === 0 ? "style='visibility:hidden'" : ""}>← Précédent</button>
-        <button class="btn btn-primary" id="dNext" ${a[i] === undefined ? "disabled style='opacity:.45'" : ""}>${i === DIAG.length - 1 ? "Voir mon résultat" : "Suivant →"}</button></div></div>`;
-  $$(".opt", el).forEach(b => b.onclick = () => { diagState.a[i] = +b.dataset.k; $$(".opt", el).forEach(x => x.setAttribute("aria-pressed", x === b)); setTimeout(() => { diagState.i++; renderDiag(); }, 200); });
-  $("#dPrev").onclick = () => { diagState.i--; renderDiag(); };
-  $("#dNext").onclick = () => { if (a[i] !== undefined) { diagState.i++; renderDiag(); } };
-}
-function renderDiagResult(el) {
-  const dims = {};
-  DIAG.forEach((d, k) => { dims[d.dim] = dims[d.dim] || [0, 0]; dims[d.dim][0] += diagState.a[k] ?? 0; dims[d.dim][1] += 2; });
-  const scores = Object.entries(dims).map(([k, [s, m]]) => [k, Math.round(s / m * 100)]);
-  const total = Math.round(scores.reduce((s, [, v]) => s + v, 0) / scores.length);
-  const niveau = total < 35 ? "Fragile" : total < 70 ? "En consolidation" : "Résiliente";
-  const weak = [...scores].sort((x, y) => x[1] - y[1]).filter(([, v]) => v < 100).slice(0, 3);
-  store.set("ubora_diag", { total, scores, date: new Date().toISOString() });
-  const resume = `Diagnostic Ubora : score ${total}/100 (${niveau}). ` + scores.map(([k, v]) => `${k} ${v}%`).join(", ");
-  el.innerHTML = `<div class="q fade"><span class="dim">Votre résultat</span><h3>Niveau de résilience : ${niveau}</h3>
-    <div class="result"><div style="color:var(--ink)">${gauge(total, "Score global").replace('stroke="rgba(255,255,255,.12)"', 'stroke="var(--line)"')}</div>
-      <div class="bars">${scores.map(([k, v]) => `<div class="bar-row"><span>${k}</span><span class="track"><i style="width:${v}%;background:${v < 40 ? "var(--copper)" : v < 70 ? "var(--lime)" : "var(--green)"}"></i></span><b>${v}%</b></div>`).join("")}</div></div>
-    ${weak.length ? `<h4 style="margin-top:34px;font-size:19px">Nos recommandations pour vous</h4><div class="recos">${weak.map(([k]) => { const [t, d, h] = RECOS[k]; return `<a class="reco" href="${h}">${ICON.arrow}<div><b>${t}</b><span>${d}</span></div></a>`; }).join("")}</div>`
-      : `<p style="margin-top:24px">Excellent ! Votre entreprise est bien structurée. Parlons croissance et financement.</p>`}
-    <div class="btn-row" style="margin-top:30px"><a class="btn btn-primary" href="#/contact?sujet=${encodeURIComponent("Suite au diagnostic")}&msg=${encodeURIComponent(resume)}">Parler à un conseiller</a>
-      <a class="btn btn-wa" href="${waLink(resume)}" target="_blank" rel="noopener">Envoyer sur WhatsApp</a><button class="btn btn-ghost" id="dRestart">Recommencer</button></div></div>`;
-  $("#dRestart").onclick = () => { diagState = { i: 0, a: [] }; renderDiag(); };
-}
-
 /* ---------- Contact ---------- */
 function pageContact(params) {
   const sujet = params.get("sujet") || "", msg = params.get("msg") || "";
@@ -982,7 +908,7 @@ $("#toTop").addEventListener("click", () => scrollTo({ top: 0, behavior: "smooth
 /* ==========================================================================
    ROUTEUR
    ========================================================================== */
-const TITLES = { "": "Accueil", "a-propos": "À propos", avec: "Appui aux AVEC", services: "Expertises", solutions: "Solutions", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", diagnostic: "Diagnostic PME", contact: "Contact", approche: "Notre approche", mentions: "Mentions légales", admin: "Espace équipe" };
+const TITLES = { "": "Accueil", "a-propos": "À propos", avec: "Appui aux AVEC", services: "Expertises", solutions: "Solutions", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", approche: "Notre approche", mentions: "Mentions légales", admin: "Espace équipe" };
 function route() {
   const raw = location.hash.replace(/^#\/?/, "");
   const [pathPart, anchor] = raw.split("#");
@@ -1005,7 +931,7 @@ function route() {
     case "formations": html = pageFormations(params); break;
     case "actualites": html = sub ? pageArticle(sub) : pageNews(); break;
     case "carrieres": html = pageCareers(sub); break;
-    case "diagnostic": diagState = { i: 0, a: [] }; html = pageDiag(); break;
+    case "diagnostic": location.replace("#/contact"); return;
     case "contact": html = pageContact(params); break;
     case "admin": html = pageAdmin(); break;
     case "cooperatives": location.replace("#/services#axe-agri"); return;
@@ -1024,7 +950,6 @@ function route() {
   if (base === "services") bindSpy();
   if (base === "actualites" && !sub) bindNews();
   if (base === "formations") bindFormations();
-  if (base === "diagnostic") renderDiag();
   if (base === "contact") bindContact();
   if (base === "admin") bindAdmin();
   $$("[data-copy]").forEach(b => b.addEventListener("click", async () => {
