@@ -234,7 +234,7 @@ function buildFooter() {
         <p style="margin-top:18px;max-width:36ch">Bâtir la résilience économique des entreprises et des communautés, depuis Lubumbashi, partout en RDC.</p>
       </div>
       <div><h4>Expertises</h4><ul>${AXES.map(a => `<li><a href="#/services#axe-${a.id}">${a.titre}</a></li>`).join("")}</ul></div>
-      <div><h4>Solutions</h4><ul>${SOLUTIONS.map(s => `<li><a href="${s.site || "#/solutions/" + s.id}"${s.site ? ' target="_blank" rel="noopener"' : ""}>${esc(s.nom)}${s.site ? " ↗" : ""}</a></li>`).join("")}</ul></div>
+      <div><h4>Solutions</h4><ul>${SOLUTIONS.map(s => `<li><a href="#/solutions/${s.id}">${esc(s.nom)}</a></li>`).join("")}</ul></div>
       <div><h4>Ubora</h4><ul><li><a href="#/a-propos">Qui sommes-nous</a></li><li><a href="#/approche">Notre approche</a></li><li><a href="#/avec">Appui aux AVEC</a></li><li><a href="#/formations">Formations</a></li><li><a href="#/actualites">Actualités</a></li><li><a href="#/carrieres">Carrières</a></li><li><a href="#/diagnostic">Diagnostic PME</a></li><li><a href="#/contact">Contact</a></li></ul></div>
       <div><h4>Nous joindre</h4><ul>
         <li><a href="tel:${CONFIG.telephone.replace(/\s/g, "")}">${esc(CONFIG.telephone)}</a></li>
@@ -341,7 +341,7 @@ function pageHome() {
           <span class="mk" style="background:${s.couleur}">${esc(s.initiales)}</span>
           <span><b>${esc(s.nom)}</b><small>${esc(s.tagline)}</small></span>${statusPill(s)}
           <span class="tab-desc">${esc(s.resume)}</span>
-          <span class="tab-cta"><a class="btn btn-primary btn-sm" href="#/solutions/${s.id}">En savoir plus</a>${s.site ? `<a class="btn btn-ghost btn-sm" href="${s.site}" target="_blank" rel="noopener">Ouvrir ${esc(s.nom)} ${ICON.ext}</a>` : ""}</span>
+          <span class="tab-cta"><a class="btn btn-primary btn-sm" href="#/solutions/${s.id}">En savoir plus</a>${s.site ? `<a class="btn btn-ghost btn-sm" href="${s.site}" target="_blank" rel="noopener">${s.app ? "Ouvrir l'application " + esc(s.app) : "Ouvrir l'application"} ${ICON.ext}</a>` : ""}</span>
         </button>`).join("")}</div>
       <div class="screen" id="screen" role="tabpanel"><span class="glow g1"></span><span class="glow g2"></span>${mockFor(SOLUTIONS[0])}<span class="screen-note">Données d'exemple</span></div>
     </div>
@@ -590,8 +590,8 @@ function pageSolution(id) {
       <p class="lead" style="color:#fff;font-weight:600">${esc(s.tagline)}</p>
       <p class="lead" style="margin-top:14px">${esc(s.description)}</p>
       <div class="btn-row" style="margin-top:30px">
-        ${s.site ? `<a class="btn btn-lime" href="${s.site}" target="_blank" rel="noopener">Ouvrir ${esc(s.nom)} ${ICON.ext}</a>` : ""}
-        <a class="btn ${s.site ? "btn-glass" : "btn-lime"}" href="#/contact?sujet=${encodeURIComponent("Démo " + s.nom)}">${s.statut === "bientot" ? "Être informé du lancement" : "Demander une démo"}</a>
+        ${s.site ? `<a class="btn btn-glass" href="${s.site}" target="_blank" rel="noopener">${s.app ? "Ouvrir l'application " + esc(s.app) : "Ouvrir l'application"} ${ICON.ext}</a>` : ""}
+        <a class="btn btn-lime" href="#/contact?sujet=${encodeURIComponent("Démo " + s.nom)}">${s.statut === "bientot" ? "Être informé du lancement" : "Demander une démo"}</a>
       </div></div>
       <div class="stage" style="min-height:0">${mockFor(s)}</div>
     </div></section>
