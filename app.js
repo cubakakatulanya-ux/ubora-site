@@ -298,14 +298,6 @@ function pageHome() {
       <span class="eyebrow">Notre mission</span>
       <blockquote style="margin-top:20px">Mettre la <span class="serif">résilience économique</span> au cœur du développement des entreprises et des communautés congolaises.</blockquote>
       <p class="lead" style="margin-top:22px">Inflation, variations du franc, chocs climatiques, accès limité au crédit : les entrepreneurs congolais évoluent dans un environnement exigeant. Nous les aidons à tenir, puis à grandir.</p>
-      <div class="idcard reveal" style="margin-top:28px"><h4>Ubora en bref</h4><dl>
-        <dt>Nom</dt><dd><b>ubora</b> — « excellence » en swahili</dd>
-        <dt>Statut</dt><dd>Entreprise sociale</dd>
-        <dt>Siège</dt><dd>Lubumbashi, Haut-Katanga</dd>
-        <dt>Terrain</dt><dd>Toute la RDC, sur place et à distance</dd>
-        <dt>Métiers</dt><dd>${SERVICES.length} expertises, de l'épargne communautaire au conseil</dd>
-        <dt>Outils</dt><dd>${SOLUTIONS.map(s => esc(s.nom)).join(" · ")}</dd>
-      </dl></div>
     </div>
     <div class="pillars3">
       <div class="p3 reveal"><span class="ic">${ICON.shield}</span><div><h4>Des organisations solides</h4><p>Formalisation, gouvernance, gestion rigoureuse : les bases qui permettent d'absorber les chocs.</p></div></div>
@@ -353,12 +345,6 @@ function pageHome() {
         </button>`).join("")}</div>
       <div class="screen" id="screen" role="tabpanel"><span class="glow g1"></span><span class="glow g2"></span>${mockFor(SOLUTIONS[0])}<span class="screen-note">Données d'exemple</span></div>
     </div>
-    <ul class="traits">
-      <li>${ICON.wifi}<div><b>Hors ligne d'abord</b><span>Saisie sans réseau, synchronisation au retour de la connexion</span></div></li>
-      <li>${ICON.coins}<div><b>CDF & USD</b><span>Double monnaie gérée nativement</span></div></li>
-      <li>${ICON.phoneM}<div><b>Mobile money</b><span>M-Pesa, Airtel Money, Orange Money</span></div></li>
-      <li>${ICON.school}<div><b>Formation & suivi</b><span>Jusqu'à l'autonomie complète</span></div></li>
-    </ul>
   </div></section>
 
   ${methodStrip(true)}
