@@ -58,6 +58,11 @@ const UboraDB = (() => {
     const { error } = await c.from("site_messages").insert([m]);
     return { ok: !error, error };
   }
+  async function logQuestion(q) {
+    const c = sb(); if (!c) return { ok: false, offline: true };
+    const { error } = await c.from("site_questions").insert([q]);
+    return { ok: !error, error };
+  }
   async function subscribe(email) {
     const c = sb(); if (!c) return { ok: false, offline: true };
     const { error } = await c.from("site_abonnes").insert([{ email }]);
@@ -105,5 +110,5 @@ const UboraDB = (() => {
     return data || [];
   }
 
-  return { configured, load, sendMessage, subscribe, signIn, signUp, signOut, currentUser, listAll, save, remove, listMessages, get ready() { return ready; } };
+  return { configured, load, sendMessage, subscribe, logQuestion, signIn, signUp, signOut, currentUser, listAll, save, remove, listMessages, get ready() { return ready; } };
 })();

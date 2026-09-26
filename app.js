@@ -286,6 +286,14 @@ function pageHome() {
       <span class="eyebrow">Notre mission</span>
       <blockquote style="margin-top:20px">Mettre la <span class="serif">résilience économique</span> au cœur du développement des entreprises et des communautés congolaises.</blockquote>
       <p class="lead" style="margin-top:22px">Inflation, variations du franc, chocs climatiques, accès limité au crédit : les entrepreneurs congolais évoluent dans un environnement exigeant. Nous les aidons à tenir, puis à grandir.</p>
+      <div class="idcard reveal" style="margin-top:28px"><h4>Ubora en bref</h4><dl>
+        <dt>Nom</dt><dd><b>ubora</b> — « excellence » en swahili</dd>
+        <dt>Statut</dt><dd>Entreprise sociale</dd>
+        <dt>Siège</dt><dd>Lubumbashi, Haut-Katanga</dd>
+        <dt>Terrain</dt><dd>Toute la RDC, sur place et à distance</dd>
+        <dt>Métiers</dt><dd>${SERVICES.length} expertises, de l'épargne communautaire au conseil</dd>
+        <dt>Outils</dt><dd>${SOLUTIONS.map(s => esc(s.nom)).join(" · ")}</dd>
+      </dl></div>
     </div>
     <div class="pillars3">
       <div class="p3 reveal"><span class="ic">${ICON.shield}</span><div><h4>Des organisations solides</h4><p>Formalisation, gouvernance, gestion rigoureuse : les bases qui permettent d'absorber les chocs.</p></div></div>
@@ -586,7 +594,6 @@ function pageSolution(id) {
       <div class="btn-row" style="margin-top:30px">
         ${s.site ? `<a class="btn btn-lime" href="${s.site}" target="_blank" rel="noopener">Ouvrir ${esc(s.nom)} ${ICON.ext}</a>` : ""}
         <a class="btn ${s.site ? "btn-glass" : "btn-lime"}" href="#/contact?sujet=${encodeURIComponent("Démo " + s.nom)}">${s.statut === "bientot" ? "Être informé du lancement" : "Demander une démo"}</a>
-        ${s.simulateur ? `<a class="btn btn-glass" href="#sim" data-scroll="sim">Simuler un cycle</a>` : ""}
       </div></div>
       <div class="stage" style="min-height:0">${mockFor(s)}</div>
     </div></section>
@@ -594,49 +601,24 @@ function pageSolution(id) {
     <div class="sec-head"><span class="eyebrow">Fonctionnalités</span><h2>Ce que ${esc(s.nom)} <span class="serif">permet</span>.</h2></div>
     <div class="feat">${s.fonctionnalites.map(([t, d]) => `<div class="reveal"><b>${t}</b><p>${d}</p></div>`).join("")}</div>
     <div class="for" style="margin-top:28px"><b style="margin-right:6px">Pour :</b>${s.pour.map(p => `<span>${p}</span>`).join("")}</div>
-    ${trainBox(s)}
   </div></section>
-  ${s.simulateur ? simulator() : ""}
+  ${s.outils ? `<section class="band"><div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Les outils</span><h2>Ce que comprend <span class="serif">${esc(s.nom)}</span>.</h2></div>
+    <div class="feat">${s.outils.map(([t, d]) => `<div class="reveal"><b>${t}</b><p>${d}</p></div>`).join("")}</div>
+  </div></section>` : ""}
+  ${s.deploiement ? `<section><div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Mise en place</span><h2>Comment se passe le <span class="serif">déploiement</span>.</h2>
+      <p class="lead">Nous appliquons sur l'outil la même méthode que sur le terrain : comprendre, paramétrer, former, puis rester le temps qu'il faut.</p></div>
+    <ol class="strip">${s.deploiement.map(([t, d], k) => `<li class="reveal"><span class="sn">${String(k + 1).padStart(2, "0")}</span><b>${t}</b><span class="st">${d}</span></li>`).join("")}</ol>
+  </div></section>` : ""}
+  ${s.usages ? `<section class="band"><div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Usages</span><h2>Qui s'en sert, et <span class="serif">pour quoi</span>.</h2></div>
+    <ul class="usages">${s.usages.map(([r, u]) => `<li><b>${r}</b><span>${u}</span></li>`).join("")}</ul>
+  </div></section>` : ""}
+  <section><div class="wrap">${trainBox(s)}</div></section>
   <section class="band"><div class="wrap"><div class="sec-head"><span class="eyebrow">Autres solutions</span></div>
     <div class="sol-grid">${SOLUTIONS.filter(x => x.id !== s.id).map(solCard).join("")}</div></div></section>`;
 }
-function simulator() {
-  return `<section id="sim" style="padding-top:0"><div class="wrap">
-    <div class="sec-head"><span class="eyebrow">Simulateur Ubora AVEC</span><h2>Combien votre groupe peut-il <span class="serif">épargner</span> ?</h2><p class="lead">Ajustez les paramètres de votre groupe pour estimer la caisse et le partage en fin de cycle.</p></div>
-    <div class="sim"><div>
-      <div class="field"><label for="s-m">Nombre de membres <output id="o-m"></output></label><input type="range" id="s-m" min="5" max="30" value="25"></div>
-      <div class="field"><label for="s-c">Cotisation par semaine <output id="o-c"></output></label><input type="range" id="s-c" min="1000" max="50000" step="1000" value="10000"></div>
-      <div class="field"><label for="s-w">Durée du cycle <output id="o-w"></output></label><input type="range" id="s-w" min="12" max="52" step="4" value="36"></div>
-      <div class="field"><label for="s-t">Intérêt mensuel sur les prêts <output id="o-t"></output></label><input type="range" id="s-t" min="0" max="10" step="1" value="5"></div>
-      <div class="field"><label for="s-u">Part de la caisse prêtée <output id="o-u"></output></label><input type="range" id="s-u" min="0" max="90" step="10" value="60"></div>
-      <div class="seg" role="group" aria-label="Devise"><button type="button" data-cur="CDF" aria-pressed="true">Francs congolais</button><button type="button" data-cur="USD" aria-pressed="false">Dollars US</button></div>
-    </div>
-    <div class="sim-out" aria-live="polite">
-      <div class="sim-row"><span>Épargne totale du groupe</span><strong id="r-e"></strong></div>
-      <div class="sim-row"><span>Intérêts générés (estimation)</span><strong id="r-i"></strong></div>
-      <div class="sim-row"><span>Caisse en fin de cycle</span><strong id="r-t"></strong></div>
-      <div class="sim-row big"><span>Partage par membre</span><strong id="r-p"></strong></div>
-      <div class="sim-row"><span>Rendement pour chaque membre</span><strong id="r-r"></strong></div>
-      <small>Estimation indicative. 1 USD = ${fmtNum(CONFIG.tauxUSD)} FC.</small>
-    </div></div></div></section>`;
-}
-function bindSimulator() {
-  if (!$("#s-m")) return;
-  let cur = "CDF";
-  const money = v => cur === "CDF" ? fmtNum(v) + " FC" : "$" + fmtNum(v / CONFIG.tauxUSD);
-  const run = () => {
-    const m = +$("#s-m").value, c = +$("#s-c").value, w = +$("#s-w").value, t = +$("#s-t").value / 100, u = +$("#s-u").value / 100;
-    $("#o-m").textContent = m; $("#o-c").textContent = money(c); $("#o-w").textContent = w + " semaines";
-    $("#o-t").textContent = Math.round(t * 100) + " %"; $("#o-u").textContent = Math.round(u * 100) + " %";
-    const ep = m * c * w, it = (ep / 2) * u * t * (w / 4.33), tot = ep + it;
-    $("#r-e").textContent = money(ep); $("#r-i").textContent = money(it); $("#r-t").textContent = money(tot);
-    $("#r-p").textContent = money(tot / m); $("#r-r").textContent = "+" + (ep ? (it / ep * 100).toFixed(1).replace(".", ",") : 0) + " %";
-  };
-  $$("#sim input").forEach(i => i.addEventListener("input", run));
-  $$(".seg button").forEach(b => b.addEventListener("click", () => { cur = b.dataset.cur; $$(".seg button").forEach(x => x.setAttribute("aria-pressed", x === b)); run(); }));
-  run();
-}
-
 /* ---------- Formations ---------- */
 let trainFilter = "all";
 function pageFormations(params) {
@@ -1012,7 +994,6 @@ function route() {
   if (base === "") { startNet(); startRotator(); bindShowcase(); }
   if (base === "services") bindSpy();
   if (base === "actualites" && !sub) bindNews();
-  if (base === "solutions" && sub) bindSimulator();
   if (base === "formations") bindFormations();
   if (base === "diagnostic") renderDiag();
   if (base === "contact") bindContact();

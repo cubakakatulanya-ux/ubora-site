@@ -163,7 +163,7 @@ const SOLUTIONS = [
     site: "https://cubakakatulanya-ux.github.io/akiba-avec/",
     tagline: "Épargne et crédit communautaires, digitalisés",
     resume: "La gestion des groupes d'épargne (AVEC, mutuelles, tontines) passe du cahier au téléphone : cotisations, prêts, remboursements et partage de fin de cycle, en toute transparence.",
-    description: "Ubora AVEC — application AKIBA, de « akiba », épargne en swahili — donne aux groupes d'épargne et de crédit un registre numérique fiable. Chaque membre voit son solde, le trésorier n'a plus de calculs à la main, et le groupe se constitue un historique financier. Cet historique ouvre ensuite l'accès au crédit auprès des institutions de microfinance partenaires.",
+    description: "Ubora AVEC est notre offre complète d'appui aux groupes d'épargne : constitution, gouvernance, formation, puis tenue numérique des comptes. Son outil numérique, AKIBA (« épargne » en swahili), donne aux groupes d'épargne et de crédit un registre numérique fiable. Chaque membre voit son solde, le trésorier n'a plus de calculs à la main, et le groupe se constitue un historique financier. Cet historique ouvre ensuite l'accès au crédit auprès des institutions de microfinance partenaires.",
     fonctionnalites: [
       ["Registre des cotisations", "Chaque dépôt est horodaté, attribué à un membre et visible par tout le groupe."],
       ["Prêts & remboursements", "Calcul automatique des intérêts, échéanciers et relances."],
@@ -173,7 +173,25 @@ const SOLUTIONS = [
       ["Historique de crédit", "Un score de discipline financière utile pour accéder à la microfinance."]
     ],
     pour: ["Groupes AVEC / VSLA", "Mutuelles de solidarité", "Coopératives", "ONG & programmes"],
-    simulateur: true
+    outils: [
+      ["AKIBA", "L'application de tenue des comptes du groupe : cotisations, prêts, remboursements, amendes, fonds social et partage de fin de cycle. Fonctionne hors ligne sur un simple téléphone Android."],
+      ["Registres et fiches modèles", "Statuts, règlement intérieur, fiches de membre et procès-verbaux types, conformes aux pratiques AVEC."],
+      ["Tableau de bord programme", "Vue consolidée de tous les groupes d'un projet, avec indicateurs exportables pour l'ONG ou le bailleur."],
+      ["Dossier de crédit", "Synthèse de l'historique du groupe, à présenter à une IMF, une COOPEC ou une banque."]
+    ],
+    deploiement: [
+      ["Cadrage avec le groupe", "Nous partons des règles existantes : montant des parts, rythme des réunions, taux pratiqué, langue de travail."],
+      ["Formation des responsables", "Une journée pour le trésorier, le secrétaire et le comité, sur leur propre matériel."],
+      ["Démarrage accompagné", "Nous assistons deux à trois réunions pour sécuriser les premières saisies."],
+      ["Suivi de cycle", "Visites de contrôle, appui au partage de fin de cycle, puis préparation du dossier de crédit."]
+    ],
+    usages: [
+      ["Trésorier", "Saisit les cotisations, prêts et amendes pendant la réunion, sans connexion."],
+      ["Secrétaire", "Vérifie les écritures et partage le récapitulatif avec les membres."],
+      ["Membres", "Consultent leur épargne, leurs crédits en cours et leurs échéances."],
+      ["ONG ou programme", "Suit tous les groupes et produit ses rapports sans collecte manuelle."],
+      ["Institution financière", "Consulte l'historique du groupe pour instruire une demande de crédit."]
+    ]
   },
   {
     id: "ubora-hub", nom: "Ubora Hub", initiales: "Hb", couleur: "#0B2F6E", statut: "dispo", mock: "hub",
@@ -189,7 +207,19 @@ const SOLUTIONS = [
       ["Rapports bailleurs", "Tableaux de bord et exports prêts à envoyer."],
       ["Mise en relation", "Mentors, experts, financeurs et marchés."]
     ],
-    pour: ["Incubateurs & accélérateurs", "Programmes d'entrepreneuriat", "ONG & bailleurs", "Entrepreneurs"]
+    pour: ["Incubateurs & accélérateurs", "Programmes d'entrepreneuriat", "ONG & bailleurs", "Entrepreneurs"],
+    deploiement: [
+      ["Cartographie du parcours", "Atelier avec vos équipes pour décrire vos étapes, vos critères et vos indicateurs actuels."],
+      ["Paramétrage", "Formulaires de candidature, grilles d'évaluation, modèles de séances et indicateurs d'impact."],
+      ["Formation des équipes", "Prise en main par les chargés de programme, les coachs et la direction."],
+      ["Première cohorte accompagnée", "Nous restons présents sur le premier cycle complet, jusqu'au rapport final."]
+    ],
+    usages: [
+      ["Chargé de programme", "Lance les appels à candidatures, constitue les cohortes, suit l'avancement."],
+      ["Coach ou mentor", "Tient la fiche de l'entrepreneur, planifie les séances et note les décisions."],
+      ["Entrepreneur", "Dépose sa candidature, suit son plan d'action et accède aux ressources."],
+      ["Direction et bailleur", "Consulte les tableaux de bord et exporte les rapports d'impact."]
+    ]
   },
   {
     id: "ubora-coop", nom: "Ubora Coop", initiales: "Co", couleur: "#5E9E2F", statut: "pilote", mock: "coop",
@@ -204,7 +234,20 @@ const SOLUTIONS = [
       ["Paiements producteurs", "Décomptes individuels, versements mobile money."],
       ["Gouvernance", "AG, PV, conformité OHADA des sociétés coopératives."]
     ],
-    pour: ["Coopératives agricoles", "Unions de coopératives", "Acheteurs & agrégateurs"]
+    pour: ["Coopératives agricoles", "Unions de coopératives", "Acheteurs & agrégateurs"],
+    deploiement: [
+      ["Recensement", "Enregistrement des membres, des parcelles, des cultures et des parts sociales."],
+      ["Paramétrage de la campagne", "Cultures, prix, entrepôts, points de collecte et règles de paiement."],
+      ["Formation du comité", "Gérant, comptable et agents de collecte formés sur leurs opérations quotidiennes."],
+      ["Première campagne accompagnée", "Présence lors des collectes, puis appui à la vente groupée et aux paiements."]
+    ],
+    usages: [
+      ["Agent de collecte", "Enregistre les pesées et la qualité, même sans réseau, au point de collecte."],
+      ["Gérant", "Suit les stocks, prépare les ventes groupées et déclenche les paiements."],
+      ["Comité de gestion", "Prépare l'assemblée générale avec des comptes à jour."],
+      ["Producteur", "Reçoit son décompte détaillé et son paiement par mobile money."],
+      ["Acheteur", "Obtient des volumes traçables et des livraisons planifiées."]
+    ]
   },
   {
     id: "ubora-fin", nom: "Ubora Fin", initiales: "Fi", couleur: "#1D5FB8", statut: "dispo", mock: "fin",
@@ -220,7 +263,20 @@ const SOLUTIONS = [
       ["Caisse & guichet", "Opérations en CDF et USD, arrêtés de caisse."],
       ["Rapports & indicateurs", "Tableaux de bord de performance et rapports réglementaires."]
     ],
-    pour: ["Petites IMF", "COOPEC", "Mutuelles d'épargne et de crédit", "Programmes de crédit d'ONG"]
+    pour: ["Petites IMF", "COOPEC", "Mutuelles d'épargne et de crédit", "Programmes de crédit d'ONG"],
+    deploiement: [
+      ["Diagnostic", "Revue des procédures, des produits et de l'état du portefeuille."],
+      ["Paramétrage", "Produits d'épargne et de crédit, taux, frais, agences et rôles des agents."],
+      ["Reprise des données", "Import des membres, comptes et crédits en cours depuis vos fichiers actuels."],
+      ["Formation et accompagnement", "Guichet et agents de crédit formés, puis présence sur le premier mois d'exploitation."]
+    ],
+    usages: [
+      ["Caissier", "Enregistre dépôts, retraits et remboursements, en CDF comme en USD, et clôture sa caisse."],
+      ["Agent de crédit", "Instruit les dossiers, génère les échéanciers et suit ses relances."],
+      ["Comité de crédit", "Examine les demandes avec un historique complet du client ou du groupe."],
+      ["Direction", "Suit l'encours, le PAR 30 et la rentabilité par agence."],
+      ["Contrôle et supervision", "Produit les rapports réglementaires sans ressaisie."]
+    ]
   },
   {
     id: "ubora-pme", nom: "Ubora PME", initiales: "Pm", couleur: "#B0642E", statut: "dispo", mock: "pme",
@@ -236,7 +292,19 @@ const SOLUTIONS = [
       ["Stock & factures", "Alertes de rupture, devis et factures envoyés par WhatsApp."],
       ["Tableau de bord", "Marge, trésorerie, meilleurs produits."]
     ],
-    pour: ["Porteurs de projet", "PME & commerces", "Artisans", "Programmes d'entrepreneuriat"]
+    pour: ["Porteurs de projet", "PME & commerces", "Artisans", "Programmes d'entrepreneuriat"],
+    deploiement: [
+      ["Diagnostic express", "Une séance pour situer l'entreprise : formalisation, finances, gestion, digital."],
+      ["Mise en route de la gestion", "Installation de la caisse et du stock, avec les produits et les soldes réels."],
+      ["Atelier plan d'affaires", "Deux jours pour construire le projet, le marché et les prévisions financières."],
+      ["Suivi mensuel", "Revue des indicateurs et appui à la présentation du dossier aux financeurs."]
+    ],
+    usages: [
+      ["Entrepreneur", "Tient sa caisse, suit sa marge réelle et construit son plan d'affaires pas à pas."],
+      ["Vendeur ou caissier", "Enregistre les ventes et les encaissements du jour."],
+      ["Accompagnateur ou comptable", "Vérifie les écritures et prépare les états financiers."],
+      ["Banque, IMF ou bailleur", "Reçoit un plan d'affaires chiffré et des comptes tenus régulièrement."]
+    ]
   }
 ];
 
