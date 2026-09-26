@@ -978,6 +978,17 @@ $("#themeBtn").addEventListener("click", () => {
 });
 const savedTheme = store.get("ubora_theme", null); if (savedTheme) document.documentElement.dataset.theme = savedTheme;
 $("#waFloat").href = waLink("Bonjour Ubora, je souhaite avoir des informations.");
+
+/* Sous-domaines : avec. fin. pme. coop. ouvrent directement la page concernée,
+   hub. renvoie vers la plateforme Ubora Hub. */
+(function sousDomaine() {
+  const parts = location.hostname.toLowerCase().split(".");
+  if (parts.length < 3) return;
+  if (parts[0] === "hub") { location.replace("https://www.uborahub.com"); return; }
+  const cible = { avec: "#/avec", fin: "#/solutions/ubora-fin", pme: "#/solutions/ubora-pme", coop: "#/solutions/ubora-coop" }[parts[0]];
+  if (cible && (!location.hash || location.hash === "#" || location.hash === "#/")) location.hash = cible;
+})();
+
 buildMenu(); buildFooter(); renderTicker(); route(); typo($("#footer")); typo($(".site-header"));
 UboraDB.load().then(() => {
   renderTicker();
