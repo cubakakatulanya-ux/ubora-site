@@ -188,17 +188,17 @@ const FAQ = [
 
 /* ---------- Navigation ---------- */
 function buildMenu() {
-  const mega = AXES.map(a => `<div class="dd-col"><h5>${a.titre}</h5>${a.services.map(id => `<a href="#/services#${id}">${svc(id).titre}</a>`).join("")}</div>`).join("");
+  const mega = AXES.map(a => `<div class="dd-col"><h5>${a.titre}</h5>${a.services.map(id => `<a href="${svc(id).lien || "#/services#" + id}">${svc(id).titre}</a>`).join("")}</div>`).join("");
   const sols = SOLUTIONS.map(s => `<a href="#/solutions/${s.id}"><span class="mk" style="background:${s.couleur}">${esc(s.initiales)}</span><span><b>${esc(s.nom)}</b><small>${esc(s.tagline)}</small></span></a>`).join("");
   $("#menu").innerHTML = `
     <li><a href="#/a-propos" data-r="a-propos">À propos</a></li>
+    <li><a class="nav-star" href="#/avec" data-r="avec">Appui aux AVEC</a></li>
     <li class="has-dd"><button class="dd-btn" data-r="services" aria-expanded="false">Expertises ${ICON.chev}</button>
       <div class="dd dd-mega">${mega}<div class="dd-foot"><span>${SERVICES.length} expertises réparties en ${AXES.length} axes</span><a class="link" href="#/services">Tout voir ${ICON.arrow}</a></div></div></li>
     <li class="has-dd"><button class="dd-btn" data-r="solutions" aria-expanded="false">Solutions ${ICON.chev}</button>
       <div class="dd dd-sol">${sols}<div class="dd-foot"><span>Outils numériques Ubora</span><a class="link" href="#/solutions">Toutes ${ICON.arrow}</a></div></div></li>
     <li><a href="#/formations" data-r="formations">Formations</a></li>
     <li><a href="#/actualites" data-r="actualites">Actualités</a></li>
-    <li><a href="#/carrieres" data-r="carrieres">Carrières</a></li>
     <li><a href="#/contact" data-r="contact">Contact</a></li>
     <li class="m-cta"><a class="btn btn-lime" href="#/diagnostic" style="justify-content:center">Diagnostic gratuit</a></li>`;
   $$(".dd-btn").forEach(b => b.addEventListener("click", () => {
@@ -284,6 +284,19 @@ function pageHome() {
     </div>
   </div></section>
 
+  <section style="padding-top:0"><div class="wrap">
+    <div class="deep avec-band"><span class="glow g1"></span><span class="glow g2"></span>
+      <div>
+        <span class="eyebrow">Approche phare</span>
+        <h2>L'appui aux <span class="serif">AVEC</span>, du cahier jusqu'à la banque.</h2>
+        <p class="lead">Les Associations Villageoises d'Épargne et de Crédit sont, pour des millions de Congolais, le seul service financier accessible. Nous les constituons, les formons, digitalisons leurs comptes avec AKIBA, puis transformons leur historique en dossier crédible auprès des institutions financières.</p>
+        ${bridge()}
+        <div class="btn-row" style="margin-top:30px"><a class="btn btn-lime" href="#/avec">Notre appui aux AVEC ${ICON.arrow}</a><a class="btn btn-glass" href="#/solutions/akiba">Voir AKIBA</a></div>
+      </div>
+      <div class="stage" style="min-height:0">${mockAkiba()}<span class="mock-note">Écran AKIBA, données d'exemple</span></div>
+    </div>
+  </div></section>
+
   <section class="band"><div class="wrap">
     <div class="sec-head split"><div style="display:grid;gap:16px"><span class="eyebrow">Nos expertises</span><h2>Quatre axes, <span class="serif">une</span> même exigence.</h2></div>
       <a class="btn btn-ghost" href="#/services">Toutes nos expertises ${ICON.arrow}</a></div>
@@ -310,28 +323,15 @@ function pageHome() {
         </button>`).join("")}</div>
       <div class="screen" id="screen" role="tabpanel"><span class="glow g1"></span><span class="glow g2"></span>${mockFor(SOLUTIONS[0])}<span class="screen-note">Données d'exemple</span></div>
     </div>
+    <ul class="traits">
+      <li>${ICON.wifi}<div><b>Hors ligne d'abord</b><span>Saisie sans réseau, synchronisation au retour de la connexion</span></div></li>
+      <li>${ICON.coins}<div><b>CDF & USD</b><span>Double monnaie gérée nativement</span></div></li>
+      <li>${ICON.phoneM}<div><b>Mobile money</b><span>M-Pesa, Airtel Money, Orange Money</span></div></li>
+      <li>${ICON.school}<div><b>Formation & suivi</b><span>Jusqu'à l'autonomie complète</span></div></li>
+    </ul>
   </div></section>
 
-  <section class="band"><div class="wrap">
-    <div class="sec-head"><span class="eyebrow">Notre méthode</span><h2>Un parcours en <span class="serif">cinq</span> étapes.</h2></div>
-    <ol class="timeline">
-      <li class="reveal"><span class="dot">1</span><div><h4>Diagnostic</h4><p>État des lieux de l'organisation, des finances et des outils.</p></div></li>
-      <li class="reveal"><span class="dot">2</span><div><h4>Structuration</h4><p>Formalisation, procédures, gouvernance, rôles clairs.</p></div></li>
-      <li class="reveal"><span class="dot">3</span><div><h4>Digitalisation</h4><p>Déploiement des outils adaptés et formation des équipes.</p></div></li>
-      <li class="reveal"><span class="dot">4</span><div><h4>Financement</h4><p>Plan d'affaires, dossiers solides, mise en relation.</p></div></li>
-      <li class="reveal"><span class="dot">5</span><div><h4>Suivi</h4><p>Indicateurs, coaching et support dans la durée.</p></div></li>
-    </ol>
-  </div></section>
-
-  <section><div class="wrap">
-    <div class="sec-head"><span class="eyebrow">Conçu pour la RDC</span><h2>Pensé pour les <span class="serif">réalités</span> du terrain.</h2></div>
-    <div class="field-grid">
-      <div class="fcard reveal"><span class="ic">${ICON.wifi}</span><h4>Hors ligne d'abord</h4><p>Saisie sans réseau, synchronisation automatique au retour de la connexion.</p></div>
-      <div class="fcard reveal"><span class="ic">${ICON.coins}</span><h4>CDF & USD</h4><p>Double monnaie gérée nativement, taux de change paramétrable.</p></div>
-      <div class="fcard reveal"><span class="ic">${ICON.phoneM}</span><h4>Mobile money</h4><p>M-Pesa, Airtel Money, Orange Money : là où l'argent circule vraiment.</p></div>
-      <div class="fcard reveal"><span class="ic">${ICON.school}</span><h4>Formation & suivi</h4><p>Prise en main, formateurs relais, support WhatsApp jusqu'à l'autonomie.</p></div>
-    </div>
-  </div></section>
+  ${methodSection(true)}
 
   <section style="padding-top:0"><div class="wrap">${teamBand()}</div></section>
 
@@ -371,6 +371,74 @@ function finalCta() {
     <h2>Construisons une économie plus <span class="serif">résiliente</span>.</h2>
     <p>Un projet, un programme à outiller, une microfinance à digitaliser, une équipe à former ? Parlons-en.</p>
     <div class="btn-row" style="justify-content:center"><a class="btn btn-wa" href="${waLink("Bonjour Ubora, je souhaite échanger sur un projet.")}" target="_blank" rel="noopener">Écrire sur WhatsApp</a><a class="btn btn-glass" href="#/contact">Formulaire de contact</a></div></div>`;
+}
+
+/* ---------- Méthodologie (accueil + page AVEC) ---------- */
+function methodSection(band) {
+  return `<section class="${band ? "band" : ""}" id="methode"><div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Notre méthodologie</span><h2>${esc(METHODE.nom)} : <span class="serif">${esc(METHODE.accroche)}</span></h2>
+      <p class="lead">${esc(METHODE.intro)}</p></div>
+    <ol class="steps-grid">${METHODE.etapes.map((e, i) => `<li class="reveal">
+      <span class="step-n">${String(i + 1).padStart(2, "0")}</span>
+      <h4>${esc(e.titre)}</h4><p>${esc(e.texte)}</p>
+      <p class="why"><b>Pourquoi en RDC</b>${esc(e.pourquoi)}</p></li>`).join("")}</ol>
+  </div></section>`;
+}
+
+/* ---------- La passerelle AVEC → institution financière ---------- */
+function bridge() {
+  const etapes = [["Le groupe", "15 à 30 membres, épargne hebdomadaire, crédits internes"], ["AKIBA", "Comptes tenus sur téléphone, hors ligne, transparents"], ["Historique", "Régularité et remboursements traduits en indicateurs"], ["Financement", "IMF, COOPEC ou banque : crédit accordé et suivi"]];
+  return `<ol class="bridge">${etapes.map((e, i) => `<li><span class="bn">${i + 1}</span><div><b>${e[0]}</b><span>${e[1]}</span></div></li>`).join("")}</ol>`;
+}
+
+function pageAvec() {
+  return pageHead({
+    eyebrow: "Approche phare", title: 'Du cahier au <span class="serif">financement</span> : notre appui aux AVEC.',
+    crumbs: [["Appui aux AVEC"]],
+    lead: "Les Associations Villageoises d'Épargne et de Crédit sont la porte d'entrée de millions de Congolais vers les services financiers. Nous les accompagnons de leur constitution jusqu'à leur reconnaissance par une institution financière.",
+    extra: `<div class="btn-row" style="margin-top:28px"><a class="btn btn-lime" href="#/contact?sujet=${encodeURIComponent("Appui aux AVEC")}">Faire accompagner nos groupes ${ICON.arrow}</a><a class="btn btn-glass" href="#/solutions/akiba">Découvrir AKIBA</a></div>`
+  }) + `
+  <section><div class="wrap two" style="align-items:start">
+    <div><span class="eyebrow">Ce qu'est une AVEC</span>
+      <h2 style="font-size:clamp(26px,3.2vw,38px);margin:14px 0 16px">Une banque de village, gérée par ses membres.</h2>
+      <p class="lead">${esc(AVEC.definition)}</p>
+      <div class="for" style="margin-top:20px"><span>15 à 30 membres</span><span>Cycle de 9 à 12 mois</span><span>Fonds social</span><span>Majorité de femmes</span></div>
+    </div>
+    <div class="panel"><span class="eyebrow">Le constat en RDC</span>
+      <ul class="constats">${AVEC.constats.map(([t, d]) => `<li><b>${esc(t)}</b><span>${esc(d)}</span></li>`).join("")}</ul>
+    </div>
+  </div></section>
+
+  ${methodSection(true)}
+
+  <section><div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Digitalisation</span><h2>Ce que change le passage à <span class="serif">AKIBA</span>.</h2>
+      <p class="lead">Le groupe garde ses règles et ses habitudes de réunion. Seule la tenue des comptes change, et elle devient vérifiable par tous.</p></div>
+    <div class="two" style="align-items:center">
+      <div class="table-wrap"><table class="compare">
+        <thead><tr><th></th><th>Avec le cahier</th><th>Avec AKIBA</th></tr></thead>
+        <tbody>${AVEC.avantApres.map(([q, a, b]) => `<tr><th scope="row">${esc(q)}</th><td>${esc(a)}</td><td class="ok">${esc(b)}</td></tr>`).join("")}</tbody>
+      </table></div>
+      <div class="screen"><span class="glow g1"></span>${mockAkiba()}<span class="screen-note">Données d'exemple</span></div>
+    </div>
+    ${trainBox(sol("akiba"))}
+  </div></section>
+
+  <section class="band"><div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Passerelle financière</span><h2>Transformer la discipline d'un groupe en <span class="serif">accès au crédit</span>.</h2>
+      <p class="lead">Un groupe qui épargne depuis trois ans reste invisible pour une banque s'il ne peut rien prouver. Notre rôle est de rendre cette régularité lisible, des deux côtés du guichet : nous outillons aussi les institutions financières avec Ubora Fin.</p></div>
+    ${bridge()}
+    <div class="sol-grid" style="margin-top:44px">${["akiba", "ubora-fin"].map(id => solCard(sol(id))).join("")}</div>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Avec qui nous travaillons</span><h2>Trois portes d'entrée, <span class="serif">un</span> même dispositif.</h2></div>
+    <div class="field-grid" style="grid-template-columns:repeat(3,1fr)">
+      ${AVEC.pourQui.map(([t, d, h]) => `<a class="fcard reveal" href="${h}" style="text-decoration:none;color:inherit"><span class="ic">${ICON.users}</span><h4>${esc(t)}</h4><p>${esc(d)}</p><span class="link">En savoir plus ${ICON.arrow}</span></a>`).join("")}
+    </div>
+  </div></section>
+
+  <section style="padding-top:0"><div class="wrap">${finalCta()}</div></section>`;
 }
 
 function pageAbout() {
@@ -420,7 +488,7 @@ function pageServices() {
         <header><h2>${a.titre}</h2><span class="muted">Outils : ${a.solutions.map(id => `<a class="link" href="#/solutions/${id}">${esc(sol(id).nom)}</a>`).join(" · ")}</span></header>
         ${a.services.map(id => { const s = svc(id); return `<article class="svc" id="${s.id}"><span class="ic">${ICON[s.ico]}</span><div>
           <h3>${s.titre}</h3><p>${s.texte}</p><ul class="ticks">${s.points.map(p => `<li>${p}</li>`).join("")}</ul>
-          <div class="for">${s.pour.map(p => `<span>${p}</span>`).join("")}</div></div></article>`; }).join("")}
+          <div class="for">${s.pour.map(p => `<span>${p}</span>`).join("")}</div>${s.lien ? `<div class="btn-row" style="margin-top:18px"><a class="btn btn-primary btn-sm" href="${s.lien}">Voir notre appui aux AVEC ${ICON.arrow}</a></div>` : ""}</div></article>`; }).join("")}
       </div>`).join("")}</div>
   </div></section>
   <section style="padding-top:0"><div class="wrap">${finalCta()}</div></section>`;
@@ -870,7 +938,7 @@ $("#toTop").addEventListener("click", () => scrollTo({ top: 0, behavior: "smooth
 /* ==========================================================================
    ROUTEUR
    ========================================================================== */
-const TITLES = { "": "Accueil", "a-propos": "À propos", services: "Expertises", solutions: "Solutions", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", diagnostic: "Diagnostic PME", contact: "Contact", rediger: "Espace équipe", admin: "Administration" };
+const TITLES = { "": "Accueil", "a-propos": "À propos", avec: "Appui aux AVEC", services: "Expertises", solutions: "Solutions", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", diagnostic: "Diagnostic PME", contact: "Contact", rediger: "Espace équipe", admin: "Administration" };
 function route() {
   const raw = location.hash.replace(/^#\/?/, "");
   const [pathPart, anchor] = raw.split("#");
@@ -881,6 +949,7 @@ function route() {
   switch (base) {
     case "": html = pageHome(); break;
     case "a-propos": html = pageAbout(); break;
+    case "avec": html = pageAvec(); break;
     case "services": html = pageServices(); break;
     case "solutions": html = sub ? pageSolution(sub) : pageSolutions(); break;
     case "formations": html = pageFormations(params); break;

@@ -23,17 +23,17 @@ const CONFIG = {
 
 /* Messages de la bande déroulante (en plus des 4 dernières actualités) */
 const TICKER_MESSAGES = [
+  ["Appui aux AVEC : du cahier au numérique, jusqu'à la banque", "#/avec"],
   ["Diagnostic PME gratuit : évaluez votre entreprise en 3 minutes", "#/diagnostic"],
   ["Formations AKIBA & UboraHub : consultez le calendrier des sessions", "#/formations"],
-  ["UboraHub : la plateforme d'accompagnement des entrepreneurs", "#/solutions/uborahub"],
   ["Nous recrutons : découvrez nos offres d'emploi", "#/carrieres"],
   ["Basés à Lubumbashi, nous intervenons partout en RDC", "#/contact"]
 ];
 
 /* ---------- Les 4 axes d'intervention (regroupent les services) ---------- */
 const AXES = [
-  { id: "finance", titre: "Finance inclusive", accroche: "Rendre l'épargne et le crédit accessibles à tous.",
-    services: ["inclusion"], solutions: ["akiba", "ubora-fin"] },
+  { id: "finance", titre: "Épargne communautaire & finance inclusive", accroche: "Des AVEC solides, digitalisées, puis connectées au financement formel.",
+    services: ["avec", "inclusion"], solutions: ["akiba", "ubora-fin"] },
   { id: "entreprises", titre: "Entreprises & entrepreneurs", accroche: "Des PME structurées, outillées et finançables.",
     services: ["pme", "entrepreneuriat", "outils"], solutions: ["ubora-pme"] },
   { id: "agri", titre: "Agriculture & filières", accroche: "Des coopératives fortes et des filières qui créent de la valeur.",
@@ -42,13 +42,71 @@ const AXES = [
     services: ["conseil", "projets", "processus", "formation"], solutions: ["uborahub"] }
 ];
 
+/* ---------- Notre méthodologie d'accompagnement ----------
+   Utilisée sur l'accueil et sur la page AVEC. « pourquoi » explique
+   ce que cette étape règle dans le contexte congolais. */
+const METHODE = {
+  nom: "La méthode Ubora",
+  accroche: "Six temps, du terrain jusqu'au financement.",
+  intro: "Nos concurrents s'arrêtent souvent à la formation, ou livrent un logiciel sans accompagnement. Nous faisons les deux, dans l'ordre, et nous restons jusqu'à ce que le groupe ou l'entreprise tienne sans nous.",
+  etapes: [
+    { titre: "Écouter", texte: "Diagnostic sur place, dans la langue des membres, avec les autorités locales et les structures déjà présentes.",
+      pourquoi: "En RDC, un dispositif conçu depuis un bureau ne survit pas au premier cycle. Nous partons de ce qui existe déjà." },
+    { titre: "Structurer", texte: "Statuts, règlement intérieur, comité élu, rôles précis, caisse et fonds social bien séparés.",
+      pourquoi: "La majorité des conflits viennent de règles non écrites et de rôles confus, pas du manque d'argent." },
+    { titre: "Former", texte: "Éducation financière pratique, gestion du crédit, et formation de formateurs relais issus de la communauté.",
+      pourquoi: "Le relais local reste après notre départ : c'est lui qui forme les cycles suivants." },
+    { titre: "Digitaliser", texte: "Passage du cahier à AKIBA : saisie hors ligne, calculs automatiques, transparence pour tous les membres.",
+      pourquoi: "Réseau intermittent, double monnaie, faible alphabétisation : l'outil est conçu pour ces contraintes, pas contre elles." },
+    { titre: "Connecter", texte: "L'historique d'épargne et de remboursement devient un dossier crédible auprès des IMF, COOPEC et banques partenaires.",
+      pourquoi: "Un groupe discipliné reste invisible pour le système financier tant que personne ne traduit sa régularité en preuves." },
+    { titre: "Suivre", texte: "Visites de contrôle, indicateurs partagés, support WhatsApp, jusqu'à l'autonomie complète.",
+      pourquoi: "L'abandon après la formation est la première cause d'échec des programmes d'inclusion financière." }
+  ]
+};
+
+/* ---------- Page « Appui aux AVEC » ---------- */
+const AVEC = {
+  definition: "Une AVEC (Association Villageoise d'Épargne et de Crédit) réunit 15 à 30 personnes qui épargnent ensemble chaque semaine, s'accordent de petits crédits et partagent la caisse à la fin du cycle, généralement après 9 à 12 mois. Un fonds social couvre les coups durs : maladie, deuil, scolarité.",
+  constats: [
+    ["Environ un adulte sur quatre", "dispose d'un compte dans une institution financière formelle en RDC (Global Findex). Pour les autres, l'AVEC est souvent le seul service financier accessible."],
+    ["Le cahier se perd", "Registres abîmés, calculs à la main, erreurs de report : la confiance s'effrite et les conflits apparaissent en fin de cycle."],
+    ["Aucune trace exploitable", "Même après des années de discipline, le groupe n'a rien à présenter à une banque ou à une IMF."],
+    ["Un suivi qui s'arrête", "Quand le projet financé se termine, l'accompagnement disparaît et beaucoup de groupes se dispersent."]
+  ],
+  avantApres: [
+    ["Tenue des comptes", "Cahier manuscrit, recopié à chaque réunion", "Saisie sur téléphone, hors ligne, sauvegardée"],
+    ["Calcul du partage", "Plusieurs heures, contestations fréquentes", "Instantané, au prorata de l'épargne de chacun"],
+    ["Transparence", "Seul le trésorier connaît les soldes", "Chaque membre voit sa situation"],
+    ["Suivi des prêts", "Retards repérés tard", "Échéancier et alertes automatiques"],
+    ["Historique financier", "Inexistant hors du groupe", "Exportable et présentable à une institution financière"],
+    ["Pilotage d'un programme", "Collecte de données lente et incomplète", "Tableau de bord consolidé pour l'ONG ou le bailleur"]
+  ],
+  passerelle: [
+    ["1 à 2 cycles documentés", "Le groupe utilise AKIBA et constitue un historique fiable de cotisations, de prêts et de remboursements."],
+    ["Score de discipline", "Régularité, taux de remboursement et gouvernance sont résumés en indicateurs lisibles par un financier."],
+    ["Dossier et mise en relation", "Nous préparons le dossier avec le groupe et l'accompagnons auprès des IMF, COOPEC et banques partenaires."],
+    ["Crédit et suivi", "Le crédit finance des activités génératrices de revenus ; nous suivons les remboursements avec le groupe et l'institution."]
+  ],
+  pourQui: [
+    ["Groupes et réseaux d'AVEC", "Constitution, formation, digitalisation et accès au crédit.", "#/contact"],
+    ["ONG et programmes d'inclusion", "Déploiement à grande échelle, suivi des indicateurs et rapports aux bailleurs.", "#/solutions/uborahub"],
+    ["IMF, COOPEC et banques", "Un portefeuille de groupes déjà structurés et un système de gestion adapté.", "#/solutions/ubora-fin"]
+  ]
+};
+
 /* ---------- Services ---------- */
 const SERVICES = [
-  { id:"inclusion", ico:"finance", titre:"Inclusion financière",
-    court:"Épargne communautaire, éducation financière et accès au crédit pour les ménages et micro-entrepreneurs.",
-    texte:"Nous aidons les personnes exclues du système bancaire, en particulier les femmes et les jeunes, à épargner, à gérer leur argent et à accéder au crédit. Nous passons pour cela par les groupes d'épargne, le mobile money et des partenariats avec la microfinance.",
-    points:["Création et suivi de groupes AVEC / VSLA","Éducation financière pratique","Digitalisation avec AKIBA","Connexion aux institutions de microfinance","Épargne et paiements mobile money","Suivi de la discipline de remboursement"],
-    pour:["Femmes entrepreneures","Jeunes","Ménages ruraux","Micro-commerçants"] },
+  { id:"avec", ico:"coins", titre:"Appui aux AVEC (groupes d'épargne)", lien:"#/avec",
+    court:"Créer, former, digitaliser et accompagner les Associations Villageoises d'Épargne et de Crédit, jusqu'à leur ouvrir l'accès au financement formel.",
+    texte:"L'AVEC est le premier service financier accessible dans la plupart des communautés congolaises. Nous accompagnons les groupes sur tout leur cycle : mise en place et gouvernance, éducation financière, tenue des comptes avec AKIBA, puis valorisation de leur historique auprès des institutions financières. C'est notre cœur de métier.",
+    points:["Sensibilisation et constitution des groupes","Statuts, règlement intérieur et gouvernance","Éducation financière en langues locales","Formation des trésoriers et de formateurs relais","Digitalisation des comptes avec AKIBA","Passerelle vers les IMF, COOPEC et banques"],
+    pour:["Groupes AVEC / VSLA","Mutuelles de solidarité","Femmes et jeunes","ONG et programmes d'inclusion"] },
+  { id:"inclusion", ico:"finance", titre:"Inclusion financière & microfinance",
+    court:"Éducation financière, mobile money et outillage des petites institutions financières qui servent la base de la pyramide.",
+    texte:"Au-delà des groupes d'épargne, nous travaillons avec les institutions qui financent les populations mal servies : COOPEC, petites IMF, programmes de crédit. Nous renforçons leurs pratiques et leur système de gestion pour qu'elles prêtent davantage, et mieux.",
+    points:["Éducation financière des ménages et micro-entrepreneurs","Paiements et épargne par mobile money","Système de gestion Ubora Fin pour IMF et COOPEC","Suivi du portefeuille et des impayés","Produits adaptés aux groupes d'épargne","Conseil en inclusion financière"],
+    pour:["COOPEC & petites IMF","Programmes de crédit","Ménages et micro-entrepreneurs"] },
   { id:"pme", ico:"pme", titre:"Structuration & digitalisation des PME",
     court:"Formalisation, organisation interne, outils numériques de gestion : bâtir une entreprise solide et finançable.",
     texte:"Une PME bien structurée vend mieux, recrute mieux et convainc les financeurs. Nous intervenons du diagnostic à la mise en place des outils, avec des solutions adaptées au contexte congolais (CDF/USD, mobile money, connectivité intermittente).",
