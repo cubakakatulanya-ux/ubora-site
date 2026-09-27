@@ -52,13 +52,14 @@
 [hidden] { display: none !important; }
 html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 html, body { overflow-x: clip; }
-body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.62; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--f-body); font-size: 17px; line-height: 1.62; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; text-rendering: optimizeLegibility; font-kerning: normal; font-optical-sizing: auto; font-variant-ligatures: common-ligatures; }
 /* le menu mobile bloque le défilement de la page, sans casser l'en-tête collant */
 html:has(body.menu-open) { overflow: hidden; }
 img { max-width: 100%; display: block; }
 a { color: var(--navy); text-underline-offset: 3px; }
 h1, h2, h3, h4 { font-family: var(--f-display); line-height: 1.1; margin: 0; letter-spacing: -.02em; font-weight: 700; text-wrap: balance; }
 p { margin: 0; }
+p, li, dd { text-wrap: pretty; }
 ul, ol { margin: 0; }
 :focus-visible { outline: 3px solid var(--lime); outline-offset: 3px; border-radius: 8px; }
 ::selection { background: var(--lime); color: #06203F; }
@@ -67,7 +68,7 @@ ul, ol { margin: 0; }
 .wrap { max-width: 1220px; margin: 0 auto; padding-inline: 24px; }
 .wrap.narrow { max-width: 860px; }
 @media (max-width: 600px) { .wrap { padding-inline: 18px; } }
-section { padding-block: clamp(64px, 8vw, 112px); }
+section { padding-block: clamp(56px, 8vw, 112px); }
 section.tight-top { padding-top: 0; }
 .band { background: var(--surface); border-block: 1px solid var(--line); }
 
@@ -217,7 +218,7 @@ section.tight-top { padding-top: 0; }
 @media (max-width: 1080px) { .hero-grid { grid-template-columns: 1fr; gap: 56px; } }
 .pill { display: inline-flex; align-items: center; gap: 10px; padding: 6px 14px 6px 7px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .16); background: rgba(255, 255, 255, .06); font-size: 13.5px; color: var(--deep-ink); }
 .pill b { padding: 3px 9px; border-radius: 99px; background: var(--lime); color: #06203F; font-family: var(--f-mono); font-size: 10.5px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; }
-.hero h1 { margin-top: 24px; font-size: clamp(38px, 5.4vw, 70px); font-weight: 800; line-height: 1.02; letter-spacing: -.045em; }
+.hero h1 { margin-top: 24px; font-size: clamp(34px, 5.4vw, 70px); font-weight: 800; line-height: 1.04; letter-spacing: -.045em; }
 .hero h1 .serif { font-size: 1.04em; }
 .hero .lead { margin-top: 24px; }
 .hero .btn-row { margin-top: 34px; }
@@ -363,7 +364,7 @@ section.tight-top { padding-top: 0; }
 
 /* ---------- En-tête des pages ---------- */
 .page-head { padding-block: clamp(52px, 7vw, 92px) clamp(56px, 7vw, 88px); }
-.page-head h1 { max-width: 20ch; margin: 16px 0 20px; font-size: clamp(34px, 5vw, 62px); font-weight: 800; line-height: 1.04; letter-spacing: -.04em; }
+.page-head h1 { max-width: 20ch; margin: 16px 0 20px; font-size: clamp(32px, 5vw, 62px); font-weight: 800; line-height: 1.05; letter-spacing: -.04em; }
 .page-head .btn-row { margin-top: 30px; }
 .crumbs { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; font-size: 13.5px; color: var(--deep-muted); }
 .crumbs a { color: var(--deep-muted); text-decoration: none; }
@@ -492,7 +493,7 @@ table.compare tbody tr:last-child > * { border-bottom: 0; }
 .row-card h3 { margin: 6px 0 8px; font-size: 20px; letter-spacing: -.02em; }
 .datebox { padding: 12px 8px; border-radius: 14px; background: #E4ECF8; color: var(--navy); font-family: var(--f-display); text-align: center; }
 :root[data-theme="dark"] .datebox { background: #152A4D; }
-.datebox b { display: block; font-size: 34px; line-height: 1; letter-spacing: -.04em; }
+.datebox b { display: block; font-variant-numeric: tabular-nums; font-size: 34px; line-height: 1; letter-spacing: -.04em; }
 .datebox span { display: block; margin-top: 4px; font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
 @media (max-width: 760px) { .datebox { display: flex; gap: 10px; align-items: baseline; width: max-content; padding: 8px 14px; } .datebox b { font-size: 24px; } }
 .tags { display: flex; flex-wrap: wrap; gap: 6px; }
@@ -660,7 +661,7 @@ main { min-height: 60vh; }
 .kpi-card { display: grid; gap: 4px; padding: 22px; border-radius: var(--r-lg); border: 1px solid var(--line); background: var(--surface); color: var(--ink); text-align: left; font: inherit; cursor: pointer; transition: border-color .2s, box-shadow .2s; }
 .kpi-card:hover { border-color: var(--navy); box-shadow: var(--shadow); }
 .kpi-card span { font-size: 14.5px; color: var(--muted); }
-.kpi-card b { font-family: var(--f-display); font-size: 38px; letter-spacing: -.03em; line-height: 1.05; }
+.kpi-card b { font-variant-numeric: tabular-nums; font-family: var(--f-display); font-size: 38px; letter-spacing: -.03em; line-height: 1.05; }
 .kpi-card small { font-size: 13px; color: var(--muted); }
 .admin-help { display: grid; gap: 12px; }
 .admin-tools { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 20px; }
@@ -689,3 +690,15 @@ main { min-height: 60vh; }
 .btn { max-width: 100%; }
 .menu > li.m-cta > a.btn { justify-content: center; background: var(--lime); color: #06203F; border-radius: 999px; font-family: var(--f-display); font-size: 16px; }
 body.menu-open .wa-float, body.menu-open .chat-fab, body.menu-open .chat, body.menu-open .to-top { display: none; }
+
+/* ---------- Finitions sur petit écran (en dernier pour primer) ---------- */
+@media (max-width: 600px) {
+  body { font-size: 16.5px; }
+  .grid-2, .grid-3, .grid-4, .poles, .tools, .list-rows, .model, .faq { gap: 12px; }
+  .pole, .tool, .fcard, .steps li, .value, .svc, .panel { padding: 22px; }
+  .pole.feature { padding: 26px; }
+  .parcours li, .row-card { padding: 20px; }
+  .sec-head { margin-bottom: 28px; }
+  .fcard p, .pole p, .tool p, .parcours p, .steps p, .constats span, .boite span { hyphens: auto; -webkit-hyphens: auto; }
+}
+@media (max-width: 480px) { .btn-row > .btn { flex: 1 1 auto; } }

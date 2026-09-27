@@ -9,6 +9,6 @@
 
 /* Thème choisi par le visiteur. */
 try {
-  var t = JSON.parse(localStorage.getItem("ubora_theme"));
+  var t = JSON.parse(localStorage.getItem("ubora_theme_2026"));
   if (t === "dark" || t === "light") document.documentElement.dataset.theme = t;
 } catch (e) {}

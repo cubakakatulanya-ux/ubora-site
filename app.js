@@ -866,7 +866,7 @@ function boot() {
   });
   $("#themeBtn").addEventListener("click", () => {
     const r = document.documentElement, next = r.dataset.theme === "dark" ? "light" : "dark";
-    r.dataset.theme = next; store.set("ubora_theme", next);
+    r.dataset.theme = next; store.set("ubora_theme_2026", next);
   });
   $("#newsForm").addEventListener("submit", async e => {
     e.preventDefault();
