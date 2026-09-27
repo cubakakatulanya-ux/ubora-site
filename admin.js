@@ -7,9 +7,9 @@
 
 const ONGLETS = [
   ["tableau", "Tableau de bord"], ["messages", "Messages"], ["actualites", "Actualités"],
-  ["formations", "Formations"], ["offres", "Offres d'emploi"], ["abonnes", "Abonnés"], ["questions", "Questions"]
+  ["formations", "Formations"], ["offres", "Offres d'emploi"], ["realisations", "Réalisations"], ["equipe", "Équipe"], ["abonnes", "Abonnés"], ["questions", "Questions"]
 ];
-const SINGULIER = { actualites: "une actualité", formations: "une formation", offres: "une offre" };
+const SINGULIER = { actualites: "une actualité", formations: "une formation", offres: "une offre", equipe: "un membre de l'équipe", realisations: "une réalisation" };
 let adminState = { onglet: "tableau", filtre: "a-traiter" };
 
 const slugify = t => (t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 70);
@@ -87,6 +87,8 @@ async function renderTableau(pane, user) {
     ["actualites", "Actualités", c.actualites, "publiées ou en brouillon"],
     ["formations", "Formations", c.formations, "sessions enregistrées"],
     ["offres", "Offres d'emploi", c.offres, "offres enregistrées"],
+    ["realisations", "Réalisations", c.realisations, "publiées ou en brouillon"],
+    ["equipe", "Équipe", c.equipe, "membres présentés"],
     ["abonnes", "Abonnés", c.abonnes, "à la lettre d'information"],
     ["questions", "Questions sans réponse", c.questionsSansReponse, "posées à l'assistant"]
   ];
@@ -95,7 +97,9 @@ async function renderTableau(pane, user) {
       <ul class="checks"><li>Une actualité, une formation ou une offre décochée « Visible sur le site » reste enregistrée comme brouillon.</li>
       <li>Une formation dont la date est passée disparaît du calendrier public.</li>
       <li>Une offre d'emploi disparaît du site le lendemain de sa date limite.</li>
-      <li>Les demandes de boîte à outils arrivent dans les messages, avec l'objet « Boîte à outils ».</li></ul></div>`;
+      <li>Les demandes de boîte à outils arrivent dans les messages, avec l'objet « Boîte à outils ».</li>
+      <li>Les photos sont réduites automatiquement avant l'envoi : inutile de les retoucher.</li>
+      <li>Équipe et réalisations s'affichent du plus petit au plus grand « ordre d'affichage ».</li></ul></div>`;
   $$(".kpi-card").forEach(b => b.onclick = () => { adminState.onglet = b.dataset.k; renderDash(pane, user); });
 }
 
@@ -158,11 +162,12 @@ async function renderListe(kind) {
   const el = $("#adminBody");
   el.innerHTML = `<div class="empty">Chargement…</div>`;
   const rows = await UboraDB.listAll(kind);
-  const sous = r => kind === "actualites" ? `${fmtDate(r.date)} · ${r.categorie}` : kind === "formations" ? `${fmtDate(r.date)} · ${r.mode} · ${r.lieu}` : `${r.type} · ${r.lieu} · jusqu'au ${fmtDate(r.cloture)}`;
+  const sous = r => kind === "actualites" ? `${fmtDate(r.date)} · ${r.categorie}` : kind === "formations" ? `${fmtDate(r.date)} · ${r.mode} · ${r.lieu}`
+    : kind === "equipe" ? r.fonction : kind === "realisations" ? [poleReal(r.pole).nom, r.periode, r.lieu].filter(Boolean).join(" · ") : `${r.type} · ${r.lieu} · jusqu'au ${fmtDate(r.cloture)}`;
   el.innerHTML = `<div class="admin-tools"><button class="btn btn-primary" id="adNew">Ajouter ${SINGULIER[kind]}</button></div>
     <div id="adForm"></div>
     ${rows.length ? `<div class="list-rows">${rows.map(r => `<article class="row-card two-cols">
-      <div><div class="tags">${r._publie ? '<span class="tag tag-ok">En ligne</span>' : '<span class="tag">Brouillon</span>'}</div><h3>${esc(r.titre)}</h3><div class="meta-line"><span>${esc(sous(r))}</span></div></div>
+      <div><div class="tags">${r._publie ? '<span class="tag tag-ok">En ligne</span>' : '<span class="tag">Brouillon</span>'}</div><h3>${esc(r.titre || r.nom)}</h3><div class="meta-line"><span>${esc(sous(r))}</span></div></div>
       <div class="stack"><button class="btn btn-ghost btn-sm" data-edit="${r._id}">Modifier</button><button class="btn btn-ghost btn-sm danger" data-del="${r._id}">Supprimer</button></div>
     </article>`).join("")}</div>` : `<div class="empty"><b>Rien pour le moment.</b><p>Cliquez sur « Ajouter » pour publier ${SINGULIER[kind]}.</p></div>`}`;
   $("#adNew").onclick = () => renderForm(kind, null);
@@ -175,6 +180,25 @@ async function renderListe(kind) {
 }
 
 function champ(label, inner, full) { return `<label${full ? ' class="full"' : ""}>${label}${inner}</label>`; }
+function champImage(label, url) {
+  return `<div class="full"><span class="lbl">${label}</span>
+    <div class="apercu"><img alt="" id="f-apercu"${url ? ` src="${esc(url)}"` : " hidden"}>
+      <input id="f-image" type="file" accept="image/jpeg,image/png,image/webp">
+      ${url ? `<label class="check"><input type="checkbox" id="f-sansimage"> Retirer l'image</label>` : ""}</div></div>`;
+}
+/* Réduit la photo dans le navigateur (1 200 pixels au plus, JPEG) avant l'envoi */
+async function preparerImage(file, max = 1200) {
+  if (!/^image\/(jpeg|png|webp)$/.test(file.type)) throw new Error("choisissez une image JPG, PNG ou WebP.");
+  const url = URL.createObjectURL(file);
+  try {
+    const img = await new Promise((ok, ko) => { const i = new Image(); i.onload = () => ok(i); i.onerror = () => ko(new Error("image illisible.")); i.src = url; });
+    const k = Math.min(1, max / Math.max(img.naturalWidth, img.naturalHeight));
+    const c = document.createElement("canvas");
+    c.width = Math.round(img.naturalWidth * k); c.height = Math.round(img.naturalHeight * k);
+    const ctx = c.getContext("2d"); ctx.fillStyle = "#fff"; ctx.fillRect(0, 0, c.width, c.height); ctx.drawImage(img, 0, 0, c.width, c.height);
+    return await new Promise(ok => c.toBlob(ok, "image/jpeg", 0.86));
+  } finally { URL.revokeObjectURL(url); }
+}
 function renderForm(kind, row) {
   const el = $("#adForm"), r = row || {};
   const cats = ["Terrain", "Programme", "Coopératives", "Événement", "Partenariat", "Formation", "Recrutement"];
@@ -206,6 +230,23 @@ function renderForm(kind, row) {
     ${champ("Résumé du poste", `<textarea id="f-resume" rows="3" maxlength="500">${esc(r.resume || "")}</textarea>`, true)}
     ${champ("Missions : une par ligne", `<textarea id="f-missions" rows="5">${esc((r.missions || []).join("\n"))}</textarea>`, true)}
     ${champ("Profil recherché : un élément par ligne", `<textarea id="f-profil" rows="5">${esc((r.profil || []).join("\n"))}</textarea>`, true)}`;
+  if (kind === "equipe") body = `
+    ${champ("Nom et prénom", `<input id="f-titre" value="${esc(r.nom || "")}" required maxlength="120">`)}
+    ${champ("Fonction", `<input id="f-fonction" value="${esc(r.fonction || "")}" required maxlength="120">`)}
+    ${champ("Présentation courte (facultatif)", `<textarea id="f-bio" rows="3" maxlength="600">${esc(r.bio || "")}</textarea>`, true)}
+    ${champ("Profil LinkedIn (facultatif)", `<input id="f-linkedin" type="url" value="${esc(r.linkedin || "")}" maxlength="300" placeholder="https://www.linkedin.com/in/…">`)}
+    ${champ("Ordre d'affichage", `<input id="f-ordre" type="number" min="0" max="999" value="${r.ordre ?? 100}">`)}
+    ${champImage("Photo (carrée de préférence)", r.photo)}`;
+  if (kind === "realisations") body = `
+    ${champ("Titre", `<input id="f-titre" value="${esc(r.titre || "")}" required maxlength="160">`, true)}
+    ${champ("Pôle", `<select id="f-pole">${[...POLES.map(p => [p.id, p.nom]), ["conseil", "Conseil et programmes"]].map(([v, l]) => `<option value="${v}"${v === r.pole ? " selected" : ""}>${l}</option>`).join("")}</select>`)}
+    ${champ("Période", `<input id="f-periode" value="${esc(r.periode || "")}" maxlength="40" placeholder="Par exemple : 2024-2025">`)}
+    ${champ("Lieu", `<input id="f-lieu" value="${esc(r.lieu || "")}" maxlength="120" placeholder="Province, ville ou territoire">`)}
+    ${champ("Partenaire ou commanditaire", `<input id="f-partenaire" value="${esc(r.partenaire || "")}" maxlength="160">`)}
+    ${champ("Ce que nous avons fait", `<textarea id="f-resume" rows="4" maxlength="1200">${esc(r.resume || "")}</textarea>`, true)}
+    ${champ("Résultats : un par ligne, avec des chiffres si possible", `<textarea id="f-resultats" rows="4">${esc((r.resultats || []).join("\n"))}</textarea>`, true)}
+    ${champ("Ordre d'affichage", `<input id="f-ordre" type="number" min="0" max="999" value="${r.ordre ?? 100}">`)}
+    ${champImage("Photo (format paysage de préférence)", r.image)}`;
   el.innerHTML = `<div class="panel admin-form">
     <h3>${row ? "Modifier" : "Ajouter " + SINGULIER[kind]}</h3>
     <form class="form" id="adSave">${body}
@@ -214,13 +255,33 @@ function renderForm(kind, row) {
       <div class="full btn-row"><button class="btn btn-primary" type="submit">Enregistrer</button><button class="btn btn-ghost" type="button" id="adCancel">Annuler</button></div>
     </form></div>`;
   $("#adCancel").onclick = () => { el.innerHTML = ""; };
+  const fi = $("#f-image");
+  if (fi) fi.onchange = () => { const f = fi.files[0], im = $("#f-apercu"); if (f) { im.src = URL.createObjectURL(f); im.hidden = false; } };
   $("#adSave").addEventListener("submit", async e => {
     e.preventDefault();
     const v = id => { const n = $("#f-" + id); return n ? n.value.trim() : ""; };
     const titre = v("titre"), err = $("#f-err");
-    if (!titre) { err.hidden = false; err.textContent = "Le titre est obligatoire."; return; }
+    const faute = t => { err.hidden = false; err.textContent = t; };
+    if (!titre) return faute(kind === "equipe" ? "Le nom est obligatoire." : "Le titre est obligatoire.");
+    if (kind === "equipe" && !v("fonction")) return faute("Indiquez la fonction.");
+    if (kind === "equipe" && v("linkedin") && !/^https:\/\//.test(v("linkedin"))) return faute("Le lien LinkedIn doit commencer par https://");
     const publie = $("#f-publie").checked;
     let obj;
+    if (kind === "equipe" || kind === "realisations") {
+      let image = kind === "equipe" ? row?.photo : row?.image;
+      if ($("#f-sansimage")?.checked) image = "";
+      const fichier = fi && fi.files[0];
+      if (fichier) {
+        const b = e.target.querySelector("button[type=submit]"); b.disabled = true; b.textContent = "Envoi de la photo…";
+        try {
+          const up = await UboraDB.uploadImage(await preparerImage(fichier), kind);
+          if (!up.ok) throw new Error(up.message);
+          image = up.url;
+        } catch (x) { b.disabled = false; b.textContent = "Enregistrer"; return faute("La photo n'a pas pu être envoyée : " + x.message); }
+      }
+      if (kind === "equipe") obj = { nom: titre, fonction: v("fonction"), bio: v("bio"), linkedin: v("linkedin"), ordre: +v("ordre") || 100, photo: image, publie };
+      else obj = { slug: row?.slug || slugify(titre), titre, pole: v("pole"), periode: v("periode"), lieu: v("lieu"), partenaire: v("partenaire"), resume: v("resume"), resultats: lignes($("#f-resultats").value), ordre: +v("ordre") || 100, image, publie };
+    }
     if (kind === "actualites") obj = { slug: row?.slug || slugify(titre), titre, categorie: v("cat"), date: v("date"), extrait: v("extrait"), contenu: lignes($("#f-contenu").value), publie };
     if (kind === "formations") obj = { id: row?.id || slugify(titre + "-" + v("date")), titre, outil: v("outil") || "general", date: v("date"), duree: v("duree"), mode: v("mode"), lieu: v("lieu"), places: +v("places") || 20, public: v("public"), programme: lignes($("#f-programme").value), publie };
     if (kind === "offres") {

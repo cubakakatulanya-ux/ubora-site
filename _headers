@@ -1,6 +1,6 @@
 # En-têtes de sécurité envoyés avec chaque page du site.
 /*
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://uoshpvqdszygezkuhhco.supabase.co wss://uoshpvqdszygezkuhhco.supabase.co https://cloudflareinsights.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://uoshpvqdszygezkuhhco.supabase.co; connect-src 'self' https://uoshpvqdszygezkuhhco.supabase.co wss://uoshpvqdszygezkuhhco.supabase.co https://cloudflareinsights.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests
   Strict-Transport-Security: max-age=31536000; includeSubDomains
   X-Content-Type-Options: nosniff
   X-Frame-Options: DENY
@@ -12,6 +12,10 @@
 /generateur/*
   ! Content-Security-Policy
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+
+# L'espace équipe ne doit pas apparaître dans les moteurs de recherche.
+https://admin.uborardc.com/*
+  X-Robots-Tag: noindex, nofollow
 
 /logo.png
   Cache-Control: public, max-age=604800

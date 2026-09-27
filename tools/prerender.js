@@ -31,11 +31,14 @@ async function chargerBase() {
     return r.json();
   };
   try {
-    const [a, f, o] = await Promise.all([get("site_actualites", "date.desc"), get("site_formations", "date.asc"), get("site_offres", "publie_le.desc")]);
+    const [a, f, o, e, r] = await Promise.all([get("site_actualites", "date.desc"), get("site_formations", "date.asc"), get("site_offres", "publie_le.desc"),
+      get("site_equipe", "ordre.asc,nom.asc"), get("site_realisations", "ordre.asc,created_at.desc")]);
     S.DATA.actualites = a.map(S.UboraDB.mappers.actualites);
     S.DATA.formations = f.map(S.UboraDB.mappers.formations);
     S.DATA.offres = o.map(S.UboraDB.mappers.offres);
-    console.log(`Base : ${a.length} actualité(s), ${f.length} formation(s), ${o.length} offre(s).`);
+    S.DATA.equipe = e.map(S.UboraDB.mappers.equipe);
+    S.DATA.realisations = r.map(S.UboraDB.mappers.realisations);
+    console.log(`Base : ${a.length} actualité(s), ${f.length} formation(s), ${o.length} offre(s), ${e.length} membre(s) de l'équipe, ${r.length} réalisation(s).`);
   } catch (e) {
     console.warn("Base injoignable, pages générées sans le contenu publié :", e.message);
   }
@@ -90,22 +93,25 @@ async function main() {
   const shell = read("tools/shell.html");
   const menu = S.menuHTML(), footer = S.footerHTML(), ticker = S.tickerHTML();
 
-  const chemins = ["/", ...S.POLES.map(p => p.chemin), "/approche", "/a-propos", "/outils", "/conseil", "/formations", "/actualites", "/carrieres", "/contact", "/mentions",
+  const chemins = ["/", ...S.POLES.map(p => p.chemin), "/approche", "/a-propos", "/outils", "/conseil", "/formations", "/actualites", "/realisations", "/equipe", "/carrieres", "/contact", "/mentions",
     ...S.allNews().map(n => "/actualites/" + n.slug)];
   const pages = [];
 
-  for (const chemin of [...chemins, "/admin"]) {
+  const donnees = `<script type="application/json" id="ubora-donnees">${JSON.stringify({ actualites: S.DATA.actualites, formations: S.DATA.formations, offres: S.DATA.offres, equipe: S.DATA.equipe, realisations: S.DATA.realisations }).replace(/</g, String.fromCharCode(92) + "u003c")}</script>`;
+
+  for (const chemin of chemins) {
     const r = S.resolve(chemin, "", "uborardc.com");
     if (r.redirect) continue;
     const canon = S.CONFIG.site + (chemin === "/" ? "/" : chemin);
-    const robots = chemin === "/admin" ? "noindex, nofollow" : "index, follow, max-image-preview:large";
+    const robots = "index, follow, max-image-preview:large";
     const html = shell
       .replace(/{{TITLE}}/g, attr(fine(texte(r.title))))
       .replace(/{{DESC}}/g, attr(fine(texte(r.desc))))
       .replace(/{{CANON}}/g, canon)
       .replace("{{ROBOTS}}", robots)
       .replace("{{OGTYPE}}", chemin.startsWith("/actualites/") ? "article" : "website")
-      .replace("{{JSONLD}}", chemin === "/admin" ? "" : donneesStructurees(chemin, r))
+      .replace("{{JSONLD}}", donneesStructurees(chemin, r))
+      .replace("{{DONNEES}}", () => donnees)
       .replace(/{{VERSION}}/g, version)
       .replace("{{MENU}}", () => S.typoHTML(menu))
       .replace("{{TICKER}}", () => S.typoHTML(ticker))
@@ -113,11 +119,11 @@ async function main() {
       .replace("{{APP}}", () => S.typoHTML(r.html));
     const fichier = chemin === "/" ? "index.html" : chemin.slice(1) + ".html";
     write(fichier, html);
-    if (chemin !== "/admin") pages.push(chemin);
+    pages.push(chemin);
   }
 
   /* Plan du site */
-  const prio = c => c === "/" ? "1.0" : S.POLES.some(p => p.chemin === c) ? "0.9" : c.startsWith("/actualites/") ? "0.6" : "0.7";
+  const prio = c => c === "/" ? "1.0" : S.POLES.some(p => p.chemin === c) ? "0.9" : c === "/realisations" ? "0.8" : c.startsWith("/actualites/") ? "0.6" : "0.7";
   /* seule la date des articles est connue avec certitude ; les autres pages n'en indiquent pas */
   const modif = c => { const n = S.allNews().find(x => "/actualites/" + x.slug === c); return n ? `<lastmod>${n.date}</lastmod>` : ""; };
   write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>
@@ -133,7 +139,7 @@ Disallow: /admin
 Sitemap: ${S.CONFIG.site}/sitemap.xml
 `);
 
-  console.log(`${pages.length + 1} pages générées (version ${version}), sitemap.xml et robots.txt mis à jour.`);
+  console.log(`${pages.length} pages générées (version ${version}), sitemap.xml et robots.txt mis à jour.`);
 }
 
 main().catch(e => { console.error(e); process.exit(1); });

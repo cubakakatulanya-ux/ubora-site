@@ -27,6 +27,7 @@ const CONFIG = {
 const TICKER_MESSAGES = [
   ["Le générateur de business plan est en ligne sur bp.uborardc.com", "https://bp.uborardc.com"],
   ["Groupes d'épargne, ONG, réseaux : demandez notre boîte à outils AVEC", "/avec#boite"],
+  ["Ubora Fin : un fonds de roulement pour les AVEC que nous accompagnons", "/financement#intermediation"],
   ["Ubora Market prépare une plateforme qui relie vendeurs et acheteurs", "/marche"],
   ["Notre siège est à Lubumbashi. Nous travaillons dans toute la RDC", "/contact"]
 ];
@@ -62,7 +63,7 @@ const POLES = [
     nom: "Ubora AVEC", initiales: "Av", couleur: "#23843A",
     carte: "Nous créons, formons et suivons des groupes d'épargne, puis nous les aidons à accéder au crédit.",
     titre: `Des groupes d'épargne solides, et un vrai accès au <span class="serif">crédit</span>.`,
-    lead: "Les Associations Villageoises d'Épargne et de Crédit sont souvent le premier service financier auquel une famille congolaise a accès. Nous les accompagnons de la création du groupe jusqu'à son premier prêt auprès d'une institution financière.",
+    lead: "Les Associations Villageoises d'Épargne et de Crédit sont souvent le premier service financier auquel une famille congolaise a accès. Nous les accompagnons de la création du groupe jusqu'à son premier financement : un prêt d'une institution financière, ou un fonds de roulement apporté par Ubora Fin.",
     contexte: {
       intro: "En ville comme en zone rurale, beaucoup de ménages n'ont ni compte bancaire ni accès au crédit. L'AVEC comble ce vide avec des moyens très simples. Mais la plupart des groupes restent fragiles.",
       constats: [
@@ -77,7 +78,7 @@ const POLES = [
       ["Mettre en place", "Sensibilisation, constitution du groupe, statuts, règlement intérieur, élection du comité.", "Un groupe organisé, avec des règles connues de tous."],
       ["Former", "Modules de formation des membres, éducation financière, formation des animateurs et des relais.", "Des membres qui comprennent ce qu'ils font, et des relais sur place."],
       ["Digitaliser", "Passage du cahier à AKIBA pour les cotisations, les prêts, les remboursements et le partage.", "Des comptes justes, que chaque membre peut vérifier."],
-      ["Connecter", "Présentation de l'historique du groupe aux IMF, aux COOPEC et aux banques partenaires.", "Un premier crédit obtenu à des conditions raisonnables."],
+      ["Financer", "Deux voies : présenter l'historique du groupe aux IMF, aux COOPEC et aux banques, ou lui apporter un fonds de roulement par Ubora Fin, notre branche financière.", "Un groupe qui peut prêter davantage à ses membres, à des conditions raisonnables."],
       ["Suivre et faire grandir", "Supervision, graduation, activités génératrices de revenus, puis regroupement en fédération.", "Des groupes qui durent, et qui se renforcent ensemble."]
     ],
     avec: true,
@@ -211,9 +212,9 @@ const POLES = [
   {
     id: "financement", chemin: "/financement", sousDomaine: "fin.uborardc.com",
     nom: "Ubora Fin", initiales: "Fi", couleur: "#1D5FB8",
-    carte: "Nous préparons les groupes, les coopératives et les PME à emprunter, et nous aidons les institutions qui prêtent.",
+    carte: "Nous préparons les emprunteurs, nous équipons les institutions et nous faisons le lien : des fonds levés auprès des financeurs, prêtés aux AVEC.",
     titre: `Rapprocher ceux qui ont besoin de crédit de ceux qui <span class="serif">prêtent</span>.`,
-    lead: "Le crédit existe en RDC, mais il atteint mal les petits emprunteurs. Nous travaillons des deux côtés : nous préparons les groupes, les coopératives et les PME, et nous équipons les petites institutions financières.",
+    lead: "Le crédit existe en RDC, mais il atteint mal les petits emprunteurs. Nous travaillons des deux côtés, et entre les deux : nous préparons les groupes, les coopératives et les PME, nous équipons les institutions financières, et nous faisons circuler l'argent des unes vers les autres.",
     contexte: {
       intro: "D'un côté, des emprunteurs qui n'ont rien à présenter. De l'autre, des institutions qui n'ont pas les moyens d'étudier de petits dossiers sans y perdre de l'argent. Tant que l'on ne travaille qu'un seul côté, rien ne bouge.",
       constats: [
@@ -229,11 +230,27 @@ const POLES = [
       ["Constituer un historique", "Les cotisations, les prêts et les remboursements enregistrés dans nos outils servent de preuves.", "Des indicateurs qu'un financier sait lire."],
       ["Équiper l'institution", "Un logiciel pour gérer les membres, l'épargne, les crédits, la caisse et les rapports.", "De petits crédits suivis sans y perdre d'argent."],
       ["Mettre en relation", "Nous présentons les dossiers aux IMF, aux COOPEC et aux banques, et nous suivons la discussion.", "Un premier crédit, à des conditions supportables."],
+      ["Apporter un fonds de roulement", "Pour les AVEC que nous suivons, Ubora Fin prête elle-même un fonds de roulement au groupe, remboursable sur le cycle, en plus de l'épargne des membres.", "Plus de prêts possibles pour les membres, sans attendre une banque."],
       ["Suivre le remboursement", "Échéances, relances, appui en cas de difficulté, des deux côtés.", "Un bon historique, qui ouvre la porte au crédit suivant."]
     ],
+    intermediation: {
+      titre: "Le lien entre ceux qui financent et les groupes d'épargne",
+      intro: "Une banque ne peut pas étudier des centaines de petits dossiers dans des villages éloignés. Un groupe d'épargne ne sait pas à quelle porte frapper. Ubora Fin se place entre les deux : nous levons des fonds auprès de ceux qui veulent financer, et nous les prêtons aux AVEC que nous connaissons, sous forme de fonds de roulement.",
+      etapes: [
+        ["Lever des fonds", "Lignes de crédit d'institutions de microfinance et de banques, capitaux d'investisseurs d'impact, fonds de garantie apportés par des bailleurs."],
+        ["Prêter aux groupes", "Un fonds de roulement accordé au groupe, et non à chaque membre, par paliers, selon l'historique enregistré dans AKIBA."],
+        ["Suivre et rendre compte", "Les remboursements sont suivis semaine après semaine. Chaque financeur reçoit des rapports clairs sur l'usage de son argent."],
+        ["Faire grandir", "Les groupes les plus solides passent en relation directe avec l'institution partenaire. Les sommes remboursées financent d'autres groupes."]
+      ],
+      gains: [
+        ["Pour les institutions financières", "Une clientèle nouvelle, déjà formée et suivie, sans coût d'étude dossier par dossier. Le risque est réparti sur de nombreux groupes et porté par la caution solidaire des membres."],
+        ["Pour les AVEC", "Plus d'argent à prêter aux membres, au bon moment de l'année, sans garantie matérielle, à un coût raisonnable et avec un accompagnement."],
+        ["Pour les bailleurs et les investisseurs", "Un fonds qui tourne au lieu d'une subvention consommée une seule fois, et un impact mesuré à partir de données réelles."]
+      ]
+    },
     projet: {
       titre: "Une société de crédit pour les AVEC",
-      texte: "Malgré tout ce travail, une partie des groupes reste hors de portée des institutions actuelles. Les montants sont trop petits, les zones trop éloignées, les garanties absentes. Nous préparons donc la création d'une société de crédit pensée pour eux, qui prêterait aux AVEC en s'appuyant sur leur historique d'épargne et sur leur discipline collective.",
+      texte: "Pour porter ce rôle d'intermédiaire à plus grande échelle, dans un cadre agréé, nous préparons la création d'une société de crédit dédiée aux AVEC. Elle s'appuiera sur l'historique d'épargne des groupes et sur leur discipline collective.",
       etat: "Projet en préparation. L'étude de faisabilité, le cadre réglementaire et la recherche de partenaires financiers sont en cours.",
       appel: "Institution, bailleur ou investisseur intéressé ? Parlons-en."
     },
@@ -323,7 +340,7 @@ const AVEC = {
     ["Le groupe", "Quinze à trente membres qui épargnent chaque semaine et se prêtent entre eux."],
     ["AKIBA", "Les comptes sont tenus sur téléphone, sans réseau, et chacun peut les vérifier."],
     ["L'historique", "La régularité et les remboursements deviennent des indicateurs lisibles."],
-    ["Le crédit", "Une IMF, une COOPEC ou une banque accorde un prêt, et nous suivons le remboursement."]
+    ["Le financement", "Une IMF, une COOPEC, une banque, ou Ubora Fin elle-même, apporte un fonds de roulement au groupe. Nous suivons le remboursement."]
   ]
 };
 
@@ -401,6 +418,7 @@ const FAQ = [
   ["Vos outils fonctionnent-ils sans internet ?", "AKIBA fonctionne sans réseau et synchronise les données dès que la connexion revient. Le générateur de business plan reste utilisable une fois ouvert."],
   ["Proposez-vous des formations sur vos outils ?", "Oui. Chaque déploiement comprend une formation de prise en main, puis un suivi. Nous organisons aussi des sessions sur demande, dans votre province ou en ligne."],
   ["Faut-il être une entreprise déclarée pour être accompagné ?", "Non. Nous accompagnons justement beaucoup d'entrepreneurs et de groupements vers la formalisation, étape par étape."],
+  ["Ubora peut-elle financer notre groupe d'épargne ?", "Oui, par Ubora Fin, notre branche financière. Pour les AVEC que nous accompagnons, nous pouvons apporter un fonds de roulement, remboursable sur le cycle, en plus de l'épargne des membres. Nous pouvons aussi présenter le groupe à une IMF, une COOPEC ou une banque partenaire."],
   ["Combien coûte l'accompagnement ?", "Cela dépend du programme et du nombre de bénéficiaires. Les prestations facturées aux organisations nous permettent de proposer des tarifs solidaires aux groupes d'épargne et aux micro-entrepreneurs. Contactez-nous pour en parler."]
 ];
 

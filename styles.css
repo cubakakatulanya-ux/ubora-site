@@ -702,3 +702,57 @@ body.menu-open .wa-float, body.menu-open .chat-fab, body.menu-open .chat, body.m
   .fcard p, .pole p, .tool p, .parcours p, .steps p, .constats span, .boite span { hyphens: auto; -webkit-hyphens: auto; }
 }
 @media (max-width: 480px) { .btn-row > .btn { flex: 1 1 auto; } }
+
+/* ---------- Circulation des fonds (Ubora Fin) ---------- */
+.suite { margin-top: 22px; }
+.gains { margin-top: 18px; }
+.flux { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-bottom: 22px; padding: 16px 18px; border-radius: var(--r); background: var(--surface); border: 1px solid var(--line); }
+.flux span { padding: 8px 14px; border-radius: 999px; background: var(--surface-2); font-family: var(--f-display); font-size: 15px; font-weight: 600; }
+.flux span.on { background: #1D5FB8; color: #fff; }
+.flux i { display: grid; place-items: center; color: var(--muted); }
+.flux i svg { width: 18px; height: 18px; }
+@media (max-width: 600px) { .flux { flex-direction: column; align-items: stretch; text-align: center; } .flux i svg { transform: rotate(90deg); margin: 0 auto; } }
+
+/* ---------- Équipe ---------- */
+.team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+@media (max-width: 1000px) { .team-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 760px) { .team-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 440px) { .team-grid { grid-template-columns: 1fr; } }
+.team-grid > * { min-width: 0; }
+.member { display: flex; flex-direction: column; overflow: hidden; border-radius: var(--r-lg); background: var(--surface); border: 1px solid var(--line); }
+.member-photo { width: 100%; aspect-ratio: 1; object-fit: cover; background: var(--surface-2); }
+.member-ini { display: grid; place-items: center; background: linear-gradient(155deg, var(--deep-2), var(--deep)); color: var(--lime); font: 700 44px var(--f-display); letter-spacing: -.02em; }
+.member-txt { display: grid; gap: 6px; padding: 18px 20px 22px; }
+.member-txt h3 { font-size: 18px; letter-spacing: -.02em; }
+.member-txt .sub { color: var(--green); font-weight: 600; font-size: 14.5px; }
+.member-txt p:not(.sub) { font-size: 14.5px; color: var(--muted); }
+.member-txt .link { margin-top: 4px; font-size: 14px; }
+
+/* ---------- Réalisations ---------- */
+.real-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+@media (max-width: 1000px) { .real-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .real-grid { grid-template-columns: 1fr; } }
+.real-grid > * { min-width: 0; }
+.real { display: flex; flex-direction: column; overflow: hidden; border-radius: var(--r-lg); background: var(--surface); border: 1px solid var(--line); }
+.band .real { background: var(--bg); }
+.real-img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: var(--surface-2); }
+.real-cover { display: grid; place-items: center; background: radial-gradient(320px 160px at 100% 0%, color-mix(in srgb, var(--c) 45%, transparent), transparent 70%), linear-gradient(155deg, var(--deep-2), var(--deep)); }
+.real-cover .mk { width: 56px; height: 56px; border-radius: 16px; background: var(--c); font-size: 20px; }
+.real-txt { display: grid; gap: 10px; padding: 20px 22px 24px; }
+.real-txt h3 { font-size: 19px; letter-spacing: -.02em; }
+.real-txt p { font-size: 15px; color: var(--muted); }
+.real-txt .checks li { font-size: 14.5px; }
+.real .tags a.tag { text-decoration: none; }
+.filtres { margin-bottom: 24px; }
+a.chip { display: inline-block; text-decoration: none; }
+.chip[aria-current="page"] { border-color: var(--navy); background: var(--navy); color: #fff; }
+:root[data-theme="dark"] .chip[aria-current="page"] { color: #07183A; }
+
+/* ---------- Espace équipe : photos ---------- */
+.form .lbl { display: block; margin-bottom: 7px; font-size: 14.5px; font-weight: 600; }
+.apercu { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+.apercu img { width: 72px; height: 72px; border-radius: 12px; object-fit: cover; background: var(--surface-2); }
+.apercu input[type=file] { width: auto; flex: 1 1 220px; }
+.admin-kpis { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 1000px) { .admin-kpis { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 520px) { .admin-kpis { grid-template-columns: 1fr; } }

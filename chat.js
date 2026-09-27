@@ -20,9 +20,10 @@ const UboraChat = (() => {
     const push = (titre, texte, lien, mots) => K.push({ titre, texte, lien, mots: WORDS(titre + " " + texte + " " + (mots || "")) });
 
     push("Qui est Ubora", "Ubora est une entreprise sociale née à Lubumbashi, qui travaille dans toute la RDC. Nous accompagnons les groupes d'épargne, les entrepreneurs, les coopératives et les institutions financières, avec des outils numériques pensés pour le pays.", "/a-propos", "presentation mission qui sommes nous entreprise sociale societe");
-    push("Notre modèle d'entreprise sociale", "Les organisations (ONG, bailleurs, institutions financières, programmes) paient nos prestations. Cela nous permet de proposer des tarifs solidaires aux groupes d'épargne, aux femmes et jeunes entrepreneurs et aux producteurs ruraux. Les excédents sont réinvestis dans nos outils et notre présence sur le terrain.", "/a-propos#modele", "modele social entreprise sociale economique financement tarif solidaire");
+    push("Notre modèle d'entreprise sociale", "Les organisations (ONG, bailleurs, institutions financières, programmes) paient nos prestations. Cela nous permet de proposer des tarifs solidaires aux groupes d'épargne, aux femmes et jeunes entrepreneurs et aux producteurs ruraux. Par Ubora Fin, nous levons aussi des fonds auprès des financeurs et les prêtons aux AVEC en fonds de roulement. Les excédents sont réinvestis dans nos outils et notre présence sur le terrain.", "/a-propos#modele", "modele social entreprise sociale economique financement tarif solidaire");
     push("Notre méthode", `${METHODE.nom}, en six temps : ${METHODE.etapes.map(e => e.titre.toLowerCase()).join(", ")}. ${METHODE.intro}`, "/approche", "methodologie methode approche etapes demarche accompagnement");
     push("Qu'est-ce qu'une AVEC", AVEC.definition, "/avec", "avec vsla definition association villageoise epargne credit tontine");
+    push("Financer les AVEC : le rôle d'Ubora Fin", "Ubora Fin lève des fonds auprès d'institutions financières, d'investisseurs d'impact et de bailleurs, puis les prête aux AVEC que nous accompagnons, sous forme de fonds de roulement accordé au groupe. Les remboursements sont suivis dans AKIBA et les sommes remboursées financent d'autres groupes.", "/financement#intermediation", "fonds roulement financement pret credit financer groupe avec argent capital investisseur banque imf");
     push("Contact", `Téléphone et WhatsApp : ${CONFIG.telephone}. E-mail : ${CONFIG.email}. Siège : ${CONFIG.adresse}. ${CONFIG.horaires}.`, "/contact", "contact telephone numero adresse mail bureau joindre rendez-vous horaires ou situes whatsapp");
     push("Formations", "Nous formons les utilisateurs de nos outils et des formateurs relais, et nous organisons des sessions sur demande, dans votre province ou en ligne.", "/formations", "formation former session calendrier atelier apprendre cours");
     push("Offres d'emploi", "Nos postes ouverts, stages et consultances sont publiés sur la page Carrières. Vous pouvez aussi envoyer une candidature spontanée.", "/carrieres", "emploi recrutement poste stage carriere candidature travailler job cv");
@@ -36,6 +37,10 @@ const UboraChat = (() => {
     FAQ.forEach(([q, r]) => push(q, r, "/a-propos#faq", "question"));
     DATA.formations.slice(0, 8).forEach(f => push(f.titre, `Session du ${fmtDate(f.date)} · ${f.mode} · ${f.lieu} · ${f.places} places. Public : ${f.public}.`, "/formations", "formation session date calendrier"));
     DATA.offres.forEach(o => push(o.titre, `${o.type} · ${o.lieu}. ${o.resume} Candidatures jusqu'au ${fmtDate(o.cloture)}.`, "/carrieres/" + o.id, "emploi poste recrutement"));
+    push("Notre équipe", "Consultants, formateurs, agents de terrain et développeurs, basés à Lubumbashi et présents dans toute la RDC.", "/equipe", "equipe personnes qui directeur staff collaborateurs responsable");
+    DATA.equipe.forEach(m => push(m.nom, `${m.fonction}. ${m.bio || ""}`, "/equipe", "equipe membre"));
+    push("Nos réalisations", "Les programmes que nous avons menés, avec leur contexte, nos actions et les résultats obtenus.", "/realisations", "realisations projets references experience resultats deja fait");
+    DATA.realisations.forEach(r => push(r.titre, `${r.resume || ""} ${r.lieu ? "Lieu : " + r.lieu + "." : ""}`, "/realisations", "realisation projet reference"));
     DATA.actualites.slice(0, 5).forEach(n => push(n.titre, n.extrait, "/actualites/" + n.slug, "actualite nouvelle article"));
     return K;
   }

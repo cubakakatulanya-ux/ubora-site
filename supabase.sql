@@ -219,3 +219,58 @@ create policy "equipe supprime questions" on public.site_questions
 -- La fonction de contrôle ne sert qu'aux membres connectés
 revoke execute on function public.est_admin_site() from public, anon;
 grant execute on function public.est_admin_site() to authenticated;
+
+-- ==========================================================================
+-- Équipe, réalisations et photos (27 septembre 2026)
+-- ==========================================================================
+create table if not exists public.site_equipe (
+  id         uuid primary key default gen_random_uuid(),
+  nom        text not null check (char_length(nom) between 2 and 120),
+  fonction   text not null check (char_length(fonction) between 2 and 120),
+  bio        text check (bio is null or char_length(bio) <= 600),
+  photo_url  text check (photo_url is null or photo_url ~ '^https://'),
+  linkedin   text check (linkedin is null or linkedin ~ '^https://'),
+  ordre      integer not null default 100,
+  publie     boolean not null default true,
+  created_at timestamptz not null default now()
+);
+create table if not exists public.site_realisations (
+  id         uuid primary key default gen_random_uuid(),
+  slug       text unique not null,
+  titre      text not null check (char_length(titre) between 3 and 160),
+  pole       text not null default 'avec' check (pole in ('avec','pme','cooperatives','financement','marche','conseil')),
+  periode    text not null default '' check (char_length(periode) <= 40),
+  lieu       text not null default '' check (char_length(lieu) <= 120),
+  partenaire text not null default '' check (char_length(partenaire) <= 160),
+  resume     text not null default '' check (char_length(resume) <= 1200),
+  resultats  jsonb not null default '[]'::jsonb,
+  image_url  text check (image_url is null or image_url ~ '^https://'),
+  ordre      integer not null default 100,
+  publie     boolean not null default true,
+  created_at timestamptz not null default now()
+);
+alter table public.site_equipe       enable row level security;
+alter table public.site_realisations enable row level security;
+create policy "lecture publique equipe" on public.site_equipe for select to anon, authenticated using (publie = true);
+create policy "equipe gere equipe" on public.site_equipe for all to authenticated using (public.est_admin_site()) with check (public.est_admin_site());
+create policy "lecture publique realisations" on public.site_realisations for select to anon, authenticated using (publie = true);
+create policy "equipe gere realisations" on public.site_realisations for all to authenticated using (public.est_admin_site()) with check (public.est_admin_site());
+
+-- Photos : lecture publique, dépôt réservé à l'équipe, 2 Mo maximum
+insert into storage.buckets (id, name, public, file_size_limit, allowed_mime_types)
+values ('site-medias', 'site-medias', true, 2097152, array['image/jpeg','image/png','image/webp'])
+on conflict (id) do nothing;
+create policy "site medias depot equipe" on storage.objects for insert to authenticated with check (bucket_id = 'site-medias' and public.est_admin_site());
+create policy "site medias modif equipe" on storage.objects for update to authenticated using (bucket_id = 'site-medias' and public.est_admin_site());
+create policy "site medias suppr equipe" on storage.objects for delete to authenticated using (bucket_id = 'site-medias' and public.est_admin_site());
+
+-- ==========================================================================
+-- Application COOPEC (même projet) : fonctions réservées aux utilisateurs connectés
+-- ==========================================================================
+revoke execute on function public.creer_compte(text, text, text, text, text, text, text) from public, anon;
+revoke execute on function public.desactiver_compte(text) from public, anon;
+revoke execute on function public.enregistrer_profil(uuid, text, text, text, text, text) from public, anon;
+revoke execute on function public.marquer_revision() from public, anon;
+revoke execute on function public.profil_agence() from public, anon;
+revoke execute on function public.profil_role() from public, anon;
+revoke execute on function public.reserver_bloc(text, integer) from public, anon;

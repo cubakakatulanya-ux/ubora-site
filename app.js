@@ -190,6 +190,29 @@ function newsCard(n) {
 function allNews() {
   return [...DATA.actualites].sort((a, b) => b.date.localeCompare(a.date));
 }
+const initialesDe = nom => String(nom || "").split(/\s+/).filter(Boolean).slice(0, 2).map(m => m[0]).join("").toUpperCase();
+function memberCard(m) {
+  return `<article class="member reveal">
+    ${m.photo ? `<img class="member-photo" src="${esc(m.photo)}" alt="${esc(m.nom)}" loading="lazy" width="400" height="400">` : `<span class="member-photo member-ini" aria-hidden="true">${esc(initialesDe(m.nom))}</span>`}
+    <div class="member-txt"><h3>${esc(m.nom)}</h3><p class="sub">${esc(m.fonction)}</p>${m.bio ? `<p>${esc(m.bio)}</p>` : ""}
+      ${m.linkedin ? `<a class="link" href="${esc(m.linkedin)}" target="_blank" rel="noopener">LinkedIn ${ICON.ext}</a>` : ""}</div>
+  </article>`;
+}
+/* pôle d'une réalisation ; « conseil » regroupe les missions pour les ONG et les bailleurs */
+const poleReal = id => pole(id) || { id: "conseil", nom: "Conseil et programmes", initiales: "Cp", couleur: "#0F3170", chemin: "/conseil" };
+function realCard(r) {
+  const p = poleReal(r.pole);
+  return `<article class="real reveal" style="--c:${p.couleur}">
+    ${r.image ? `<img class="real-img" src="${esc(r.image)}" alt="" loading="lazy">` : `<div class="real-img real-cover"><span class="mk">${esc(p.initiales)}</span></div>`}
+    <div class="real-txt">
+      <div class="tags"><a class="tag" style="background:${p.couleur};color:#fff" href="${p.chemin}">${esc(p.nom)}</a>${r.periode ? `<span class="tag">${esc(r.periode)}</span>` : ""}</div>
+      <h3>${esc(r.titre)}</h3>
+      ${r.lieu || r.partenaire ? `<div class="meta-line">${r.lieu ? `<span>${ICON.pin}${esc(r.lieu)}</span>` : ""}${r.partenaire ? `<span>${ICON.handshake}${esc(r.partenaire)}</span>` : ""}</div>` : ""}
+      ${r.resume ? `<p>${esc(r.resume)}</p>` : ""}
+      ${(r.resultats || []).length ? `<ul class="checks">${r.resultats.map(x => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
+    </div>
+  </article>`;
+}
 
 /* ---------- En-tête, pied de page, bande déroulante ---------- */
 function menuHTML() {
@@ -197,7 +220,8 @@ function menuHTML() {
     <li><a href="/" data-r="">Accueil</a></li>
     <li class="has-dd"><button class="dd-btn" type="button" data-r="a-propos" aria-expanded="false">Ubora ${ICON.chev}</button>
       <div class="dd dd-list">
-        <a href="/a-propos"><b>Qui sommes-nous</b><small>Mission, modèle social, équipe</small></a>
+        <a href="/a-propos"><b>Qui sommes-nous</b><small>Mission, modèle social, valeurs</small></a>
+        <a href="/equipe"><b>Notre équipe</b><small>Les personnes derrière Ubora</small></a>
         <a href="/approche"><b>Notre approche</b><small>La méthode Ubora</small></a>
         <a href="/conseil"><b>Conseil et programmes</b><small>Pour les ONG et les bailleurs</small></a>
         <a href="/carrieres"><b>Carrières</b><small>Rejoindre l'équipe</small></a>
@@ -208,6 +232,7 @@ function menuHTML() {
         <div class="dd-col"><h5>Nos outils</h5>${OUTILS.filter(o => o.statut === "en-ligne").map(o => `<a href="${o.url}" target="_blank" rel="noopener" class="dd-item"><span class="mk" style="background:${o.couleur}">${o.initiales}</span><span><b>${esc(o.nom)}</b><small>${esc(o.sousDomaine)}</small></span></a>`).join("")}
           <a href="/outils" class="dd-more">Tous les outils ${ICON.arrow}</a><a href="/formations" class="dd-more">Formations ${ICON.arrow}</a></div>
       </div></li>
+    <li><a href="/realisations" data-r="realisations">Réalisations</a></li>
     <li><a href="/actualites" data-r="actualites">Actualités</a></li>
     <li><a href="/contact" data-r="contact">Contact</a></li>
     <li class="m-cta"><a class="btn btn-accent" href="/contact">Nous contacter</a></li>`;
@@ -221,7 +246,7 @@ function footerHTML() {
       </div>
       <div><h4>Nos pôles</h4><ul>${POLES.map(p => `<li><a href="${p.chemin}">${esc(p.nom)}</a><a class="foot-sub" href="https://${p.sousDomaine}">${esc(p.sousDomaine)}</a></li>`).join("")}</ul></div>
       <div><h4>Nos outils</h4><ul>${OUTILS.filter(o => o.statut === "en-ligne").map(o => `<li><a href="${o.url}" target="_blank" rel="noopener">${esc(o.nom)}</a><span class="foot-sub">${esc(o.sousDomaine)}</span></li>`).join("")}<li><a href="/outils">Tous les outils</a></li><li><a href="/formations">Formations</a></li></ul></div>
-      <div><h4>Ubora</h4><ul><li><a href="/a-propos">Qui sommes-nous</a></li><li><a href="/approche">Notre approche</a></li><li><a href="/conseil">Conseil et programmes</a></li><li><a href="/actualites">Actualités</a></li><li><a href="/carrieres">Carrières</a></li><li><a href="/contact">Contact</a></li></ul></div>
+      <div><h4>Ubora</h4><ul><li><a href="/a-propos">Qui sommes-nous</a></li><li><a href="/equipe">Notre équipe</a></li><li><a href="/realisations">Nos réalisations</a></li><li><a href="/approche">Notre approche</a></li><li><a href="/conseil">Conseil et programmes</a></li><li><a href="/actualites">Actualités</a></li><li><a href="/carrieres">Carrières</a></li><li><a href="/contact">Contact</a></li></ul></div>
       <div><h4>Nous joindre</h4><ul>
         <li><a href="tel:${CONFIG.telephone.replace(/\s/g, "")}">${esc(CONFIG.telephone)}</a></li>
         <li><a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a></li>
@@ -230,7 +255,7 @@ function footerHTML() {
         <form class="news-form" id="newsForm"><input id="nlEmail" type="email" required maxlength="160" placeholder="Votre adresse e-mail" aria-label="Adresse e-mail"><input class="hp" id="nlSite" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn btn-accent btn-sm" type="submit">S'inscrire</button></form>
       </div>
     </div>
-    <div class="foot-bottom"><span>© ${new Date().getFullYear()} Ubora, entreprise sociale · Siège à Lubumbashi · Interventions dans toute la RDC</span><span class="foot-links"><a href="/mentions">Mentions légales</a><a href="/admin" rel="nofollow">Espace équipe</a></span></div>
+    <div class="foot-bottom"><span>© ${new Date().getFullYear()} Ubora, entreprise sociale · Siège à Lubumbashi · Interventions dans toute la RDC</span><span class="foot-links"><a href="/mentions">Mentions légales</a><a href="https://admin.uborardc.com" rel="nofollow">Espace équipe</a></span></div>
   </div>`;
 }
 function tickerHTML() {
@@ -275,7 +300,8 @@ function pageHome() {
     <ol class="model">
       <li><span class="bn">1</span><div><b>Les organisations paient</b><span>ONG, bailleurs, institutions financières, programmes publics et privés financent nos prestations.</span></div></li>
       <li><span class="bn">2</span><div><b>Les plus fragiles accèdent à tarif solidaire</b><span>Groupes d'épargne, femmes et jeunes entrepreneurs, producteurs ruraux.</span></div></li>
-      <li><span class="bn">3</span><div><b>Les excédents sont réinvestis</b><span>Dans nos outils, dans la formation de relais locaux et dans notre présence sur le terrain.</span></div></li>
+      <li><span class="bn">3</span><div><b>L'argent circule jusqu'aux groupes</b><span>Par Ubora Fin, nous levons des fonds auprès des financeurs et les prêtons aux AVEC en fonds de roulement. Ce qui est remboursé finance d'autres groupes.</span></div></li>
+      <li><span class="bn">4</span><div><b>Les excédents sont réinvestis</b><span>Dans nos outils, dans la formation de relais locaux et dans notre présence sur le terrain.</span></div></li>
     </ol>
   </div></section>
 
@@ -294,6 +320,11 @@ function pageHome() {
     </div>
   </div></section>
 
+  ${DATA.realisations.length ? `<section><div class="wrap">
+    ${secHead("Nos réalisations", `Ce que nous avons <span class="serif">fait</span>`, "", `<a class="btn btn-ghost" href="/realisations">Toutes les réalisations ${ICON.arrow}</a>`)}
+    <div class="real-grid">${DATA.realisations.slice(0, 3).map(realCard).join("")}</div>
+  </div></section>` : ""}
+
   ${news.length ? `<section><div class="wrap">
     ${secHead("Actualités", "Nouvelles du terrain", "", `<a class="btn btn-ghost" href="/actualites">Toutes les actualités ${ICON.arrow}</a>`)}
     <div class="news-grid">${news.map(newsCard).join("")}</div>
@@ -302,12 +333,12 @@ function pageHome() {
   <section><div class="wrap">${finalCta()}</div></section>`;
 }
 
-function teamBand() {
+function teamBand(surPageEquipe) {
   return `<div class="deep team-band">
-    <div><span class="eyebrow">Notre équipe</span>
+    <div><span class="eyebrow">${surPageEquipe ? "Ce qui nous rassemble" : "Notre équipe"}</span>
       <h2>Une équipe qui a de l'expérience et qui connaît le terrain.</h2>
       <p class="lead">Consultants, formateurs et développeurs, nous avons accompagné des entrepreneurs, des groupes d'épargne, des coopératives et des institutions financières. Nous connaissons les réalités de nos bénéficiaires parce que nous les vivons aussi.</p>
-      <a class="btn btn-glass" href="/carrieres">Nous rejoindre ${ICON.arrow}</a></div>
+      <div class="btn-row">${surPageEquipe ? "" : `<a class="btn btn-accent" href="/equipe">Rencontrer l'équipe ${ICON.arrow}</a>`}<a class="btn btn-glass" href="/carrieres">Nous rejoindre</a></div></div>
     <ul class="team-list">
       <li><span class="ic">${ICON.map}</span><div><b>L'expérience du terrain</b><span>Des années d'accompagnement en RDC, dans plusieurs provinces.</span></div></li>
       <li><span class="ic">${ICON.spark}</span><div><b>Deux compétences réunies</b><span>La finance, la gestion et l'agriculture d'un côté, le numérique de l'autre.</span></div></li>
@@ -330,9 +361,10 @@ function pageAbout() {
 
   <section class="band" id="modele"><div class="wrap">
     ${secHead("Notre modèle", `Pourquoi nous avons choisi d'être une <span class="serif">entreprise sociale</span>`, "Les projets financés pour deux ou trois ans s'arrêtent souvent au moment où les bénéficiaires commencent à progresser. Nous voulions pouvoir rester.")}
-    <div class="grid-3">
+    <div class="grid-4">
       <div class="fcard"><span class="ic">${ICON.briefcase}</span><h3>Qui paie</h3><p>Les ONG, les bailleurs, les institutions financières, les incubateurs et les programmes publics ou privés qui nous confient des missions.</p></div>
       <div class="fcard"><span class="ic">${ICON.heart}</span><h3>Qui en bénéficie</h3><p>Les groupes d'épargne, les femmes et les jeunes entrepreneurs, les producteurs ruraux, qui accèdent à nos services à tarif solidaire.</p></div>
+      <div class="fcard"><span class="ic">${ICON.coins}</span><h3>Ce que nous prêtons</h3><p>Par Ubora Fin, un fonds de roulement pour les AVEC que nous accompagnons, grâce à des fonds levés auprès d'institutions et d'investisseurs. Ce qui est remboursé repart vers d'autres groupes.</p></div>
       <div class="fcard"><span class="ic">${ICON.spark}</span><h3>Ce que nous réinvestissons</h3><p>Le développement de nos outils, la formation de relais locaux et le temps passé sur le terrain, là où c'est nécessaire.</p></div>
     </div>
     <p class="note">Être rentables n'est pas une fin en soi. C'est ce qui nous permet d'être encore là au cycle suivant.</p>
@@ -392,6 +424,7 @@ function pagePole(id) {
   const P = pole(id); if (!P) return notFound();
   const outilsLies = (P.outils || []).map(outil).filter(Boolean);
   const enLigne = outilsLies.filter(o => o.statut === "en-ligne");
+  const reals = DATA.realisations.filter(r => r.pole === P.id);
   return pageHead({
     eyebrow: esc(P.nom), title: P.titre, lead: esc(P.lead), crumbs: [["Nos pôles", "/#poles"], [esc(P.nom)]],
     extra: `<div class="btn-row"><a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent(P.nom)}">Parler de votre projet ${ICON.arrow}</a>
@@ -436,6 +469,18 @@ function pagePole(id) {
   <section><div class="wrap">
     ${secHead("Vers le crédit", `Transformer la discipline d'un groupe en <span class="serif">accès au crédit</span>`, "Un groupe qui épargne depuis trois ans reste invisible pour une banque s'il ne peut rien prouver. Notre rôle est de rendre cette régularité lisible.")}
     <ol class="bridge">${AVEC.passerelle.map(([t, x], i) => `<li><span class="bn">${i + 1}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`).join("")}</ol>
+    <p class="suite"><a class="link" href="/financement#intermediation">Comment Ubora Fin finance les groupes ${ICON.arrow}</a></p>
+  </div></section>` : ""}
+
+  ${P.intermediation ? `<section id="intermediation"><div class="wrap">
+    ${secHead("Notre rôle d'intermédiaire", esc(P.intermediation.titre), esc(P.intermediation.intro))}
+    <div class="flux" aria-label="Circulation des fonds">
+      <span>Institutions financières, investisseurs, bailleurs</span><i aria-hidden="true">${ICON.arrow}</i>
+      <span class="on">Ubora Fin</span><i aria-hidden="true">${ICON.arrow}</i>
+      <span>AVEC</span><i aria-hidden="true">${ICON.arrow}</i><span>Membres</span>
+    </div>
+    <ol class="bridge">${P.intermediation.etapes.map(([t, x], i) => `<li><span class="bn">${i + 1}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`).join("")}</ol>
+    <div class="grid-3 gains">${P.intermediation.gains.map(([t, x]) => `<div class="fcard reveal"><h3>${esc(t)}</h3><p>${esc(x)}</p></div>`).join("")}</div>
   </div></section>` : ""}
 
   ${P.canaux ? `<section class="band"><div class="wrap">
@@ -448,6 +493,11 @@ function pagePole(id) {
       <h2>${esc(P.projet.titre)}</h2><p class="lead">${esc(P.projet.texte)}</p><p class="etat">${esc(P.projet.etat)}</p>
       <p class="appel">${esc(P.projet.appel)}</p>
       <div class="btn-row"><a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent(P.projet.titre)}">Nous écrire ${ICON.arrow}</a><a class="btn btn-glass" href="${waLink("Bonjour Ubora, je m'intéresse au projet : " + P.projet.titre + ".")}" target="_blank" rel="noopener">WhatsApp</a></div></div>
+  </div></section>` : ""}
+
+  ${reals.length ? `<section class="band"><div class="wrap">
+    ${secHead("Sur le terrain", `Nos réalisations avec ${esc(P.nom)}`, "", `<a class="btn btn-ghost" href="/realisations?pole=${P.id}">Toutes ${ICON.arrow}</a>`)}
+    <div class="real-grid">${reals.slice(0, 3).map(realCard).join("")}</div>
   </div></section>` : ""}
 
   <section><div class="wrap">
@@ -550,6 +600,33 @@ function pageArticle(slug) {
   </article></div></section>`;
 }
 
+function pageEquipe() {
+  const membres = DATA.equipe;
+  return pageHead({ eyebrow: "Notre équipe", title: `Des gens de terrain, et des <span class="serif">spécialistes</span>.`, crumbs: [["Qui sommes-nous", "/a-propos"], ["Notre équipe"]],
+    lead: "Consultants, formateurs, agents de terrain et développeurs : l'équipe qui accompagne les groupes d'épargne, les entrepreneurs, les coopératives et les institutions financières, à Lubumbashi et dans les provinces." }) + `
+  <section><div class="wrap">
+    ${membres.length ? `<div class="team-grid">${membres.map(memberCard).join("")}</div>`
+      : `<div class="empty"><b>Les membres de l'équipe seront présentés ici très bientôt.</b><p>En attendant, écrivez-nous ou appelez-nous : nous vous mettrons en relation avec la bonne personne.</p><a class="btn btn-primary" href="/contact">Nous contacter</a></div>`}
+  </div></section>
+  <section class="tight-top"><div class="wrap">${teamBand(true)}</div></section>
+  <section><div class="wrap">${finalCta()}</div></section>`;
+}
+
+function pageRealisations(params) {
+  const tout = DATA.realisations;
+  const filtre = (params && params.get("pole")) || "";
+  const liste = filtre ? tout.filter(r => r.pole === filtre) : tout;
+  const presents = [...new Set(tout.map(r => r.pole))];
+  return pageHead({ eyebrow: "Nos réalisations", title: `Ce que nous avons fait, et ce que cela a <span class="serif">changé</span>.`, crumbs: [["Nos réalisations"]],
+    lead: "Des programmes menés avec des ONG, des bailleurs, des institutions financières et des communautés, partout en RDC. Pour chacun : le contexte, ce que nous avons fait et les résultats obtenus." }) + `
+  <section><div class="wrap">
+    ${presents.length > 1 ? `<nav class="chips filtres" aria-label="Filtrer par pôle"><a class="chip" href="/realisations"${filtre ? "" : ' aria-current="page"'}>Toutes</a>${presents.map(id => `<a class="chip" href="/realisations?pole=${id}"${filtre === id ? ' aria-current="page"' : ""}>${esc(poleReal(id).nom)}</a>`).join("")}</nav>` : ""}
+    ${liste.length ? `<div class="real-grid">${liste.map(realCard).join("")}</div>`
+      : `<div class="empty"><b>Nos réalisations seront présentées ici prochainement.</b><p>Vous préparez un programme avec des groupes d'épargne, des entrepreneurs ou des coopératives ? Parlons de ce que nous pouvons faire ensemble.</p><a class="btn btn-primary" href="/contact?sujet=${encodeURIComponent("Partenariat")}">Nous écrire</a></div>`}
+  </div></section>
+  <section><div class="wrap">${finalCta()}</div></section>`;
+}
+
 function pageCareers(openId) {
   const t = todayISO();
   const ouvertes = [...DATA.offres].filter(o => o.cloture >= t).sort((a, b) => (b.publie || "").localeCompare(a.publie || ""));
@@ -640,7 +717,7 @@ function notFound() {
 /* ==========================================================================
    ROUTAGE
    ========================================================================== */
-const SOUS_DOMAINES = { avec: "avec", pme: "pme", coop: "cooperatives", fin: "financement", market: "marche" };
+const SOUS_DOMAINES = { avec: "avec", pme: "pme", coop: "cooperatives", fin: "financement", market: "marche", admin: "admin" };
 /* bp. et hub. mènent directement à l'outil ; akiba. est servi à part (GitHub Pages). */
 const EXTERNES = { hub: "https://www.uborahub.com", bp: "/generateur/" };
 const ANCIENNES = {
@@ -658,17 +735,19 @@ const DESCR = {
   actualites: "Les actualités d'Ubora : programmes, déploiements, formations et nouvelles du terrain en RDC.",
   carrieres: "Offres d'emploi, de stage et de consultance chez Ubora, entreprise sociale basée à Lubumbashi.",
   contact: "Contacter Ubora par téléphone, WhatsApp ou e-mail. Siège à Lubumbashi, interventions dans toute la RDC.",
-  mentions: "Mentions légales et politique de données personnelles du site d'Ubora."
+  mentions: "Mentions légales et politique de données personnelles du site d'Ubora.",
+  equipe: "L'équipe d'Ubora : consultants, formateurs, agents de terrain et développeurs, basés à Lubumbashi et présents dans toute la RDC.",
+  realisations: "Les réalisations d'Ubora en RDC : groupes d'épargne, entrepreneurs, coopératives, accès au financement et au marché. Contexte, actions et résultats."
 };
 /* Titre et description des pôles pour les moteurs de recherche */
 const SEO_POLES = {
-  avec: ["Ubora AVEC : accompagner les groupes d'épargne en RDC", "Création, formation et suivi des groupes d'épargne (AVEC), application AKIBA et passerelle vers les institutions financières, partout en RDC."],
+  avec: ["Ubora AVEC : accompagner les groupes d'épargne en RDC", "Création, formation et suivi des groupes d'épargne (AVEC), application AKIBA, fonds de roulement par Ubora Fin et lien avec les institutions financières, en RDC."],
   pme: ["Ubora PME : incubation et accélération d'entrepreneurs en RDC", "Idéation, incubation et accélération d'entrepreneurs et de PME en RDC, avec une démarche lean startup adaptée et un générateur de business plan."],
   cooperatives: ["Ubora Coop : créer et gérer une coopérative en RDC", "Structuration, formalisation et gestion de coopératives en RDC, à partir d'une organisation paysanne, d'un groupement ou d'une coopérative existante."],
-  financement: ["Ubora Fin : accès au crédit et microfinance en RDC", "Préparer les groupes, les coopératives et les PME au crédit, les relier aux institutions de microfinance et équiper ces institutions, en RDC."],
+  financement: ["Ubora Fin : accès au crédit et microfinance en RDC", "Ubora Fin prépare les emprunteurs, équipe les institutions financières et fait le lien : des fonds levés auprès des financeurs, prêtés aux AVEC en RDC."],
   marche: ["Ubora Market : vendre plus, trouver des acheteurs en RDC", "Relier les PME, les coopératives et les entrepreneurs de la RDC à des acheteurs : ventes B2B et B2C, marchés institutionnels et export."]
 };
-const TITRES = { "":"Ubora, entreprise sociale en RDC", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos outils numériques", conseil: "Conseil et programmes", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", admin: "Espace équipe" };
+const TITRES = { "":"Ubora, entreprise sociale en RDC", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos outils numériques", conseil: "Conseil et programmes", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
 
 /* Construit une page à partir d'une adresse. */
 function resolve(pathname, search, host) {
@@ -697,6 +776,8 @@ function resolve(pathname, search, host) {
       else html = pageNews();
       break;
     }
+    case "equipe": html = pageEquipe(); break;
+    case "realisations": html = pageRealisations(params); break;
     case "carrieres": html = pageCareers(sub); break;
     case "contact": html = pageContact(params); break;
     case "mentions": html = pageMentions(); break;
@@ -741,6 +822,8 @@ function boot() {
     if (location.hash.startsWith("#/")) history.replaceState({}, "", location.hash.slice(1));
     const r = resolve(location.pathname, location.search, location.hostname);
     if (r.redirect) { history.replaceState({}, "", r.redirect); return route(); }
+    /* l'espace équipe a sa propre adresse */
+    if (r.base === "admin" && sd !== "admin" && /(^|\.)uborardc\.com$/.test(location.hostname)) { location.replace("https://admin.uborardc.com/"); return; }
     stopNet();
     app.innerHTML = `<div class="fade">${r.html}</div>`;
     document.title = r.title;
@@ -751,7 +834,7 @@ function boot() {
     setMeta('meta[property="og:url"]', "content", CONFIG.site + r.canon);
     setMeta('meta[name="robots"]', "content", r.base === "admin" || !r.found ? "noindex" : "index, follow");
     $$("#menu [data-r]").forEach(a => {
-      const on = a.dataset.r === r.base || (a.dataset.r === "poles" && (!!pole(r.base) || ["outils", "formations"].includes(r.base))) || (a.dataset.r === "a-propos" && ["a-propos", "approche", "conseil", "carrieres"].includes(r.base));
+      const on = a.dataset.r === r.base || (a.dataset.r === "poles" && (!!pole(r.base) || ["outils", "formations"].includes(r.base))) || (a.dataset.r === "a-propos" && ["a-propos", "approche", "conseil", "carrieres", "equipe"].includes(r.base));
       a.classList.toggle("current", on);
       if (a.tagName === "A") on ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current");
     });
@@ -851,7 +934,7 @@ function boot() {
     const [p, h] = href.split("#");
     /* sur un sous-domaine de pôle, seuls les liens vers le pôle lui-même restent sur place ; le reste mène au site principal */
     if (SOUS_DOMAINES[sd]) {
-      if (p.split("?")[0] !== pole(SOUS_DOMAINES[sd]).chemin) { location.href = CONFIG.site + href; return; }
+      if (p.split("?")[0] !== "/" + SOUS_DOMAINES[sd]) { location.href = CONFIG.site + href; return; }
       if (h) document.getElementById(h)?.scrollIntoView({ behavior: "smooth" }); else scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
@@ -887,10 +970,14 @@ function boot() {
   typo($("#footer")); typo($(".site-header"));
 
   /* contenu publié dans la base : on réaffiche les pages qui l'utilisent */
+  /* contenu publié dans la base : on ne réaffiche la page que si quelque chose a changé depuis sa génération */
+  const empreinte = () => JSON.stringify([DATA.actualites, DATA.formations, DATA.offres, DATA.equipe, DATA.realisations]);
+  const avant = empreinte();
   UboraDB.load().then(() => {
+    if (empreinte() === avant) return;
     $("#tickerMove").innerHTML = tickerHTML();
-    const base = location.pathname.split("/")[1] || "";
-    if (["", "actualites", "formations", "carrieres"].includes(base) && !(base === "" && SOUS_DOMAINES[sd])) route({ keep: true });
+    const r = resolve(location.pathname, location.search, location.hostname);
+    if (["", "actualites", "formations", "carrieres", "equipe", "realisations"].includes(r.base) || pole(r.base)) route({ keep: true });
   });
 }
 

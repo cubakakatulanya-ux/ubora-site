@@ -5,7 +5,7 @@ Site officiel d'Ubora, entreprise sociale basée à Lubumbashi et active dans to
 - **Site principal :** https://uborardc.com
 - **Pôles :** avec., pme., coop., fin. et market.uborardc.com (chaque sous-domaine affiche la page du pôle)
 - **Outils :** akiba.uborardc.com (application AKIBA), bp.uborardc.com (générateur de business plan), hub.uborardc.com (Ubora Hub)
-- **Espace équipe :** https://uborardc.com/admin
+- **Espace équipe :** https://admin.uborardc.com
 
 ## Les fichiers
 
@@ -29,7 +29,7 @@ Site officiel d'Ubora, entreprise sociale basée à Lubumbashi et active dans to
 
 ## Modifier le contenu
 
-**Actualités, formations, offres d'emploi :** espace équipe, sur https://uborardc.com/admin.
+**Actualités, formations, offres d'emploi, réalisations, équipe :** espace équipe, sur https://admin.uborardc.com.
 Ce qui est publié apparaît aussitôt sur le site. Chaque nuit, une tâche automatique
 (`.github/workflows/pages.yml`) régénère les pages et le plan du site pour que les moteurs
 de recherche voient les nouveautés. On peut aussi la lancer à la main depuis l'onglet
@@ -47,7 +47,7 @@ et envoyer les changements sur GitHub (`git push`). Le site se met à jour en un
 
 Projet Supabase **coopec-gestion** (`uoshpvqdszygezkuhhco`, eu-central-1). Les tables du site sont
 préfixées `site_` : `site_actualites`, `site_formations`, `site_offres`, `site_messages`,
-`site_abonnes`, `site_questions`, `site_admins`.
+`site_abonnes`, `site_questions`, `site_equipe`, `site_realisations`, `site_admins`. Les photos sont dans le stockage `site-medias`.
 
 La clé *anon* de `data.js` est faite pour être publique : les règles d'accès de la base empêchent
 un visiteur de lire les messages, les abonnés ou les brouillons, et de modifier quoi que ce soit.
@@ -62,7 +62,7 @@ un visiteur de lire les messages, les abonnés ou les brouillons, et de modifier
 insert into public.site_admins (email, nom) values ('prenom.nom@exemple.com', 'Prénom Nom');
 ```
 
-La personne peut alors se connecter sur `/admin`.
+La personne peut alors se connecter sur https://admin.uborardc.com.
 
 ## Hébergement
 
