@@ -995,13 +995,14 @@ $("#themeBtn").addEventListener("click", () => {
 const savedTheme = store.get("ubora_theme", null); if (savedTheme) document.documentElement.dataset.theme = savedTheme;
 $("#waFloat").href = waLink("Bonjour Ubora, je souhaite avoir des informations.");
 
-/* Sous-domaines : avec. fin. pme. coop. ouvrent directement la page concernée,
-   hub. renvoie vers la plateforme Ubora Hub. */
+/* Sous-domaines : avec. fin. pme. coop. bp. ouvrent directement la page concernée ;
+   hub. et akiba. renvoient vers les applications correspondantes. */
 (function sousDomaine() {
   const parts = location.hostname.toLowerCase().split(".");
   if (parts.length < 3) return;
-  if (parts[0] === "hub") { location.replace("https://www.uborahub.com"); return; }
-  const cible = { avec: "/avec", fin: "/solutions/ubora-fin", pme: "/solutions/ubora-pme", coop: "/solutions/ubora-coop" }[parts[0]];
+  const externe = { hub: "https://www.uborahub.com", akiba: "https://cubakakatulanya-ux.github.io/akiba-avec/" }[parts[0]];
+  if (externe) { location.replace(externe); return; }
+  const cible = { avec: "/avec", fin: "/solutions/ubora-fin", pme: "/solutions/ubora-pme", coop: "/solutions/ubora-coop", bp: "/solutions/ubora-pme" }[parts[0]];
   if (cible && location.pathname === "/") history.replaceState({}, "", cible);
 })();
 
