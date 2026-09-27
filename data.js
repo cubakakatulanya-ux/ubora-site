@@ -222,10 +222,13 @@ const SOLUTIONS = [
   },
   {
     id: "ubora-coop", raccourci: "coop.uborardc.com", nom: "Ubora Coop", initiales: "Co", couleur: "#5E9E2F", statut: "pilote", mock: "coop",
-    tagline: "Accompagnement, gestion et accès aux marchés des coopératives",
-    resume: "Un logiciel de gestion — membres, parcelles, collectes, intrants, ventes et paiements — doublé d'un accompagnement complet : mise en conformité OHADA, formation des comités, ventes groupées et accès au crédit de campagne.",
-    description: "Ubora Coop suit la même logique que nos autres offres : un outil, et l'accompagnement qui le rend utile. Le logiciel donne à la coopérative un registre fiable de ses membres, de ses parcelles, de ses collectes et de ses ventes. L'accompagnement met la gouvernance en conformité avec l'Acte uniforme OHADA, forme le comité et les agents de collecte, organise les ventes groupées et prépare l'accès au crédit de campagne. Une coopérative qui connaît ses volumes et paie ses producteurs à temps négocie mieux, et convainc acheteurs comme financeurs.",
+    tagline: "Créer, structurer et gérer une coopérative, jusqu'au marché",
+    resume: "De la constitution du groupe à la vente groupée : création et immatriculation de la coopérative, structuration interne, formation des organes, logiciel de gestion, accès aux marchés et au crédit de campagne.",
+    description: "Ubora Coop accompagne une coopérative depuis sa création. Beaucoup de groupements existent de fait — des producteurs qui travaillent ensemble — sans exister en droit : pas de statuts, pas d'immatriculation, donc pas de compte bancaire, pas de contrat possible, pas de crédit. Nous partons de là : constituer la coopérative, la formaliser, organiser ses organes, puis l'outiller. Le logiciel donne à la coopérative un registre fiable de ses membres, de ses parcelles, de ses collectes et de ses ventes. L'accompagnement met la gouvernance en conformité avec l'Acte uniforme OHADA, forme le comité et les agents de collecte, organise les ventes groupées et prépare l'accès au crédit de campagne. Une coopérative qui connaît ses volumes et paie ses producteurs à temps négocie mieux, et convainc acheteurs comme financeurs.",
     fonctionnalites: [
+      ["Création & constitution", "Assemblée constitutive, adhésions, souscription des parts sociales, désignation des organes."],
+      ["Formalisation", "Statuts conformes à l'Acte uniforme OHADA, immatriculation au registre des sociétés coopératives, identification nationale, compte bancaire."],
+      ["Structuration interne", "Règlement intérieur, organigramme, séparation des rôles entre assemblée, conseil et gérance, procédures de caisse."],
       ["Registre des membres", "Profil, parcelles, cultures, parts sociales."],
       ["Collecte & stocks", "Pesées, qualité, entrepôts, pertes post-récolte."],
       ["Intrants à crédit", "Distribution et récupération sur les ventes."],
@@ -578,13 +581,16 @@ const DOMAINES = {
     lead: "Gouvernance conforme, gestion rigoureuse, accès aux marchés et au financement : notre accompagnement des coopératives agricoles, de la parcelle jusqu'à la vente groupée.",
     intro: "Une coopérative bien organisée négocie mieux, accède aux intrants et au crédit, et paie ses producteurs à temps. La plupart échouent non par manque de volonté, mais parce que les règles, les comptes et les volumes ne sont écrits nulle part.",
     constats: [
+      ["Des groupements sans existence légale", "Des producteurs travaillent déjà ensemble, mais sans statuts ni immatriculation : ni compte bancaire, ni contrat, ni crédit possible."],
       ["Une gouvernance floue", "Statuts non conformes à l'Acte uniforme OHADA, assemblées irrégulières, décisions contestées."],
       ["Des membres mal connus", "Sans registre des membres et des parcelles, impossible d'annoncer un volume crédible à un acheteur."],
       ["Des pertes après récolte", "Faute de stockage et de suivi, une partie de la production est perdue ou bradée."],
       ["Des paiements tardifs", "Quand les producteurs ne sont pas payés à temps, ils vendent ailleurs au cycle suivant."]
     ],
     parcours: [
-      ["Organiser", "Statuts conformes OHADA, règlement intérieur, comité élu, rôles écrits.", "Une coopérative juridiquement solide."],
+      ["Constituer", "Mobilisation des membres, assemblée constitutive, souscription des parts sociales, élection des organes.", "Une coopérative qui existe, avec des membres engagés."],
+      ["Formaliser", "Statuts conformes à l'Acte uniforme OHADA, immatriculation au registre des sociétés coopératives, identification nationale, ouverture du compte.", "Une personnalité juridique : contrats, compte bancaire et crédit deviennent possibles."],
+      ["Structurer", "Règlement intérieur, rôles séparés entre assemblée, conseil et gérance, procédures de caisse et de stock.", "Des règles écrites qui évitent les conflits."],
       ["Recenser", "Membres, parcelles, cultures, parts sociales : le registre de base.", "Des volumes annonçables et vérifiables."],
       ["Produire et collecter", "Planification des campagnes, intrants à crédit, pesées, qualité, gestion des stocks.", "Moins de pertes, une production maîtrisée."],
       ["Vendre groupé", "Recherche d'acheteurs, contrats, négociation des prix, planification des livraisons.", "Un meilleur prix que la vente individuelle."],
