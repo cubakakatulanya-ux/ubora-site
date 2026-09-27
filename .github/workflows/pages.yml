@@ -1,0 +1,33 @@
+# Régénère chaque nuit les pages statiques et le plan du site, pour que les
+# actualités, formations et offres publiées depuis l'espace équipe soient
+# visibles des moteurs de recherche. Ne crée un commit que si quelque chose a changé.
+name: Pages et plan du site
+
+on:
+  schedule:
+    - cron: "15 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  generer:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - run: node tools/prerender.js
+      - name: Enregistrer les changements
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git config user.name "ubora-bot"
+            git config user.email "ubora-bot@users.noreply.github.com"
+            git add -A
+            git commit -m "Pages régénérées à partir du contenu publié"
+            git push
+          else
+            echo "Rien de nouveau."
+          fi

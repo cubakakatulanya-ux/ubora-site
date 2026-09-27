@@ -1,0 +1,11 @@
+# Fichiers du dépôt qui ne doivent jamais être publiés sur le site.
+.git
+.github
+.gitignore
+.assetsignore
+*.md
+*.sql
+*.bak
+wrangler.jsonc
+tools
+node_modules

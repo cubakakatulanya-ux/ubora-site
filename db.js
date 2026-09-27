@@ -1,31 +1,32 @@
 /* ==========================================================================
    UBORA — Connexion à la base de données (Supabase)
-   --------------------------------------------------------------------------
-   Tant que SUPABASE.url est vide, le site fonctionne avec le contenu écrit
-   dans data.js. Dès que les identifiants sont renseignés, actualités,
-   formations et offres d'emploi viennent de la base et se modifient depuis
-   la page d'administration (#/admin).
+   Les actualités, formations et offres publiées viennent de la base.
+   Les formulaires du site (contact, lettre d'information, assistant) y écrivent.
+   L'espace équipe (/admin) y lit et y modifie tout le reste.
+   La sécurité repose sur les règles d'accès de la base : un visiteur ne peut
+   que lire ce qui est publié et déposer un message ; seule l'équipe inscrite
+   dans site_admins peut publier ou lire les messages.
    ========================================================================== */
 
 const DATA = { actualites: ACTUALITES, formations: FORMATIONS, offres: OFFRES, source: "fichier" };
 
 const UboraDB = (() => {
-  let client = null, ready = false;
+  let client = null;
 
   const configured = () => !!(typeof SUPABASE !== "undefined" && SUPABASE.url && SUPABASE.anonKey);
   function sb() {
-    if (!configured() || !window.supabase) return null;
-    if (!client) client = window.supabase.createClient(SUPABASE.url, SUPABASE.anonKey);
+    if (!configured() || typeof window === "undefined" || !window.supabase) return null;
+    if (!client) client = window.supabase.createClient(SUPABASE.url, SUPABASE.anonKey, { auth: { persistSession: true, storageKey: "ubora-admin" } });
     return client;
   }
 
   /* --- Conversion base <-> site --- */
-  const fromNews = r => ({ slug: r.slug, date: r.date, categorie: r.categorie, titre: r.titre, extrait: r.extrait, contenu: r.contenu || [], exemple: !!r.exemple });
-  const toNews = o => ({ slug: o.slug, date: o.date, categorie: o.categorie, titre: o.titre, extrait: o.extrait, contenu: o.contenu, exemple: !!o.exemple, publie: o.publie !== false });
-  const fromTrain = r => ({ id: r.slug, titre: r.titre, outil: r.outil, date: r.date, duree: r.duree, mode: r.mode, lieu: r.lieu, public: r.public_cible, places: r.places, programme: r.programme || [], exemple: !!r.exemple });
-  const toTrain = o => ({ slug: o.id, titre: o.titre, outil: o.outil, date: o.date, duree: o.duree, mode: o.mode, lieu: o.lieu, public_cible: o.public, places: o.places, programme: o.programme, exemple: !!o.exemple, publie: o.publie !== false });
-  const fromJob = r => ({ id: r.slug, titre: r.titre, type: r.type, lieu: r.lieu, departement: r.departement, publie: r.publie_le, cloture: r.cloture, resume: r.resume, missions: r.missions || [], profil: r.profil || [], exemple: !!r.exemple });
-  const toJob = o => ({ slug: o.id, titre: o.titre, type: o.type, lieu: o.lieu, departement: o.departement, publie_le: o.publie, cloture: o.cloture, resume: o.resume, missions: o.missions, profil: o.profil, exemple: !!o.exemple, publie: o.publie_flag !== false });
+  const fromNews = r => ({ slug: r.slug, date: r.date, categorie: r.categorie, titre: r.titre, extrait: r.extrait, contenu: r.contenu || [] });
+  const toNews = o => ({ slug: o.slug, date: o.date, categorie: o.categorie, titre: o.titre, extrait: o.extrait, contenu: o.contenu, exemple: false, publie: o.publie !== false });
+  const fromTrain = r => ({ id: r.slug, titre: r.titre, outil: r.outil, date: r.date, duree: r.duree, mode: r.mode, lieu: r.lieu, public: r.public_cible, places: r.places, programme: r.programme || [] });
+  const toTrain = o => ({ slug: o.id, titre: o.titre, outil: o.outil, date: o.date, duree: o.duree, mode: o.mode, lieu: o.lieu, public_cible: o.public, places: o.places, programme: o.programme, exemple: false, publie: o.publie !== false });
+  const fromJob = r => ({ id: r.slug, titre: r.titre, type: r.type, lieu: r.lieu, departement: r.departement, publie: r.publie_le, cloture: r.cloture, resume: r.resume, missions: r.missions || [], profil: r.profil || [] });
+  const toJob = o => ({ slug: o.id, titre: o.titre, type: o.type, lieu: o.lieu, departement: o.departement, publie_le: o.publie, cloture: o.cloture, resume: o.resume, missions: o.missions, profil: o.profil, exemple: false, publie: o.publie_flag !== false });
 
   const MAP = {
     actualites: { table: "site_actualites", order: "date", from: fromNews, to: toNews },
@@ -33,58 +34,57 @@ const UboraDB = (() => {
     offres: { table: "site_offres", order: "publie_le", from: fromJob, to: toJob }
   };
 
-  /* --- Chargement du contenu public --- */
+  /* --- Contenu public --- */
   async function load() {
-    const c = sb();
-    if (!c) return DATA;
+    const c = sb(); if (!c) return DATA;
     try {
       const [a, f, o] = await Promise.all([
         c.from("site_actualites").select("*").eq("publie", true).order("date", { ascending: false }),
         c.from("site_formations").select("*").eq("publie", true).order("date", { ascending: true }),
         c.from("site_offres").select("*").eq("publie", true).order("publie_le", { ascending: false })
       ]);
-      if (a.data && a.data.length) DATA.actualites = a.data.map(fromNews);
-      if (f.data && f.data.length) DATA.formations = f.data.map(fromTrain);
-      if (o.data && o.data.length) DATA.offres = o.data.map(fromJob);
-      if (!a.error && !f.error && !o.error) { DATA.source = "base"; ready = true; }
-      else console.warn("Ubora : lecture partielle de la base", a.error || f.error || o.error);
-    } catch (e) { console.warn("Ubora : base indisponible, contenu du fichier utilisé.", e); }
+      if (!a.error) DATA.actualites = (a.data || []).map(fromNews);
+      if (!f.error) DATA.formations = (f.data || []).map(fromTrain);
+      if (!o.error) DATA.offres = (o.data || []).map(fromJob);
+      DATA.source = "base";
+    } catch (e) { console.warn("Ubora : base indisponible.", e); }
     return DATA;
   }
 
-  /* --- Écritures publiques (formulaires du site) --- */
+  /* --- Formulaires publics --- */
   async function sendMessage(m) {
-    const c = sb(); if (!c) return { ok: false, offline: true };
+    const c = sb(); if (!c) return { ok: false };
     const { error } = await c.from("site_messages").insert([m]);
     return { ok: !error, error };
   }
   async function logQuestion(q) {
-    const c = sb(); if (!c) return { ok: false, offline: true };
+    const c = sb(); if (!c) return { ok: false };
     const { error } = await c.from("site_questions").insert([q]);
     return { ok: !error, error };
   }
   async function subscribe(email) {
-    const c = sb(); if (!c) return { ok: false, offline: true };
-    const { error } = await c.from("site_abonnes").insert([{ email }]);
+    const c = sb(); if (!c) return { ok: false };
+    const { error } = await c.from("site_abonnes").insert([{ email: email.toLowerCase() }]);
     return { ok: !error || error.code === "23505", error };
   }
 
-  /* --- Administration --- */
+  /* --- Espace équipe --- */
   async function signIn(email, password) {
-    const c = sb(); if (!c) return { ok: false, message: "Base de données non configurée." };
+    const c = sb(); if (!c) return { ok: false, message: "La base de données est injoignable." };
     const { data, error } = await c.auth.signInWithPassword({ email, password });
-    return error ? { ok: false, message: error.message } : { ok: true, user: data.user };
-  }
-  async function signUp(email, password) {
-    const c = sb(); if (!c) return { ok: false, message: "Base de données non configurée." };
-    const { data, error } = await c.auth.signUp({ email, password });
-    return error ? { ok: false, message: error.message } : { ok: true, session: !!data.session };
+    if (error) return { ok: false, message: error.message === "Invalid login credentials" ? "Adresse e-mail ou mot de passe incorrect." : error.message };
+    return { ok: true, user: data.user };
   }
   async function signOut() { const c = sb(); if (c) await c.auth.signOut(); }
   async function currentUser() {
     const c = sb(); if (!c) return null;
     const { data } = await c.auth.getSession();
     return data?.session?.user || null;
+  }
+  async function isAdmin() {
+    const c = sb(); if (!c) return false;
+    const { data, error } = await c.from("site_admins").select("email").limit(1);
+    return !error && data && data.length > 0;
   }
   async function listAll(kind) {
     const c = sb(), m = MAP[kind]; if (!c) return [];
@@ -93,22 +93,46 @@ const UboraDB = (() => {
     return data.map(r => ({ ...m.from(r), _id: r.id, _publie: r.publie }));
   }
   async function save(kind, obj, id) {
-    const c = sb(), m = MAP[kind]; if (!c) return { ok: false, message: "Base non configurée." };
+    const c = sb(), m = MAP[kind]; if (!c) return { ok: false, message: "Base injoignable." };
     const row = m.to(obj);
-    const q = id ? c.from(m.table).update(row).eq("id", id) : c.from(m.table).insert([row]);
-    const { error } = await q;
-    return error ? { ok: false, message: error.message } : { ok: true };
+    const { error } = id ? await c.from(m.table).update(row).eq("id", id) : await c.from(m.table).insert([row]);
+    if (error) return { ok: false, message: error.code === "23505" ? "Un élément porte déjà ce titre. Modifiez-le légèrement." : error.message };
+    return { ok: true };
   }
   async function remove(kind, id) {
     const c = sb(), m = MAP[kind]; if (!c) return { ok: false };
     const { error } = await c.from(m.table).delete().eq("id", id);
     return { ok: !error, message: error?.message };
   }
-  async function listMessages() {
+  async function list(table, order = "created_at", limit = 500) {
     const c = sb(); if (!c) return [];
-    const { data } = await c.from("site_messages").select("*").order("created_at", { ascending: false }).limit(200);
+    const { data, error } = await c.from(table).select("*").order(order, { ascending: false }).limit(limit);
+    if (error) console.warn(error);
     return data || [];
   }
+  async function removeRow(table, id) {
+    if (!["site_messages", "site_abonnes", "site_questions"].includes(table)) return { ok: false };
+    const c = sb(); if (!c) return { ok: false };
+    const { error } = await c.from(table).delete().eq("id", id);
+    return { ok: !error };
+  }
+  async function setTraite(id, traite) {
+    const c = sb(); if (!c) return { ok: false };
+    const { error } = await c.from("site_messages").update({ traite }).eq("id", id);
+    return { ok: !error };
+  }
+  async function counts() {
+    const c = sb(); if (!c) return {};
+    const q = (t, f) => { let r = c.from(t).select("id", { count: "exact", head: true }); if (f) r = f(r); return r; };
+    const [m, mn, a, s, f, o] = await Promise.all([
+      q("site_messages"), q("site_messages", r => r.eq("traite", false)), q("site_actualites"),
+      q("site_abonnes"), q("site_formations"), q("site_offres")
+    ]);
+    const qq = await q("site_questions", r => r.eq("repondu", false));
+    return { messages: m.count || 0, nonTraites: mn.count || 0, actualites: a.count || 0, abonnes: s.count || 0, formations: f.count || 0, offres: o.count || 0, questionsSansReponse: qq.count || 0 };
+  }
 
-  return { configured, load, sendMessage, subscribe, logQuestion, signIn, signUp, signOut, currentUser, listAll, save, remove, listMessages, get ready() { return ready; } };
+  const mappers = { actualites: fromNews, formations: fromTrain, offres: fromJob };
+
+  return { configured, mappers, load, sendMessage, subscribe, logQuestion, signIn, signOut, currentUser, isAdmin, listAll, save, remove, list, removeRow, setTraite, counts };
 })();

@@ -1,86 +1,79 @@
-# Site web — Ubora Entreprise Sociale
+# Site web d'Ubora, entreprise sociale
 
-Site officiel d'Ubora, entreprise sociale basée à Lubumbashi et active dans toute la RDC :
-résilience économique, inclusion financière, structuration et digitalisation des PME,
-accompagnement entrepreneurial, coopératives et chaînes de valeur, conseil, formation et gestion de projets.
+Site officiel d'Ubora, entreprise sociale basée à Lubumbashi et active dans toute la RDC.
 
-**En ligne :** https://uborardc.com
-**Espace équipe :** https://uborardc.com/#/admin
-**Miroir GitHub Pages :** https://cubakakatulanya-ux.github.io/ubora-site/
+- **Site principal :** https://uborardc.com
+- **Pôles :** avec., pme., coop., fin. et market.uborardc.com (chaque sous-domaine affiche la page du pôle)
+- **Outils :** akiba.uborardc.com (application AKIBA), bp.uborardc.com (générateur de business plan), hub.uborardc.com (Ubora Hub)
+- **Espace équipe :** https://uborardc.com/admin
 
 ## Les fichiers
 
 | Fichier | Rôle |
 |---|---|
-| `data.js` | Contenu de secours et réglages : coordonnées, axes, services, solutions, identifiants Supabase. |
-| `index.html` | Structure de la page (en-tête, pied de page, scripts). |
-| `styles.css` | Apparence : couleurs, typographies, mises en page, mode sombre. |
-| `app.js` | Fonctionnement : navigation, pages, simulateur, diagnostic, formulaires. |
+| `data.js` | Tous les textes : coordonnées, mentions légales, pôles, méthode, outils, catalogue de formations, FAQ. |
+| `app.js` | Construction des pages et navigation. |
 | `db.js` | Connexion à la base de données Supabase. |
-| `admin.js` | Espace équipe : administration du contenu en ligne. |
-| `supabase.sql` | Script de création de la base (déjà appliqué). |
-| `logo.png` | Logo Ubora. |
+| `admin.js` | Espace équipe : messages, actualités, formations, offres, abonnés, questions. |
+| `chat.js` | Assistant du site (répond à partir du contenu, sans service extérieur). |
+| `styles.css` | Apparence : couleurs, typographies, mises en page, thème sombre. |
+| `theme.js` | Applique le thème choisi par le visiteur avant l'affichage. |
+| `*.html` | Pages générées par `tools/prerender.js`, une par adresse. **Ne pas modifier à la main.** |
+| `tools/shell.html` | Modèle commun à toutes les pages (en-tête HTML, scripts). |
+| `tools/prerender.js` | Génère les pages, `sitemap.xml` et `robots.txt`. |
+| `generateur/` | Générateur de business plan (servi sur bp.uborardc.com). |
+| `_headers` | En-têtes de sécurité (CSP, HSTS, etc.). |
+| `_redirects` | Redirections des anciennes adresses. |
+| `.assetsignore` | Fichiers du dépôt qui ne sont jamais publiés (ce fichier, `supabase.sql`, `tools/`…). |
+| `supabase.sql` | Structure et règles de la base (déjà appliquées). |
 
 ## Modifier le contenu
 
-**Actualités, formations, offres d'emploi** — rendez-vous sur `/#/admin`, connectez-vous,
-et gérez tout depuis le navigateur. Les changements apparaissent aussitôt sur le site.
+**Actualités, formations, offres d'emploi :** espace équipe, sur https://uborardc.com/admin.
+Ce qui est publié apparaît aussitôt sur le site. Chaque nuit, une tâche automatique
+(`.github/workflows/pages.yml`) régénère les pages et le plan du site pour que les moteurs
+de recherche voient les nouveautés. On peut aussi la lancer à la main depuis l'onglet
+*Actions* du dépôt GitHub.
 
-**Textes fixes** (services, solutions, coordonnées, valeurs) — modifiez `data.js`,
-puis envoyez le fichier sur GitHub (bouton *Edit* sur github.com, ou `git push`).
-Le site se met à jour en une à deux minutes.
+**Textes fixes** (pôles, méthode, coordonnées, mentions légales) : modifier `data.js`, puis lancer
 
-## Base de données (déjà connectée)
+```bash
+node tools/prerender.js
+```
 
-Le site est relié au projet Supabase **coopec-gestion** (`uoshpvqdszygezkuhhco`, région eu-central-1).
-Les tables du site y sont préfixées `site_` pour cohabiter avec les autres données du projet :
-`site_actualites`, `site_formations`, `site_offres`, `site_messages`, `site_abonnes`, `site_admins`.
+et envoyer les changements sur GitHub (`git push`). Le site se met à jour en une à deux minutes.
 
-Les identifiants publics sont dans `data.js` (constante `SUPABASE`). La clé *anon* est prévue pour
-être visible dans un site web ; l'écriture est protégée par les règles décrites dans `supabase.sql`.
+## Base de données
+
+Projet Supabase **coopec-gestion** (`uoshpvqdszygezkuhhco`, eu-central-1). Les tables du site sont
+préfixées `site_` : `site_actualites`, `site_formations`, `site_offres`, `site_messages`,
+`site_abonnes`, `site_questions`, `site_admins`.
+
+La clé *anon* de `data.js` est faite pour être publique : les règles d'accès de la base empêchent
+un visiteur de lire les messages, les abonnés ou les brouillons, et de modifier quoi que ce soit.
 **Ne publiez jamais la clé `service_role`.**
 
-Si la base est vide ou inaccessible, le site retombe automatiquement sur le contenu écrit dans
-`data.js` : il reste donc toujours consultable.
+### Ajouter un membre de l'équipe
 
-### Qui peut publier
-
-Seules les adresses e-mail inscrites dans la table `site_admins` peuvent créer ou modifier du contenu
-et lire les messages reçus. Pour ajouter un membre de l'équipe, exécutez dans le SQL Editor de Supabase :
+1. Dans Supabase, *Authentication → Users → Add user* : saisir son adresse et un mot de passe provisoire.
+2. Dans le *SQL Editor* :
 
 ```sql
 insert into public.site_admins (email, nom) values ('prenom.nom@exemple.com', 'Prénom Nom');
 ```
 
-La personne se rend ensuite sur `/#/admin`, ouvre « Première connexion ? » et choisit son mot de passe.
+La personne peut alors se connecter sur `/admin`.
 
-### Ce que la base contient
-
-- `site_actualites`, `site_formations`, `site_offres` : contenus affichés sur le site (lecture publique de ce qui est publié).
-- `site_messages` : messages envoyés par le formulaire de contact, consultables dans l'espace équipe.
-- `site_abonnes` : inscriptions à la lettre d'information.
-- `site_admins` : personnes autorisées à publier.
-
-## Domaine et hébergement
+## Hébergement
 
 Le site est servi par **Cloudflare Workers** (projet `ubora-site`), relié à ce dépôt : chaque
-`git push` sur `main` redéploie automatiquement. Les domaines `uborardc.com` et
-`entreprisesocialeubora.com` sont enregistrés chez Cloudflare, avec Email Routing pour
-`contact@uborardc.com`. GitHub Pages reste actif comme miroir de secours.
-
-Pour rattacher un domaine ou un sous-domaine : **Workers & Pages → ubora-site → Settings →
-Domains & Routes → Add → Custom domain**. Cloudflare crée les enregistrements DNS et le
-certificat lui-même.
+`git push` sur `main` redéploie automatiquement. Pour rattacher un sous-domaine :
+*Workers & Pages → ubora-site → Settings → Domains & Routes → Add → Custom domain*.
 
 ## Travailler en local
 
+N'importe quel serveur statique convient, par exemple :
+
 ```bash
-python -m http.server 8000
+npx serve .
 ```
-puis ouvrez http://localhost:8000 (ou tout autre serveur statique).
-
-## À compléter
-
-- Liens d'**Ubora Fin** et d'**Ubora PME** (champ `site` des solutions).
-- Les contenus marqués « Exemple » (actualités, formations, offres), à remplacer depuis l'espace équipe.
-- Les objectifs 2028 de la page « À propos ».

@@ -163,3 +163,59 @@ create index if not exists site_offres_cloture_idx  on public.site_offres (clotu
 
 -- ---------- Ajouter un membre de l'équipe ----------
 -- insert into public.site_admins (email, nom) values ('prenom.nom@exemple.com', 'Prénom Nom');
+
+-- ==========================================================================
+-- Questions posées à l'assistant du site
+-- ==========================================================================
+create table if not exists public.site_questions (
+  id         uuid primary key default gen_random_uuid(),
+  question   text not null,
+  repondu    boolean not null default false,
+  page       text,
+  created_at timestamptz not null default now()
+);
+alter table public.site_questions enable row level security;
+
+drop policy if exists "question publique" on public.site_questions;
+create policy "question publique" on public.site_questions
+  for insert to anon, authenticated with check (char_length(question) between 2 and 500);
+
+drop policy if exists "equipe lit questions" on public.site_questions;
+create policy "equipe lit questions" on public.site_questions
+  for select to authenticated using (public.est_admin_site());
+
+-- ==========================================================================
+-- Renforcement (27 septembre 2026)
+-- ==========================================================================
+-- Limites sur ce que les visiteurs peuvent envoyer
+alter table public.site_messages
+  add constraint site_messages_nom_len check (char_length(nom) between 1 and 120),
+  add constraint site_messages_org_len check (organisation is null or char_length(organisation) <= 160),
+  add constraint site_messages_tel_len check (telephone is null or char_length(telephone) <= 40),
+  add constraint site_messages_email_fmt check (email is null or (char_length(email) <= 160 and email ~* '^[^@\s]+@[^@\s]+\.[^@\s]+$')),
+  add constraint site_messages_besoin_len check (besoin is null or char_length(besoin) <= 160),
+  add constraint site_messages_message_len check (char_length(message) between 2 and 4000);
+alter table public.site_abonnes
+  add constraint site_abonnes_email_fmt check (char_length(email) <= 160 and email ~* '^[^@\s]+@[^@\s]+\.[^@\s]+$');
+alter table public.site_questions
+  add constraint site_questions_page_len check (page is null or char_length(page) <= 200);
+
+-- Un visiteur ne peut pas déposer un message déjà « traité »
+drop policy if exists "envoi message public" on public.site_messages;
+create policy "envoi message public" on public.site_messages
+  for insert to anon, authenticated with check (traite = false);
+
+-- L'équipe peut supprimer un message indésirable, désinscrire un abonné, effacer une question
+drop policy if exists "equipe supprime messages" on public.site_messages;
+create policy "equipe supprime messages" on public.site_messages
+  for delete to authenticated using (public.est_admin_site());
+drop policy if exists "equipe supprime abonnes" on public.site_abonnes;
+create policy "equipe supprime abonnes" on public.site_abonnes
+  for delete to authenticated using (public.est_admin_site());
+drop policy if exists "equipe supprime questions" on public.site_questions;
+create policy "equipe supprime questions" on public.site_questions
+  for delete to authenticated using (public.est_admin_site());
+
+-- La fonction de contrôle ne sert qu'aux membres connectés
+revoke execute on function public.est_admin_site() from public, anon;
+grant execute on function public.est_admin_site() to authenticated;

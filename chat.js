@@ -19,17 +19,20 @@ const UboraChat = (() => {
     const K = [];
     const push = (titre, texte, lien, mots) => K.push({ titre, texte, lien, mots: WORDS(titre + " " + texte + " " + (mots || "")) });
 
-    push("Qui est Ubora", "Ubora est une entreprise sociale basée à Lubumbashi et active dans toute la RDC. Nous bâtissons la résilience économique des PME, des coopératives, des groupes d'épargne et des institutions financières, par l'accompagnement humain et des outils numériques adaptés au terrain.", "/a-propos", "presentation mission qui sommes nous entreprise sociale societe");
-    push("Notre approche et notre méthode", `${METHODE.nom} : ${METHODE.accroche} ${METHODE.etapes.map(e => e.titre).join(", ")}. ${METHODE.intro}`, "/approche", "methodologie methode approche etapes demarche accompagnement");
-    push("L'appui aux AVEC", `Notre approche phare : constituer, former et digitaliser les Associations Villageoises d'Épargne et de Crédit, puis connecter les groupes aux institutions financières. ${AVEC.definition}`, "/avec", "avec vsla groupe epargne credit villageoise tontine mususa caisse");
-    push("Contact", `Téléphone et WhatsApp : ${CONFIG.telephone}. E-mail : ${CONFIG.email}. Siège : ${CONFIG.adresse}. ${CONFIG.zone}. Horaires : ${CONFIG.horaires}.`, "/contact", "contact telephone numero adresse mail bureau joindre rendez-vous horaires ou situes");
-    push("Formations", "Nous formons les utilisateurs de nos outils : prise en main, formateurs relais, accompagnement terrain et support. Le calendrier des sessions est en ligne.", "/formations", "formation former session calendrier atelier apprendre cours");
-    push("Offres d'emploi", "Nos postes ouverts, stages et consultances sont publiés sur la page Carrières, avec les missions, le profil recherché et la date limite.", "/carrieres", "emploi recrutement poste stage carriere candidature travailler job");
-    push("Zone d'intervention", `Notre siège est à Lubumbashi (Haut-Katanga). Nous intervenons partout en RDC, sur le terrain et à distance.`, "/contact", "zone intervention ou province kinshasa lubumbashi katanga kivu campagne rurale pays");
-    push("Tarifs", "Nos tarifs dépendent du programme et du volume. Les prestations aux organisations financent un accès à tarif solidaire pour les groupes d'épargne et les micro-entrepreneurs. Demandez un devis adapté.", "/contact", "prix tarif cout combien devis payer gratuit budget");
+    push("Qui est Ubora", "Ubora est une entreprise sociale née à Lubumbashi, qui travaille dans toute la RDC. Nous accompagnons les groupes d'épargne, les entrepreneurs, les coopératives et les institutions financières, avec des outils numériques pensés pour le pays.", "/a-propos", "presentation mission qui sommes nous entreprise sociale societe");
+    push("Notre modèle d'entreprise sociale", "Les organisations (ONG, bailleurs, institutions financières, programmes) paient nos prestations. Cela nous permet de proposer des tarifs solidaires aux groupes d'épargne, aux femmes et jeunes entrepreneurs et aux producteurs ruraux. Les excédents sont réinvestis dans nos outils et notre présence sur le terrain.", "/a-propos#modele", "modele social entreprise sociale economique financement tarif solidaire");
+    push("Notre méthode", `${METHODE.nom}, en six temps : ${METHODE.etapes.map(e => e.titre.toLowerCase()).join(", ")}. ${METHODE.intro}`, "/approche", "methodologie methode approche etapes demarche accompagnement");
+    push("Qu'est-ce qu'une AVEC", AVEC.definition, "/avec", "avec vsla definition association villageoise epargne credit tontine");
+    push("Contact", `Téléphone et WhatsApp : ${CONFIG.telephone}. E-mail : ${CONFIG.email}. Siège : ${CONFIG.adresse}. ${CONFIG.horaires}.`, "/contact", "contact telephone numero adresse mail bureau joindre rendez-vous horaires ou situes whatsapp");
+    push("Formations", "Nous formons les utilisateurs de nos outils et des formateurs relais, et nous organisons des sessions sur demande, dans votre province ou en ligne.", "/formations", "formation former session calendrier atelier apprendre cours");
+    push("Offres d'emploi", "Nos postes ouverts, stages et consultances sont publiés sur la page Carrières. Vous pouvez aussi envoyer une candidature spontanée.", "/carrieres", "emploi recrutement poste stage carriere candidature travailler job cv");
+    push("Zone d'intervention", "Notre siège est à Lubumbashi, dans le Haut-Katanga. Nous intervenons partout en RDC, sur place ou à distance.", "/contact", "zone intervention ou province kinshasa lubumbashi katanga kivu lualaba campagne rurale pays");
+    push("Tarifs", "Les tarifs dépendent du programme et du nombre de bénéficiaires. Les prestations facturées aux organisations nous permettent des tarifs solidaires pour les groupes d'épargne et les micro-entrepreneurs.", "/contact", "prix tarif cout combien devis payer gratuit budget");
+    push("Conseil et programmes", CONSEIL.map(s => s.titre).join(", ") + ", pour les ONG, les bailleurs et les institutions.", "/conseil", "conseil etude projet ong bailleur programme evaluation");
 
-    SOLUTIONS.forEach(s => push(s.nom, `${s.tagline}. ${s.resume} Pour : ${s.pour.join(", ")}.`, "/solutions/" + s.id, s.nom.replace(/\s/g, "") + " " + (s.app || "") + " outil logiciel application"));
-    SERVICES.forEach(s => push(s.titre, `${s.court} ${s.points.slice(0, 4).join(", ")}.`, s.lien || "/services#" + s.id, "service expertise accompagnement"));
+    POLES.forEach(p => push(p.nom, `${p.carte} ${p.lead} Adresse directe : ${p.sousDomaine}.`, p.chemin, p.nom.replace(/\s/g, "") + " " + p.id + " pole " + (p.boite ? "boite outils documents " : "") + p.publics.join(" ")));
+    POLES.filter(p => p.boite).forEach(p => push(p.boite.titre, `${p.boite.intro} ${p.boite.statut === "disponible" ? "Elle est disponible sur demande." : "Elle sera bientôt disponible."}`, p.chemin + "#boite", "boite outils documents modeles telecharger " + p.id));
+    OUTILS.forEach(o => push(o.nom, `${o.resume} ${o.statut === "en-ligne" ? "En ligne à l'adresse " + o.sousDomaine + "." : "En préparation."}`, o.statut === "en-ligne" ? o.url : "/outils#" + o.id, o.nom.replace(/\s/g, "") + " outil logiciel application"));
     FAQ.forEach(([q, r]) => push(q, r, "/a-propos#faq", "question"));
     DATA.formations.slice(0, 8).forEach(f => push(f.titre, `Session du ${fmtDate(f.date)} · ${f.mode} · ${f.lieu} · ${f.places} places. Public : ${f.public}.`, "/formations", "formation session date calendrier"));
     DATA.offres.forEach(o => push(o.titre, `${o.type} · ${o.lieu}. ${o.resume} Candidatures jusqu'au ${fmtDate(o.cloture)}.`, "/carrieres/" + o.id, "emploi poste recrutement"));
@@ -40,11 +43,11 @@ const UboraChat = (() => {
 
   const SUGGESTIONS = [
     "Qu'est-ce qu'une AVEC ?",
-    "Que fait Ubora AVEC ?",
-    "Quelles formations proposez-vous ?",
-    "Comment vous contacter ?",
+    "Comment obtenir la boîte à outils ?",
+    "Accompagnez-vous les entrepreneurs ?",
+    "Qu'est-ce qu'une entreprise sociale ?",
     "Travaillez-vous hors de Lubumbashi ?",
-    "Recrutez-vous en ce moment ?"
+    "Comment vous contacter ?"
   ];
 
   /* --- Recherche --- */
@@ -80,7 +83,7 @@ const UboraChat = (() => {
       <div class="chat-log" id="chatLog" role="log" aria-live="polite"></div>
       <div class="chat-sugg" id="chatSugg">${SUGGESTIONS.map(s => `<button type="button">${esc(s)}</button>`).join("")}</div>
       <form class="chat-form" id="chatForm">
-        <input id="chatInput" autocomplete="off" placeholder="Posez votre question…" aria-label="Votre question">
+        <input id="chatInput" autocomplete="off" maxlength="300" placeholder="Posez votre question…" aria-label="Votre question">
         <button class="btn btn-primary btn-sm" type="submit" aria-label="Envoyer">${ICON.arrow}</button>
       </form>`;
     document.body.appendChild(box);
@@ -96,7 +99,7 @@ const UboraChat = (() => {
     $("#chatClose").addEventListener("click", toggle);
     $("#chatForm").addEventListener("submit", e => { e.preventDefault(); send($("#chatInput").value); });
     $$("#chatSugg button").forEach(b => b.addEventListener("click", () => send(b.textContent)));
-    say("bot", `Karibu ! Je réponds à partir du contenu du site : nos expertises, nos solutions Ubora, l'appui aux AVEC, les formations, les offres d'emploi et nos coordonnées. Que cherchez-vous ?`);
+    say("bot", `Karibu. Je réponds à partir de ce qui est écrit sur le site : nos pôles, nos outils, les boîtes à outils, les formations, les offres d'emploi et nos coordonnées. Que cherchez-vous ?`);
   }
 
   function say(who, html) {
@@ -116,7 +119,7 @@ const UboraChat = (() => {
     const res = answer(q);
     setTimeout(() => {
       if (!res) {
-        say("bot", `Je n'ai pas trouvé de réponse sûre à cette question dans le contenu du site. Notre équipe vous répondra directement :
+        say("bot", `Je ne trouve pas de réponse fiable à cette question sur le site. Notre équipe peut vous répondre directement.
           <span class="chat-actions"><a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="${waLink("Bonjour Ubora, ma question : " + q)}">Demander sur WhatsApp</a>
           <a class="btn btn-ghost btn-sm" href="/contact">Formulaire de contact</a></span>`);
         logQuestion(q, false);
@@ -124,14 +127,14 @@ const UboraChat = (() => {
       }
       const [best, ...autres] = res;
       say("bot", `<b>${esc(best.titre)}</b><p>${esc(best.texte)}</p>
-        <span class="chat-actions"><a class="btn btn-primary btn-sm" href="${best.lien}">Voir la page ${ICON.arrow}</a></span>
+        <span class="chat-actions"><a class="btn btn-primary btn-sm" href="${best.lien}"${/^https?:/.test(best.lien) ? ' target="_blank" rel="noopener"' : ""}>Voir la page ${ICON.arrow}</a></span>
         ${autres.length ? `<span class="chat-more">Voir aussi : ${autres.map(o => `<a href="${o.lien}">${esc(o.titre)}</a>`).join(" · ")}</span>` : ""}`);
       logQuestion(q, true);
     }, 260);
   }
 
   async function logQuestion(question, repondu) {
-    try { await UboraDB.logQuestion({ question, repondu, page: location.hash || "#/" }); } catch (e) {}
+    try { await UboraDB.logQuestion({ question: question.slice(0, 500), repondu, page: location.pathname }); } catch (e) {}
   }
 
   function toggle() {
