@@ -223,10 +223,12 @@ const SOLUTIONS = [
   {
     id: "ubora-coop", raccourci: "coop.uborardc.com", nom: "Ubora Coop", initiales: "Co", couleur: "#5E9E2F", statut: "pilote", mock: "coop",
     tagline: "Créer, structurer et gérer une coopérative, jusqu'au marché",
-    resume: "De la constitution du groupe à la vente groupée : création et immatriculation de la coopérative, structuration interne, formation des organes, logiciel de gestion, accès aux marchés et au crédit de campagne.",
-    description: "Ubora Coop accompagne une coopérative depuis sa création. Beaucoup de groupements existent de fait — des producteurs qui travaillent ensemble — sans exister en droit : pas de statuts, pas d'immatriculation, donc pas de compte bancaire, pas de contrat possible, pas de crédit. Nous partons de là : constituer la coopérative, la formaliser, organiser ses organes, puis l'outiller. Le logiciel donne à la coopérative un registre fiable de ses membres, de ses parcelles, de ses collectes et de ses ventes. L'accompagnement met la gouvernance en conformité avec l'Acte uniforme OHADA, forme le comité et les agents de collecte, organise les ventes groupées et prépare l'accès au crédit de campagne. Une coopérative qui connaît ses volumes et paie ses producteurs à temps négocie mieux, et convainc acheteurs comme financeurs.",
+    resume: "Deux points de départ : créer une coopérative à partir d'une organisation paysanne ou d'un groupement existant, ou remettre sur pied une coopérative déjà constituée. Puis la même suite : structuration, gestion outillée, accès aux marchés et au crédit de campagne.",
+    description: "Nous rencontrons deux situations. Des organisations paysannes et des groupements qui existent de fait — des producteurs qui travaillent déjà ensemble — mais pas en droit : ni statuts, ni immatriculation, donc ni compte bancaire, ni contrat, ni crédit. Et des coopératives déjà constituées, souvent en sommeil : statuts non conformes, comités jamais renouvelés, comptes introuvables. Dans le premier cas nous constituons, dans le second nous diagnostiquons et remettons en ordre. La suite est la même : structurer, outiller, ouvrir les marchés et le financement. Le logiciel donne à la coopérative un registre fiable de ses membres, de ses parcelles, de ses collectes et de ses ventes. L'accompagnement met la gouvernance en conformité avec l'Acte uniforme OHADA, forme le comité et les agents de collecte, organise les ventes groupées et prépare l'accès au crédit de campagne. Une coopérative qui connaît ses volumes et paie ses producteurs à temps négocie mieux, et convainc acheteurs comme financeurs.",
     fonctionnalites: [
+      ["Diagnostic de l'existant", "Pour une OP, un groupement ou une coopérative déjà là : état des statuts, de la gouvernance, des comptes et de l'activité."],
       ["Création & constitution", "Assemblée constitutive, adhésions, souscription des parts sociales, désignation des organes."],
+      ["Mise en conformité & redressement", "Révision des statuts, régularisation de l'immatriculation, renouvellement des organes, reconstitution des comptes."],
       ["Formalisation", "Statuts conformes à l'Acte uniforme OHADA, immatriculation au registre des sociétés coopératives, identification nationale, compte bancaire."],
       ["Structuration interne", "Règlement intérieur, organigramme, séparation des rôles entre assemblée, conseil et gérance, procédures de caisse."],
       ["Registre des membres", "Profil, parcelles, cultures, parts sociales."],
@@ -238,7 +240,7 @@ const SOLUTIONS = [
       ["Formation & coaching", "Comité de gestion, gérant, comptable et agents de collecte formés sur leurs opérations réelles."],
       ["Accès aux marchés et au crédit", "Recherche d'acheteurs, contrats de vente groupée, préparation du crédit de campagne et des intrants."]
     ],
-    pour: ["Coopératives agricoles", "Unions de coopératives", "Groupements de producteurs", "Acheteurs & agrégateurs", "ONG et programmes agricoles"],
+    pour: ["Organisations paysannes (OP)", "Groupements de producteurs", "Coopératives agricoles", "Coopératives à redresser", "Unions de coopératives", "ONG et programmes agricoles"],
     deploiement: [
       ["Recensement", "Enregistrement des membres, des parcelles, des cultures et des parts sociales."],
       ["Paramétrage de la campagne", "Cultures, prix, entrepôts, points de collecte et règles de paiement."],
@@ -579,16 +581,18 @@ const DOMAINES = {
     eyebrow: "Coopératives",
     titre: 'Des coopératives <span class="serif">solides</span>, des producteurs mieux payés.',
     lead: "Gouvernance conforme, gestion rigoureuse, accès aux marchés et au financement : notre accompagnement des coopératives agricoles, de la parcelle jusqu'à la vente groupée.",
-    intro: "Une coopérative bien organisée négocie mieux, accède aux intrants et au crédit, et paie ses producteurs à temps. La plupart échouent non par manque de volonté, mais parce que les règles, les comptes et les volumes ne sont écrits nulle part.",
+    intro: "Nous n'arrivons presque jamais devant une page blanche : il y a déjà une organisation paysanne, un groupement de fait ou une coopérative endormie. Notre travail consiste à partir de cet existant — le diagnostiquer, le constituer ou le redresser — puis à l'outiller jusqu'à ce qu'il vende mieux et paie ses producteurs à temps.",
     constats: [
-      ["Des groupements sans existence légale", "Des producteurs travaillent déjà ensemble, mais sans statuts ni immatriculation : ni compte bancaire, ni contrat, ni crédit possible."],
+      ["Des groupements sans existence légale", "Des organisations paysannes et des groupements travaillent déjà ensemble, sans statuts ni immatriculation : ni compte bancaire, ni contrat, ni crédit possible."],
+      ["Des coopératives en sommeil", "Immatriculées il y a des années, mais sans assemblée récente, sans comptes tenus et sans activité collective réelle."],
       ["Une gouvernance floue", "Statuts non conformes à l'Acte uniforme OHADA, assemblées irrégulières, décisions contestées."],
       ["Des membres mal connus", "Sans registre des membres et des parcelles, impossible d'annoncer un volume crédible à un acheteur."],
       ["Des pertes après récolte", "Faute de stockage et de suivi, une partie de la production est perdue ou bradée."],
       ["Des paiements tardifs", "Quand les producteurs ne sont pas payés à temps, ils vendent ailleurs au cycle suivant."]
     ],
     parcours: [
-      ["Constituer", "Mobilisation des membres, assemblée constitutive, souscription des parts sociales, élection des organes.", "Une coopérative qui existe, avec des membres engagés."],
+      ["Diagnostiquer l'existant", "Nous partons de ce qui est déjà là : une organisation paysanne, un groupement informel ou une coopérative en sommeil. État des statuts, de la gouvernance, des comptes et de l'activité.", "Un point de départ clair, et le choix entre constituer ou redresser."],
+      ["Constituer ou remettre en ordre", "Selon le cas : assemblée constitutive et souscription des parts, ou révision des statuts, renouvellement des organes et régularisation de l'immatriculation.", "Une coopérative qui existe réellement, avec des membres engagés."],
       ["Formaliser", "Statuts conformes à l'Acte uniforme OHADA, immatriculation au registre des sociétés coopératives, identification nationale, ouverture du compte.", "Une personnalité juridique : contrats, compte bancaire et crédit deviennent possibles."],
       ["Structurer", "Règlement intérieur, rôles séparés entre assemblée, conseil et gérance, procédures de caisse et de stock.", "Des règles écrites qui évitent les conflits."],
       ["Recenser", "Membres, parcelles, cultures, parts sociales : le registre de base.", "Des volumes annonçables et vérifiables."],
