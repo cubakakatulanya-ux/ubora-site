@@ -816,3 +816,10 @@ dl.legal dd.todo{color:var(--copper);font-style:italic}
 .parcours p{font-size:15.5px;color:var(--muted)}
 .parcours .resultat{margin-top:8px;padding-left:14px;border-left:2px solid var(--green);color:var(--ink);font-weight:500}
 @media (max-width:560px){.parcours li{grid-template-columns:1fr;gap:8px}}
+
+
+/* Bloc « projet en préparation » */
+.projet{border-radius:var(--r-lg);padding:clamp(28px,5vw,56px);display:grid;gap:14px;max-width:none}
+.projet h2{font-size:clamp(28px,3.6vw,42px);letter-spacing:-.03em;color:#fff;max-width:20ch}
+.projet .lead{max-width:62ch}
+.projet .etat{font-family:var(--f-mono);font-size:13px;color:var(--glow-green);border-left:2px solid var(--glow-green);padding-left:14px}

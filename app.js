@@ -140,7 +140,14 @@ function mockPme() {
     <div class="hub-kpis"><div><small>Investissement</small><b>$8 500</b></div><div><small>Seuil de rentabilité</small><b>mois 9</b></div><div><small>Marge nette an 2</small><b>21%</b></div></div>
     <div class="hub-chart"><small>Trésorerie prévisionnelle</small>${areaChart([5, 3, 2, 2.5, 4, 6, 8, 10, 13, 16, 19, 23])}</div></div>`);
 }
-const MOCKS = { akiba: mockAkiba, hub: mockHub, coop: mockCoop, fin: mockFin, pme: mockPme };
+function mockMarket() {
+  const rows = [["Maïs blanc", "Coop. Kasenga", "18 t", "Sous contrat", 1], ["Soja", "Coop. Kipushi", "7 t", "En négociation", 0], ["Farine de manioc", "Atelier Tuinuane", "2,5 t", "Sous contrat", 1], ["Haricot", "Coop. Sakania", "11 t", "Disponible", 0]];
+  return browser("ubora-market · Offre de la campagne", `<div style="padding:16px;display:grid;gap:12px">
+    <div class="hub-kpis"><div><small>Offre recensée</small><b>38 t</b></div><div><small>Acheteurs actifs</small><b>6</b></div><div><small>Sous contrat</small><b style="color:#9BDB5A">54%</b></div></div>
+    <div style="overflow-x:auto"><table class="coop-t"><thead><tr><th>Produit</th><th>Origine</th><th>Volume</th><th>État</th></tr></thead>
+    <tbody>${rows.map(r => `<tr><td>${r[0]}</td><td>${r[1]}</td><td>${r[2]}</td><td class="${r[4] ? "ok" : "wait"}">${r[3]}</td></tr>`).join("")}</tbody></table></div></div>`);
+}
+const MOCKS = { akiba: mockAkiba, hub: mockHub, coop: mockCoop, fin: mockFin, pme: mockPme, market: mockMarket };
 const mockFor = s => (MOCKS[s.mock] || mockHub)();
 
 /* ---------- Petits composants ---------- */
@@ -423,6 +430,16 @@ function pageDomaine(id) {
         <h3>${esc(n)}</h3><p>${esc(x)}</p><p class="shortcut">${esc(court)}</p>
         <span class="link">Ouvrir l'outil ${ICON.ext}</span></a>`).join("")}</div>
   </div></section>
+
+  ${D.projet ? `<section><div class="wrap">
+    <div class="deep projet"><span class="glow g1"></span><span class="glow g3"></span>
+      <span class="eyebrow">En préparation</span>
+      <h2>${esc(D.projet.titre)}</h2>
+      <p class="lead">${esc(D.projet.texte)}</p>
+      <p class="etat">${esc(D.projet.etat)}</p>
+      <div class="btn-row" style="margin-top:22px"><a class="btn btn-lime" href="/contact?sujet=${encodeURIComponent(D.projet.titre)}">${esc(D.projet.appel)}</a></div>
+    </div>
+  </div></section>` : ""}
 
   ${boiteOutils(D.boite, demande)}
 
@@ -957,7 +974,7 @@ $("#toTop").addEventListener("click", () => scrollTo({ top: 0, behavior: "smooth
 /* ==========================================================================
    ROUTEUR
    ========================================================================== */
-const TITLES = { "": "Accueil", "a-propos": "À propos", avec: "Appui aux AVEC", services: "Expertises", solutions: "Solutions", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", approche: "Notre approche", pme: "Accompagnement PME", financement: "Accès au financement", cooperatives: "Coopératives", mentions: "Mentions légales", admin: "Espace équipe" };
+const TITLES = { "": "Accueil", "a-propos": "À propos", avec: "Appui aux AVEC", services: "Expertises", solutions: "Solutions", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", approche: "Notre approche", pme: "Accompagnement PME", financement: "Accès au financement", cooperatives: "Coopératives", marche: "Accès au marché", mentions: "Mentions légales", admin: "Espace équipe" };
 function nav(path) { history.pushState({}, "", path); route(); }
 function route() {
   /* compatibilité : les anciennes adresses en #/ basculent vers le chemin réel */
@@ -973,7 +990,7 @@ function route() {
     case "a-propos": html = pageAbout(); break;
     case "avec": html = pageAvec(); break;
     case "approche": html = pageApproche(); break;
-    case "pme": case "financement": case "cooperatives": html = pageDomaine(base); break;
+    case "pme": case "financement": case "cooperatives": case "marche": html = pageDomaine(base); break;
     case "mentions": html = pageMentions(); break;
     case "services": html = pageServices(); break;
     case "solutions": {
@@ -1065,7 +1082,7 @@ $("#waFloat").href = waLink("Bonjour Ubora, je souhaite avoir des informations."
   if (parts.length < 3) return;
   const externe = { hub: "https://www.uborahub.com", akiba: "https://cubakakatulanya-ux.github.io/akiba-avec/", bp: "/generateur/" }[parts[0]];
   if (externe && location.pathname === "/") { location.replace(externe); return; }
-  const cible = { avec: "/avec", pme: "/pme", fin: "/financement", coop: "/cooperatives" }[parts[0]];
+  const cible = { avec: "/avec", pme: "/pme", fin: "/financement", coop: "/cooperatives", market: "/marche" }[parts[0]];
   if (cible && location.pathname === "/") history.replaceState({}, "", cible);
 })();
 

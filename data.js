@@ -222,18 +222,20 @@ const SOLUTIONS = [
   },
   {
     id: "ubora-coop", raccourci: "coop.uborardc.com", nom: "Ubora Coop", initiales: "Co", couleur: "#5E9E2F", statut: "pilote", mock: "coop",
-    tagline: "La gestion de coopérative agricole, de la parcelle à la vente",
-    resume: "Registre des membres et parcelles, collecte des récoltes, intrants à crédit, ventes groupées et paiements aux producteurs.",
-    description: "Ubora Coop outille les coopératives agricoles de toute la RDC pour professionnaliser leur gestion. La coopérative connaît ses membres et leurs volumes, la traçabilité s'améliore et les producteurs sont payés à temps. Ce sont des arguments décisifs face aux acheteurs et aux financeurs.",
+    tagline: "Accompagnement, gestion et accès aux marchés des coopératives",
+    resume: "Un logiciel de gestion — membres, parcelles, collectes, intrants, ventes et paiements — doublé d'un accompagnement complet : mise en conformité OHADA, formation des comités, ventes groupées et accès au crédit de campagne.",
+    description: "Ubora Coop suit la même logique que nos autres offres : un outil, et l'accompagnement qui le rend utile. Le logiciel donne à la coopérative un registre fiable de ses membres, de ses parcelles, de ses collectes et de ses ventes. L'accompagnement met la gouvernance en conformité avec l'Acte uniforme OHADA, forme le comité et les agents de collecte, organise les ventes groupées et prépare l'accès au crédit de campagne. Une coopérative qui connaît ses volumes et paie ses producteurs à temps négocie mieux, et convainc acheteurs comme financeurs.",
     fonctionnalites: [
       ["Registre des membres", "Profil, parcelles, cultures, parts sociales."],
       ["Collecte & stocks", "Pesées, qualité, entrepôts, pertes post-récolte."],
       ["Intrants à crédit", "Distribution et récupération sur les ventes."],
       ["Ventes groupées", "Contrats acheteurs, prix, livraisons."],
       ["Paiements producteurs", "Décomptes individuels, versements mobile money."],
-      ["Gouvernance", "AG, PV, conformité OHADA des sociétés coopératives."]
+      ["Gouvernance", "AG, PV, conformité OHADA des sociétés coopératives."],
+      ["Formation & coaching", "Comité de gestion, gérant, comptable et agents de collecte formés sur leurs opérations réelles."],
+      ["Accès aux marchés et au crédit", "Recherche d'acheteurs, contrats de vente groupée, préparation du crédit de campagne et des intrants."]
     ],
-    pour: ["Coopératives agricoles", "Unions de coopératives", "Acheteurs & agrégateurs"],
+    pour: ["Coopératives agricoles", "Unions de coopératives", "Groupements de producteurs", "Acheteurs & agrégateurs", "ONG et programmes agricoles"],
     deploiement: [
       ["Recensement", "Enregistrement des membres, des parcelles, des cultures et des parts sociales."],
       ["Paramétrage de la campagne", "Cultures, prix, entrepôts, points de collecte et règles de paiement."],
@@ -251,18 +253,20 @@ const SOLUTIONS = [
   {
     id: "ubora-fin", raccourci: "fin.uborardc.com", nom: "Ubora Fin", initiales: "Fi", couleur: "#1D5FB8", statut: "dispo", mock: "fin",
     site: "",   // À COMPLÉTER : collez ici le lien vers Ubora Fin (ex. "https://...")
-    tagline: "Le logiciel de gestion des petites institutions de microfinance",
-    resume: "Membres, comptes d'épargne, crédits, remboursements, caisse et rapports réglementaires : tout ce qu'il faut pour gérer une petite microfinance, une COOPEC ou une mutuelle d'épargne et de crédit.",
-    description: "Ubora Fin donne aux petites institutions financières un système de gestion fiable, abordable et adapté au contexte congolais. Les agents gagnent du temps au guichet et le portefeuille de crédit est suivi en temps réel. La direction dispose aussi des indicateurs et rapports attendus par les autorités de supervision.",
+    tagline: "Gestion, formation et passerelle vers le financement",
+    resume: "Un logiciel pour les petites institutions financières, la formation et le coaching des structures bénéficiaires, et la mise en relation avec les institutions de microfinance. Un projet de société de crédit dédiée au financement des AVEC est en préparation.",
+    description: "Ubora Fin travaille les deux côtés du guichet. D'un côté, un système de gestion fiable et abordable pour les petites institutions financières : les agents gagnent du temps, le portefeuille est suivi en temps réel, la direction dispose des indicateurs attendus par la supervision. De l'autre, la formation et le coaching des structures bénéficiaires — groupes d'épargne, coopératives, PME — jusqu'à ce qu'elles soient en état d'emprunter et d'être acceptées par une institution de microfinance. Nous préparons enfin la création d'une société de crédit dédiée au financement des AVEC, pour les groupes qu'aucune institution ne sert aujourd'hui.",
     fonctionnalites: [
       ["Gestion des membres & clients", "Dossiers KYC, pièces d'identité, parts sociales."],
       ["Épargne & dépôts", "Comptes à vue, épargne bloquée, calcul des intérêts."],
       ["Crédits", "Instruction, échéanciers, décaissements, garanties."],
       ["Remboursements & retards", "Suivi des impayés, PAR 30, relances automatiques."],
       ["Caisse & guichet", "Opérations en CDF et USD, arrêtés de caisse."],
-      ["Rapports & indicateurs", "Tableaux de bord de performance et rapports réglementaires."]
+      ["Rapports & indicateurs", "Tableaux de bord de performance et rapports réglementaires."],
+      ["Formation & coaching", "Préparation des groupes, coopératives et PME à l'emprunt : comptes tenus, dossier, garanties, discipline de remboursement."],
+      ["Mise en relation", "Présentation des dossiers aux IMF, COOPEC et banques partenaires, et appui à la négociation."]
     ],
-    pour: ["Petites IMF", "COOPEC", "Mutuelles d'épargne et de crédit", "Programmes de crédit d'ONG"],
+    pour: ["Petites IMF", "COOPEC", "Mutuelles d'épargne et de crédit", "Groupes AVEC", "PME et coopératives en recherche de crédit", "Programmes de crédit d'ONG"],
     deploiement: [
       ["Diagnostic", "Revue des procédures, des produits et de l'état du portefeuille."],
       ["Paramétrage", "Produits d'épargne et de crédit, taux, frais, agences et rôles des agents."],
@@ -279,30 +283,65 @@ const SOLUTIONS = [
   },
   {
     id: "ubora-pme", raccourci: "pme.uborardc.com", nom: "Ubora PME", initiales: "Pm", couleur: "#B0642E", statut: "dispo", mock: "pme",
-    site: "https://bp.uborardc.com",   // générateur de business plan en ligne
-    tagline: "Gestion quotidienne et plan d'affaires pour la petite entreprise",
-    resume: "Caisse, stock, factures et tableau de bord en CDF et USD, plus un logiciel de plan d'affaires qui guide l'entrepreneur jusqu'au dossier de financement.",
-    description: "Ubora PME réunit deux outils complémentaires. Le module de gestion permet de tenir sa caisse, de suivre son stock, d'émettre des factures et de connaître sa marge réelle. Le logiciel de plan d'affaires guide l'entrepreneur pas à pas, de la présentation du projet aux prévisions financières, pour produire un dossier présentable aux banques, aux IMF et aux bailleurs.",
+    tagline: "Programmes d'accompagnement : idéation, incubation, accélération",
+    resume: "Le parcours qui mène une idée jusqu'à une entreprise viable : idéation, incubation puis accélération, en appliquant la démarche lean startup adaptée aux réalités congolaises.",
+    description: "Ubora PME est notre offre de programmes d'accompagnement entrepreneurial. Nous y appliquons la démarche lean startup — construire, mesurer, apprendre — mais réécrite pour le terrain congolais : on teste avec de petits budgets, auprès de clients réels, souvent informels, sans attendre des données de marché qui n'existent pas. Chaque cohorte combine formation collective, coaching individuel, outils numériques et mise en relation avec les financeurs.",
     fonctionnalites: [
-      ["Plan d'affaires guidé", "Questions pas à pas : projet, marché, concurrence, stratégie, équipe."],
-      ["Prévisions financières", "Compte de résultat, trésorerie et seuil de rentabilité calculés automatiquement."],
-      ["Dossier de financement", "Export d'un plan d'affaires complet, prêt à présenter."],
-      ["Caisse & dépenses", "Entrées et sorties quotidiennes, en CDF et USD."],
-      ["Stock & factures", "Alertes de rupture, devis et factures envoyés par WhatsApp."],
-      ["Tableau de bord", "Marge, trésorerie, meilleurs produits."]
+      ["Idéation", "Identifier un problème réel, formuler une proposition de valeur et confronter l'idée au terrain."],
+      ["Validation du marché", "Tester auprès de vrais clients avec un produit minimum viable, avant d'investir."],
+      ["Incubation", "Modèle économique, formalisation, premières ventes, organisation et outils de gestion."],
+      ["Accélération", "Structurer la croissance : équipe, canaux de vente, financement, nouveaux marchés."],
+      ["Coaching individuel", "Un accompagnateur dédié, des points réguliers et des objectifs mesurés."],
+      ["Accès au financement", "Plan d'affaires, dossier de crédit et mise en relation avec IMF, banques et bailleurs."]
     ],
-    pour: ["Porteurs de projet", "PME & commerces", "Artisans", "Programmes d'entrepreneuriat"],
+    pour: ["Porteurs de projet", "Jeunes entreprises", "PME en croissance", "Incubateurs & programmes partenaires"],
+    outils: [
+      ["Générateur de business plan", "L'outil en ligne qui construit le dossier de financement, étape par étape, avec les prévisions financières. Adresse : bp.uborardc.com"],
+      ["Canevas de validation", "Proposition de valeur, hypothèses à tester, protocole d'expérimentation et critères de décision."],
+      ["Outils de gestion", "Caisse, stock, facturation et tableau de bord, en francs congolais et en dollars."],
+      ["Suivi dans Ubora Hub", "Le parcours de chaque entrepreneur, ses séances de coaching et ses indicateurs."]
+    ],
     deploiement: [
-      ["Diagnostic express", "Une séance pour situer l'entreprise : formalisation, finances, gestion, digital."],
-      ["Mise en route de la gestion", "Installation de la caisse et du stock, avec les produits et les soldes réels."],
-      ["Atelier plan d'affaires", "Deux jours pour construire le projet, le marché et les prévisions financières."],
-      ["Suivi mensuel", "Revue des indicateurs et appui à la présentation du dossier aux financeurs."]
+      ["Appel à candidatures", "Sélection de la cohorte sur la base du problème traité, de l'équipe et de la motivation."],
+      ["Diagnostic de départ", "Situer chaque participant : maturité de l'idée, formalisation, finances, compétences."],
+      ["Programme", "Sessions collectives, coaching individuel, expérimentations terrain entre les séances."],
+      ["Démonstration et financement", "Présentation des résultats, préparation des dossiers, rencontre des financeurs."],
+      ["Suivi post-programme", "Points réguliers pendant plusieurs mois, jusqu'à la stabilisation de l'activité."]
     ],
     usages: [
-      ["Entrepreneur", "Tient sa caisse, suit sa marge réelle et construit son plan d'affaires pas à pas."],
-      ["Vendeur ou caissier", "Enregistre les ventes et les encaissements du jour."],
-      ["Accompagnateur ou comptable", "Vérifie les écritures et prépare les états financiers."],
-      ["Banque, IMF ou bailleur", "Reçoit un plan d'affaires chiffré et des comptes tenus régulièrement."]
+      ["Porteur de projet", "Passe de l'idée à une offre testée, avec des premiers clients."],
+      ["Jeune entreprise", "Structure sa gestion, formalise son activité et prépare son financement."],
+      ["PME en croissance", "Ouvre de nouveaux marchés et organise son passage à l'échelle."],
+      ["Incubateur partenaire", "Confie à Ubora l'animation d'une cohorte, ou s'appuie sur notre méthode et nos outils."],
+      ["Bailleur", "Reçoit des indicateurs de résultats consolidés, entreprise par entreprise."]
+    ]
+  },
+  {
+    id: "ubora-market", raccourci: "market.uborardc.com", nom: "Ubora Market", initiales: "Mk", couleur: "#1F7A6B", statut: "pilote", mock: "market",
+    tagline: "Connecter les producteurs et les entrepreneurs aux marchés",
+    resume: "La vente est le maillon qui manque le plus souvent. Ubora Market met en relation coopératives, transformateurs, artisans et PME avec des acheteurs réels, et organise la vente groupée.",
+    description: "Produire mieux ne sert à rien si l'on vend mal. Ubora Market s'attaque au débouché : recensement de l'offre disponible chez nos bénéficiaires, mise en relation avec des acheteurs identifiés, organisation de la vente groupée et suivi des livraisons et des paiements. L'outil s'accompagne d'un travail de terrain sur la qualité, le conditionnement et la fiabilité des volumes, sans lesquels aucun acheteur sérieux ne s'engage.",
+    fonctionnalites: [
+      ["Catalogue de l'offre", "Produits, volumes disponibles, périodes de récolte ou de production, zones."],
+      ["Acheteurs référencés", "Agro-industries, grossistes, restaurants, institutions, exportateurs."],
+      ["Vente groupée", "Agréger l'offre de plusieurs producteurs pour atteindre le volume demandé."],
+      ["Contrats et livraisons", "Modèles de contrat, planification des livraisons, suivi des engagements."],
+      ["Qualité et conditionnement", "Normes attendues par l'acheteur, appui à la mise à niveau."],
+      ["Paiements", "Suivi des règlements jusqu'au producteur, par mobile money."]
+    ],
+    pour: ["Coopératives agricoles", "Transformateurs & artisans", "PME et commerces", "Acheteurs et agro-industries"],
+    deploiement: [
+      ["Recenser l'offre", "Ce que produisent réellement nos bénéficiaires, en quelles quantités et à quelles périodes."],
+      ["Identifier la demande", "Rencontrer les acheteurs, comprendre leurs volumes, leurs prix et leurs exigences."],
+      ["Mettre à niveau", "Qualité, conditionnement, régularité : ce qui fait la différence entre un test et un contrat."],
+      ["Connecter et contractualiser", "Mise en relation, négociation, contrat de vente groupée."],
+      ["Suivre", "Livraisons, paiements, qualité — et préparation de la campagne suivante."]
+    ],
+    usages: [
+      ["Coopérative", "Annonce ses volumes et trouve un acheteur avant la récolte."],
+      ["Transformateur ou artisan", "Accède à des clients réguliers au-delà de son quartier."],
+      ["Acheteur", "Trouve des volumes traçables et un interlocuteur unique."],
+      ["Ubora", "Vérifie la fiabilité des deux parties et sécurise la transaction."]
     ]
   }
 ];
@@ -430,36 +469,68 @@ const OUTILS_AVEC = [
 const DOMAINES = {
   pme: {
     sousDomaine: "pme.uborardc.com",
-    eyebrow: "Accompagnement",
-    titre: 'Faire grandir les <span class="serif">PME</span> congolaises.',
-    lead: "De l'entreprise informelle au dossier de financement : notre parcours d'accompagnement des entrepreneurs et des petites entreprises, et les outils que nous mettons entre leurs mains.",
-    intro: "Beaucoup de PME congolaises disparaissent avant leur troisième année. Rarement faute d'idée ou de courage : par manque de structure, d'outils de gestion et d'accès au financement. Notre accompagnement s'attaque à ces trois causes, dans cet ordre.",
+    eyebrow: "Ubora PME",
+    titre: 'De l'+"'"+'idée à l'+"'"+'entreprise, par la <span class="serif">preuve</span>.',
+    lead: "Nos programmes d'accompagnement entrepreneurial : idéation, incubation et accélération, avec la démarche lean startup adaptée aux réalités congolaises.",
+    intro: "La plupart des accompagnements commencent par un plan d'affaires de trente pages écrit avant d'avoir parlé à un seul client. Nous faisons l'inverse : formuler une hypothèse, la tester à petit budget auprès de vrais clients, décider sur des faits. Le plan d'affaires vient après, quand il y a quelque chose à financer.",
     constats: [
-      ["L'informalité par défaut", "Sans RCCM ni identification nationale, impossible de facturer une grande entreprise, de répondre à un appel d'offres ou d'ouvrir un compte professionnel."],
-      ["La caisse mélangée", "Quand l'argent de l'entreprise et celui du ménage se confondent, la marge réelle reste inconnue et la trésorerie s'épuise sans qu'on sache pourquoi."],
-      ["Le financement hors de portée", "Les banques demandent des états financiers et un plan d'affaires ; la plupart des PME n'en ont jamais produit."],
-      ["Des outils inadaptés", "Les logiciels du marché supposent une connexion permanente, une seule monnaie et un comptable à demeure."]
+      ["Des idées jamais confrontées au marché", "On construit pendant des mois un produit que personne n'a demandé, puis on cherche des clients."],
+      ["Pas de données de marché", "Les études sectorielles fiables sont rares en RDC : il faut aller chercher l'information soi-même, sur le terrain."],
+      ["Des budgets de test minuscules", "Impossible de dépenser des milliers de dollars en expérimentation : chaque test doit coûter presque rien."],
+      ["Un accompagnement qui s'arrête trop tôt", "Beaucoup de programmes finissent au pitch, juste avant les difficultés réelles : vendre, produire, recruter."]
     ],
     parcours: [
-      ["Diagnostic", "Une demi-journée dans l'entreprise : organisation, finances, gestion, présence numérique.", "Un état des lieux écrit et trois priorités."],
-      ["Formalisation", "RCCM, identification nationale, régime fiscal, statuts, rôles et responsabilités écrits.", "L'entreprise devient un interlocuteur crédible."],
-      ["Mise en gestion", "Caisse séparée, suivi des ventes et du stock, calcul de la marge réelle, tableau de bord mensuel.", "Vous pilotez avec des chiffres, plus à l'intuition."],
-      ["Plan d'affaires", "Projet, marché, stratégie et prévisions financières construits avec vous dans notre générateur en ligne.", "Un dossier présentable à une banque, une IMF ou un bailleur."],
-      ["Financement et marchés", "Préparation du dossier, mise en relation avec les financeurs, appui aux appels d'offres.", "Le capital nécessaire pour passer à l'échelle."],
-      ["Suivi", "Points mensuels sur vos indicateurs, ajustements, appui à distance par WhatsApp.", "L'accompagnement ne s'arrête pas à la formation."]
+      ["Idéation", "Partir d'un problème observé, pas d'une solution. Formuler la proposition de valeur et lister les hypothèses risquées.", "Une idée formulée clairement et des hypothèses à tester."],
+      ["Validation terrain", "Construire un produit minimum viable, le présenter à de vrais clients, mesurer ce qu'ils font — pas ce qu'ils disent.", "La preuve qu'il existe une demande, ou la décision de changer de direction."],
+      ["Incubation", "Modèle économique, prix, formalisation, premières ventes, outils de gestion et tenue de caisse.", "Une entreprise qui vend et sait ce qu'elle gagne."],
+      ["Accélération", "Canaux de distribution, équipe, capacité de production, nouveaux marchés.", "Une croissance organisée, pas subie."],
+      ["Financement", "Plan d'affaires construit avec le générateur en ligne, dossier de crédit, rencontre des financeurs.", "Un dossier recevable et des rendez-vous obtenus."],
+      ["Suivi", "Coaching mensuel après le programme, indicateurs suivis, appui à distance.", "Une entreprise qui tient une fois seule."]
     ],
     solutions: ["ubora-pme"],
     apps: [["Générateur de business plan", "Votre dossier de financement construit pas à pas, utilisable hors connexion.", "https://bp.uborardc.com", "bp.uborardc.com"]],
-    boite: { statut: "bientot", titre: "Une boîte à outils à télécharger", intro: "Nous préparons les modèles que nous utilisons en accompagnement, pour que chaque entrepreneur puisse s'en servir librement.",
+    boite: { statut: "bientot", titre: "Une boîte à outils pour entreprendre", intro: "Les canevas que nous utilisons en cohorte seront mis à disposition des entrepreneurs.",
       outils: [
+        ["Canevas de proposition de valeur", "Le problème, le client, la solution, en une page."],
+        ["Grille d'hypothèses et de tests", "Ce qu'il faut vérifier en premier, et comment le vérifier à moindre coût."],
+        ["Guide de l'entretien client", "Les questions à poser — et celles à ne jamais poser."],
         ["Modèle de tenue de caisse", "Tableur simple, en CDF et USD, avec arrêté journalier."],
-        ["Canevas de plan d'affaires", "La trame utilisée en atelier, à remplir seul."],
         ["Grille de prix de revient", "Pour fixer un prix qui couvre réellement vos coûts."],
-        ["Modèles de facture et de devis", "Conformes aux mentions exigées en RDC."],
-        ["Guide de la formalisation", "Les démarches, les pièces et les coûts, étape par étape."],
-        ["Tableau de bord mensuel", "Les huit indicateurs à suivre dans une petite entreprise."]
+        ["Guide de la formalisation", "RCCM, identification nationale, fiscalité : démarches, pièces et coûts."]
       ] },
-    services: ["pme", "entrepreneuriat", "outils"]
+    services: ["entrepreneuriat", "pme"]
+  },
+
+  marche: {
+    sousDomaine: "market.uborardc.com",
+    eyebrow: "Ubora Market",
+    titre: 'Trouver des <span class="serif">acheteurs</span>, pas seulement produire.',
+    lead: "Connecter les coopératives, les transformateurs et les PME que nous accompagnons à des acheteurs réels : recensement de l'offre, mise à niveau, vente groupée et suivi des paiements.",
+    intro: "Le maillon qui casse le plus souvent n'est ni la production ni le financement : c'est la vente. Un producteur qui n'écoule pas sa récolte au bon prix perd sa campagne, rembourse mal son crédit et se décourage. Ubora Market s'occupe de ce maillon.",
+    constats: [
+      ["Vendre au plus offrant du jour", "Sans acheteur identifié à l'avance, le producteur brade sa récolte au premier intermédiaire venu."],
+      ["Des volumes trop petits", "Pris isolément, aucun producteur n'atteint le volume qu'exige un acheteur institutionnel."],
+      ["Une qualité irrégulière", "Conditionnement, humidité, calibrage : les exigences des acheteurs sont rarement connues des producteurs."],
+      ["La confiance manquante", "Acheteurs et producteurs se méfient mutuellement, faute d'un tiers qui sécurise la transaction."]
+    ],
+    parcours: [
+      ["Recenser l'offre", "Produits, volumes, périodes et zones de nos bénéficiaires, consignés dans un catalogue.", "Une offre annonçable et vérifiable."],
+      ["Identifier la demande", "Rencontrer agro-industries, grossistes, institutions et exportateurs pour connaître leurs besoins.", "Des débouchés nommés, avec leurs exigences."],
+      ["Mettre à niveau", "Qualité, conditionnement, régularité des livraisons, documents exigés.", "Une offre conforme à ce que l'acheteur attend."],
+      ["Agréger et connecter", "Regrouper l'offre de plusieurs producteurs et organiser la rencontre commerciale.", "Un volume suffisant et une négociation équilibrée."],
+      ["Contractualiser", "Contrat de vente groupée, prix, calendrier de livraison, conditions de paiement.", "Un engagement écrit des deux côtés."],
+      ["Suivre jusqu'au paiement", "Livraisons, contrôle qualité, règlements jusqu'au producteur.", "Des producteurs payés, et une relation qui se répète."]
+    ],
+    solutions: ["ubora-market", "ubora-coop"],
+    apps: [],
+    boite: { statut: "bientot", titre: "Outils d'accès au marché", intro: "Les documents commerciaux que nous utilisons seront mis à disposition.",
+      outils: [
+        ["Modèle de contrat de vente groupée", "Les clauses à ne pas oublier face à un acheteur."],
+        ["Fiche technique produit", "Décrire son produit comme un acheteur le demande."],
+        ["Grille de qualité et de conditionnement", "Les critères contrôlés à la réception."],
+        ["Calendrier de campagne", "Planifier récolte, collecte et livraison."]
+      ] },
+    services: ["chaines-valeur", "cooperatives"]
   },
 
   financement: {
@@ -475,12 +546,19 @@ const DOMAINES = {
       ["Le suivi des impayés", "Sans système, les retards se découvrent trop tard et le portefeuille se dégrade."]
     ],
     parcours: [
-      ["Préparer l'emprunteur", "Discipline d'épargne, comptes tenus, plan d'affaires chiffré, garanties réalistes.", "Un dossier qu'une institution peut réellement instruire."],
+      ["Former et coacher", "Éducation financière, gestion du crédit, tenue des comptes : les structures bénéficiaires apprennent d'abord à gérer avant d'emprunter.", "Des emprunteurs préparés, pas seulement demandeurs."],
+      ["Préparer le dossier", "Discipline d'épargne, comptes tenus, plan d'affaires chiffré, garanties réalistes.", "Un dossier qu'une institution peut réellement instruire."],
       ["Construire l'historique", "Les cotisations, prêts et remboursements enregistrés dans nos outils deviennent des preuves.", "Un score de discipline lisible par un financier."],
       ["Outiller l'institution", "Ubora Fin : gestion des membres, de l'épargne, des crédits, du guichet et des rapports.", "Instruire et suivre de petits crédits sans y perdre d'argent."],
       ["Mettre en relation", "Nous présentons les dossiers aux IMF, COOPEC et banques partenaires, et accompagnons la négociation.", "Un premier crédit obtenu, à des conditions tenables."],
       ["Suivre le remboursement", "Échéanciers, relances, appui en cas de difficulté, des deux côtés.", "Un historique positif qui ouvre le crédit suivant."]
     ],
+    projet: {
+      titre: "Une société de crédit dédiée aux AVEC",
+      texte: "Malgré tout ce travail de préparation, une partie des groupes reste hors du champ des institutions existantes : montants trop petits, zones trop éloignées, absence de garanties classiques. Nous préparons donc la création d'une société de crédit conçue pour eux, qui prêterait aux AVEC sur la base de leur historique d'épargne et de leur discipline collective.",
+      etat: "Projet en préparation : étude de faisabilité, cadre réglementaire et recherche de partenaires financiers en cours.",
+      appel: "Institutions, bailleurs ou investisseurs intéressés par ce projet : écrivez-nous."
+    },
     solutions: ["ubora-fin", "ubora-avec"],
     apps: [],
     boite: { statut: "bientot", titre: "Outils d'accès au financement", intro: "Les documents que nous utilisons pour préparer un dossier de crédit seront mis à disposition.",
