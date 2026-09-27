@@ -20,7 +20,7 @@ function pageAdmin() {
   return `<section class="deep page-head admin-head"><div class="wrap">
       <span class="eyebrow">Espace équipe</span>
       <h1>Gérer le site</h1>
-      <p class="lead">Messages reçus, actualités, formations, offres d'emploi et abonnés. Tout ce que vous publiez ici apparaît aussitôt sur le site.</p>
+      <p class="lead">Messages reçus, actualités, réalisations, équipe, formations, offres d'emploi et abonnés. Tout ce que vous publiez ici apparaît aussitôt sur le site.</p>
     </div></section>
     <section><div class="wrap"><div id="adminPane"><div class="empty">Chargement…</div></div></div></section>`;
 }
