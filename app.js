@@ -272,29 +272,16 @@ function pageHome() {
     </div>
   </section>
 
-  <div class="wrap facts"><div class="facts-in">
-    <div class="fact"><strong>${SERVICES.length}</strong><span>expertises complémentaires, du terrain au numérique</span></div>
-    <div class="fact"><strong>${SOLUTIONS.length}</strong><span>solutions numériques conçues pour la RDC</span></div>
-    <div class="fact"><strong>26</strong><span>provinces où nous pouvons intervenir</span></div>
-    <div class="fact"><strong>100<small>%</small></strong><span>de nos déploiements incluent formation et suivi</span></div>
-  </div></div>
-
   <div class="wrap"><nav class="rail" aria-label="Nos solutions">
     <span class="rail-lab">Nos solutions</span>
     ${SOLUTIONS.map(s => `<a class="rail-item" href="/solutions/${s.id}"><span class="mk" style="background:${s.couleur}">${esc(s.initiales)}</span><span class="rail-txt"><b>${esc(s.nom)}</b><small>${s.raccourci ? esc(s.raccourci) : esc(s.tagline)}</small></span>${ICON.arrow}</a>`).join("")}
   </nav></div>
 
-  <section><div class="wrap mission">
-    <div>
-      <span class="eyebrow">Notre mission</span>
-      <blockquote style="margin-top:20px">Mettre la <span class="serif">résilience économique</span> au cœur du développement des entreprises et des communautés congolaises.</blockquote>
-      <p class="lead" style="margin-top:22px">Inflation, variations du franc, chocs climatiques, accès limité au crédit : les entrepreneurs congolais évoluent dans un environnement exigeant. Nous les aidons à tenir, puis à grandir.</p>
-    </div>
-    <div class="pillars3">
-      <div class="p3 reveal"><span class="ic">${ICON.shield}</span><div><h4>Des organisations solides</h4><p>Formalisation, gouvernance, gestion rigoureuse : les bases qui permettent d'absorber les chocs.</p></div></div>
-      <div class="p3 reveal"><span class="ic">${ICON.coins}</span><div><h4>Un accès équitable à la finance</h4><p>Épargne, crédit et microfinance mieux gérés, pour se constituer des réserves et investir.</p></div></div>
-      <div class="p3 reveal"><span class="ic">${ICON.handshake}</span><div><h4>Un modèle qui dure</h4><p>Nos prestations aux organisations financent l'accès à tarif solidaire des groupes d'épargne et des micro-entrepreneurs. <a class="link" href="/approche">Notre modèle ${ICON.arrow}</a></p></div></div>
-    </div>
+  <section><div class="wrap mission-solo">
+    <span class="eyebrow">Notre mission</span>
+    <blockquote>Mettre la <span class="serif">résilience économique</span> au cœur du développement des entreprises et des communautés congolaises.</blockquote>
+    <p class="lead">Inflation, variations du franc, chocs climatiques, accès limité au crédit : les entrepreneurs congolais évoluent dans un environnement exigeant. Nous les aidons à tenir, puis à grandir — par l'accompagnement de terrain et des outils numériques adaptés.</p>
+    <div class="btn-row"><a class="btn btn-ghost" href="/approche">Notre méthode ${ICON.arrow}</a><a class="btn btn-ghost" href="/a-propos">Qui nous sommes</a></div>
   </div></section>
 
   <section style="padding-top:0"><div class="wrap">
@@ -338,9 +325,7 @@ function pageHome() {
     </div>
   </div></section>
 
-  ${methodStrip(true)}
-
-  <section><div class="wrap">
+  <section class="band"><div class="wrap">
     <div class="sec-head split"><div style="display:grid;gap:16px"><span class="eyebrow">Pourquoi Ubora</span><h2>L'expertise d'un cabinet, la présence d'une <span class="serif">équipe de terrain</span>.</h2></div>
       <a class="btn btn-ghost" href="/a-propos">Qui nous sommes ${ICON.arrow}</a></div>
     <div class="field-grid">
