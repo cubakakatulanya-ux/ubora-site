@@ -641,7 +641,8 @@ function notFound() {
    ROUTAGE
    ========================================================================== */
 const SOUS_DOMAINES = { avec: "avec", pme: "pme", coop: "cooperatives", fin: "financement", market: "marche" };
-const EXTERNES = { akiba: "https://cubakakatulanya-ux.github.io/akiba-avec/", hub: "https://www.uborahub.com", bp: "/generateur/" };
+/* bp. et hub. mènent directement à l'outil ; akiba. est servi à part (GitHub Pages). */
+const EXTERNES = { hub: "https://www.uborahub.com", bp: "/generateur/" };
 const ANCIENNES = {
   "solutions/ubora-avec": "/avec", "solutions/akiba": "/avec", "solutions/ubora-pme": "/pme", "solutions/ubora-coop": "/cooperatives",
   "solutions/ubora-fin": "/financement", "solutions/ubora-market": "/marche", "solutions/ubora-hub": "/outils#hub", "solutions/uborahub": "/outils#hub",
