@@ -1002,7 +1002,7 @@ $("#waFloat").href = waLink("Bonjour Ubora, je souhaite avoir des informations."
   if (parts.length < 3) return;
   const externe = { hub: "https://www.uborahub.com", akiba: "https://cubakakatulanya-ux.github.io/akiba-avec/" }[parts[0]];
   if (externe) { location.replace(externe); return; }
-  const cible = { avec: "/avec", fin: "/solutions/ubora-fin", pme: "/solutions/ubora-pme", coop: "/solutions/ubora-coop", bp: "/solutions/ubora-pme" }[parts[0]];
+  const cible = { avec: "/avec", fin: "/solutions/ubora-fin", pme: "/solutions/ubora-pme", coop: "/solutions/ubora-coop" }[parts[0]];
   if (cible && location.pathname === "/") history.replaceState({}, "", cible);
 })();
 

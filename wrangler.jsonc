@@ -1,11 +1,14 @@
 {
-  // Configuration du Worker qui sert le site (Cloudflare Workers Static Assets).
+  // Worker qui sert le site (Cloudflare Workers Static Assets).
   // single-page-application : toute adresse inconnue renvoie index.html,
   // ce qui permet les adresses propres du type /avec ou /solutions/ubora-fin.
+  // Le script worker.js sert le générateur de business plan sur bp.uborardc.com.
   "name": "ubora-site",
   "compatibility_date": "2026-09-01",
+  "main": "worker.js",
   "assets": {
     "directory": ".",
+    "binding": "ASSETS",
     "not_found_handling": "single-page-application"
   }
 }

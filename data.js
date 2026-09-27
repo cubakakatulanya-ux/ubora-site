@@ -279,7 +279,7 @@ const SOLUTIONS = [
   },
   {
     id: "ubora-pme", raccourci: "pme.uborardc.com", nom: "Ubora PME", initiales: "Pm", couleur: "#B0642E", statut: "dispo", mock: "pme",
-    site: "",   // À COMPLÉTER si Ubora PME a son propre lien
+    site: "https://bp.uborardc.com",   // générateur de business plan en ligne
     tagline: "Gestion quotidienne et plan d'affaires pour la petite entreprise",
     resume: "Caisse, stock, factures et tableau de bord en CDF et USD, plus un logiciel de plan d'affaires qui guide l'entrepreneur jusqu'au dossier de financement.",
     description: "Ubora PME réunit deux outils complémentaires. Le module de gestion permet de tenir sa caisse, de suivre son stock, d'émettre des factures et de connaître sa marge réelle. Le logiciel de plan d'affaires guide l'entrepreneur pas à pas, de la présentation du projet aux prévisions financières, pour produire un dossier présentable aux banques, aux IMF et aux bailleurs.",
