@@ -405,7 +405,7 @@ function pageDomaine(id) {
   const demande = encodeURIComponent("Boîte à outils — " + D.eyebrow);
   return pageHead({
     eyebrow: D.eyebrow, titre: D.titre, title: D.titre, lead: D.lead, crumbs: [[D.eyebrow]],
-    extra: `<div class="btn-row" style="margin-top:28px"><a class="btn btn-lime" href="/contact?sujet=${encodeURIComponent(D.eyebrow)}">Parler de votre besoin ${ICON.arrow}</a>${D.apps.map(([n, , url]) => `<a class="btn btn-glass" href="${url}" target="_blank" rel="noopener">Ouvrir ${esc(n)} ${ICON.ext}</a>`).join("")}</div>
+    extra: `<div class="btn-row" style="margin-top:28px"><a class="btn btn-lime" href="/contact?sujet=${encodeURIComponent(D.eyebrow)}">Parler de votre besoin ${ICON.arrow}</a>${D.apps.map(([n, , url]) => `<a class="btn btn-glass" href="${url}" target="_blank" rel="noopener">Ouvrir ${esc(n)} ${ICON.ext}</a>`).join("")}${D.boite ? `<a class="btn btn-glass" href="#boite" data-scroll="boite">Boîte à outils</a>` : ""}</div>
       <p class="shortcut on-deep" style="margin-top:18px">${esc(D.sousDomaine)}</p>`
   }) + `
   <section><div class="wrap two" style="align-items:start">
@@ -458,7 +458,7 @@ function pageDomaine(id) {
 function boiteOutils(b, sujet) {
   if (!b) return "";
   const dispo = b.statut === "disponible";
-  return `<section class="band"><div class="wrap">
+  return `<section class="band" id="boite"><div class="wrap">
     <div class="sec-head"><span class="eyebrow">${dispo ? "Boîte à outils" : "Bientôt"}</span><h2>${esc(b.titre)}</h2><p class="lead">${esc(b.intro)}</p></div>
     <ul class="usages">${b.outils.map(([t, x]) => `<li><b>${esc(t)}</b><span>${esc(x)}</span>${dispo ? "" : `<span class="tag ex" style="justify-self:start;margin-top:8px">À venir</span>`}</li>`).join("")}</ul>
     <div class="train-box" style="margin-top:32px"><span class="ic">${ICON[dispo ? "briefcase" : "bell"]}</span>
@@ -517,7 +517,7 @@ function pageAvec() {
     eyebrow: "Approche phare", title: 'Du cahier au <span class="serif">financement</span> : notre appui aux AVEC.',
     crumbs: [["Appui aux AVEC"]],
     lead: "Les Associations Villageoises d'Épargne et de Crédit sont la porte d'entrée de millions de Congolais vers les services financiers. Nous les accompagnons de leur constitution jusqu'à leur reconnaissance par une institution financière.",
-    extra: `<div class="btn-row" style="margin-top:28px"><a class="btn btn-lime" href="/contact?sujet=${encodeURIComponent("Appui aux AVEC")}">Faire accompagner nos groupes ${ICON.arrow}</a><a class="btn btn-glass" href="/solutions/ubora-avec">Découvrir Ubora AVEC</a></div>`
+    extra: `<div class="btn-row" style="margin-top:28px"><a class="btn btn-lime" href="/contact?sujet=${encodeURIComponent("Appui aux AVEC")}">Faire accompagner nos groupes ${ICON.arrow}</a><a class="btn btn-glass" href="#boite" data-scroll="boite">La boîte à outils (16 documents)</a><a class="btn btn-glass" href="/solutions/ubora-avec">Découvrir Ubora AVEC</a></div>`
   }) + `
   <section><div class="wrap two" style="align-items:start">
     <div><span class="eyebrow">Ce qu'est une AVEC</span>
