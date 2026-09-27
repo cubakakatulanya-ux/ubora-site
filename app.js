@@ -393,6 +393,67 @@ function bridge() {
   return `<ol class="bridge">${etapes.map((e, i) => `<li><span class="bn">${i + 1}</span><div><b>${e[0]}</b><span>${e[1]}</span></div></li>`).join("")}</ol>`;
 }
 
+function pageDomaine(id) {
+  const D = DOMAINES[id]; if (!D) return notFound();
+  const demande = encodeURIComponent("Boîte à outils — " + D.eyebrow);
+  return pageHead({
+    eyebrow: D.eyebrow, titre: D.titre, title: D.titre, lead: D.lead, crumbs: [[D.eyebrow]],
+    extra: `<div class="btn-row" style="margin-top:28px"><a class="btn btn-lime" href="/contact?sujet=${encodeURIComponent(D.eyebrow)}">Parler de votre besoin ${ICON.arrow}</a>${D.apps.map(([n, , url]) => `<a class="btn btn-glass" href="${url}" target="_blank" rel="noopener">Ouvrir ${esc(n)} ${ICON.ext}</a>`).join("")}</div>
+      <p class="shortcut on-deep" style="margin-top:18px">${esc(D.sousDomaine)}</p>`
+  }) + `
+  <section><div class="wrap two" style="align-items:start">
+    <div><span class="eyebrow">Le constat</span>
+      <h2 style="font-size:clamp(26px,3.2vw,38px);margin:14px 0 16px">Ce que nous voyons sur le terrain.</h2>
+      <p class="lead">${esc(D.intro)}</p></div>
+    <div class="panel"><ul class="constats">${D.constats.map(([t, x]) => `<li><b>${esc(t)}</b><span>${esc(x)}</span></li>`).join("")}</ul></div>
+  </div></section>
+
+  <section class="band"><div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Notre méthodologie</span><h2>${D.parcours.length} étapes, et un résultat <span class="serif">à chaque fois</span>.</h2>
+      <p class="lead">Nous ne passons à l'étape suivante que lorsque la précédente tient réellement.</p></div>
+    <ol class="parcours">${D.parcours.map(([t, x, r], k) => `<li class="reveal"><span class="pn">${String(k + 1).padStart(2, "0")}</span>
+      <div><h4>${esc(t)}</h4><p>${esc(x)}</p><p class="resultat">${esc(r)}</p></div></li>`).join("")}</ol>
+  </div></section>
+
+  <section><div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Les outils</span><h2>Ce que nous mettons entre vos <span class="serif">mains</span>.</h2></div>
+    <div class="sol-grid">${D.solutions.map(s => solCard(sol(s))).join("")}
+      ${D.apps.map(([n, x, url, court]) => `<a class="sol" href="${url}" target="_blank" rel="noopener" style="--c:#2F8F38">
+        <div class="sol-head"><span class="mk">${esc(n.slice(0, 2))}</span><span class="status st-dispo">En ligne</span></div>
+        <h3>${esc(n)}</h3><p>${esc(x)}</p><p class="shortcut">${esc(court)}</p>
+        <span class="link">Ouvrir l'outil ${ICON.ext}</span></a>`).join("")}</div>
+  </div></section>
+
+  ${boiteOutils(D.boite, demande)}
+
+  <section><div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Pour aller plus loin</span></div>
+    <div class="field-grid" style="grid-template-columns:repeat(3,1fr)">
+      ${D.services.slice(0, 2).map(s => `<a class="fcard reveal" href="${svc(s).lien || "/services#" + s}" style="text-decoration:none;color:inherit"><span class="ic">${ICON[svc(s).ico]}</span><h4>${esc(svc(s).titre)}</h4><p>${esc(svc(s).court)}</p><span class="link">Voir le détail ${ICON.arrow}</span></a>`).join("")}
+      <a class="fcard reveal" href="/formations" style="text-decoration:none;color:inherit"><span class="ic">${ICON.school}</span><h4>Formations</h4><p>Les prochaines sessions de prise en main et d'accompagnement.</p><span class="link">Calendrier ${ICON.arrow}</span></a>
+    </div>
+  </div></section>
+
+  <section style="padding-top:0"><div class="wrap">${finalCta()}</div></section>`;
+}
+
+/* Boîte à outils : liste visible, documents remis sur demande */
+function boiteOutils(b, sujet) {
+  if (!b) return "";
+  const dispo = b.statut === "disponible";
+  return `<section class="band"><div class="wrap">
+    <div class="sec-head"><span class="eyebrow">${dispo ? "Boîte à outils" : "Bientôt"}</span><h2>${esc(b.titre)}</h2><p class="lead">${esc(b.intro)}</p></div>
+    <ul class="usages">${b.outils.map(([t, x]) => `<li><b>${esc(t)}</b><span>${esc(x)}</span>${dispo ? "" : `<span class="tag ex" style="justify-self:start;margin-top:8px">À venir</span>`}</li>`).join("")}</ul>
+    <div class="train-box" style="margin-top:32px"><span class="ic">${ICON[dispo ? "briefcase" : "bell"]}</span>
+      <div><b>${dispo ? "Demander la boîte à outils" : "Être prévenu de la mise en ligne"}</b>
+        <p>${dispo ? "Nous vous transmettons les documents et nous vous accompagnons dans leur utilisation." : "Inscrivez-vous : vous recevrez les outils dès leur publication."}</p></div>
+      <div style="display:grid;gap:8px">
+        <a class="btn btn-primary" href="/contact?sujet=${sujet}">${dispo ? "Faire la demande" : "Me prévenir"}</a>
+        ${dispo ? `<a class="btn btn-wa btn-sm" href="${waLink("Bonjour Ubora, je souhaite recevoir la boîte à outils AVEC.")}" target="_blank" rel="noopener">Demander sur WhatsApp</a>` : ""}</div>
+    </div>
+  </div></section>`;
+}
+
 function pageApproche() {
   return pageHead({
     eyebrow: "Notre approche", title: 'Ce qui rend notre accompagnement <span class="serif">différent</span>.',
@@ -479,6 +540,8 @@ function pageAvec() {
       ${AVEC.pourQui.map(([t, d, h]) => `<a class="fcard reveal" href="${h}" style="text-decoration:none;color:inherit"><span class="ic">${ICON.users}</span><h4>${esc(t)}</h4><p>${esc(d)}</p><span class="link">En savoir plus ${ICON.arrow}</span></a>`).join("")}
     </div>
   </div></section>
+
+  ${boiteOutils({ statut: "disponible", titre: "La boîte à outils AVEC", intro: "Seize documents issus de nos déploiements : guides, modules de formation, registres, règlement intérieur, livret du membre et templates vierges. Nous les remettons aux organisations et aux réseaux qui accompagnent des groupes d'épargne.", outils: OUTILS_AVEC }, encodeURIComponent("Boîte à outils AVEC"))}
 
   <section style="padding-top:0"><div class="wrap">${finalCta()}</div></section>`;
 }
@@ -894,7 +957,7 @@ $("#toTop").addEventListener("click", () => scrollTo({ top: 0, behavior: "smooth
 /* ==========================================================================
    ROUTEUR
    ========================================================================== */
-const TITLES = { "": "Accueil", "a-propos": "À propos", avec: "Appui aux AVEC", services: "Expertises", solutions: "Solutions", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", approche: "Notre approche", mentions: "Mentions légales", admin: "Espace équipe" };
+const TITLES = { "": "Accueil", "a-propos": "À propos", avec: "Appui aux AVEC", services: "Expertises", solutions: "Solutions", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", approche: "Notre approche", pme: "Accompagnement PME", financement: "Accès au financement", cooperatives: "Coopératives", mentions: "Mentions légales", admin: "Espace équipe" };
 function nav(path) { history.pushState({}, "", path); route(); }
 function route() {
   /* compatibilité : les anciennes adresses en #/ basculent vers le chemin réel */
@@ -910,6 +973,7 @@ function route() {
     case "a-propos": html = pageAbout(); break;
     case "avec": html = pageAvec(); break;
     case "approche": html = pageApproche(); break;
+    case "pme": case "financement": case "cooperatives": html = pageDomaine(base); break;
     case "mentions": html = pageMentions(); break;
     case "services": html = pageServices(); break;
     case "solutions": {
@@ -923,7 +987,6 @@ function route() {
     case "diagnostic": nav("/contact"); return;
     case "contact": html = pageContact(params); break;
     case "admin": html = pageAdmin(); break;
-    case "cooperatives": nav("/services#axe-agri"); return;
     case "rediger": nav("/admin"); return;
     default: html = notFound();
   }
@@ -1002,7 +1065,7 @@ $("#waFloat").href = waLink("Bonjour Ubora, je souhaite avoir des informations."
   if (parts.length < 3) return;
   const externe = { hub: "https://www.uborahub.com", akiba: "https://cubakakatulanya-ux.github.io/akiba-avec/", bp: "/generateur/" }[parts[0]];
   if (externe && location.pathname === "/") { location.replace(externe); return; }
-  const cible = { avec: "/avec", fin: "/solutions/ubora-fin", pme: "/solutions/ubora-pme", coop: "/solutions/ubora-coop" }[parts[0]];
+  const cible = { avec: "/avec", pme: "/pme", fin: "/financement", coop: "/cooperatives" }[parts[0]];
   if (cible && location.pathname === "/") history.replaceState({}, "", cible);
 })();
 

@@ -805,3 +805,14 @@ dl.legal dd.todo{color:var(--copper);font-style:italic}
 .mission-solo blockquote{margin:0;font-family:var(--f-display);font-size:clamp(28px,3.8vw,46px);font-weight:600;line-height:1.14;letter-spacing:-.03em}
 .mission-solo blockquote .serif{color:var(--green);font-size:1.08em}
 .mission-solo .btn-row{margin-top:6px}
+
+
+/* Parcours d'accompagnement (pages thématiques) */
+.parcours{list-style:none;padding:0;margin:0;display:grid;gap:14px}
+.parcours li{display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:start;padding:22px 24px;border-radius:var(--r);background:var(--surface);border:1px solid var(--line)}
+.band .parcours li{background:var(--bg)}
+.parcours .pn{font-family:var(--f-mono);font-size:13px;color:var(--green);padding-top:4px}
+.parcours h4{font-size:20px;letter-spacing:-.02em;margin-bottom:6px}
+.parcours p{font-size:15.5px;color:var(--muted)}
+.parcours .resultat{margin-top:8px;padding-left:14px;border-left:2px solid var(--green);color:var(--ink);font-weight:500}
+@media (max-width:560px){.parcours li{grid-template-columns:1fr;gap:8px}}

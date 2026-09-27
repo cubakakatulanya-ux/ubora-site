@@ -402,3 +402,128 @@ const ACTUALITES = [
     ]
   }
 ];
+
+/* ---------- Boîte à outils AVEC (16 documents, remis sur demande) ---------- */
+const OUTILS_AVEC = [
+  ["Guide général de la boîte à outils", "Comment utiliser l'ensemble des documents, dans quel ordre et avec qui."],
+  ["Étude de référence", "Le canevas d'enquête préalable : besoins, pratiques d'épargne existantes, cartographie des acteurs."],
+  ["Identification et sensibilisation", "Comment repérer les communautés, présenter la démarche et susciter l'adhésion."],
+  ["Formation des animateurs", "Le programme complet de formation des agents et relais communautaires."],
+  ["Modules de formation des AVEC", "Les séances à animer avec le groupe, de la constitution au premier partage."],
+  ["Kit carnets, registres et règlement", "Carnet du membre, registre du groupe, règlement intérieur type et statuts."],
+  ["Diagnostic des AVEC existantes", "La grille pour évaluer un groupe déjà constitué et repérer ses faiblesses."],
+  ["Suivi, supervision et graduation", "Fiches de visite, indicateurs de maturité et critères de graduation."],
+  ["Modules AGR", "Activités génératrices de revenus : choisir, chiffrer et lancer une activité."],
+  ["Modules complémentaires", "Alphabétisation financière, gestion des conflits, leadership féminin."],
+  ["Fédération des AVEC (FAVEC)", "Comment regrouper plusieurs AVEC en fédération et l'organiser."],
+  ["Évaluation finale", "Le protocole d'évaluation de fin de cycle ou de fin de projet."],
+  ["Plan d'affaires simplifié", "Un format court, adapté aux membres qui lancent une activité."],
+  ["Livret du membre", "Le document remis à chaque membre : droits, devoirs, suivi de son épargne."],
+  ["La méthode Ubora", "Notre démarche d'accompagnement, formalisée et transmissible."],
+  ["Templates vierges", "Tous les formulaires et tableaux, prêts à imprimer ou à adapter."]
+];
+
+/* ---------- Pages thématiques des sous-domaines ----------
+   Chaque entrée produit une page complète : constat, méthodologie, outils,
+   boîte à outils. Les clés correspondent aux adresses /pme, /financement,
+   /cooperatives — respectivement pme., fin. et coop. uborardc.com */
+const DOMAINES = {
+  pme: {
+    sousDomaine: "pme.uborardc.com",
+    eyebrow: "Accompagnement",
+    titre: 'Faire grandir les <span class="serif">PME</span> congolaises.',
+    lead: "De l'entreprise informelle au dossier de financement : notre parcours d'accompagnement des entrepreneurs et des petites entreprises, et les outils que nous mettons entre leurs mains.",
+    intro: "Beaucoup de PME congolaises disparaissent avant leur troisième année. Rarement faute d'idée ou de courage : par manque de structure, d'outils de gestion et d'accès au financement. Notre accompagnement s'attaque à ces trois causes, dans cet ordre.",
+    constats: [
+      ["L'informalité par défaut", "Sans RCCM ni identification nationale, impossible de facturer une grande entreprise, de répondre à un appel d'offres ou d'ouvrir un compte professionnel."],
+      ["La caisse mélangée", "Quand l'argent de l'entreprise et celui du ménage se confondent, la marge réelle reste inconnue et la trésorerie s'épuise sans qu'on sache pourquoi."],
+      ["Le financement hors de portée", "Les banques demandent des états financiers et un plan d'affaires ; la plupart des PME n'en ont jamais produit."],
+      ["Des outils inadaptés", "Les logiciels du marché supposent une connexion permanente, une seule monnaie et un comptable à demeure."]
+    ],
+    parcours: [
+      ["Diagnostic", "Une demi-journée dans l'entreprise : organisation, finances, gestion, présence numérique.", "Un état des lieux écrit et trois priorités."],
+      ["Formalisation", "RCCM, identification nationale, régime fiscal, statuts, rôles et responsabilités écrits.", "L'entreprise devient un interlocuteur crédible."],
+      ["Mise en gestion", "Caisse séparée, suivi des ventes et du stock, calcul de la marge réelle, tableau de bord mensuel.", "Vous pilotez avec des chiffres, plus à l'intuition."],
+      ["Plan d'affaires", "Projet, marché, stratégie et prévisions financières construits avec vous dans notre générateur en ligne.", "Un dossier présentable à une banque, une IMF ou un bailleur."],
+      ["Financement et marchés", "Préparation du dossier, mise en relation avec les financeurs, appui aux appels d'offres.", "Le capital nécessaire pour passer à l'échelle."],
+      ["Suivi", "Points mensuels sur vos indicateurs, ajustements, appui à distance par WhatsApp.", "L'accompagnement ne s'arrête pas à la formation."]
+    ],
+    solutions: ["ubora-pme"],
+    apps: [["Générateur de business plan", "Votre dossier de financement construit pas à pas, utilisable hors connexion.", "https://bp.uborardc.com", "bp.uborardc.com"]],
+    boite: { statut: "bientot", titre: "Une boîte à outils à télécharger", intro: "Nous préparons les modèles que nous utilisons en accompagnement, pour que chaque entrepreneur puisse s'en servir librement.",
+      outils: [
+        ["Modèle de tenue de caisse", "Tableur simple, en CDF et USD, avec arrêté journalier."],
+        ["Canevas de plan d'affaires", "La trame utilisée en atelier, à remplir seul."],
+        ["Grille de prix de revient", "Pour fixer un prix qui couvre réellement vos coûts."],
+        ["Modèles de facture et de devis", "Conformes aux mentions exigées en RDC."],
+        ["Guide de la formalisation", "Les démarches, les pièces et les coûts, étape par étape."],
+        ["Tableau de bord mensuel", "Les huit indicateurs à suivre dans une petite entreprise."]
+      ] },
+    services: ["pme", "entrepreneuriat", "outils"]
+  },
+
+  financement: {
+    sousDomaine: "fin.uborardc.com",
+    eyebrow: "Accès au financement",
+    titre: 'Rendre le crédit <span class="serif">accessible</span>, des deux côtés du guichet.',
+    lead: "Nous préparons les groupes, les coopératives et les PME à emprunter, et nous outillons les institutions qui prêtent. C'est en travaillant les deux côtés que le crédit circule vraiment.",
+    intro: "En RDC, le crédit existe mais ne rencontre pas la demande : les emprunteurs n'ont rien à présenter, et les institutions manquent de systèmes pour instruire de petits dossiers à un coût raisonnable. Nous intervenons sur les deux versants.",
+    constats: [
+      ["Pas d'historique, pas de crédit", "Un groupe qui épargne depuis trois ans reste invisible pour une banque s'il ne peut rien prouver."],
+      ["Des dossiers non recevables", "Sans états financiers ni prévisions, la demande est refusée avant même l'analyse."],
+      ["Un coût d'instruction trop élevé", "Analyser un crédit de 500 dollars coûte presque aussi cher que d'en analyser un de 50 000 : les IMF s'en détournent."],
+      ["Le suivi des impayés", "Sans système, les retards se découvrent trop tard et le portefeuille se dégrade."]
+    ],
+    parcours: [
+      ["Préparer l'emprunteur", "Discipline d'épargne, comptes tenus, plan d'affaires chiffré, garanties réalistes.", "Un dossier qu'une institution peut réellement instruire."],
+      ["Construire l'historique", "Les cotisations, prêts et remboursements enregistrés dans nos outils deviennent des preuves.", "Un score de discipline lisible par un financier."],
+      ["Outiller l'institution", "Ubora Fin : gestion des membres, de l'épargne, des crédits, du guichet et des rapports.", "Instruire et suivre de petits crédits sans y perdre d'argent."],
+      ["Mettre en relation", "Nous présentons les dossiers aux IMF, COOPEC et banques partenaires, et accompagnons la négociation.", "Un premier crédit obtenu, à des conditions tenables."],
+      ["Suivre le remboursement", "Échéanciers, relances, appui en cas de difficulté, des deux côtés.", "Un historique positif qui ouvre le crédit suivant."]
+    ],
+    solutions: ["ubora-fin", "ubora-avec"],
+    apps: [],
+    boite: { statut: "bientot", titre: "Outils d'accès au financement", intro: "Les documents que nous utilisons pour préparer un dossier de crédit seront mis à disposition.",
+      outils: [
+        ["Dossier de crédit type", "La trame attendue par les IMF et banques congolaises."],
+        ["Grille d'analyse de la capacité de remboursement", "Calculer ce qu'un emprunteur peut réellement rembourser."],
+        ["Modèle de prévisions de trésorerie", "Sur douze mois, en CDF et USD."],
+        ["Fiche de score de discipline d'un groupe", "Les indicateurs qui rassurent un financier."]
+      ] },
+    services: ["inclusion", "avec"]
+  },
+
+  cooperatives: {
+    sousDomaine: "coop.uborardc.com",
+    eyebrow: "Coopératives",
+    titre: 'Des coopératives <span class="serif">solides</span>, des producteurs mieux payés.',
+    lead: "Gouvernance conforme, gestion rigoureuse, accès aux marchés et au financement : notre accompagnement des coopératives agricoles, de la parcelle jusqu'à la vente groupée.",
+    intro: "Une coopérative bien organisée négocie mieux, accède aux intrants et au crédit, et paie ses producteurs à temps. La plupart échouent non par manque de volonté, mais parce que les règles, les comptes et les volumes ne sont écrits nulle part.",
+    constats: [
+      ["Une gouvernance floue", "Statuts non conformes à l'Acte uniforme OHADA, assemblées irrégulières, décisions contestées."],
+      ["Des membres mal connus", "Sans registre des membres et des parcelles, impossible d'annoncer un volume crédible à un acheteur."],
+      ["Des pertes après récolte", "Faute de stockage et de suivi, une partie de la production est perdue ou bradée."],
+      ["Des paiements tardifs", "Quand les producteurs ne sont pas payés à temps, ils vendent ailleurs au cycle suivant."]
+    ],
+    parcours: [
+      ["Organiser", "Statuts conformes OHADA, règlement intérieur, comité élu, rôles écrits.", "Une coopérative juridiquement solide."],
+      ["Recenser", "Membres, parcelles, cultures, parts sociales : le registre de base.", "Des volumes annonçables et vérifiables."],
+      ["Produire et collecter", "Planification des campagnes, intrants à crédit, pesées, qualité, gestion des stocks.", "Moins de pertes, une production maîtrisée."],
+      ["Vendre groupé", "Recherche d'acheteurs, contrats, négociation des prix, planification des livraisons.", "Un meilleur prix que la vente individuelle."],
+      ["Payer et financer", "Décomptes individuels, paiements mobile money, accès au crédit de campagne.", "Des producteurs payés à temps, qui restent fidèles."],
+      ["Suivre", "Appui à la vie associative, aux assemblées et au reporting.", "Une coopérative autonome au bout d'une campagne."]
+    ],
+    solutions: ["ubora-coop"],
+    apps: [],
+    boite: { statut: "bientot", titre: "Outils pour les coopératives", intro: "Les modèles de gouvernance et de gestion que nous déployons seront téléchargeables.",
+      outils: [
+        ["Statuts type conformes OHADA", "Pour une société coopérative simplifiée ou avec conseil d'administration."],
+        ["Règlement intérieur", "Droits et devoirs des membres, fonctionnement des organes."],
+        ["Registre des membres et des parcelles", "Le format de base à tenir dès la première campagne."],
+        ["Fiche de collecte et de pesée", "Traçabilité du producteur jusqu'à l'entrepôt."],
+        ["Modèle de contrat de vente groupée", "Les clauses à ne pas oublier face à un acheteur."],
+        ["Canevas de procès-verbal d'assemblée", "Pour des décisions opposables et archivées."]
+      ] },
+    services: ["cooperatives", "chaines-valeur"]
+  }
+};
