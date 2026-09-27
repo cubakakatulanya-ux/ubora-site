@@ -431,6 +431,11 @@ function pageDomaine(id) {
         <span class="link">Ouvrir l'outil ${ICON.ext}</span></a>`).join("")}</div>
   </div></section>
 
+  ${D.canaux ? `<section><div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Les débouchés</span><h2>${esc(D.canaux.titre)}</h2><p class="lead">${esc(D.canaux.intro)}</p></div>
+    <div class="field-grid" style="grid-template-columns:repeat(2,1fr)">${D.canaux.liste.map(([t, q, x]) => `<div class="fcard reveal"><h4>${esc(t)}</h4><p class="tagline" style="color:var(--green);font-weight:600;font-size:14.5px">${esc(q)}</p><p>${esc(x)}</p></div>`).join("")}</div>
+  </div></section>` : ""}
+
   ${D.projet ? `<section><div class="wrap">
     <div class="deep projet"><span class="glow g1"></span><span class="glow g3"></span>
       <span class="eyebrow">En préparation</span>

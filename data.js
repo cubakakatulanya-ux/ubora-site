@@ -323,10 +323,13 @@ const SOLUTIONS = [
   },
   {
     id: "ubora-market", raccourci: "market.uborardc.com", nom: "Ubora Market", initiales: "Mk", couleur: "#1F7A6B", statut: "pilote", mock: "market",
-    tagline: "Connecter les producteurs et les entrepreneurs aux marchés",
-    resume: "La vente est le maillon qui manque le plus souvent. Ubora Market met en relation coopératives, transformateurs, artisans et PME avec des acheteurs réels, et organise la vente groupée.",
-    description: "Produire mieux ne sert à rien si l'on vend mal. Ubora Market s'attaque au débouché : recensement de l'offre disponible chez nos bénéficiaires, mise en relation avec des acheteurs identifiés, organisation de la vente groupée et suivi des livraisons et des paiements. L'outil s'accompagne d'un travail de terrain sur la qualité, le conditionnement et la fiabilité des volumes, sans lesquels aucun acheteur sérieux ne s'engage.",
+    tagline: "Connecter les vendeurs aux acheteurs : B2B, B2C, institutions",
+    resume: "Ubora Market relie les vendeurs que nous accompagnons — PME, coopératives, entrepreneurs — aux acheteurs : entreprises, institutions et consommateurs. Une plateforme dédiée est en préparation ; en attendant, la mise en relation se fait dans le cadre de l'accompagnement.",
+    description: "Produire mieux ne sert à rien si l'on vend mal. Ubora Market s'attaque au débouché. Nous travaillons plusieurs canaux selon le vendeur : le B2B avec les agro-industries, grossistes, hôtels et restaurants ; le B2C avec la vente directe, les boutiques, les réseaux sociaux et la livraison ; les marchés institutionnels avec les écoles, hôpitaux, ONG et programmes ; et l'export régional pour les volumes qui le permettent. Une plateforme numérique dédiée, où vendeurs et acheteurs se trouveront directement, est en préparation. Elle ne remplacera pas le travail de terrain sur la qualité, le conditionnement et la fiabilité des volumes, sans lequel aucun acheteur sérieux ne s'engage.",
     fonctionnalites: [
+      ["Canaux B2B", "Agro-industries, grossistes, hôtels, restaurants : contrats réguliers et volumes importants."],
+      ["Canaux B2C", "Vente directe, boutiques, réseaux sociaux et livraison : marge plus élevée, logistique à organiser."],
+      ["Marchés institutionnels", "Écoles, hôpitaux, ONG et programmes : commandes prévisibles, exigences administratives."],
       ["Catalogue de l'offre", "Produits, volumes disponibles, périodes de récolte ou de production, zones."],
       ["Acheteurs référencés", "Agro-industries, grossistes, restaurants, institutions, exportateurs."],
       ["Vente groupée", "Agréger l'offre de plusieurs producteurs pour atteindre le volume demandé."],
@@ -521,11 +524,28 @@ const DOMAINES = {
     parcours: [
       ["Recenser l'offre", "Produits, volumes, périodes et zones de nos bénéficiaires, consignés dans un catalogue.", "Une offre annonçable et vérifiable."],
       ["Identifier la demande", "Rencontrer agro-industries, grossistes, institutions et exportateurs pour connaître leurs besoins.", "Des débouchés nommés, avec leurs exigences."],
+      ["Choisir le canal", "B2B, B2C, marché institutionnel ou export : selon le produit, le volume et la capacité à livrer.", "Une stratégie commerciale réaliste, pas un catalogue d'intentions."],
       ["Mettre à niveau", "Qualité, conditionnement, régularité des livraisons, documents exigés.", "Une offre conforme à ce que l'acheteur attend."],
       ["Agréger et connecter", "Regrouper l'offre de plusieurs producteurs et organiser la rencontre commerciale.", "Un volume suffisant et une négociation équilibrée."],
       ["Contractualiser", "Contrat de vente groupée, prix, calendrier de livraison, conditions de paiement.", "Un engagement écrit des deux côtés."],
       ["Suivre jusqu'au paiement", "Livraisons, contrôle qualité, règlements jusqu'au producteur.", "Des producteurs payés, et une relation qui se répète."]
     ],
+    canaux: {
+      titre: "Quatre canaux, quatre logiques",
+      intro: "Le bon débouché dépend du produit, du volume et de la capacité du vendeur à livrer. Nous choisissons avec lui, puis nous le préparons aux exigences du canal retenu.",
+      liste: [
+        ["B2B — entreprises", "Agro-industries, grossistes, hôtels, restaurants.", "Volumes élevés et contrats réguliers, mais exigences strictes de qualité, de régularité et de facturation."],
+        ["B2C — consommateurs", "Vente directe, boutiques, réseaux sociaux, livraison.", "Meilleure marge et paiement immédiat, au prix d'un effort commercial et logistique constant."],
+        ["Institutions et programmes", "Écoles, hôpitaux, ONG, projets et marchés publics.", "Commandes prévisibles et volumes garantis, à condition d'être formalisé et de savoir répondre à un appel d'offres."],
+        ["Export régional", "Zambie, Tanzanie et marchés voisins.", "Prix supérieurs pour les filières qui atteignent le volume et les normes exigées."]
+      ]
+    },
+    projet: {
+      titre: "Une plateforme de mise en relation",
+      texte: "Nous préparons une plateforme numérique où les vendeurs que nous accompagnons publieront leur offre — produit, volume, période, zone — et où les acheteurs trouveront directement des fournisseurs vérifiés. Chaque vendeur y sera référencé avec son historique de livraisons, ce qui est la seule chose qui rassure vraiment un acheteur.",
+      etat: "Projet en développement : conception fonctionnelle et premiers tests avec des acheteurs et des coopératives pilotes.",
+      appel: "Acheteur ou vendeur intéressé par la phase pilote : écrivez-nous."
+    },
     solutions: ["ubora-market", "ubora-coop"],
     apps: [],
     boite: { statut: "bientot", titre: "Outils d'accès au marché", intro: "Les documents commerciaux que nous utilisons seront mis à disposition.",
