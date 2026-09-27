@@ -593,20 +593,30 @@ const DOMAINES = {
       ["Structurer", "Règlement intérieur, rôles séparés entre assemblée, conseil et gérance, procédures de caisse et de stock.", "Des règles écrites qui évitent les conflits."],
       ["Recenser", "Membres, parcelles, cultures, parts sociales : le registre de base.", "Des volumes annonçables et vérifiables."],
       ["Produire et collecter", "Planification des campagnes, intrants à crédit, pesées, qualité, gestion des stocks.", "Moins de pertes, une production maîtrisée."],
+      ["Gérer au quotidien", "Caisse et banque, comptabilité simplifiée, inventaires, suivi des parts sociales et des ristournes, tableau de bord mensuel du gérant.", "Des comptes à jour, vérifiables par les membres à tout moment."],
       ["Vendre groupé", "Recherche d'acheteurs, contrats, négociation des prix, planification des livraisons.", "Un meilleur prix que la vente individuelle."],
       ["Payer et financer", "Décomptes individuels, paiements mobile money, accès au crédit de campagne.", "Des producteurs payés à temps, qui restent fidèles."],
       ["Suivre", "Appui à la vie associative, aux assemblées et au reporting.", "Une coopérative autonome au bout d'une campagne."]
     ],
     solutions: ["ubora-coop"],
     apps: [],
-    boite: { statut: "bientot", titre: "Outils pour les coopératives", intro: "Les modèles de gouvernance et de gestion que nous déployons seront téléchargeables.",
+    boite: { statut: "bientot", titre: "La boîte à outils de gestion coopérative", intro: "Tous les documents que nous installons dans une coopérative accompagnée : de la constitution aux comptes de fin de campagne. Ils seront mis à disposition des coopératives et des programmes agricoles.",
       outils: [
         ["Statuts type conformes OHADA", "Pour une société coopérative simplifiée ou avec conseil d'administration."],
-        ["Règlement intérieur", "Droits et devoirs des membres, fonctionnement des organes."],
+        ["Règlement intérieur", "Droits et devoirs des membres, fonctionnement des organes, sanctions."],
+        ["Dossier de constitution", "Convocation, procès-verbal d'assemblée constitutive, liste de souscription des parts."],
         ["Registre des membres et des parcelles", "Le format de base à tenir dès la première campagne."],
+        ["Registre des parts sociales", "Souscriptions, libérations, cessions et remboursements."],
+        ["Livre de caisse et de banque", "Tenue quotidienne, en francs congolais et en dollars, avec arrêté mensuel."],
         ["Fiche de collecte et de pesée", "Traçabilité du producteur jusqu'à l'entrepôt."],
+        ["Fiche de stock et d'inventaire", "Entrées, sorties, pertes, valorisation du stock."],
+        ["Suivi des intrants à crédit", "Distribution, récupération sur les ventes, soldes par producteur."],
         ["Modèle de contrat de vente groupée", "Les clauses à ne pas oublier face à un acheteur."],
-        ["Canevas de procès-verbal d'assemblée", "Pour des décisions opposables et archivées."]
+        ["Décompte et bordereau de paiement producteur", "Le détail remis à chaque membre après la vente."],
+        ["Canevas de procès-verbal d'assemblée", "Pour des décisions opposables et archivées."],
+        ["Budget et plan de campagne", "Prévoir les besoins, les recettes et la trésorerie de la saison."],
+        ["Tableau de bord du gérant", "Les indicateurs à suivre chaque mois : collecte, stock, ventes, trésorerie, impayés."],
+        ["Rapport annuel type", "Le compte rendu à présenter à l'assemblée générale."]
       ] },
     services: ["cooperatives", "chaines-valeur"]
   }
