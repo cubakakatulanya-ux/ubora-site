@@ -756,3 +756,19 @@ a.chip { display: inline-block; text-decoration: none; }
 .admin-kpis { grid-template-columns: repeat(4, 1fr); }
 @media (max-width: 1000px) { .admin-kpis { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 520px) { .admin-kpis { grid-template-columns: 1fr; } }
+
+/* ---------- Photos ---------- */
+.head-grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: clamp(28px, 4vw, 56px); align-items: center; }
+.head-grid > * { min-width: 0; }
+.head-photo { margin: 0; overflow: hidden; border-radius: var(--r-lg); box-shadow: 0 30px 60px -28px rgba(0, 0, 0, .75); aspect-ratio: 4 / 3; }
+.head-photo img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 900px) { .head-grid { grid-template-columns: 1fr; } .head-photo { aspect-ratio: 16 / 9; } }
+.photos { padding-block: 0; background: var(--deep); overflow: hidden; }
+.photos-track { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); }
+.photos-move { display: flex; gap: 12px; width: max-content; padding-block: 12px 28px; animation: tick 90s linear infinite; }
+.photos:hover .photos-move { animation-play-state: paused; }
+.photos figure { position: relative; flex: none; width: clamp(240px, 26vw, 360px); aspect-ratio: 3 / 2; margin: 0; overflow: hidden; border-radius: 16px; }
+.photos img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s; }
+.photos figure:hover img { transform: scale(1.04); }
+.photos figcaption { position: absolute; left: 12px; bottom: 12px; padding: 5px 11px; border-radius: 99px; background: rgba(7, 24, 58, .78); color: #fff; font-size: 13px; font-weight: 600; backdrop-filter: blur(6px); }
+@media (prefers-reduced-motion: reduce) { .photos-track { overflow-x: auto; } }

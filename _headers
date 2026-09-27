@@ -19,3 +19,6 @@ https://admin.uborardc.com/*
 
 /logo.png
   Cache-Control: public, max-age=604800
+
+/img/*
+  Cache-Control: public, max-age=2592000

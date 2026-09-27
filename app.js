@@ -116,14 +116,21 @@ const MOCKS = {
 const mockFor = id => (MOCKS[id] || mockHub)();
 
 /* ---------- Composants ---------- */
-function pageHead({ eyebrow, title, lead, crumbs = [], extra = "" }) {
-  return `<section class="deep page-head"><div class="wrap">
-      <nav class="crumbs" aria-label="Fil d'Ariane"><a href="/">Accueil</a>${crumbs.map(([t, h]) => h ? `<span><a href="${h}">${t}</a></span>` : `<span>${t}</span>`).join("")}</nav>
+function pageHead({ eyebrow, title, lead, crumbs = [], extra = "", photo }) {
+  const texte = `<nav class="crumbs" aria-label="Fil d'Ariane"><a href="/">Accueil</a>${crumbs.map(([t, h]) => h ? `<span><a href="${h}">${t}</a></span>` : `<span>${t}</span>`).join("")}</nav>
       <span class="eyebrow">${eyebrow}</span>
       <h1>${title}</h1>
       ${lead ? `<p class="lead">${lead}</p>` : ""}
-      ${extra}
+      ${extra}`;
+  if (!photo) return `<section class="deep page-head"><div class="wrap">${texte}</div></section>`;
+  return `<section class="deep page-head has-photo"><div class="wrap head-grid">
+      <div>${texte}</div>
+      <figure class="head-photo"><img src="${photo[0]}" alt="${esc(photo[1])}" width="1536" height="1024" fetchpriority="high"></figure>
     </div></section>`;
+}
+function bandePhotos() {
+  const une = PHOTOS.map(([src, t]) => `<figure><img src="${src}" alt="${esc(t)}" width="1536" height="1024" loading="lazy"><figcaption>${esc(t)}</figcaption></figure>`).join("");
+  return `<section class="photos" aria-label="Sur le terrain"><div class="photos-track"><div class="photos-move">${une}${une.replace(/<figure>/g, '<figure aria-hidden="true">')}</div></div></section>`;
 }
 function secHead(eyebrow, title, lead, action) {
   return `<div class="sec-head${action ? " split" : ""}"><div><span class="eyebrow">${eyebrow}</span><h2>${title}</h2>${lead ? `<p class="lead">${lead}</p>` : ""}</div>${action || ""}</div>`;
@@ -285,6 +292,8 @@ function pageHome() {
     </div>
   </section>
 
+  ${bandePhotos()}
+
   <section id="poles"><div class="wrap">
     ${secHead("Nos pôles", `Cinq pôles, chacun avec sa <span class="serif">démarche</span>`, "Chaque pôle a sa propre adresse. Vous y trouverez le contexte dans lequel nous travaillons, nos étapes d'accompagnement, les outils associés et une boîte à outils.")}
     <div class="poles">${POLES.map((p, i) => poleCard(p, i === 0)).join("")}</div>
@@ -348,7 +357,7 @@ function teamBand(surPageEquipe) {
 }
 
 function pageAbout() {
-  return pageHead({ eyebrow: "Qui sommes-nous", title: `Une entreprise sociale au service de la <span class="serif">résilience économique</span>.`, crumbs: [["Qui sommes-nous"]],
+  return pageHead({ eyebrow: "Qui sommes-nous", title: `Une entreprise sociale au service de la <span class="serif">résilience économique</span>.`, crumbs: [["Qui sommes-nous"]], photo: ["/img/terrain.jpg", "Une communauté réunie en plein air"],
     lead: "Ubora veut dire « excellence » en swahili. Nous sommes nés à Lubumbashi et nous travaillons dans toute la RDC, pour que les familles, les entreprises et les coopératives résistent mieux aux coups durs et puissent se développer." }) + `
   <section><div class="wrap two">
     <div><span class="eyebrow">Mission</span>
@@ -426,7 +435,7 @@ function pagePole(id) {
   const enLigne = outilsLies.filter(o => o.statut === "en-ligne");
   const reals = DATA.realisations.filter(r => r.pole === P.id);
   return pageHead({
-    eyebrow: esc(P.nom), title: P.titre, lead: esc(P.lead), crumbs: [["Nos pôles", "/#poles"], [esc(P.nom)]],
+    eyebrow: esc(P.nom), title: P.titre, lead: esc(P.lead), crumbs: [["Nos pôles", "/#poles"], [esc(P.nom)]], photo: P.photo,
     extra: `<div class="btn-row"><a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent(P.nom)}">Parler de votre projet ${ICON.arrow}</a>
       ${P.boite ? `<a class="btn btn-glass" href="#boite" data-scroll="boite">La boîte à outils</a>` : ""}
       ${enLigne.map(o => `<a class="btn btn-glass" href="${o.url}" target="_blank" rel="noopener">Ouvrir ${esc(o.nom)} ${ICON.ext}</a>`).join("")}</div>
@@ -544,7 +553,7 @@ function pageConseil() {
 function pageFormations() {
   const t = todayISO();
   const sessions = [...DATA.formations].filter(f => f.date >= t).sort((a, b) => a.date.localeCompare(b.date));
-  return pageHead({ eyebrow: "Formations", title: `Apprendre à utiliser les outils, puis à s'en servir seul.`, crumbs: [["Formations"]],
+  return pageHead({ eyebrow: "Formations", title: `Apprendre à utiliser les outils, puis à s'en servir seul.`, crumbs: [["Formations"]], photo: ["/img/formation.jpg", "Un formateur s'adresse à un groupe dans une salle"],
     lead: "Chaque déploiement comprend une formation de prise en main et un suivi. Nous organisons aussi des sessions à Lubumbashi, dans votre province ou en ligne." }) + `
   <section><div class="wrap">
     ${secHead("Prochaines sessions", "Le calendrier")}
@@ -705,6 +714,7 @@ function pageMentions() {
     <ul class="checks"><li>le formulaire de contact : nom, organisation, téléphone, e-mail et message, pour vous répondre ;</li><li>la lettre d'information : votre adresse e-mail, jusqu'à votre désinscription ;</li><li>l'assistant du site : le texte de vos questions, sans aucune donnée d'identification.</li></ul>
     <p>Ces données ne sont ni vendues ni cédées. Pour les consulter, les corriger ou les faire supprimer, écrivez à <a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a>.</p>
     <h2>Cookies</h2><p>Le site n'utilise aucun cookie publicitaire ni outil de mesure d'audience. Votre navigateur garde seulement votre choix d'affichage clair ou sombre.</p>
+    <h2>Photos</h2><p>Les photos d'ambiance du site proviennent de la banque d'images Unsplash et sont utilisées selon sa licence. Elles illustrent nos domaines d'intervention et ne représentent pas des bénéficiaires ni des projets d'Ubora. Les photos des pages « Notre équipe » et « Nos réalisations » sont les nôtres.</p>
     <h2>Propriété intellectuelle</h2><p>Le logo, les noms Ubora AVEC, Ubora PME, Ubora Coop, Ubora Fin, Ubora Market et AKIBA, ainsi que les textes et les documents de ce site, appartiennent à Ubora. Toute reproduction sans autorisation est interdite.</p>
   </div></section>`;
 }
