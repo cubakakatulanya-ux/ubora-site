@@ -34,7 +34,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="/styles.css?v=63075cc8a9">
+<link rel="stylesheet" href="/styles.css?v=9de1a77cc1">
 </head>
 <body>
 <div class="progress-top" id="readBar"></div>
@@ -188,20 +188,27 @@
     <div class="foot-grid">
       <div class="foot-brand">
         <a class="brand" href="/"><img class="logo-img" src="/logo-ubora.png" alt="" width="64" height="64" loading="lazy"><span class="brand-txt"><span class="brand-name">ub<b>o</b>ra</span><span class="brand-sub">Entreprise sociale</span></span></a>
-        <p>Nous aidons les groupes d'épargne, les entrepreneurs, les coopératives et les institutions financières de la RDC à devenir plus solides.</p>
+        <p class="foot-accroche">Des groupes d'épargne, des entrepreneurs et des coopératives plus solides, partout en RDC. Et nous restons quand les projets se terminent.</p>
+        <form class="news-form" id="newsForm" aria-label="Lettre d'information">
+          <label class="news-label" for="nlEmail">Recevoir nos nouvelles du terrain</label>
+          <div class="news-row"><input id="nlEmail" type="email" required maxlength="160" placeholder="Votre adresse e-mail"><input class="hp" id="nlSite" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn btn-accent btn-sm" type="submit">S'inscrire</button></div>
+        </form>
       </div>
-      <div><h4>Nos pôles</h4><ul><li><a href="/avec">Ubora AVEC</a><a class="foot-sub" href="https://avec.uborardc.com">avec.uborardc.com</a></li><li><a href="/pme">Ubora PME</a><a class="foot-sub" href="https://pme.uborardc.com">pme.uborardc.com</a></li><li><a href="/cooperatives">Ubora Coop</a><a class="foot-sub" href="https://coop.uborardc.com">coop.uborardc.com</a></li><li><a href="/financement">Ubora Fin</a><a class="foot-sub" href="https://fin.uborardc.com">fin.uborardc.com</a></li><li><a href="/marche">Ubora Market</a><a class="foot-sub" href="https://market.uborardc.com">market.uborardc.com</a></li></ul></div>
-      <div><h4>Nos outils</h4><ul><li><a href="https://akiba.uborardc.com" target="_blank" rel="noopener">AKIBA</a><span class="foot-sub">akiba.uborardc.com</span></li><li><a href="https://bp.uborardc.com" target="_blank" rel="noopener">Générateur de business plan</a><span class="foot-sub">bp.uborardc.com</span></li><li><a href="https://www.uborahub.com" target="_blank" rel="noopener">Ubora Hub</a><span class="foot-sub">hub.uborardc.com</span></li><li><a href="/outils">Tous les outils</a></li><li><a href="/formations">Formations</a></li></ul></div>
-      <div><h4>Ubora</h4><ul><li><a href="/a-propos">Qui sommes-nous</a></li><li><a href="/equipe">Notre équipe</a></li><li><a href="/realisations">Nos réalisations</a></li><li><a href="/approche">Notre approche</a></li><li><a href="/conseil">Conseil et programmes</a></li><li><a href="/actualites">Actualités</a></li><li><a href="/carrieres">Carrières</a></li><li><a href="/contact">Contact</a></li></ul></div>
-      <div><h4>Nous joindre</h4><ul>
-        <li><a href="tel:+243998275144">+243 998 275 144</a></li>
-        <li><a href="mailto:contact@uborardc.com">contact@uborardc.com</a></li>
-        <li>Lubumbashi, Haut-Katanga, RDC</li></ul>
-        <h4 class="h4-gap">Lettre d'information</h4>
-        <form class="news-form" id="newsForm"><input id="nlEmail" type="email" required maxlength="160" placeholder="Votre adresse e-mail" aria-label="Adresse e-mail"><input class="hp" id="nlSite" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn btn-accent btn-sm" type="submit">S'inscrire</button></form>
+      <nav aria-label="Nos pôles"><h4>Nos pôles</h4><ul><li><a class="foot-pole" href="/avec" style="--c:#23843A">Ubora AVEC</a></li><li><a class="foot-pole" href="/pme" style="--c:#B0622A">Ubora PME</a></li><li><a class="foot-pole" href="/cooperatives" style="--c:#4E8F2A">Ubora Coop</a></li><li><a class="foot-pole" href="/financement" style="--c:#1D5FB8">Ubora Fin</a></li><li><a class="foot-pole" href="/marche" style="--c:#1F7A6B">Ubora Market</a></li></ul></nav>
+      <nav aria-label="Outils et formations"><h4>Outils</h4><ul><li><a href="https://akiba.uborardc.com" target="_blank" rel="noopener">AKIBA</a></li><li><a href="https://bp.uborardc.com" target="_blank" rel="noopener">Générateur de business plan</a></li><li><a href="https://www.uborahub.com" target="_blank" rel="noopener">Ubora Hub</a></li><li><a href="/outils">Tous les outils</a></li><li><a href="/formations">Formations</a></li></ul></nav>
+      <nav aria-label="Ubora"><h4>Ubora</h4><ul><li><a href="/a-propos">Qui sommes-nous</a></li><li><a href="/equipe">Notre équipe</a></li><li><a href="/realisations">Nos réalisations</a></li><li><a href="/approche">Notre approche</a></li><li><a href="/conseil">Conseil et programmes</a></li><li><a href="/actualites">Actualités</a></li><li><a href="/carrieres">Carrières</a></li></ul></nav>
+      <div class="foot-contact"><h4>Nous joindre</h4><ul>
+        <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 3h4l2 5-2.5 1.5a11 11 0 0 0 6 6L16 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 5a2 2 0 0 1 2-2z"/></svg></span><a href="tel:+243998275144">+243 998 275 144</a></li>
+        <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></span><a href="mailto:contact@uborardc.com">contact@uborardc.com</a></li>
+        <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-6.5 7-12a7 7 0 0 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg></span><span>Lubumbashi, Haut-Katanga, RDC</span></li>
+        <li><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span><span>Du lundi au vendredi, de 8 h à 17 h</span></li></ul>
+        <div class="foot-btns"><a class="btn btn-wa btn-sm" href="https://wa.me/243998275144?text=Bonjour%20Ubora%2C%20je%20souhaite%20%C3%A9changer%20avec%20vous." target="_blank" rel="noopener">WhatsApp</a><a class="btn btn-glass btn-sm" href="/contact">Nous écrire</a></div>
       </div>
     </div>
-    <div class="foot-bottom"><span>© 2026 Ubora, entreprise sociale · Siège à Lubumbashi · Interventions dans toute la RDC</span><span class="foot-links"><a href="/mentions">Mentions légales</a><a href="https://admin.uborardc.com" rel="nofollow">Espace équipe</a></span></div>
+    <div class="foot-bottom">
+      <span>© 2026 Ubora, entreprise sociale · Lubumbashi, RDC<span class="foot-legal">RCCM CD/KNM/RCCM/24-A-04755 · ID NAT 01-G4701-N86995I</span></span>
+      <span class="foot-links"><a href="/mentions">Mentions légales</a><a href="https://admin.uborardc.com" rel="nofollow">Espace équipe</a></span>
+    </div>
   </div></footer>
 
 <a class="wa-float" id="waFloat" href="https://wa.me/243998275144" target="_blank" rel="noopener" aria-label="Écrire à Ubora sur WhatsApp">
@@ -214,10 +221,10 @@
 
 <script type="application/json" id="ubora-donnees">{"actualites":[],"formations":[],"offres":[],"equipe":[],"realisations":[]}</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" integrity="sha384-GFr3yTh5lJznCbZfpTtXnwboFsxqtTQoeTZCRHhE0579KrRmlCzen5AA8ohaB5ug" crossorigin="anonymous"></script>
-<script src="/data.js?v=63075cc8a9"></script>
-<script src="/db.js?v=63075cc8a9"></script>
-<script src="/admin.js?v=63075cc8a9"></script>
-<script src="/app.js?v=63075cc8a9"></script>
-<script src="/chat.js?v=63075cc8a9"></script>
+<script src="/data.js?v=9de1a77cc1"></script>
+<script src="/db.js?v=9de1a77cc1"></script>
+<script src="/admin.js?v=9de1a77cc1"></script>
+<script src="/app.js?v=9de1a77cc1"></script>
+<script src="/chat.js?v=9de1a77cc1"></script>
 </body>
 </html>

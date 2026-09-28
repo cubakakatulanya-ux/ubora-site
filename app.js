@@ -270,24 +270,34 @@ function menuHTML() {
     <li class="m-cta"><a class="btn btn-accent" href="/contact">Nous contacter</a></li>`;
 }
 function footerHTML() {
+  const L = CONFIG.legal || {};
+  const legal = [L.rccm && "RCCM " + L.rccm, L.idnat && "ID NAT " + L.idnat].filter(Boolean).join(" · ");
+  const tel = CONFIG.telephone.replace(/\s/g, "");
   return `<div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
         <a class="brand" href="/"><img class="logo-img" src="/logo-ubora.png" alt="" width="64" height="64" loading="lazy"><span class="brand-txt"><span class="brand-name">ub<b>o</b>ra</span><span class="brand-sub">Entreprise sociale</span></span></a>
-        <p>Nous aidons les groupes d'épargne, les entrepreneurs, les coopératives et les institutions financières de la RDC à devenir plus solides.</p>
+        <p class="foot-accroche">Des groupes d'épargne, des entrepreneurs et des coopératives plus solides, partout en RDC. Et nous restons quand les projets se terminent.</p>
+        <form class="news-form" id="newsForm" aria-label="Lettre d'information">
+          <label class="news-label" for="nlEmail">Recevoir nos nouvelles du terrain</label>
+          <div class="news-row"><input id="nlEmail" type="email" required maxlength="160" placeholder="Votre adresse e-mail"><input class="hp" id="nlSite" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn btn-accent btn-sm" type="submit">S'inscrire</button></div>
+        </form>
       </div>
-      <div><h4>Nos pôles</h4><ul>${POLES.map(p => `<li><a href="${p.chemin}">${esc(p.nom)}</a><a class="foot-sub" href="https://${p.sousDomaine}">${esc(p.sousDomaine)}</a></li>`).join("")}</ul></div>
-      <div><h4>Nos outils</h4><ul>${OUTILS.filter(o => o.statut === "en-ligne").map(o => `<li><a href="${o.url}" target="_blank" rel="noopener">${esc(o.nom)}</a><span class="foot-sub">${esc(o.sousDomaine)}</span></li>`).join("")}<li><a href="/outils">Tous les outils</a></li><li><a href="/formations">Formations</a></li></ul></div>
-      <div><h4>Ubora</h4><ul><li><a href="/a-propos">Qui sommes-nous</a></li><li><a href="/equipe">Notre équipe</a></li><li><a href="/realisations">Nos réalisations</a></li><li><a href="/approche">Notre approche</a></li><li><a href="/conseil">Conseil et programmes</a></li><li><a href="/actualites">Actualités</a></li><li><a href="/carrieres">Carrières</a></li><li><a href="/contact">Contact</a></li></ul></div>
-      <div><h4>Nous joindre</h4><ul>
-        <li><a href="tel:${CONFIG.telephone.replace(/\s/g, "")}">${esc(CONFIG.telephone)}</a></li>
-        <li><a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a></li>
-        <li>${esc(CONFIG.adresse)}</li></ul>
-        <h4 class="h4-gap">Lettre d'information</h4>
-        <form class="news-form" id="newsForm"><input id="nlEmail" type="email" required maxlength="160" placeholder="Votre adresse e-mail" aria-label="Adresse e-mail"><input class="hp" id="nlSite" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn btn-accent btn-sm" type="submit">S'inscrire</button></form>
+      <nav aria-label="Nos pôles"><h4>Nos pôles</h4><ul>${POLES.map(p => `<li><a class="foot-pole" href="${p.chemin}" style="--c:${p.couleur}">${esc(p.nom)}</a></li>`).join("")}</ul></nav>
+      <nav aria-label="Outils et formations"><h4>Outils</h4><ul>${OUTILS.filter(o => o.statut === "en-ligne").map(o => `<li><a href="${o.url}" target="_blank" rel="noopener">${esc(o.nom)}</a></li>`).join("")}<li><a href="/outils">Tous les outils</a></li><li><a href="/formations">Formations</a></li></ul></nav>
+      <nav aria-label="Ubora"><h4>Ubora</h4><ul><li><a href="/a-propos">Qui sommes-nous</a></li><li><a href="/equipe">Notre équipe</a></li><li><a href="/realisations">Nos réalisations</a></li><li><a href="/approche">Notre approche</a></li><li><a href="/conseil">Conseil et programmes</a></li><li><a href="/actualites">Actualités</a></li><li><a href="/carrieres">Carrières</a></li></ul></nav>
+      <div class="foot-contact"><h4>Nous joindre</h4><ul>
+        <li><span class="ic">${ICON.phone}</span><a href="tel:${tel}">${esc(CONFIG.telephone)}</a></li>
+        <li><span class="ic">${ICON.mail}</span><a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a></li>
+        <li><span class="ic">${ICON.pin}</span><span>${esc(CONFIG.adresse)}</span></li>
+        <li><span class="ic">${ICON.clock}</span><span>${esc(CONFIG.horaires)}</span></li></ul>
+        <div class="foot-btns"><a class="btn btn-wa btn-sm" href="${waLink("Bonjour Ubora, je souhaite échanger avec vous.")}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn-glass btn-sm" href="/contact">Nous écrire</a></div>
       </div>
     </div>
-    <div class="foot-bottom"><span>© ${new Date().getFullYear()} Ubora, entreprise sociale · Siège à Lubumbashi · Interventions dans toute la RDC</span><span class="foot-links"><a href="/mentions">Mentions légales</a><a href="https://admin.uborardc.com" rel="nofollow">Espace équipe</a></span></div>
+    <div class="foot-bottom">
+      <span>© ${new Date().getFullYear()} Ubora, entreprise sociale · Lubumbashi, RDC${legal ? `<span class="foot-legal">${esc(legal)}</span>` : ""}</span>
+      <span class="foot-links"><a href="/mentions">Mentions légales</a><a href="https://admin.uborardc.com" rel="nofollow">Espace équipe</a></span>
+    </div>
   </div>`;
 }
 function tickerHTML() {

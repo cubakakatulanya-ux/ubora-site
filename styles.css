@@ -1025,3 +1025,38 @@ h1, h2, h3, h4 { font-optical-sizing: auto; }
   .pole.feature .pole-body { min-height: 300px; padding: 22px; }
   .parcours li, .row-card { padding: 16px; }
 }
+
+/* ---------- Pied de page ---------- */
+.foot-grid { grid-template-columns: 1.6fr 1fr 1fr 1fr 1.35fr; gap: 32px 40px; }
+@media (max-width: 1100px) { .foot-grid { grid-template-columns: repeat(3, 1fr); } .foot-brand { grid-column: 1 / -1; } }
+@media (max-width: 640px) { .foot-grid { grid-template-columns: 1fr 1fr; } .foot-contact { grid-column: 1 / -1; } }
+.foot-brand { gap: 18px; }
+.foot-accroche { max-width: 34ch; font-size: 16px !important; line-height: 1.55; color: var(--deep-ink) !important; }
+.news-form { display: grid; gap: 8px; max-width: 360px; }
+.news-label { font-size: 13.5px; font-weight: 600; color: var(--deep-muted); }
+.news-row { display: flex; gap: 8px; }
+.news-row input:not(.hp) { flex: 1 1 auto; min-width: 0; padding: 10px 16px; border-radius: 99px; border: 1px solid rgba(255, 255, 255, .2); background: rgba(255, 255, 255, .06); color: #fff; font: 15px var(--f-body); }
+.news-row input::placeholder { color: var(--deep-muted); }
+.site-footer ul { gap: 9px; }
+.site-footer li { display: flex; align-items: center; gap: 10px; }
+.foot-pole::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 10px; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c) 25%, transparent); vertical-align: 1px; }
+.foot-contact .ic { display: grid; place-items: center; flex: none; width: 28px; height: 28px; border-radius: 8px; background: rgba(255, 255, 255, .06); color: var(--lime); }
+.foot-contact .ic svg { width: 15px; height: 15px; }
+.foot-contact li { align-items: flex-start; }
+.foot-contact li > a, .foot-contact li > span:not(.ic) { padding-top: 4px; overflow-wrap: anywhere; }
+.foot-btns { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+.foot-bottom { align-items: center; margin-top: 44px; }
+.foot-legal { display: block; margin-top: 4px; font-family: var(--f-mono); font-size: 11.5px; letter-spacing: .02em; opacity: .8; }
+
+/* ---------- Encadrés « bientôt » plus compacts ---------- */
+.empty { max-width: 600px; gap: 8px; padding: 28px 26px; }
+.empty b { font-size: 17px; }
+.empty p { font-size: 15px; }
+.empty .btn { margin-top: 6px; }
+
+/* ---------- Plus d'espace vide dans les cartes : chaque carte prend la hauteur de son contenu ---------- */
+.grid-2, .grid-3, .grid-4, .tools, .parcours, .steps, .boite, .bridge, .real-grid, .team-grid, .news-grid, .poles-sm, .model { align-items: start; }
+.poles { align-items: start; }
+.pole .link, .tool .tool-foot { margin-top: 6px; }
+.pole.feature .pole-body { min-height: 300px; }
+.pole.feature .pole-top { margin-bottom: auto; }
