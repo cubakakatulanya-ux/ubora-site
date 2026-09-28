@@ -261,7 +261,7 @@ function footerHTML() {
   return `<div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
-        <a class="brand" href="/"><img class="logo-img" src="/logo.png" alt="" width="64" height="64"><span class="brand-txt"><span class="brand-name">ub<b>o</b>ra</span><span class="brand-sub">Entreprise sociale</span></span></a>
+        <a class="brand" href="/"><img class="logo-img" src="/logo-ubora.png" alt="" width="64" height="64" loading="lazy"><span class="brand-txt"><span class="brand-name">ub<b>o</b>ra</span><span class="brand-sub">Entreprise sociale</span></span></a>
         <p>Nous aidons les groupes d'épargne, les entrepreneurs, les coopératives et les institutions financières de la RDC à devenir plus solides.</p>
       </div>
       <div><h4>Nos pôles</h4><ul>${POLES.map(p => `<li><a href="${p.chemin}">${esc(p.nom)}</a><a class="foot-sub" href="https://${p.sousDomaine}">${esc(p.sousDomaine)}</a></li>`).join("")}</ul></div>
@@ -755,7 +755,7 @@ const ANCIENNES = {
   "solutions": "/outils", "services": "/conseil", "diagnostic": "/contact", "rediger": "/admin"
 };
 const DESCR = {
-  "": "Ubora, entreprise sociale à Lubumbashi : appui aux groupes d'épargne (AVEC), accompagnement des entrepreneurs et des coopératives, accès au financement et au marché, dans toute la RDC.",
+  "": "Ubora, entreprise sociale à Lubumbashi : groupes d'épargne (AVEC), entrepreneurs, coopératives, accès au financement et au marché, partout en RDC.",
   "a-propos": "Qui est Ubora : une entreprise sociale née à Lubumbashi, sa mission, son modèle, ses valeurs et son équipe de terrain.",
   approche: "La méthode Ubora en six temps : écouter, structurer, former, outiller, connecter et suivre, pensée pour les réalités de la RDC.",
   outils: "AKIBA, le générateur de business plan, Ubora Hub et les outils en préparation : des outils numériques conçus pour la RDC.",
@@ -776,7 +776,7 @@ const SEO_POLES = {
   financement: ["Ubora Fin : accès au crédit et microfinance en RDC", "Ubora Fin prépare les emprunteurs, équipe les institutions financières et fait le lien : des fonds levés auprès des financeurs, prêtés aux AVEC en RDC."],
   marche: ["Ubora Market : vendre plus, trouver des acheteurs en RDC", "Relier les PME, les coopératives et les entrepreneurs de la RDC à des acheteurs : ventes B2B et B2C, marchés institutionnels et export."]
 };
-const TITRES = { "":"Ubora, entreprise sociale en RDC", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos outils numériques", conseil: "Conseil et programmes", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
+const TITRES = { "": "Ubora, entreprise sociale à Lubumbashi, RDC", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos outils numériques", conseil: "Conseil et programmes", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
 
 /* Construit une page à partir d'une adresse. */
 function resolve(pathname, search, host) {

@@ -50,16 +50,19 @@ const fine = s => s.replace(/ ([;:!?»])/g, " $1").replace(/« /g, "« ");
 const jsonld = o => `<script type="application/ld+json">${JSON.stringify(o).replace(/</g, "\\u003c")}</script>`;
 
 const ORG = {
-  "@type": "Organization",
+  "@type": ["Organization", "ProfessionalService"],
   "@id": "https://uborardc.com/#organisation",
   name: "Ubora",
   alternateName: "Ubora, entreprise sociale",
   url: "https://uborardc.com",
-  logo: "https://uborardc.com/logo.png",
+  logo: { "@type": "ImageObject", url: "https://uborardc.com/icon-512.png", width: 512, height: 512 },
+  image: "https://uborardc.com/partage.jpg",
+  slogan: "Bâtir la résilience économique des familles, des entreprises et des coopératives congolaises.",
   email: "contact@uborardc.com",
   telephone: "+243998275144",
   description: "Entreprise sociale basée à Lubumbashi : appui aux groupes d'épargne (AVEC), accompagnement des entrepreneurs et des coopératives, accès au financement et au marché, dans toute la RDC.",
   address: { "@type": "PostalAddress", addressLocality: "Lubumbashi", addressRegion: "Haut-Katanga", addressCountry: "CD" },
+  openingHoursSpecification: [{ "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "08:00", closes: "17:00" }],
   areaServed: { "@type": "Country", name: "République démocratique du Congo" },
   contactPoint: [{ "@type": "ContactPoint", telephone: "+243998275144", contactType: "customer service", availableLanguage: ["fr", "sw"] }],
   knowsAbout: ["Associations villageoises d'épargne et de crédit", "inclusion financière", "entrepreneuriat", "coopératives agricoles", "microfinance", "accès au marché"]
@@ -70,14 +73,14 @@ ORG.identifier = [["RCCM", legal.rccm], ["Identification nationale", legal.idnat
 
 function donneesStructurees(chemin, r) {
   const url = S.CONFIG.site + (chemin === "/" ? "/" : chemin);
-  if (chemin === "/") return jsonld({ "@context": "https://schema.org", "@graph": [ORG, { "@type": "WebSite", "@id": "https://uborardc.com/#site", url: "https://uborardc.com/", name: "Ubora", inLanguage: "fr", publisher: { "@id": ORG["@id"] } }] });
+  if (chemin === "/") return jsonld({ "@context": "https://schema.org", "@graph": [ORG, { "@type": "WebSite", "@id": "https://uborardc.com/#site", url: "https://uborardc.com/", name: "Ubora", alternateName: ["Ubora RDC", "Ubora, entreprise sociale", "uborardc.com"], inLanguage: "fr", publisher: { "@id": ORG["@id"] } }] });
   const miettes = { "@type": "BreadcrumbList", itemListElement: [{ "@type": "ListItem", position: 1, name: "Accueil", item: "https://uborardc.com/" }] };
   const graph = [miettes];
   const parts = chemin.split("/").filter(Boolean);
   if (parts[0] === "actualites" && parts[1]) {
     miettes.itemListElement.push({ "@type": "ListItem", position: 2, name: "Actualités", item: "https://uborardc.com/actualites" }, { "@type": "ListItem", position: 3, name: texte(r.title.replace(/ · Ubora$/, "")), item: url });
     const n = S.allNews().find(x => x.slug === parts[1]);
-    if (n) graph.push({ "@type": "NewsArticle", headline: n.titre, description: n.extrait, datePublished: n.date, inLanguage: "fr", mainEntityOfPage: url, image: "https://uborardc.com/logo.png", author: { "@id": ORG["@id"] }, publisher: { "@id": ORG["@id"] } });
+    if (n) graph.push({ "@type": "NewsArticle", headline: n.titre, description: n.extrait, datePublished: n.date, inLanguage: "fr", mainEntityOfPage: url, image: "https://uborardc.com/partage.jpg", author: { "@id": ORG["@id"] }, publisher: { "@id": ORG["@id"] } });
   } else {
     miettes.itemListElement.push({ "@type": "ListItem", position: 2, name: texte(r.title.replace(/ · Ubora$/, "")), item: url });
     const P = S.POLES.find(p => p.chemin === chemin);
