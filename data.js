@@ -60,7 +60,7 @@ const METHODE = {
 const POLES = [
   {
     id: "avec", chemin: "/avec", sousDomaine: "avec.uborardc.com",
-    photo: ["/img/avec.jpg", "Des femmes réunies en groupe, en pagnes colorés"],
+    photo: ["avec", "Des femmes réunies en groupe, en pagnes colorés"],
     nom: "Ubora AVEC", initiales: "Av", couleur: "#23843A",
     carte: "Nous créons, formons et suivons des groupes d'épargne, puis nous les aidons à accéder au crédit.",
     titre: `Des groupes d'épargne solides, et un vrai accès au <span class="serif">crédit</span>.`,
@@ -112,7 +112,7 @@ const POLES = [
 
   {
     id: "pme", chemin: "/pme", sousDomaine: "pme.uborardc.com",
-    photo: ["/img/pme.jpg", "Un tailleur au travail sur sa machine à coudre"],
+    photo: ["pme", "Un tailleur au travail sur sa machine à coudre"],
     nom: "Ubora PME", initiales: "Pm", couleur: "#B0622A",
     carte: "Nos programmes pour entrepreneurs : trouver l'idée, la tester, lancer l'entreprise puis la faire grandir.",
     titre: `Aider les entrepreneurs à passer de l'idée à une entreprise qui <span class="serif">vend</span>.`,
@@ -158,7 +158,7 @@ const POLES = [
 
   {
     id: "cooperatives", chemin: "/cooperatives", sousDomaine: "coop.uborardc.com",
-    photo: ["/img/coop.jpg", "Des cultivateurs au travail dans un champ"],
+    photo: ["coop", "Des cultivateurs au travail dans un champ"],
     nom: "Ubora Coop", initiales: "Co", couleur: "#4E8F2A",
     carte: "Nous aidons les organisations paysannes à devenir des coopératives bien gérées, qui vendent mieux.",
     titre: `Des coopératives bien gérées, et des producteurs <span class="serif">payés à temps</span>.`,
@@ -214,7 +214,7 @@ const POLES = [
 
   {
     id: "financement", chemin: "/financement", sousDomaine: "fin.uborardc.com",
-    photo: ["/img/fin.jpg", "Trois femmes échangent autour d'une table de réunion"],
+    photo: ["fin", "Trois femmes échangent autour d'une table de réunion"],
     nom: "Ubora Fin", initiales: "Fi", couleur: "#1D5FB8",
     carte: "Nous préparons les emprunteurs, nous équipons les institutions et nous faisons le lien : des fonds levés auprès des financeurs, prêtés aux AVEC.",
     titre: `Rapprocher ceux qui ont besoin de crédit de ceux qui <span class="serif">prêtent</span>.`,
@@ -275,7 +275,7 @@ const POLES = [
 
   {
     id: "marche", chemin: "/marche", sousDomaine: "market.uborardc.com",
-    photo: ["/img/market.jpg", "Un étal de tomates et de légumes sur un marché"],
+    photo: ["market", "Un étal de tomates et de légumes sur un marché"],
     nom: "Ubora Market", initiales: "Mk", couleur: "#1F7A6B",
     carte: "Nous mettons en relation les PME, les coopératives et les entrepreneurs avec des acheteurs.",
     titre: `Produire, c'est bien. Trouver des <span class="serif">acheteurs</span>, c'est mieux.`,
@@ -332,14 +332,14 @@ const POLES = [
 
 /* Bande de photos qui défile sur l'accueil : [fichier, légende] */
 const PHOTOS = [
-  ["/img/avec.jpg", "Groupes d'épargne"],
-  ["/img/pme.jpg", "Entrepreneurs"],
-  ["/img/coop.jpg", "Coopératives agricoles"],
-  ["/img/akiba.jpg", "Le téléphone au quotidien"],
-  ["/img/fin.jpg", "Accès au crédit"],
-  ["/img/market.jpg", "Accès au marché"],
-  ["/img/formation.jpg", "Formation"],
-  ["/img/terrain.jpg", "Communautés"]
+  ["avec", "Groupes d'épargne"],
+  ["pme", "Entrepreneurs"],
+  ["coop", "Coopératives agricoles"],
+  ["akiba", "Le téléphone au quotidien"],
+  ["fin", "Accès au crédit"],
+  ["market", "Accès au marché"],
+  ["formation", "Formation"],
+  ["terrain", "Communautés"]
 ];
 
 /* Page AVEC : éléments propres à ce pôle */

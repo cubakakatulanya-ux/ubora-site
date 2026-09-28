@@ -115,21 +115,25 @@ const MOCKS = {
 };
 const mockFor = id => (MOCKS[id] || mockHub)();
 
+/* ---------- Photos : trois tailles, le navigateur choisit selon l'écran ---------- */
+const photo = (nom, sizes, alt = "", extra = "") =>
+  `<img src="/img/${nom}-1600.webp" srcset="/img/${nom}-800.webp 800w, /img/${nom}-1600.webp 1600w, /img/${nom}-2400.webp 2400w" sizes="${sizes}" alt="${esc(alt)}" width="1600" height="1067" decoding="async"${extra}>`;
+
 /* ---------- Composants ---------- */
-function pageHead({ eyebrow, title, lead, crumbs = [], extra = "", photo }) {
+function pageHead({ eyebrow, title, lead, crumbs = [], extra = "", photo: visuel }) {
   const texte = `<nav class="crumbs" aria-label="Fil d'Ariane"><a href="/">Accueil</a>${crumbs.map(([t, h]) => h ? `<span><a href="${h}">${t}</a></span>` : `<span>${t}</span>`).join("")}</nav>
       <span class="eyebrow">${eyebrow}</span>
       <h1>${title}</h1>
       ${lead ? `<p class="lead">${lead}</p>` : ""}
       ${extra}`;
-  if (!photo) return `<section class="deep page-head"><div class="wrap">${texte}</div></section>`;
+  if (!visuel) return `<section class="deep page-head"><div class="wrap">${texte}</div></section>`;
   return `<section class="deep page-head has-photo"><div class="wrap head-grid">
       <div>${texte}</div>
-      <figure class="head-photo"><img src="${photo[0]}" alt="${esc(photo[1])}" width="1536" height="1024" fetchpriority="high"></figure>
+      <figure class="head-photo">${photo(visuel[0], "(max-width: 900px) 100vw, 44vw", visuel[1], ' fetchpriority="high"')}</figure>
     </div></section>`;
 }
 function bandePhotos() {
-  const une = PHOTOS.map(([src, t]) => `<figure><img src="${src}" alt="${esc(t)}" width="1536" height="1024" loading="lazy"><figcaption>${esc(t)}</figcaption></figure>`).join("");
+  const une = PHOTOS.map(([nom, t]) => `<figure>${photo(nom, "360px", t, ' loading="lazy"')}<figcaption>${esc(t)}</figcaption></figure>`).join("");
   return `<section class="photos" aria-label="Sur le terrain"><div class="photos-track"><div class="photos-move">${une}${une.replace(/<figure>/g, '<figure aria-hidden="true">')}</div></div></section>`;
 }
 function secHead(eyebrow, title, lead, action) {
@@ -138,12 +142,16 @@ function secHead(eyebrow, title, lead, action) {
 function statut(o) {
   return o.statut === "en-ligne" ? `<span class="status st-live">En ligne</span>` : `<span class="status st-soon">En préparation</span>`;
 }
-function poleCard(p, feature) {
-  return `<article class="pole${feature ? " feature" : ""}" style="--c:${p.couleur}">
-    <div class="pole-top"><span class="mk">${esc(p.initiales)}</span><a class="pole-sub" href="https://${p.sousDomaine}">${esc(p.sousDomaine)}</a></div>
-    <h3><a class="stretch" href="${p.chemin}">${esc(p.nom)}</a></h3>
-    <p>${esc(p.carte)}</p>
-    <span class="link">Découvrir le pôle ${ICON.arrow}</span>
+function poleCard(p, feature, compact) {
+  const img = !compact && p.photo;
+  return `<article class="pole${feature ? " feature" : ""}${img ? " has-img" : ""}" style="--c:${p.couleur}">
+    ${img ? `<div class="pole-img">${photo(p.photo[0], feature ? "(max-width: 860px) 100vw, 800px" : "(max-width: 560px) 100vw, 400px", "", ' loading="lazy"')}</div>` : ""}
+    <div class="pole-body">
+      <div class="pole-top"><span class="mk">${esc(p.initiales)}</span><a class="pole-sub" href="https://${p.sousDomaine}">${esc(p.sousDomaine)}</a></div>
+      <h3><a class="stretch" href="${p.chemin}">${esc(p.nom)}</a></h3>
+      <p>${esc(p.carte)}</p>
+      <span class="link">Découvrir le pôle ${ICON.arrow}</span>
+    </div>
   </article>`;
 }
 function outilCard(o) {
@@ -286,10 +294,18 @@ function pageHome() {
         <div class="btn-row"><a class="btn btn-accent" href="#poles" data-scroll="poles">Découvrir nos pôles ${ICON.arrow}</a><a class="btn btn-glass" href="/contact">Nous contacter</a></div>
         <ul class="trust"><li>Fonctionne sans réseau</li><li>Francs congolais et dollars</li><li>Compatible mobile money</li></ul>
       </div>
-      <div class="stage">${mockHub()}${mockAkiba()}
+      <div class="stage stage-photo">
+        <figure class="hero-photo">${photo("avec", "(max-width: 1080px) 100vw, 40vw", "Des femmes réunies en groupe, en pagnes colorés", ' fetchpriority="high"')}</figure>
+        ${mockAkiba()}
         <div class="float-card"><span class="ic">${ICON.check}</span><span><b>Cotisation reçue</b>+20 000 FC par Airtel Money</span></div>
-        <span class="mock-note">Écrans illustratifs</span></div>
+        <span class="mock-note">Application AKIBA, écran illustratif</span></div>
     </div>
+    <div class="wrap"><ul class="reperes">
+      <li><b>${POLES.length}</b><span>pôles d'intervention</span></li>
+      <li><b>${OUTILS.filter(o => o.statut === "en-ligne").length}</b><span>outils numériques en ligne</span></li>
+      <li><b>${pole("avec").boite.outils.length}</b><span>documents dans la boîte à outils AVEC</span></li>
+      <li><b>RDC</b><span>siège à Lubumbashi, interventions dans tout le pays</span></li>
+    </ul></div>
   </section>
 
   ${bandePhotos()}
@@ -357,7 +373,7 @@ function teamBand(surPageEquipe) {
 }
 
 function pageAbout() {
-  return pageHead({ eyebrow: "Qui sommes-nous", title: `Une entreprise sociale au service de la <span class="serif">résilience économique</span>.`, crumbs: [["Qui sommes-nous"]], photo: ["/img/terrain.jpg", "Une communauté réunie en plein air"],
+  return pageHead({ eyebrow: "Qui sommes-nous", title: `Une entreprise sociale au service de la <span class="serif">résilience économique</span>.`, crumbs: [["Qui sommes-nous"]], photo: ["terrain", "Une communauté réunie en plein air"],
     lead: "Ubora veut dire « excellence » en swahili. Nous sommes nés à Lubumbashi et nous travaillons dans toute la RDC, pour que les familles, les entreprises et les coopératives résistent mieux aux coups durs et puissent se développer." }) + `
   <section><div class="wrap two">
     <div><span class="eyebrow">Mission</span>
@@ -422,7 +438,7 @@ function pageApproche() {
 
   <section><div class="wrap">
     ${secHead("Sur le terrain", "La méthode, appliquée à chacun de nos pôles")}
-    <div class="poles poles-sm">${POLES.map(p => poleCard(p, false)).join("")}</div>
+    <div class="poles poles-sm">${POLES.map(p => poleCard(p, false, true)).join("")}</div>
   </div></section>
 
   <section class="tight-top"><div class="wrap">${finalCta()}</div></section>`;
@@ -545,7 +561,7 @@ function pageConseil() {
   <section><div class="wrap grid-2">${CONSEIL.map(s => `<article class="svc reveal" id="${s.id}"><span class="ic">${ICON[s.ico]}</span><div><h2>${esc(s.titre)}</h2><p>${esc(s.texte)}</p><ul class="checks">${s.points.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div></article>`).join("")}</div></section>
   <section class="band"><div class="wrap">
     ${secHead("Nos pôles au service de votre programme", "Vous pouvez aussi mobiliser directement l'un de nos pôles")}
-    <div class="poles poles-sm">${POLES.map(p => poleCard(p, false)).join("")}</div>
+    <div class="poles poles-sm">${POLES.map(p => poleCard(p, false, true)).join("")}</div>
   </div></section>
   <section><div class="wrap">${finalCta()}</div></section>`;
 }
@@ -553,7 +569,7 @@ function pageConseil() {
 function pageFormations() {
   const t = todayISO();
   const sessions = [...DATA.formations].filter(f => f.date >= t).sort((a, b) => a.date.localeCompare(b.date));
-  return pageHead({ eyebrow: "Formations", title: `Apprendre à utiliser les outils, puis à s'en servir seul.`, crumbs: [["Formations"]], photo: ["/img/formation.jpg", "Un formateur s'adresse à un groupe dans une salle"],
+  return pageHead({ eyebrow: "Formations", title: `Apprendre à utiliser les outils, puis à s'en servir seul.`, crumbs: [["Formations"]], photo: ["formation", "Un formateur s'adresse à un groupe dans une salle"],
     lead: "Chaque déploiement comprend une formation de prise en main et un suivi. Nous organisons aussi des sessions à Lubumbashi, dans votre province ou en ligne." }) + `
   <section><div class="wrap">
     ${secHead("Prochaines sessions", "Le calendrier")}
