@@ -97,6 +97,7 @@ const UboraChat = (() => {
     btn.className = "chat-fab";
     btn.id = "chatFab";
     btn.setAttribute("aria-label", "Ouvrir l'assistant Ubora");
+    btn.title = "Une question ?";
     btn.innerHTML = `${ICON.spark}<span>Une question ?</span>`;
     document.body.appendChild(btn);
 

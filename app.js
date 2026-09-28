@@ -176,7 +176,12 @@ function boiteOutils(b, sujet) {
   const dispo = b.statut === "disponible";
   return `<section class="band" id="boite"><div class="wrap">
     ${secHead(dispo ? "Boîte à outils" : "Bientôt disponible", esc(b.titre), esc(b.intro))}
-    <ol class="boite">${b.outils.map(([t, x], i) => `<li><span class="bn">${String(i + 1).padStart(2, "0")}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`).join("")}</ol>
+    ${(() => {
+      const item = ([t, x], i) => `<li><span class="bn">${String(i + 1).padStart(2, "0")}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`;
+      const reste = b.outils.slice(6);
+      return `<ol class="boite">${b.outils.slice(0, 6).map(item).join("")}</ol>`
+        + (reste.length ? `<details class="boite-plus"><summary>Voir les ${reste.length} autres documents</summary><ol class="boite">${reste.map((o, i) => item(o, i + 6)).join("")}</ol></details>` : "");
+    })()}
     <div class="notice"><span class="ic">${dispo ? ICON.doc : ICON.bell}</span>
       <div><b>${dispo ? "Recevoir la boîte à outils" : "Être prévenu de sa publication"}</b>
         <p>${dispo ? "Dites-nous qui vous êtes et comment vous comptez l'utiliser. Nous vous envoyons les documents et nous prenons le temps de vous les présenter." : "Laissez-nous vos coordonnées. Nous vous écrirons dès que les documents seront prêts."}</p></div>
@@ -292,7 +297,6 @@ function pageHome() {
         <h1>Bâtir la <span class="serif">résilience économique</span> des familles, des entreprises et des coopératives congolaises.</h1>
         <p class="lead">Ubora accompagne les groupes d'épargne, les entrepreneurs, les coopératives et les institutions financières. Nous travaillons sur le terrain, avec des outils numériques pensés pour les réalités du pays.</p>
         <div class="btn-row"><a class="btn btn-accent" href="#poles" data-scroll="poles">Découvrir nos pôles ${ICON.arrow}</a><a class="btn btn-glass" href="/contact">Nous contacter</a></div>
-        <ul class="trust"><li>Fonctionne sans réseau</li><li>Francs congolais et dollars</li><li>Compatible mobile money</li></ul>
       </div>
       <div class="stage stage-photo">
         <figure class="hero-photo">${photo("avec", "(max-width: 1080px) 100vw, 40vw", "Des femmes réunies en groupe, en pagnes colorés", ' fetchpriority="high"')}</figure>
@@ -331,8 +335,8 @@ function pageHome() {
   </div></section>
 
   <section><div class="wrap">
-    ${secHead("Nos outils numériques", `Des outils faits pour le <span class="serif">terrain</span> congolais`, "Chaque outil est lié à un pôle et livré avec une formation. Trois sont déjà en ligne, d'autres sont en préparation.", `<a class="btn btn-ghost" href="/outils">Voir tous les outils ${ICON.arrow}</a>`)}
-    <div class="tools">${OUTILS.map(outilCard).join("")}</div>
+    ${secHead("Nos outils numériques", `Des outils faits pour le <span class="serif">terrain</span> congolais`, "Chaque outil est lié à un pôle et livré avec une formation. D'autres sont en préparation.", `<a class="btn btn-ghost" href="/outils">Voir tous les outils ${ICON.arrow}</a>`)}
+    <div class="tools">${OUTILS.filter(o => o.statut === "en-ligne").map(outilCard).join("")}</div>
   </div></section>
 
   <section class="band"><div class="wrap">
@@ -485,11 +489,9 @@ function pagePole(id) {
 
   ${P.avec ? `<section class="band"><div class="wrap">
     ${secHead("Digitalisation", `Ce qui change avec <span class="serif">AKIBA</span>`, "Le groupe garde ses règles et ses réunions. Seule la tenue des comptes change, et tout le monde peut désormais la vérifier.")}
-    <div class="two align-center">
-      <div class="table-wrap"><table class="compare"><thead><tr><th></th><th>Avec le cahier</th><th>Avec AKIBA</th></tr></thead>
-        <tbody>${AVEC.avantApres.map(([q, a, b]) => `<tr><th scope="row">${esc(q)}</th><td>${esc(a)}</td><td class="ok">${esc(b)}</td></tr>`).join("")}</tbody></table></div>
-      <div class="screen">${mockAkiba()}<span class="mock-note">Écran illustratif</span></div>
-    </div>
+    <div class="table-wrap"><table class="compare"><thead><tr><th></th><th>Avec le cahier</th><th>Avec AKIBA</th></tr></thead>
+      <tbody>${AVEC.avantApres.map(([q, a, b]) => `<tr><th scope="row">${esc(q)}</th><td>${esc(a)}</td><td class="ok">${esc(b)}</td></tr>`).join("")}</tbody></table></div>
+    <p class="suite"><a class="link" href="${outil("akiba").url}" target="_blank" rel="noopener">Ouvrir AKIBA ${ICON.ext}</a></p>
   </div></section>
   <section><div class="wrap">
     ${secHead("Vers le crédit", `Transformer la discipline d'un groupe en <span class="serif">accès au crédit</span>`, "Un groupe qui épargne depuis trois ans reste invisible pour une banque s'il ne peut rien prouver. Notre rôle est de rendre cette régularité lisible.")}
