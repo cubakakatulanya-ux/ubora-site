@@ -64,10 +64,10 @@ function areaChart(pts, w = 300, h = 80) {
   const xy = pts.map((v, i) => [i * step, h - (v / max) * h]);
   const line = xy.map((p, i) => (i ? "L" : "M") + p[0].toFixed(1) + " " + p[1].toFixed(1)).join(" ");
   const last = xy[xy.length - 1];
-  return `<svg viewBox="0 0 ${w} ${h + 4}" aria-hidden="true"><defs><linearGradient id="ag" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#8DCB4F" stop-opacity=".4"/><stop offset="1" stop-color="#8DCB4F" stop-opacity="0"/></linearGradient></defs>
+  return `<svg viewBox="0 0 ${w} ${h + 4}" aria-hidden="true"><defs><linearGradient id="ag" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#5FC48E" stop-opacity=".4"/><stop offset="1" stop-color="#5FC48E" stop-opacity="0"/></linearGradient></defs>
     ${[0.25, 0.5, 0.75].map(f => `<line x1="0" x2="${w}" y1="${h * f}" y2="${h * f}" stroke="rgba(255,255,255,.07)"/>`).join("")}
-    <path d="${line} L${w} ${h} L0 ${h}Z" fill="url(#ag)"/><path d="${line}" fill="none" stroke="#9BD65E" stroke-width="2.2" stroke-linejoin="round"/>
-    <circle cx="${last[0] - 3}" cy="${last[1]}" r="4.5" fill="#fff" stroke="#5DB53C" stroke-width="2.5"/></svg>`;
+    <path d="${line} L${w} ${h} L0 ${h}Z" fill="url(#ag)"/><path d="${line}" fill="none" stroke="#7FD8A6" stroke-width="2.2" stroke-linejoin="round"/>
+    <circle cx="${last[0] - 3}" cy="${last[1]}" r="4.5" fill="#fff" stroke="#2FA36B" stroke-width="2.5"/></svg>`;
 }
 function mockAkiba() {
   return `<div class="phone"><div class="phone-screen">
@@ -82,7 +82,7 @@ function mockAkiba() {
     </div></div></div>`;
 }
 function mockHub() {
-  const ppl = [["01", "Entreprise 01", 82, "#9BD65E"], ["02", "Entreprise 02", 64, "#7FB3FF"], ["03", "Entreprise 03", 47, "#E3A064"]];
+  const ppl = [["01", "Entreprise 01", 82, "#7FD8A6"], ["02", "Entreprise 02", 64, "#7FB3FF"], ["03", "Entreprise 03", 47, "#E3A064"]];
   return browser("uborahub.com/cohortes", `<div class="hub">
     <div class="hub-side"><div class="on">Tableau de bord</div><div>Candidatures</div><div>Cohortes</div><div>Coaching</div><div>Rapports</div></div>
     <div class="hub-main">
@@ -290,7 +290,7 @@ function tickerHTML() {
 function pageHome() {
   const news = allNews().slice(0, 3);
   return `
-  <section class="deep hero"><canvas id="net" aria-hidden="true"></canvas>
+  <section class="deep hero">
     <div class="wrap hero-grid">
       <div>
         <span class="pill"><b>Entreprise sociale</b> Lubumbashi · RDC</span>
@@ -299,6 +299,7 @@ function pageHome() {
         <div class="btn-row"><a class="btn btn-accent" href="#poles" data-scroll="poles">Découvrir nos pôles ${ICON.arrow}</a><a class="btn btn-glass" href="/contact">Nous contacter</a></div>
       </div>
       <div class="stage stage-photo">
+        <span class="pierre" aria-hidden="true"></span>
         <figure class="hero-photo">${photo("avec", "(max-width: 1080px) 100vw, 40vw", "Des femmes réunies en groupe, en pagnes colorés", ' fetchpriority="high"')}</figure>
         ${mockAkiba()}
         <div class="float-card"><span class="ic">${ICON.check}</span><span><b>Cotisation reçue</b>+20 000 FC par Airtel Money</span></div>
@@ -341,7 +342,7 @@ function pageHome() {
 
   <section class="band"><div class="wrap">
     ${secHead("Pourquoi Ubora", `Une équipe de terrain, avec ses propres <span class="serif">outils</span>`)}
-    <div class="grid-4">
+    <div class="grid-4 colonnes">
       <div class="fcard reveal"><span class="ic">${ICON.map}</span><h3>Nous connaissons le terrain</h3><p>Groupes d'épargne, coopératives, PME et institutions financières, en ville comme en zone rurale.</p></div>
       <div class="fcard reveal"><span class="ic">${ICON.compass}</span><h3>Une méthode éprouvée</h3><p>Six temps, toujours dans le même ordre, du premier diagnostic jusqu'à l'autonomie.</p></div>
       <div class="fcard reveal"><span class="ic">${ICON.phoneM}</span><h3>Nos propres outils</h3><p>Conçus, déployés et maintenus par nous, pour les contraintes du pays.</p></div>
