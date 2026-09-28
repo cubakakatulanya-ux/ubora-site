@@ -975,3 +975,19 @@ h1, h2, h3, h4 { font-optical-sizing: auto; }
 .list-rows { max-width: 1000px; }
 .contact-grid { max-width: 1080px; margin-inline: auto; }
 .faq { max-width: 880px; }
+
+/* ---------- Accroches et relais après le projet ---------- */
+.pole .accroche { margin-top: -4px; font-family: var(--f-display); font-size: 16px; font-weight: 650; color: var(--ink); letter-spacing: -.01em; }
+.pole.feature .accroche { color: #fff; font-size: 19px; }
+.relais { display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(28px, 4vw, 56px); align-items: center; padding: clamp(30px, 4.5vw, 56px); border-radius: var(--r-lg); max-width: 1080px; margin-inline: auto; }
+.relais > * { min-width: 0; }
+.relais-txt { display: grid; gap: 16px; justify-items: start; }
+.relais h2 { font-size: clamp(26px, 2.8vw, 36px); letter-spacing: -.03em; }
+.relais-temps { display: grid; gap: 10px; margin: 0; padding: 0; list-style: none; }
+.relais-temps li { display: grid; grid-template-columns: auto 1fr; gap: 14px; padding: 16px 18px; border-radius: 14px; border: 1px solid var(--deep-line); background: rgba(255, 255, 255, .04); }
+.relais-temps .bn { background: var(--lime); color: #03281B; }
+.relais-temps b { display: block; font-family: var(--f-display); font-size: 16.5px; color: #fff; }
+.relais-temps span:not(.bn) { font-size: 14.5px; color: var(--deep-muted); }
+.relais-temps li:last-child { border-color: color-mix(in srgb, var(--lime) 55%, transparent); background: rgba(127, 216, 166, .08); }
+@media (max-width: 900px) { .relais { grid-template-columns: 1fr; } }
+[id="relais"] { scroll-margin-top: 110px; }

@@ -26,6 +26,7 @@ const CONFIG = {
 /* Bande déroulante. Les dernières actualités publiées s'y ajoutent d'elles-mêmes. */
 const TICKER_MESSAGES = [
   ["Le générateur de business plan est en ligne sur bp.uborardc.com", "https://bp.uborardc.com"],
+  ["Le projet se termine, l'accompagnement continue : Ubora prend le relais des ONG sur le terrain", "/conseil#relais"],
   ["Groupes d'épargne, ONG, réseaux : demandez notre boîte à outils AVEC", "/avec#boite"],
   ["Ubora Fin : un fonds de roulement pour les AVEC que nous accompagnons", "/financement#intermediation"],
   ["Ubora Market prépare une plateforme qui relie vendeurs et acheteurs", "/marche"],
@@ -62,6 +63,7 @@ const POLES = [
     id: "avec", chemin: "/avec", sousDomaine: "avec.uborardc.com",
     photo: ["avec", "Des femmes réunies en groupe, en pagnes colorés"],
     nom: "Ubora AVEC", initiales: "Av", couleur: "#23843A",
+    accroche: "Épargner ensemble, emprunter sans crainte.",
     carte: "Nous créons, formons et suivons des groupes d'épargne, puis nous les aidons à accéder au crédit.",
     titre: `Des groupes d'épargne solides, et un vrai accès au <span class="serif">crédit</span>.`,
     lead: "Les Associations Villageoises d'Épargne et de Crédit sont souvent le premier service financier auquel une famille congolaise a accès. Nous les accompagnons de la création du groupe jusqu'à son premier financement : un prêt d'une institution financière, ou un fonds de roulement apporté par Ubora Fin.",
@@ -112,6 +114,7 @@ const POLES = [
 
   {
     id: "pme", chemin: "/pme", sousDomaine: "pme.uborardc.com",
+    accroche: "De l'idée à l'entreprise qui vend.",
     photo: ["pme", "Un tailleur au travail sur sa machine à coudre"],
     nom: "Ubora PME", initiales: "Pm", couleur: "#B0622A",
     carte: "Nos programmes pour entrepreneurs : trouver l'idée, la tester, lancer l'entreprise puis la faire grandir.",
@@ -158,6 +161,7 @@ const POLES = [
 
   {
     id: "cooperatives", chemin: "/cooperatives", sousDomaine: "coop.uborardc.com",
+    accroche: "Produire ensemble, vendre mieux, être payé à temps.",
     photo: ["coop", "Des cultivateurs au travail dans un champ"],
     nom: "Ubora Coop", initiales: "Co", couleur: "#4E8F2A",
     carte: "Nous aidons les organisations paysannes à devenir des coopératives bien gérées, qui vendent mieux.",
@@ -214,6 +218,7 @@ const POLES = [
 
   {
     id: "financement", chemin: "/financement", sousDomaine: "fin.uborardc.com",
+    accroche: "Le crédit, jusqu'où il n'allait pas.",
     photo: ["fin", "Trois femmes échangent autour d'une table de réunion"],
     nom: "Ubora Fin", initiales: "Fi", couleur: "#1D5FB8",
     carte: "Nous préparons les emprunteurs, nous équipons les institutions et nous faisons le lien : des fonds levés auprès des financeurs, prêtés aux AVEC.",
@@ -275,6 +280,7 @@ const POLES = [
 
   {
     id: "marche", chemin: "/marche", sousDomaine: "market.uborardc.com",
+    accroche: "Un bon produit mérite un acheteur.",
     photo: ["market", "Un étal de tomates et de légumes sur un marché"],
     nom: "Ubora Market", initiales: "Mk", couleur: "#1F7A6B",
     carte: "Nous mettons en relation les PME, les coopératives et les entrepreneurs avec des acheteurs.",
@@ -435,6 +441,7 @@ const FAQ = [
   ["Vos outils fonctionnent-ils sans internet ?", "AKIBA fonctionne sans réseau et synchronise les données dès que la connexion revient. Le générateur de business plan reste utilisable une fois ouvert."],
   ["Proposez-vous des formations sur vos outils ?", "Oui. Chaque déploiement comprend une formation de prise en main, puis un suivi. Nous organisons aussi des sessions sur demande, dans votre province ou en ligne."],
   ["Faut-il être une entreprise déclarée pour être accompagné ?", "Non. Nous accompagnons justement beaucoup d'entrepreneurs et de groupements vers la formalisation, étape par étape."],
+  ["Que devient l'accompagnement quand le projet d'une ONG se termine ?", "Nous restons. Les groupes, les entrepreneurs et les coopératives continuent d'être suivis après la clôture du projet. Notre modèle économique finance une partie de ces activités de terrain, et les outils mis en place restent en service."],
   ["Ubora peut-elle financer notre groupe d'épargne ?", "Oui, par Ubora Fin, notre branche financière. Pour les AVEC que nous accompagnons, nous pouvons apporter un fonds de roulement, remboursable sur le cycle, en plus de l'épargne des membres. Nous pouvons aussi présenter le groupe à une IMF, une COOPEC ou une banque partenaire."],
   ["Combien coûte l'accompagnement ?", "Cela dépend du programme et du nombre de bénéficiaires. Les prestations facturées aux organisations nous permettent de proposer des tarifs solidaires aux groupes d'épargne et aux micro-entrepreneurs. Contactez-nous pour en parler."]
 ];

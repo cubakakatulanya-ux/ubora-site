@@ -149,6 +149,7 @@ function poleCard(p, feature, compact) {
     <div class="pole-body">
       <div class="pole-top"><span class="mk">${esc(p.initiales)}</span><a class="pole-sub" href="https://${p.sousDomaine}">${esc(p.sousDomaine)}</a></div>
       <h3><a class="stretch" href="${p.chemin}">${esc(p.nom)}</a></h3>
+      ${p.accroche ? `<p class="accroche">${esc(p.accroche)}</p>` : ""}
       <p>${esc(p.carte)}</p>
       <span class="link">Découvrir le pôle ${ICON.arrow}</span>
     </div>
@@ -189,6 +190,17 @@ function boiteOutils(b, sujet) {
         ${dispo ? `<a class="btn btn-wa btn-sm" href="${waLink("Bonjour Ubora, je souhaite recevoir la " + b.titre.charAt(0).toLowerCase() + b.titre.slice(1) + ".")}" target="_blank" rel="noopener">Par WhatsApp</a>` : ""}</div>
     </div>
   </div></section>`;
+}
+/* Pérenniser les actions des partenaires au-delà du projet */
+const RELAIS = [["Pendant le projet","Nous formons, outillons et suivons les bénéficiaires avec vos équipes. Les données sont tenues dans nos outils dès le premier jour."],["À la clôture","Les groupes, les relais locaux formés, les outils et l'historique restent en place. Rien ne repart de zéro."],["Après le projet","Nous poursuivons le suivi sur le terrain. Notre modèle économique en finance une partie, avec nos propres revenus."]];
+function relais(lien) {
+  return `<div class="deep relais">
+    <div class="relais-txt"><span class="eyebrow">Pour les ONG, les bailleurs et les programmes</span>
+      <h2>Le projet se termine. <span class="serif">L'accompagnement continue.</span></h2>
+      <p class="lead">Un programme dure deux ou trois ans. Les groupes d'épargne, les entrepreneurs et les coopératives ont besoin d'un suivi plus long. Nous prenons le relais : notre modèle économique finance une partie des activités sur le terrain après la fin du projet.</p>
+      ${lien ? `<a class="btn btn-accent" href="/conseil#relais">Préparer la suite de votre projet ${ICON.arrow}</a>` : `<a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent("Partenariat")}">Parlons de votre programme ${ICON.arrow}</a>`}</div>
+    <ol class="relais-temps">${RELAIS.map(([t, x], i) => `<li><span class="bn">${i + 1}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`).join("")}</ol>
+  </div>`;
 }
 function faq(items) { return `<div class="faq">${items.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join("")}</div>`; }
 function finalCta() {
@@ -335,8 +347,10 @@ function pageHome() {
     </ol>
   </div></section>
 
-  <section><div class="wrap">
-    ${secHead("Nos outils numériques", `Des outils faits pour le <span class="serif">terrain</span> congolais`, "Chaque outil est lié à un pôle et livré avec une formation. D'autres sont en préparation.", `<a class="btn btn-ghost" href="/outils">Voir tous les outils ${ICON.arrow}</a>`)}
+  <section><div class="wrap">${relais(true)}</div></section>
+
+  <section class="tight-top"><div class="wrap">
+    ${secHead("Nos outils numériques", `Des outils faits pour le <span class="serif">terrain</span> congolais`, "Des outils qui marchent sans réseau, en francs congolais comme en dollars. Chacun est livré avec une formation.", `<a class="btn btn-ghost" href="/outils">Voir tous les outils ${ICON.arrow}</a>`)}
     <div class="tools">${OUTILS.filter(o => o.statut === "en-ligne").map(outilCard).join("")}</div>
   </div></section>
 
@@ -395,7 +409,7 @@ function pageAbout() {
       <div class="fcard"><span class="ic">${ICON.briefcase}</span><h3>Qui paie</h3><p>Les ONG, les bailleurs, les institutions financières, les incubateurs et les programmes publics ou privés qui nous confient des missions.</p></div>
       <div class="fcard"><span class="ic">${ICON.heart}</span><h3>Qui en bénéficie</h3><p>Les groupes d'épargne, les femmes et les jeunes entrepreneurs, les producteurs ruraux, qui accèdent à nos services à tarif solidaire.</p></div>
       <div class="fcard"><span class="ic">${ICON.coins}</span><h3>Ce que nous prêtons</h3><p>Par Ubora Fin, un fonds de roulement pour les AVEC que nous accompagnons, grâce à des fonds levés auprès d'institutions et d'investisseurs. Ce qui est remboursé repart vers d'autres groupes.</p></div>
-      <div class="fcard"><span class="ic">${ICON.spark}</span><h3>Ce que nous réinvestissons</h3><p>Le développement de nos outils, la formation de relais locaux et le temps passé sur le terrain, là où c'est nécessaire.</p></div>
+      <div class="fcard"><span class="ic">${ICON.spark}</span><h3>Ce que nous réinvestissons</h3><p>Nos outils, la formation de relais locaux, et le suivi sur le terrain quand le projet d'un partenaire s'achève.</p></div>
     </div>
     <p class="note">Être rentables n'est pas une fin en soi. C'est ce qui nous permet d'être encore là au cycle suivant.</p>
   </div></section>
@@ -560,8 +574,9 @@ function pageOutils() {
 
 function pageConseil() {
   return pageHead({ eyebrow: "Conseil et programmes", title: `Pour les ONG, les bailleurs et les institutions.`, crumbs: [["Conseil et programmes"]],
-    lead: "Vous accompagnez des groupes, des entrepreneurs ou des coopératives en RDC ? Nous pouvons concevoir votre programme, le conduire avec vous, équiper vos équipes et mesurer vos résultats." }) + `
+    lead: "Vous accompagnez des groupes, des entrepreneurs ou des coopératives en RDC ? Nous concevons votre programme, le conduisons avec vous, équipons vos équipes, mesurons les résultats, et nous restons quand le financement s'arrête." }) + `
   <section><div class="wrap grid-2">${CONSEIL.map(s => `<article class="svc reveal" id="${s.id}"><span class="ic">${ICON[s.ico]}</span><div><h2>${esc(s.titre)}</h2><p>${esc(s.texte)}</p><ul class="checks">${s.points.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div></article>`).join("")}</div></section>
+  <section id="relais" class="tight-top"><div class="wrap">${relais(false)}</div></section>
   <section class="band"><div class="wrap">
     ${secHead("Nos pôles au service de votre programme", "Vous pouvez aussi mobiliser directement l'un de nos pôles")}
     <div class="poles poles-sm">${POLES.map(p => poleCard(p, false, true)).join("")}</div>
