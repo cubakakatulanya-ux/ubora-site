@@ -44,17 +44,17 @@ const DIRIGEANT = {
   photo: "/img/equipe/christian-cubaka-800.webp",
   photoPetite: "/img/equipe/christian-cubaka-400.webp",
   accroche: "Plus de dix ans aux côtés des entrepreneurs, des coopératives et des groupes d'épargne en RDC.",
-  bio: "Agronome de formation, Christian accompagne depuis plus de dix ans des entrepreneurs, des PME, des coopératives agricoles et des groupes d'épargne, en ville comme en zone rurale. Il a travaillé avec Equity Bank, Mercy Corps, Enabel et le projet TRANSFORME financé par la Banque mondiale. Il a fondé Ubora pour que cet accompagnement dure au-delà des projets, et il y conçoit Ubora Hub et l'application AKIBA.",
+  bio: "Agronome de formation, Christian accompagne depuis plus de dix ans des entrepreneurs, des PME, des coopératives agricoles et des groupes d'épargne, en ville comme en zone rurale. Il a travaillé pour une banque, pour des programmes de coopération internationale et pour un grand projet d'appui aux PME, à Kinshasa, au Kivu et dans le Sud-Ubangi. Il a fondé Ubora pour que cet accompagnement dure au-delà des projets, et il y conçoit Ubora Hub et l'application AKIBA.",
   parcours: [
     ["Depuis 2026", "Entreprise sociale Ubora", "Fondateur et Directeur Gérant", "Conception d'Ubora Hub, incubateur numérique, et d'AKIBA, l'application hors ligne des AVEC."],
-    ["Depuis 2026", "Enabel, projet Agriculture SAD, Sud-Ubangi", "Expert en entrepreneuriat agricole", "PME, coopératives, AVEC et incubateur provincial : structuration, plans d'affaires, accès au financement."],
-    ["2024 – 2025", "Projet TRANSFORME, Banque mondiale, Kinshasa", "Expert junior en entrepreneuriat et mutualisation des investissements", "Centres de PME, chaînes de valeur, modèles économiques et investissements partagés."],
-    ["2021 – 2024", "Enabel, programme KinEmploi, Kinshasa", "Expert en incubation et entrepreneuriat urbain", "Deux incubateurs, programmes de formation et d'accélération, formation de formateurs."],
-    ["2018 – 2021", "Mercy Corps, Food Security Project (USAID), Sud-Kivu", "Coordinateur des activités génératrices de revenus", "Mise en place des AVEC, appui aux coopératives agricoles, aux jeunes et aux femmes entrepreneurs."],
-    ["2015 – 2018", "Equity Bank, Goma et Bukavu", "Chargé de clientèle agrobusiness", "Portefeuille de PME et de coopératives : analyse de viabilité, préparation au crédit."]
+    ["Depuis 2026", "Programme de développement agricole, Sud-Ubangi", "Expert en entrepreneuriat agricole", "PME, coopératives, AVEC et incubateur provincial : structuration, plans d'affaires, accès au financement."],
+    ["2024 – 2025", "Projet d'appui aux PME, Kinshasa", "Expert junior en entrepreneuriat et mutualisation des investissements", "Centres de PME, chaînes de valeur, modèles économiques et investissements partagés."],
+    ["2021 – 2024", "Programme d'emploi et d'entrepreneuriat, Kinshasa", "Expert en incubation et entrepreneuriat urbain", "Deux incubateurs, programmes de formation et d'accélération, formation de formateurs."],
+    ["2018 – 2021", "Programme de sécurité alimentaire, Sud-Kivu", "Coordinateur des activités génératrices de revenus", "Mise en place des AVEC, appui aux coopératives agricoles, aux jeunes et aux femmes entrepreneurs."],
+    ["2015 – 2018", "Banque commerciale, Goma et Bukavu", "Chargé de clientèle agrobusiness", "Portefeuille de PME et de coopératives : analyse de viabilité, préparation au crédit."]
   ],
   domaines: ["Coopératives et AVEC", "Incubation et accompagnement des PME", "Modèles économiques et plans d'affaires", "Formation de formateurs et coaching", "Accès au financement", "Outils numériques"],
-  formation: "Licence en agronomie (sciences du sol), Université catholique de Bukavu. Formations complémentaires : coaching entrepreneurial, développement des systèmes de marché (Mercy Corps), jeunes agri-preneurs (FAO).",
+  formation: "Licence en agronomie (sciences du sol). Formations complémentaires : coaching entrepreneurial, développement des systèmes de marché, accompagnement des jeunes agri-preneurs.",
   langues: "Français, swahili, lingala, anglais"
 };
 
