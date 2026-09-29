@@ -4,17 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Générateur de business plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&family=Poppins:wght@500;600&display=swap">
 <style>
 /* ==========================================================================
    Jetons de couleur. Le bloc :root nu porte la palette claire complete ;
    les deux blocs suivants ne redefinissent que les jetons.
    ========================================================================== */
 :root{
-  --ground:#eef2f1; --surface:#ffffff; --surface-2:#f7faf9; --surface-3:#eef3f2;
-  --ink:#13212a; --ink-2:#485a64; --ink-3:#6e828c;
-  --line:#d3dedd; --line-2:#e7eeed;
+  --ground:#ffffff; --surface:#ffffff; --surface-2:#fafbfb; --surface-3:#f4f7f7;
+  --ink:#13212a; --ink-2:#4a5c66; --ink-3:#72858f;
+  --line:#e0e7e7; --line-2:#eef2f2;
   --brand:#16324f; --brand-2:#23557f;
-  --accent:#0f6e64; --accent-soft:#e0eeeb; --accent-ink:#0a4f48;
+  --accent:#0f6e64; --accent-soft:#edf5f4; --accent-ink:#0a4f48;
   --th-bg:#1d4468; --th-ink:#ffffff;
   --nav-bg:#12283e; --nav-bg-2:#1b3a58; --nav-ink:#c8d8e6; --nav-ink-2:#7f9cb8; --nav-on:#ffffff;
   --field:#fff8e4; --field-ink:#6b5410; --field-line:#d8bd74;
@@ -22,9 +25,11 @@
   --shadow:0 1px 2px rgba(19,33,42,.06), 0 6px 18px rgba(19,33,42,.05);
   --c1:#1d4468; --c2:#0f6e64; --c3:#b5651d; --c4:#6b4f9e; --c5:#8a6a00; --c6:#2f7d68;
   --grid:#e4eaea; --axis:#6e828c;
-  --font-ui:"IBM Plex Sans","Segoe UI",Calibri,system-ui,-apple-system,sans-serif;
-  --font-doc:"IBM Plex Serif",Georgia,"Times New Roman",serif;
-  --r:6px;
+  --font-ui:"Ubuntu","Segoe UI",Calibri,system-ui,-apple-system,sans-serif;
+  --font-titre:"Poppins","Ubuntu","Segoe UI",system-ui,sans-serif;
+  --font-doc:Georgia,"Times New Roman",serif;
+  --bloc-pair:#f6f8f8;
+  --r:8px;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
@@ -38,7 +43,7 @@
     --field:#2c2716; --field-ink:#e8d49a; --field-line:#6e5b24;
     --ok:#83d5a0; --ok-bg:#173426; --warn:#e9c470; --warn-bg:#392e12; --bad:#f2a79f; --bad-bg:#3d1d1a;
     --c1:#8fbde4; --c2:#58c9b6; --c3:#e5a45f; --c4:#b39ae0; --c5:#d9bf6a; --c6:#79cfae;
-    --grid:#28383c; --axis:#86999f;
+    --grid:#28383c; --axis:#86999f; --bloc-pair:#1a292d;
     --shadow:0 1px 2px rgba(0,0,0,.4), 0 6px 18px rgba(0,0,0,.3);
   }
 }
@@ -53,13 +58,13 @@
   --field:#2c2716; --field-ink:#e8d49a; --field-line:#6e5b24;
   --ok:#83d5a0; --ok-bg:#173426; --warn:#e9c470; --warn-bg:#392e12; --bad:#f2a79f; --bad-bg:#3d1d1a;
   --c1:#8fbde4; --c2:#58c9b6; --c3:#e5a45f; --c4:#b39ae0; --c5:#d9bf6a; --c6:#79cfae;
-  --grid:#28383c; --axis:#86999f;
+  --grid:#28383c; --axis:#86999f; --bloc-pair:#1a292d;
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 6px 18px rgba(0,0,0,.3);
 }
 
 *{box-sizing:border-box}
 html,body{margin:0;padding:0}
-body{font-family:var(--font-ui);font-size:14px;line-height:1.5;color:var(--ink);background:var(--ground);
+body{font-family:var(--font-ui);font-size:13.5px;line-height:1.48;color:var(--ink);background:var(--ground);
   -webkit-font-smoothing:antialiased}
 button{font-family:inherit}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px}
@@ -68,31 +73,39 @@ button{font-family:inherit}
 #app{display:flex;min-height:100vh}
 #nav{width:266px;flex:0 0 266px;background:var(--nav-bg);color:var(--nav-ink);
   position:sticky;top:0;height:100vh;overflow-y:auto}
-#nav h1{font-size:14.5px;margin:0;padding:18px 18px 2px;line-height:1.3;font-weight:600;color:var(--nav-on);
-  letter-spacing:-.01em}
+#nav h1{font-family:var(--font-titre);font-size:14px;margin:0;padding:18px 18px 2px;line-height:1.3;
+  font-weight:600;color:var(--nav-on);letter-spacing:-.01em}
 #nav .sub{font-size:11px;color:var(--nav-ink-2);padding:0 18px 14px;letter-spacing:.02em}
 #nav .grp{font-size:10px;text-transform:uppercase;letter-spacing:.11em;color:var(--nav-ink-2);
-  padding:16px 18px 5px;font-weight:600}
-#nav a{display:block;padding:7px 18px;color:var(--nav-ink);text-decoration:none;font-size:13px;
+  padding:14px 18px 8px;font-weight:600;display:flex;justify-content:space-between;gap:8px;
+  cursor:pointer;list-style:none}
+#nav .grp::-webkit-details-marker{display:none}
+#nav .grp:hover{color:var(--nav-on)}
+#nav details.grp-bloc[open]>.grp{color:var(--nav-on)}
+#nav .grp .cpt{letter-spacing:0;font-weight:500;opacity:.85}
+#nav a{display:block;padding:5px 18px;color:var(--nav-ink);text-decoration:none;font-size:12.5px;
   border-left:3px solid transparent;cursor:pointer}
 #nav a:hover{background:var(--nav-bg-2);color:var(--nav-on)}
 #nav a.on{background:var(--nav-bg-2);color:var(--nav-on);border-left-color:var(--accent);font-weight:600}
 #nav .etat{font-size:11px;padding:12px 18px;color:var(--nav-ink-2);border-top:1px solid var(--nav-bg-2);
   margin-top:12px;line-height:1.5}
+#nav .rubriques>summary{display:none}
 #main{flex:1;min-width:0;padding:0 0 64px}
 .bar{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--line);
-  padding:10px 24px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.bar .titre{font-weight:600;font-size:15.5px;color:var(--brand);margin-right:auto;letter-spacing:-.01em}
-.page{padding:22px 24px;max-width:1400px}
-h2.sec{font-size:14px;color:var(--accent-ink);background:var(--accent-soft);padding:8px 13px;
-  margin:26px 0 12px;border-radius:var(--r);font-weight:600;letter-spacing:.01em;text-wrap:balance}
-h2.sec:first-child{margin-top:0}
+  padding:8px 26px;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.bar .titre{font-family:var(--font-titre);font-weight:600;font-size:15px;color:var(--brand);
+  margin-right:auto;letter-spacing:-.01em}
+.page{padding:18px 26px 6px;max-width:1400px}
+h2.sec{font-family:var(--font-titre);font-size:12px;color:var(--accent-ink);background:transparent;padding:0 0 5px;
+  margin:22px 0 10px;border-bottom:2px solid var(--accent-soft);font-weight:600;letter-spacing:.06em;
+  text-transform:uppercase;text-wrap:balance}
+h2.sec:first-child{margin-top:2px}
 h3{font-size:13px;color:var(--brand);margin:0 0 6px;font-weight:600}
-p.intro{color:var(--ink-2);margin:0 0 14px;max-width:72ch;line-height:1.6}
+p.intro{color:var(--ink-2);margin:0 0 12px;max-width:78ch;line-height:1.55}
 
 /* ---------- boutons ---------- */
-.btn{background:var(--accent);color:#fff;border:0;border-radius:var(--r);padding:7px 13px;font-size:13px;
-  cursor:pointer;font-weight:500}
+.btn{font-family:var(--font-titre);background:var(--accent);color:#fff;border:0;border-radius:var(--r);
+  padding:7px 13px;font-size:12.5px;cursor:pointer;font-weight:500;letter-spacing:.01em}
 .btn:hover{filter:brightness(1.1)}
 .btn.sec{background:var(--surface);color:var(--brand);border:1px solid var(--line)}
 .btn.sec:hover{background:var(--surface-3);filter:none}
@@ -100,13 +113,18 @@ p.intro{color:var(--ink-2);margin:0 0 14px;max-width:72ch;line-height:1.6}
 .btn.danger{background:var(--surface);color:var(--bad);border:1px solid var(--line)}
 
 /* ---------- formulaires ---------- */
-.champ{display:grid;grid-template-columns:340px minmax(200px,300px) 1fr;gap:14px;align-items:start;
-  padding:6px 0;border-bottom:1px solid var(--line-2)}
-.champ>label{padding-top:6px;line-height:1.4;color:var(--ink)}
-.champ .aide{font-size:12px;color:var(--ink-3);padding-top:7px;line-height:1.5;max-width:62ch}
-input,select,textarea{width:100%;padding:6px 8px;border:1px solid var(--field-line);border-radius:5px;
+/* intitule et explication a gauche, case a remplir a droite : une seule
+   colonne de saisie, que l'oeil suit du haut en bas de la page */
+.champ{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:2px 24px;align-items:start;
+  padding:6px 0;border-bottom:1px solid var(--line-2);max-width:880px}
+.champ>label{grid-column:1;grid-row:1;padding-top:5px;line-height:1.35;color:var(--ink);font-weight:500}
+.oblig{color:var(--bad);font-weight:700}
+.champ>.saisie{grid-column:2;grid-row:1}
+.champ>.aide{grid-column:1;grid-row:2;font-size:11.5px;color:var(--ink-3);line-height:1.4;max-width:74ch;
+  padding-bottom:1px}
+input,select,textarea{width:100%;padding:5px 8px;border:1px solid var(--field-line);border-radius:5px;
   font:inherit;font-size:13px;background:var(--field);color:var(--field-ink)}
-textarea{min-height:64px;resize:vertical;line-height:1.5}
+textarea{min-height:54px;resize:vertical;line-height:1.45}
 input[type=number]{text-align:right;font-variant-numeric:tabular-nums}
 select{color:var(--field-ink)}
 .ro{background:var(--surface-3);color:var(--ink-2);border-color:var(--line)}
@@ -114,8 +132,9 @@ select{color:var(--field-ink)}
 /* ---------- tableaux ---------- */
 table{border-collapse:collapse;width:100%;margin:8px 0 14px;background:var(--surface);
   font-variant-numeric:tabular-nums}
-th,td{border:1px solid var(--line);padding:6px 9px;text-align:left;vertical-align:top}
-th{background:var(--th-bg);color:var(--th-ink);font-weight:600;font-size:12px;letter-spacing:.02em}
+th,td{border:1px solid var(--line);padding:5px 9px;text-align:left;vertical-align:top}
+th{background:var(--th-bg);color:var(--th-ink);font-weight:600;font-size:11.5px;letter-spacing:.02em;
+  padding-top:6px;padding-bottom:6px}
 td.n,th.n{text-align:right;white-space:nowrap}
 tr.tot td{background:var(--surface-3);font-weight:600}
 tr.sous td{background:var(--surface-2);font-weight:600}
@@ -133,16 +152,17 @@ table.compact th,table.compact td{padding:4px 6px;font-size:12.5px}
 .feu.Rouge,.feu.Probleme{background:var(--bad-bg);color:var(--bad)}
 
 /* ---------- cartes ---------- */
-.cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(216px,1fr));gap:10px;margin:12px 0 18px}
-.carte{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:11px 14px}
-.carte .k{font-size:11.5px;color:var(--ink-3);line-height:1.35;min-height:31px}
-.carte .v{font-size:19px;font-weight:600;color:var(--brand);margin-top:4px;font-variant-numeric:tabular-nums;
+.cartes{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:9px;margin:10px 0 16px}
+.carte{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:9px 12px}
+.carte .k{font-size:11px;color:var(--ink-3);line-height:1.3;min-height:28px}
+.carte .v{font-size:17.5px;font-weight:600;color:var(--brand);margin-top:2px;font-variant-numeric:tabular-nums;
   letter-spacing:-.015em}
 .carte .v.neg{color:var(--bad)}
 .carte.hi{border-color:var(--accent);box-shadow:var(--shadow)}
 
-.note{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);
-  padding:11px 14px;margin:11px 0;line-height:1.6;border-radius:0 var(--r) var(--r) 0;max-width:96ch}
+.note{background:transparent;border:0;border-left:2px solid var(--line);
+  padding:1px 0 1px 12px;margin:10px 0;line-height:1.55;font-size:12.5px;color:var(--ink-2);max-width:100ch}
+.note.att,.note.bad,.note.ok{border-left-width:3px;padding:9px 13px;border-radius:0 var(--r) var(--r) 0;font-size:13px}
 .note.att{border-left-color:var(--warn);background:var(--warn-bg);color:var(--ink)}
 .note.bad{border-left-color:var(--bad);background:var(--bad-bg);color:var(--ink)}
 .note.ok{border-left-color:var(--ok);background:var(--ok-bg);color:var(--ink)}
@@ -152,9 +172,9 @@ table.compact th,table.compact td{padding:4px 6px;font-size:12.5px}
 @media(max-width:1100px){.deux{grid-template-columns:1fr}}
 
 /* ---------- graphiques ---------- */
-.graphs{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.graphs{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 @media(max-width:1000px){.graphs{grid-template-columns:1fr}}
-.gbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.gbox{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:10px 13px}
 .gbox h3{margin:0 0 8px}
 svg{display:block;width:100%;height:auto}
 
@@ -197,12 +217,12 @@ svg{display:block;width:100%;height:auto}
 .btn.danger-plein:hover{filter:brightness(1.08)}
 
 /* ---------- bandeau de photos défilantes ---------- */
-.bandeau{position:relative;overflow:hidden;border-radius:var(--r);margin:0 0 18px;padding:10px 0;
+.bandeau{position:relative;overflow:hidden;border-radius:var(--r);margin:0 0 12px;padding:7px 0;
   background:var(--surface-3);border:1px solid var(--line)}
 .bandeau .piste{display:flex;width:max-content;animation-name:defile;animation-timing-function:linear;animation-iteration-count:infinite}
 .bandeau:hover .piste,.bandeau:focus-within .piste{animation-play-state:paused}
 @keyframes defile{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.diapo{position:relative;flex:0 0 auto;width:260px;height:170px;margin:0 10px 0 0;border-radius:6px;overflow:hidden;background:var(--surface-2)}
+.diapo{position:relative;flex:0 0 auto;width:186px;height:112px;margin:0 8px 0 0;border-radius:6px;overflow:hidden;background:var(--surface-2)}
 .diapo img,.diapo svg{width:100%;height:100%;object-fit:cover;display:block}
 .etiquette-illus{position:absolute;right:12px;top:16px;z-index:2;border:0;border-radius:12px;padding:4px 10px;
   font:500 11px/1.3 var(--font-ui);color:#fff;background:rgba(19,33,42,.72);cursor:pointer}
@@ -216,14 +236,21 @@ svg{display:block;width:100%;height:auto}
 
 /* ---------- écrans étroits : l'aide passe sous le champ ---------- */
 @media (max-width:1180px){
-  .champ{grid-template-columns:minmax(0,1fr) minmax(0,1.25fr)}
-  .champ .aide{grid-column:2;padding-top:0}
+  .champ{grid-template-columns:minmax(0,1fr) minmax(190px,270px)}
 }
 @media (max-width:760px){
+  .page{padding:14px 14px 6px}
+  .bar,.fil,.guide,.suite{padding-left:14px;padding-right:14px}
   #app{display:block}
   #nav{position:static;width:auto;height:auto}
+  #nav .rubriques>summary{display:block;margin:10px 18px 2px;padding:8px 12px;border-radius:var(--r);
+    background:var(--nav-bg-2);color:var(--nav-on);font-size:13px;font-weight:600;cursor:pointer;list-style:none}
+  #nav .rubriques>summary::-webkit-details-marker{display:none}
+  #nav .rubriques>summary::after{content:' ▾';opacity:.7}
+  #nav .rubriques[open]>summary::after{content:' ▴'}
   .champ{grid-template-columns:1fr}
-  .champ .aide{grid-column:1}
+  .champ>.saisie{grid-column:1;grid-row:2}
+  .champ>.aide{grid-column:1;grid-row:3}
 }
 
 .marque{display:flex;align-items:center;gap:11px;padding:16px 18px 12px}
@@ -231,19 +258,93 @@ svg{display:block;width:100%;height:auto}
 .marque h1{padding:0;margin:0}
 .marque .sub{padding:2px 0 0}
 
+/* ---------- blocs de section ---------- */
+.bloc{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);
+  padding:13px 17px 6px;margin:12px 0}
+.bloc.pair{background:var(--bloc-pair)}
+.bloc>h2.sec,.bloc>summary{margin-top:0;margin-bottom:12px}
+.bloc>table:last-child,.bloc>.scroll:last-child{margin-bottom:8px}
+.bloc .carte,.bloc table,.bloc .gbox{background:var(--surface)}
+
+/* ---------- sections repliables ---------- */
+.repli{margin:12px 0}
+.repli>summary{font-family:var(--font-titre);font-size:12px;color:var(--accent-ink);background:transparent;padding:0 0 5px;
+  border-bottom:2px solid var(--accent-soft);font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.repli>summary::-webkit-details-marker{display:none}
+.repli>summary::after{content:'Afficher ▾';font-size:11.5px;font-weight:500;opacity:.8;white-space:nowrap}
+.repli[open]>summary::after{content:'Masquer ▴'}
+.repli>summary:hover{filter:brightness(.97)}
+.repli>*:not(summary){margin-top:10px}
+
+/* ---------- fil des etapes ---------- */
+.fil{display:flex;gap:5px;align-items:stretch;overflow-x:auto;background:var(--surface);
+  border-bottom:1px solid var(--line);padding:7px 26px;scrollbar-width:thin}
+.jalon{display:flex;align-items:center;gap:8px;flex:0 0 auto;background:transparent;border:1px solid transparent;
+  border-radius:999px;padding:5px 13px 5px 6px;cursor:pointer;color:var(--ink-2);font:inherit;font-size:12.5px}
+.jalon:hover{background:var(--surface-3)}
+.jalon .n{width:21px;height:21px;border-radius:50%;background:var(--surface-3);color:var(--ink-3);
+  display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:600;flex:0 0 auto}
+.jalon.faite .n{background:var(--ok-bg);color:var(--ok)}
+.jalon.encours .n{background:var(--accent);color:#fff}
+.jalon.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent-ink);font-weight:600}
+.jalon.on .n{background:var(--accent);color:#fff}
+@media (max-width:760px){.fil{padding:8px 14px}.jalon .l{display:none}.jalon{padding:5px 6px}}
+
 /* ---------- guide pas a pas ---------- */
 .guide{display:flex;align-items:flex-start;gap:12px;background:var(--accent-soft);color:var(--accent-ink);
-  border-bottom:1px solid var(--line);padding:9px 24px;font-size:12.5px;line-height:1.5}
+  border-bottom:1px solid var(--line);padding:7px 26px;font-size:12px;line-height:1.45}
 .guide b{color:var(--accent-ink)}
 .guide .etape{flex:0 0 auto;background:var(--accent);color:#fff;border-radius:999px;padding:2px 10px;
   font-size:11px;font-weight:600;white-space:nowrap;margin-top:1px}
-.guide .astuce{display:block;color:var(--ink-3)}
+.guide-txt{flex:1 1 auto;min-width:0}
+.guide .etat-page{display:inline-block;margin-left:4px;padding:1px 8px;border-radius:10px;font-size:11px;
+  font-weight:600;background:var(--warn-bg);color:var(--warn)}
+.guide .etat-page.ok{background:var(--ok-bg);color:var(--ok)}
+.guide .astuce{margin-top:3px;color:var(--ink-3);font-size:12px}
+.guide .astuce summary{cursor:pointer;color:var(--accent-ink);font-weight:500;width:max-content}
+.guide .astuce[open] summary{margin-bottom:2px}
 .guide .fermerx{flex:0 0 auto;background:none;border:0;color:var(--ink-3);font-size:16px;line-height:1;
   cursor:pointer;padding:0 2px}
 .guide .fermerx:hover{color:var(--ink)}
 
+/* ---------- accueil : depart et parcours ---------- */
+.depart{display:flex;flex-wrap:wrap;gap:12px 22px;align-items:center;justify-content:space-between;
+  background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px 18px;margin:0 0 16px;
+  box-shadow:var(--shadow)}
+.depart-txt{flex:1 1 320px;min-width:0}
+.depart-titre{font-family:var(--font-titre);font-size:15px;font-weight:600;color:var(--brand);
+  margin-bottom:7px;letter-spacing:-.01em}
+.depart .progres{margin:0;height:8px;border-radius:4px;background:var(--surface-3)}
+.depart-sous{font-size:12.5px;color:var(--ink-2);margin-top:7px;line-height:1.5}
+.btn.gros{padding:11px 20px;font-size:14px;font-weight:600}
+.depart-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+
+.parcours{list-style:none;margin:0 0 6px;padding:0;display:flex;flex-direction:column;gap:5px}
+.parcours li{display:flex;align-items:center;gap:13px;background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--line);border-radius:var(--r);padding:8px 13px}
+.parcours .num{flex:0 0 auto;width:25px;height:25px;border-radius:50%;background:var(--surface-3);color:var(--ink-2);
+  display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:600}
+.parcours .quoi{flex:1 1 auto;min-width:0}
+.parcours .quoi b{color:var(--brand)}
+.parcours .detail{font-size:11.5px;color:var(--ink-3);margin-top:2px;line-height:1.4}
+.parcours .etat-etape{flex:0 0 auto;font-size:12px;color:var(--ink-3);white-space:nowrap}
+.parcours li.faite{border-left-color:var(--ok)}
+.parcours li.faite .num{background:var(--ok-bg);color:var(--ok)}
+.parcours li.faite .etat-etape{color:var(--ok)}
+.parcours li.encours{border-left-color:var(--accent)}
+.parcours li.encours .num{background:var(--accent);color:#fff}
+.parcours li.lecture{border-left-color:var(--line-2)}
+@media (max-width:700px){
+  .parcours li{flex-wrap:wrap}
+  .parcours .detail{display:none}
+}
+
 /* ---------- pages ---------- */
-.suite{display:flex;justify-content:space-between;gap:12px;padding:8px 24px 32px;max-width:1400px}
+.suite{display:flex;justify-content:space-between;gap:12px;padding:14px 26px 28px;max-width:1400px}
+.suite .btn{display:flex;flex-direction:column;align-items:flex-start;gap:1px;padding:8px 15px}
+.suite .btn:last-child{align-items:flex-end}
+.suite .ou{font-size:10.5px;text-transform:uppercase;letter-spacing:.09em;opacity:.75;font-weight:500}
 @media (max-width:760px){.guide{padding:8px 14px;font-size:12px}}
 .raccourcis{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 20px}
 .avec-suffixe{display:flex;align-items:center;gap:5px}
@@ -271,8 +372,8 @@ table.cascade{max-width:560px}
 
 @page{size:A4;margin:16mm 15mm 18mm}
 @media print{
-  html:not(#_imp){--ground:#fff;--surface:#fff;--surface-2:#f7faf9;--surface-3:#eef3f2;--ink:#13212a;--ink-2:#485a64;
-    --ink-3:#6e828c;--line:#d3dedd;--line-2:#e7eeed;--brand:#16324f;--accent:#0f6e64;--accent-soft:#e0eeeb;
+  html:not(#_imp){--ground:#fff;--surface:#fff;--surface-2:#fafbfb;--surface-3:#f4f7f7;--ink:#13212a;--ink-2:#4a5c66;
+    --ink-3:#72858f;--line:#e0e7e7;--line-2:#eef2f2;--brand:#16324f;--accent:#0f6e64;--accent-soft:#edf5f4;
     --accent-ink:#0a4f48;--th-bg:#1d4468;--th-ink:#fff;--ok:#1c6b3a;--ok-bg:#dcefe2;--warn:#8a5a00;
     --warn-bg:#fbeed2;--bad:#a32218;--bad-bg:#fae1de;color-scheme:light}
   #nav,.bar,.noprint,#modal,.suite{display:none!important}
@@ -700,13 +801,19 @@ function conseilObjectif(o) {
 /* Projet vierge : meme structure, sans contenu */
 function donneesVides() {
   var d = donneesDemo();
-  d.config.projet = 'Mon projet';
+  d.config.projet = '';
   d.config.prepare = '';
+  d.config.contact = ''; d.config.cabinet = '';
+  d.config.profil = 'Porteur de projet';
+  d.config.secteur = 'Autre';
+  d.config.objectif = 'Lancer mon entreprise';
   d.entrepreneur = { nom: '', age: null, tel: '', mail: '', ville: '', formation: '', domaine: '',
     expSecteur: 'Aucune', expGestion: 'Aucune', competences: '', realisations: '', role: '', temps: 1,
     autres: '', motivation: '', associes: 0, manque: '', combler: '' };
   d.entreprise.activite = ''; d.entreprise.clients = ''; d.entreprise.fournisseurs = '';
   d.entreprise.historique = ''; d.entreprise.localisation = '';
+  d.entreprise.juridique = 'Non formalise'; d.entreprise.formalisation = 'Non formalise';
+  d.entreprise.employesActuels = 0;
   Object.keys(d.bm).forEach(function (k) { d.bm[k] = ''; });
   d.marche.probleme = ''; d.marche.clients = ''; d.marche.zone = ''; d.marche.taille = 0;
   d.marche.methodeSam = 'Pourcentage du marche total'; d.marche.partAccessible = 0; d.marche.partVisee = 0;
@@ -723,6 +830,15 @@ function donneesVides() {
   d.credits = [{ nom: '', org: '', montant: 0, taux: 0.18, duree: 36, differe: 0, freq: 'Mensuelle', mode: 'Mensualite constante', moisDec: 1 }];
   d.financement = { tresoSec: 0, apport: 0, famille: 0, subvention: 0, fournisseur: 0, autres: 0 };
   d.planAction = [{ priorite: '', action: '', pourquoi: '', echeance: '', qui: '', statut: 'A faire' }];
+  /* modules metier, dimensionnement et objectifs : aucune valeur heritee de l'exemple */
+  d.modules = { commerce: { achat: 0, casse: 0, delai: 0 },
+    production: { matiere: 0, prixMatiere: 0, energie: 0, emballage: 0 },
+    services: { heures: 0, heuresDispo: 0, personnes: 0 } };
+  d.agricole = { cols: d.agricole.cols.map(function (c) {
+    return { nom: c.nom, ha: 0, rendement: 0, coutHa: 0, prix: 0, pertes: 0, auto: 0 };
+  }) };
+  d.orientation.budget = 0;
+  d.objectifBenefice = 0;
   return d;
 }
 
@@ -2094,11 +2210,15 @@ function inp(path, type, attrs) {
   }
   return '<input type="text"' + cible + ' data-t="txt"' + cls + ' value="' + esc(v) + '">';
 }
-function champ(label, html, aide) {
-  return '<div class="champ"><label>' + esc(label) + '</label><div>' + html + '</div>' +
-    '<div class="aide">' + (aide ? esc(aide) : '') + '</div></div>';
+function champ(label, html, aide, oblig) {
+  return '<div class="champ"><label>' + esc(label) +
+    (oblig ? ' <span class="oblig" title="Information indispensable au dossier">*</span>' : '') + '</label>' +
+    '<div class="saisie">' + html + '</div>' +
+    (aide ? '<div class="aide">' + esc(aide) + '</div>' : '') + '</div>';
 }
-function ch(label, path, type, attrs, aide) { return champ(label, inp(path, type, attrs), aide); }
+function ch(label, path, type, attrs, aide) {
+  return champ(label, inp(path, type, attrs), aide, attrs && attrs.oblig);
+}
 
 /* ------------------------------------------------------------ tableaux */
 function celN(v, fmt) {
@@ -2164,6 +2284,8 @@ function pagesVisibles() {
   return out;
 }
 
+/* etapes que la personne a ouvertes elle-meme dans le menu */
+var GROUPES_OUVERTS = {};
 function renderNav() {
   var pr = progression();
   var etat = {};
@@ -2174,17 +2296,28 @@ function renderNav() {
     '<div class="sub">Ubora · entreprise sociale<br>Fonctionne sans connexion</div></div></div>';
   s += '<div class="progres" role="progressbar" aria-label="Avancement du plan" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' +
     pr.pct + '"><div style="width:' + pr.pct + '%"></div></div><div class="progres-txt">Plan complété à ' + pr.pct + ' %</div>';
+  var etroit = typeof window !== 'undefined' && window.innerWidth && window.innerWidth < 760;
+  s += '<details class="rubriques"' + (etroit ? '' : ' open') + '><summary>Toutes les rubriques</summary>';
+  var nGrp = 0;
   PAGES.forEach(function (g) {
     var items = g[1].filter(function (p) { return vis.indexOf(p[0]) >= 0; });
     if (!items.length) return;
-    s += '<div class="grp">' + esc(g[0]) + '</div>';
+    nGrp++;
+    var testees = items.filter(function (p) { return etat[p[0]] !== undefined; });
+    var faits = testees.filter(function (p) { return etat[p[0]]; });
+    var ouvert = items.some(function (p) { return p[0] === PAGE; }) || GROUPES_OUVERTS[g[0]];
+    s += '<details class="grp-bloc" data-grp="' + esc(g[0]) + '"' + (ouvert ? ' open' : '') + '>' +
+      '<summary class="grp"><span>' + nGrp + ' · ' + esc(g[0]) + '</span>' +
+      (testees.length ? '<span class="cpt">' + faits.length + '/' + testees.length + '</span>' : '') + '</summary>';
     items.forEach(function (p) {
       var marque = etat[p[0]] === true ? '<span class="coche" title="Rubrique complétée">✓</span>'
         : (etat[p[0]] === false ? '<span class="point" title="Rubrique à compléter">•</span>' : '');
       s += '<a href="#" data-go="' + p[0] + '"' + (PAGE === p[0] ? ' class="on" aria-current="page"' : '') + '>' +
         '<span>' + esc(p[1]) + '</span>' + marque + '</a>';
     });
+    s += '</details>';
   });
+  s += '</details>';
   s += '<div class="etat">' + esc(pr.suivant) +
     (pr.suivantPage ? ' <button class="lien" data-go="' + pr.suivantPage + '">Y aller</button>' : '') + '</div>';
   if (D.config.niveau !== 'Complet') {
@@ -2209,7 +2342,8 @@ function progression() {
     ['Investissements', O.R.inv.total > 0, 10, 'Listez vos besoins d\'investissement.', 'invest'],
     ['Charges', O.R.chgMensuelSaisi > 0, 8, 'Saisissez vos charges fixes mensuelles.', 'charges'],
     ['Personnel', D.personnel.some(function (p) { return (p.poste || '').trim() !== ''; }), 5, 'Saisissez vos postes de travail.', 'personnel'],
-    ['Financement', Math.abs(O.R.fin.ecart) < 1, 15, 'Équilibrez les besoins et les ressources de financement.', 'financement']
+    ['Financement', O.R.fin.totalBesoins > 0 && Math.abs(O.R.fin.ecart) < 1, 15,
+      'Équilibrez les besoins et les ressources de financement.', 'financement']
   ];
   var tot = 0, fait = 0, suivant = 'Tout est renseigné : consultez le diagnostic, puis imprimez votre business plan.';
   var suivantPage = '';
@@ -2219,6 +2353,118 @@ function progression() {
     else if (!suivantPage) { suivant = 'Prochaine étape : ' + x[3]; suivantPage = x[4]; }
   });
   return { pct: Math.round(fait / tot * 100), suivant: suivant, suivantPage: suivantPage, sections: S };
+}
+
+var SECTIONS_PLIEES = {
+  accueil: ['Mon projet en un coup d\'œil'],
+  entrepreneur: ['Engagement dans le projet', 'L\'équipe'],
+  entreprise: ['Entreprise existante'],
+  produits: ['Module '],
+  bfr: ['Calcul du BFR'],
+  planaction: ['Priorités issues du diagnostic'],
+  config: ['Photos défilantes', 'Paramètres du pays', 'Modules métier', 'Seuils d\'appréciation'],
+  ventes: ['Saisonnalité', 'Chiffre d\'affaires mensuel', 'Je ne sais pas estimer',
+    'Projections annuelles', 'Ce que ces prévisions signifient'],
+  invest: ['Échelonnement'],
+  credits: ['Échéancier détaillé'],
+  resultat: ['Mois par mois'],
+  bilan: ['Contrôle et structure financière'],
+  rentabilite: ['Ce que ces indicateurs veulent dire', 'Seuil de rentabilité'],
+  tresorerie: ['Année par année'],
+  marche: ['Forces, faiblesses', 'Barrières et stratégie'],
+  charges: ['Vos cinq charges les plus lourdes'],
+  scenarios: ['Coefficients des trois scénarios', 'Calculs inverses', 'Mon objectif'],
+  diagnostic: ['Score de viabilité : le détail', 'Mon projet peut-il démarrer'],
+  orientation: ['Phasage des investissements', 'Et si je ne peux investir', 'Quelle durée de crédit',
+    'Conseils ciblés', 'Module agricole'],
+  aide: ['Les mots que vous allez rencontrer', 'Questions fréquentes']
+};
+/* etat d'ouverture retenu pendant la session : la saisie redessine la page */
+var PLIS = {};
+function memoriserGroupes() {
+  var nav = document.getElementById('nav');
+  [].slice.call(nav.querySelectorAll('details.grp-bloc')).forEach(function (d) {
+    d.addEventListener('toggle', function () { GROUPES_OUVERTS[d.getAttribute('data-grp')] = d.open; });
+  });
+}
+function organiserSections() {
+  var titres = SECTIONS_PLIEES[PAGE] || [];
+  var zone = document.getElementById('main');
+  [].slice.call(zone.querySelectorAll('.page')).forEach(function (page) {
+    var enfants = [].slice.call(page.childNodes), bloc = null, n = 0;
+    enfants.forEach(function (noeud) {
+      var estTitre = noeud.nodeType === 1 && noeud.tagName === 'H2' &&
+        String(noeud.className).indexOf('sec') >= 0;
+      if (estTitre) {
+        var txt = (noeud.textContent || '').trim();
+        var vise = titres.filter(function (t) { return txt.indexOf(t) === 0; })[0];
+        n++;
+        if (vise) {
+          var cle = PAGE + '|' + vise;
+          bloc = document.createElement('details');
+          bloc.className = 'bloc repli' + (n % 2 === 0 ? ' pair' : '');
+          if (PLIS[cle]) bloc.open = true;
+          var som = document.createElement('summary');
+          som.textContent = txt;
+          bloc.appendChild(som);
+          (function (b, c) {
+            b.addEventListener('toggle', function () { PLIS[c] = b.open; });
+          })(bloc, cle);
+        } else {
+          bloc = document.createElement('section');
+          bloc.className = 'bloc' + (n % 2 === 0 ? ' pair' : '');
+          bloc.appendChild(noeud.cloneNode(true));
+        }
+        page.insertBefore(bloc, noeud);
+        page.removeChild(noeud);
+      } else if (bloc) {
+        bloc.appendChild(noeud);
+      }
+    });
+  });
+}
+
+/* Fil des etapes affiche en haut de page : on voit d'un coup d'oeil ou l'on
+   est, ce qui est fait et ce qui reste. */
+function filEtapes() {
+  var PC = parcours(), vis = pagesVisibles(), courant = '';
+  PAGES.forEach(function (g) {
+    var pages = g[1].filter(function (x) { return vis.indexOf(x[0]) >= 0; });
+    if (pages.some(function (x) { return x[0] === PAGE; })) courant = g[0];
+  });
+  var s = '<nav class="fil noprint" aria-label="Étapes du parcours">';
+  PC.forEach(function (g) {
+    var on = g.nom === courant;
+    s += '<button class="jalon ' + g.classe + (on ? ' on' : '') + '" data-go="' + g.aller + '"' +
+      (on ? ' aria-current="step"' : '') + '><span class="n">' + g.num + '</span>' +
+      '<span class="l">' + esc(g.nom) + '</span></button>';
+  });
+  return s + '</nav>';
+}
+
+/* Les grandes etapes du parcours, avec leur avancement. Une etape correspond
+   a un groupe du menu : la numerotation est donc la meme partout. */
+function parcours() {
+  var pr = progression(), etat = {};
+  pr.sections.forEach(function (x) { etat[x[4]] = x[1]; });
+  var vis = pagesVisibles(), out = [], n = 0;
+  PAGES.forEach(function (g) {
+    var pages = g[1].filter(function (x) { return vis.indexOf(x[0]) >= 0; });
+    if (!pages.length) return;
+    n++;
+    var testees = pages.filter(function (x) { return etat[x[0]] !== undefined; });
+    var faits = testees.filter(function (x) { return etat[x[0]]; });
+    var incomplet = pages.filter(function (x) { return etat[x[0]] === false; })[0];
+    out.push({
+      num: n, nom: g[0],
+      detail: pages.map(function (x) { return x[1]; }).join(' · '),
+      etat: testees.length ? faits.length + ' sur ' + testees.length : 'À consulter',
+      classe: !testees.length ? 'lecture'
+        : (faits.length === testees.length ? 'faite' : (faits.length ? 'encours' : 'avenir')),
+      aller: (incomplet || pages[0])[0]
+    });
+  });
+  return out;
 }
 
 /* ------------------------------------------------------------ barre d'outils et suite */
@@ -2243,8 +2489,8 @@ function renderSuite() {
   if (i < 0) return '';
   var prec = i > 0 ? vis[i - 1] : null, suiv = i < vis.length - 1 ? vis[i + 1] : null;
   return '<div class="suite noprint">' +
-    (prec ? '<button class="btn sec" data-go="' + prec + '">← ' + esc(libellePage(prec)) + '</button>' : '<span></span>') +
-    (suiv ? '<button class="btn" data-go="' + suiv + '">' + esc(libellePage(suiv)) + ' →</button>' : '') + '</div>';
+    (prec ? '<button class="btn sec" data-go="' + prec + '"><span class="ou">Précédent</span>← ' + esc(libellePage(prec)) + '</button>' : '<span></span>') +
+    (suiv ? '<button class="btn" data-go="' + suiv + '"><span class="ou">Suivant</span>' + esc(libellePage(suiv)) + ' →</button>' : '') + '</div>';
 }
 
 /* ------------------------------------------------------------ guide pas à pas
@@ -2307,23 +2553,32 @@ var GUIDE = {
   rapport: ['lecture', 'Le business plan complet, prêt à imprimer en PDF ou à exporter vers Word.',
     'réglez le niveau et le destinataire dans la barre grise : le texte du document s\'adapte.']
 };
-function etapesGuide() {
-  var vis = pagesVisibles(), out = [];
+/* numero de l'etape (groupe du menu) qui contient la page affichee */
+function etapeCourante() {
+  var vis = pagesVisibles(), n = 0, num = 0, total = 0;
   PAGES.forEach(function (g) {
-    g[1].forEach(function (p) {
-      if (vis.indexOf(p[0]) >= 0 && GUIDE[p[0]] && GUIDE[p[0]][0] === 'saisie') out.push(p[0]);
-    });
+    var pages = g[1].filter(function (x) { return vis.indexOf(x[0]) >= 0; });
+    if (!pages.length) return;
+    n++; total = n;
+    if (pages.some(function (x) { return x[0] === PAGE; })) num = n;
   });
-  return out;
+  return { num: num, total: total };
 }
 function guideEtape() {
   var g = GUIDE[PAGE];
   if (!g || D.config.guide === 'Non') return '';
-  var et = etapesGuide(), i = et.indexOf(PAGE);
+  var et = etapeCourante();
+  var etat = {};
+  progression().sections.forEach(function (x) { etat[x[4]] = x[1]; });
+  var fait = etat[PAGE];
+  var marque = fait === true ? '<span class="etat-page ok">Complété</span>'
+    : (fait === false ? '<span class="etat-page">À compléter</span>' : '');
   return '<div class="guide noprint"><span class="etape">' +
-    (i >= 0 ? 'Étape ' + (i + 1) + ' sur ' + et.length : 'Lecture') + '</span>' +
-    '<div><b>' + esc(TITRES[PAGE] || '') + '</b> — ' + esc(g[1]) +
-    ' <span class="astuce"><b>Astuce :</b> ' + esc(g[2]) + '</span></div>' +
+    (et.num ? 'Étape ' + et.num + ' sur ' + et.total : 'Lecture') + '</span>' +
+    '<div class="guide-txt">' + esc(g[1]) + ' ' + marque +
+    '<details class="astuce"><summary>Astuce d\'utilisation</summary>' + esc(g[2]) +
+    (g[0] === 'saisie' ? ' Les cases crème se remplissent, tout le reste se calcule ; une étoile rouge signale une information indispensable au dossier.' : '') +
+    '</details></div>' +
     '<button class="fermerx" data-act="masquerGuide" title="Masquer les conseils" aria-label="Masquer les conseils">×</button></div>';
 }
 
@@ -2362,25 +2617,41 @@ function bandeauPhotos() {
 
 /* ------------------------------------------------------------ accueil */
 function pageAccueil() {
-  var R = O.R, K = R.kpi, pr = progression();
+  var R = O.R, K = R.kpi, pr = progression(), PC = parcours();
   var s = '<div class="page">';
   s += bandeauPhotos();
-  s += '<div class="raccourcis noprint">' +
-    (pr.suivantPage ? '<button class="btn" data-go="' + pr.suivantPage + '">Reprendre : ' +
-      esc(libellePage(pr.suivantPage)) + '</button>' : '<button class="btn" data-go="rapport">Imprimer mon business plan</button>') +
-    [['resultat', 'Voir mon plan financier'], ['diagnostic', 'Voir mon diagnostic'],
-    ['scenarios', 'Tester un scénario'], ['orientation', 'Redimensionner mon projet'], ['dashboard', 'Voir mon tableau de bord'],
-    ['rapport', 'Imprimer mon business plan']].map(function (x) {
-    return '<button class="btn sec" data-go="' + x[0] + '">' + esc(x[1]) + '</button>';
-  }).join('') + '</div>';
 
-  s += '<h2 class="sec">Assistant de démarrage</h2>';
-  s += '<p class="intro">Répondez à ces huit questions : le logiciel adapte les rubriques affichées, les analyses et le document final.</p>';
-  s += ch('Nom de votre projet ou de votre entreprise', 'config.projet', 'txt', {}, 'Il apparaîtra sur la page de garde du business plan.');
+  /* --- une seule action mise en avant : par ou commencer, ou reprendre --- */
+  var cible = pr.suivantPage || 'rapport';
+  s += '<div class="depart noprint"><div class="depart-txt">' +
+    '<div class="depart-titre">' + (pr.suivantPage ? (pr.pct < 15 ? 'Commencez ici' : 'Reprenez où vous en êtes') : 'Votre plan est complet') + '</div>' +
+    '<div class="progres"><div style="width:' + pr.pct + '%"></div></div>' +
+    '<div class="depart-sous">Plan complété à ' + pr.pct + ' %. ' + esc(pr.suivant) + '</div></div>' +
+    '<div class="depart-actions"><button class="btn gros" data-go="' + cible + '">' +
+    (pr.suivantPage ? esc(libellePage(pr.suivantPage)) : 'Imprimer mon business plan') + ' →</button>' +
+    (pr.pct < 30 ? '<button class="btn sec" data-act="demo">Voir un exemple rempli</button>' : '') +
+    '</div></div>';
+
+  /* --- le parcours complet, etape par etape --- */
+  s += '<h2 class="sec">Votre parcours, étape par étape</h2>';
+  s += '<ol class="parcours">';
+  PC.forEach(function (g) {
+    s += '<li class="' + g.classe + '"><span class="num">' + g.num + '</span>' +
+      '<div class="quoi"><b>' + esc(g.nom) + '</b>' +
+      (g.classe === 'encours' || g.classe === 'avenir' && g.num === 1 ? '<div class="detail">' + esc(g.detail) + '</div>' : '') + '</div>' +
+      '<span class="etat-etape">' + esc(g.etat) + '</span>' +
+      '<button class="btn sec sm" data-go="' + g.aller + '">Ouvrir</button></li>';
+  });
+  s += '</ol>';
+
+  /* --- etape 1 : les huit reponses de depart --- */
+  s += '<h2 class="sec">Étape 1 : votre projet en huit réponses</h2>';
+  s += '<p class="intro">Elles commandent les rubriques affichées, les analyses et le document final ; elles se changent à tout moment.</p>';
+  s += ch('Nom de votre projet ou de votre entreprise', 'config.projet', 'txt', { oblig: 1 }, 'Il apparaîtra sur la page de garde du business plan.');
   s += ch('Quel est votre profil ?', 'config.profil', 'sel', { options: LISTES.profil });
-  s += ch('Quel est votre secteur d\'activité ?', 'config.secteur', 'sel', { options: LISTES.secteur },
+  s += ch('Quel est votre secteur d\'activité ?', 'config.secteur', 'sel', { options: LISTES.secteur, oblig: 1 },
     'Le secteur active le module métier correspondant dans la page Produits.');
-  s += ch('Pourquoi préparez-vous ce business plan ?', 'config.objectif', 'sel', { options: LISTES.objectif },
+  s += ch('Pourquoi préparez-vous ce business plan ?', 'config.objectif', 'sel', { options: LISTES.objectif, oblig: 1 },
     'Le document final met en avant ce que regarde ce destinataire.');
   s += ch('Quel niveau de détail souhaitez-vous ?', 'config.niveau', 'sel', { options: LISTES.niveau },
     'Simplifié : 5 à 10 pages et moins de rubriques. Standard : dossier complet. Complet : analyse approfondie.');
@@ -2391,61 +2662,50 @@ function pageAccueil() {
     'Tout le logiciel se recalcule immédiatement.');
 
   var cs = conseilSecteur(D.config.secteur);
-  s += '<div class="note"><b>Votre configuration :</b> ' + escL(D.config.profil) + ', secteur ' + escL(D.config.secteur) +
-    ', objectif : ' + escL(D.config.objectif).toLowerCase() + '. ' + esc(conseilObjectif(D.config.objectif)) + '</div>';
-  if (cs) {
-    s += '<div class="note"><b>Dans votre secteur,</b> un financeur regarde particulièrement ' + esc(cs) +
-      '. Ces points doivent apparaître dans vos chiffres et dans vos explications écrites.</div>';
+  s += '<div class="note">' + esc(conseilObjectif(D.config.objectif)) +
+    (cs ? ' Dans votre secteur, un financeur regarde particulièrement ' + esc(cs) + '.' : '') + '</div>';
+
+  /* --- la synthese n'apparait que lorsqu'il y a des chiffres a montrer --- */
+  if (R.fin.totalBesoins > 0 || R.res.ca[0] > 0) {
+    var premierBenef = -1;
+    for (var ib = 0; ib < 5; ib++) { if (R.res.rn[ib] > 0) { premierBenef = ib; break; } }
+    var equilibre = K.moisBenefice > 0
+      ? 'Dès le mois ' + K.moisBenefice + (K.moisCumul > K.moisBenefice ? ' (pertes du démarrage effacées au mois ' + K.moisCumul + ')' : '')
+      : (premierBenef >= 0 ? 'En année ' + (premierBenef + 1) : 'Pas sur les cinq années projetées');
+    var risques = O.diagnostic.constats.filter(function (c) { return c.gravite >= 3; })
+      .sort(function (a, b) { return b.gravite - a.gravite; }).slice(0, 3)
+      .map(function (c) { return libelle(c.sujet); });
+
+    s += '<h2 class="sec">Mon projet en un coup d\'œil</h2>';
+    var syn = [
+      ['Combien coûte mon projet ?', mon(R.fin.totalBesoins)],
+      ['Combien dois-je apporter moi-même ?', mon(R.fin.fondsPropres)],
+      ['Combien dois-je financer auprès de tiers ?', mon(R.fin.recherche)],
+      ['Combien dois-je vendre par mois, au minimum ?', mon(K.seuilMensuel[0])],
+      ['Quel chiffre d\'affaires la première année ?', mon(R.res.ca[0])],
+      ['Quel bénéfice la première année ?', mon(R.res.rn[0])],
+      ['Quand vais-je atteindre l\'équilibre ?', equilibre],
+      ['Quelle sera ma trésorerie la plus basse ?', mon(R.tre.mois.mini)],
+      ['Puis-je rembourser mon crédit ? (DSCR)', R.cred.servAn[0] === 0 ? 'Pas de crédit' : rat(K.dscr[0])],
+      ['Quand vais-je récupérer l\'argent engagé ?', K.paybackSimple >= 99 ? 'Au-delà de 5 ans' : 'Année ' + K.paybackSimple],
+      ['Mon projet est-il bien dimensionné ?', libelle(O.orientation.verdict)],
+      ['Quels sont mes principaux risques ?', risques.length ? risques.join(', ') : 'Aucun risque majeur détecté'],
+      ['Quel est mon score de viabilité ?', O.diagnostic.score + ' / 100'],
+      ['Mon dossier est-il finançable ?', libelle(O.diagnostic.bancabilite.global)],
+      ['Mon plan est-il cohérent ?', libelle(O.controles.global)],
+      ['Que dois-je améliorer en premier ?', O.diagnostic.priorites[0] ? libelle(O.diagnostic.priorites[0].sujet) : 'Rien de bloquant']
+    ];
+    s += '<table><tr><th>Question</th><th>Réponse</th></tr>';
+    syn.forEach(function (x) { s += '<tr><td>' + esc(x[0]) + '</td><td><b>' + esc(x[1]) + '</b></td></tr>'; });
+    s += '</table>';
+  } else {
+    s += '<div class="note">Vos chiffres clés apparaîtront ici dès que vous aurez saisi vos produits et vos ventes.</div>';
   }
 
-  s += '<h2 class="sec">Où en est mon business plan ?</h2>';
-  s += '<div class="gbox" style="max-width:560px">' + graphJauge(pr.pct, 100, 'Plan complété à', tok('--ok', '#1c6b3a')) + '</div>';
-  s += '<table><tr><th>Rubrique</th><th>État</th><th>Ce qui reste à faire</th></tr>';
-  pr.sections.forEach(function (x) {
-    s += '<tr><td><a href="#" class="lien-tab" data-go="' + x[4] + '">' + esc(x[0]) + '</a></td><td>' +
-      '<span class="feu ' + (x[1] ? 'Vert' : 'Orange') + '">' + (x[1] ? 'Complété' : 'À compléter') + '</span></td><td>' +
-      (x[1] ? '' : esc(x[3])) + '</td></tr>';
-  });
-  s += '</table>';
-
-  var premierBenef = -1;
-  for (var ib = 0; ib < 5; ib++) { if (R.res.rn[ib] > 0) { premierBenef = ib; break; } }
-  var equilibre = K.moisBenefice > 0
-    ? 'Dès le mois ' + K.moisBenefice + (K.moisCumul > K.moisBenefice ? ' (pertes du démarrage effacées au mois ' + K.moisCumul + ')' : '')
-    : (premierBenef >= 0 ? 'En année ' + (premierBenef + 1) : 'Pas sur les cinq années projetées');
-  var risques = O.diagnostic.constats.filter(function (c) { return c.gravite >= 3; })
-    .sort(function (a, b) { return b.gravite - a.gravite; }).slice(0, 3)
-    .map(function (c) { return libelle(c.sujet); });
-
-  s += '<h2 class="sec">Mon projet en un coup d\'œil</h2>';
-  var syn = [
-    ['Combien coûte mon projet ?', mon(R.fin.totalBesoins)],
-    ['Combien dois-je apporter moi-même ?', mon(R.fin.fondsPropres)],
-    ['Combien dois-je financer auprès de tiers ?', mon(R.fin.recherche)],
-    ['Combien dois-je vendre par mois, au minimum ?', mon(K.seuilMensuel[0])],
-    ['Quel chiffre d\'affaires la première année ?', mon(R.res.ca[0])],
-    ['Quel bénéfice la première année ?', mon(R.res.rn[0])],
-    ['Quand vais-je atteindre l\'équilibre ?', equilibre],
-    ['Quelle sera ma trésorerie la plus basse ?', mon(R.tre.mois.mini)],
-    ['Puis-je rembourser mon crédit ? (DSCR)', R.cred.servAn[0] === 0 ? 'Pas de crédit' : rat(K.dscr[0])],
-    ['Quand vais-je récupérer l\'argent engagé ?', K.paybackSimple >= 99 ? 'Au-delà de 5 ans' : 'Année ' + K.paybackSimple],
-    ['Mon projet est-il bien dimensionné ?', libelle(O.orientation.verdict)],
-    ['Quels sont mes principaux risques ?', risques.length ? risques.join(', ') : 'Aucun risque majeur détecté'],
-    ['Quel est mon score de viabilité ?', O.diagnostic.score + ' / 100'],
-    ['Mon dossier est-il finançable ?', libelle(O.diagnostic.bancabilite.global)],
-    ['Mon plan est-il cohérent ?', libelle(O.controles.global)],
-    ['Que dois-je améliorer en premier ?', O.diagnostic.priorites[0] ? libelle(O.diagnostic.priorites[0].sujet) : 'Rien de bloquant']
-  ];
-  s += '<table><tr><th>Question</th><th>Réponse</th></tr>';
-  syn.forEach(function (x) { s += '<tr><td>' + esc(x[0]) + '</td><td><b>' + esc(x[1]) + '</b></td></tr>'; });
-  s += '</table>';
-  s += '<div class="note"><b>Rappel :</b> les champs jaunes se saisissent, tout le reste se calcule automatiquement. ' +
-    'Vos données restent sur votre ordinateur : rien n\'est envoyé sur internet. ' +
-    'Utilisez <b>Enregistrer</b> pour conserver votre projet dans un fichier, et <b>Ouvrir</b> pour le recharger.</div>';
   return s + '</div>';
 }
 
-/* ------------------------------------------------------------ aide */
+
 function pageAide() {
   var etapes = [
     ['1', 'Configurer', 'Accueil', 'Votre profil, votre secteur, l\'objectif du document et le niveau de détail.'],
@@ -2611,7 +2871,7 @@ function pageEntrepreneur() {
   var R = O.R;
   var s = '<div class="page"><p class="intro">Un financeur finance d\'abord une personne. Ces informations comptent autant que les chiffres.</p>';
   s += '<h2 class="sec">Identité</h2>';
-  s += ch('Nom et prénom', E + 'nom', 'txt');
+  s += ch('Nom et prénom', E + 'nom', 'txt', { oblig: 1 });
   s += ch('Âge', E + 'age', 'num');
   s += ch('Téléphone', E + 'tel', 'txt');
   s += ch('Adresse électronique', E + 'mail', 'txt');
@@ -2659,7 +2919,7 @@ function pageEntreprise() {
   s += ch('Statut juridique', E + 'juridique', 'sel', { options: LISTES.juridique });
   s += ch('Année de création (ou prévue)', E + 'anneeCreation', 'num');
   s += ch('Localisation', E + 'localisation', 'txt');
-  s += ch('Activité, en une phrase', E + 'activite', 'area', {}, 'Reprise sous le titre de la page de garde.');
+  s += ch('Activité, en une phrase', E + 'activite', 'area', { oblig: 1 }, 'Reprise sous le titre de la page de garde.');
   s += '<h2 class="sec">Formalisation</h2>';
   s += ch('Situation de formalisation', E + 'formalisation', 'sel', { options: LISTES.formal });
   s += ch('Numéro RCCM', E + 'rccm', 'txt');
@@ -2715,7 +2975,7 @@ function pageBM() {
   ];
   var B = D.bm;
   var s = '<div class="page"><p class="intro">Neuf questions simples. Vos réponses construisent votre modèle économique sur une page, repris dans le business plan.</p>';
-  Q.forEach(function (q) { s += ch(q[1], 'bm.' + q[0], 'area'); });
+  Q.forEach(function (q, i) { s += ch(q[1], 'bm.' + q[0], 'area', i === 0 ? { oblig: 1 } : {}); });
 
   var bloc = function (t, v) {
     return '<span class="k">' + esc(t) + '</span>' + ((v || '').trim() ? esc(v) : '<i class="vide">À compléter</i>');
@@ -2795,7 +3055,7 @@ function pageMarche() {
   s += '<p class="intro">Trois niveaux, du plus large au plus concret. Vous ne saisissez que les deux premiers. ' +
     'Le troisième est votre prévision de ventes, reprise automatiquement de la page Ventes : les trois chiffres restent donc toujours cohérents entre eux.</p>';
   s += ch('Marché total (TAM) : ce que dépensent par an tous les clients de la zone pour ce type de produit' + enDevise(),
-    M + 'taille', 'num', {}, 'Estimation, même approximative : nombre de clients de la zone × consommation moyenne par an × prix. Décrivez votre méthode plus bas.');
+    M + 'taille', 'num', { oblig: 1 }, 'Estimation, même approximative : nombre de clients de la zone × consommation moyenne par an × prix. Décrivez votre méthode plus bas.');
   s += ch('Comment calculer le marché accessible (SAM) ?', M + 'methodeSam', 'sel', { options: LISTES.methodeSam },
     'Soit un pourcentage du marché total, soit la somme du potentiel des segments que vous listez plus bas.');
   if (EM.methode === 'Somme de mes segments') {
@@ -3803,11 +4063,11 @@ function pageDashboard() {
   var R = O.R, A = R.res, K = R.kpi, S = D.seuils, P = D.params;
   var s = '<div class="page">';
   s += '<div style="text-align:center;margin-bottom:6px"><div style="font-size:20px;font-weight:700;color:var(--brand)">' +
-    esc(D.config.projet) + '</div><div style="font-size:12px;color:var(--ink-3)">Scénario ' + esc(D.config.scenario) +
+    esc(D.config.projet) + '</div><div style="font-size:12px;color:var(--ink-3)">Scénario ' + escL(D.config.scenario) +
     '  -  Devise ' + esc(D.config.devise) + '  -  ' + esc(D.config.date) + '</div></div>';
 
   function bloc(titre, cartes) {
-    var h = '<h2 class="sec">' + esc(titre) + '</h2><div class="cartes">';
+    var h = '<h2 class="sec">' + escL(titre) + '</h2><div class="cartes">';
     cartes.forEach(function (c) {
       h += '<div class="carte' + (c[2] ? ' hi' : '') + '"><div class="k">' + esc(c[0]) + '</div><div class="v' +
         (c[3] ? ' neg' : '') + '">' + esc(c[1]) + '</div></div>';
@@ -3867,7 +4127,7 @@ function pageDashboard() {
    ['Apport propre', feuHaut(R.fin.partFP, num(P.apportMin), num(P.apportMin) * 0.6)],
    ['Capacite', (K.utilisation <= 1 && K.utilisation >= 0.35) ? 'Vert' : (K.utilisation > 1 ? 'Rouge' : 'Orange')]
   ].forEach(function (c) {
-    s += '<div class="carte"><div class="k">' + esc(c[0]) + '</div><div class="v" style="font-size:14px">' + feu(c[1]) + '</div></div>';
+    s += '<div class="carte"><div class="k">' + escL(c[0]) + '</div><div class="v" style="font-size:14px">' + feu(c[1]) + '</div></div>';
   });
   s += '<div class="carte hi"><div class="k">Score de viabilité</div><div class="v">' + O.diagnostic.score + ' / 100</div></div>';
   s += '<div class="carte"><div class="k">Bancabilité</div><div class="v" style="font-size:15px">' + esc(O.diagnostic.bancabilite.global) + '</div></div>';
@@ -3889,7 +4149,7 @@ function pageDashboard() {
   s += '<div class="gbox"><h3>Vos cinq charges les plus lourdes</h3>' +
     graphBarresH(top.map(function (x) { return x.ref.nom; }), top.map(function (x) { return x.an[0]; })) + '</div>';
   s += '<div class="gbox"><h3>Résultat net selon le scénario</h3>' +
-    graphBarres(['Prudent', 'Realiste', 'Optimiste'],
+    graphBarres(['Prudent', 'Réaliste', 'Optimiste'],
       [{ nom: 'Résultat net année 1', data: [O.scen.Prudent.res.rn[0], O.scen.Realiste.res.rn[0], O.scen.Optimiste.res.rn[0]] }]) + '</div>';
   s += '<div class="gbox"><h3>Chiffre d\'affaires et seuil de rentabilité</h3>' +
     graphBarres(ANS.map(function (a) { return a.replace('Année ', 'An '); }),
@@ -3916,7 +4176,7 @@ function pageScenarios() {
   var s = '<div class="page"><p class="intro">Les coefficients ci-dessous sont le seul point d\'entrée des scénarios. ' +
     'Changez le scénario actif dans la barre du haut : tout le logiciel se recalcule.</p>';
   s += '<h2 class="sec">Coefficients des trois scénarios</h2><table class="grille"><tr><th>Coefficient</th>' +
-    sc.map(function (x) { return '<th class="n">' + x + '</th>'; }).join('') + '</tr>';
+    sc.map(function (x) { return '<th class="n">' + escL(x) + '</th>'; }).join('') + '</tr>';
   [['v', 'Volumes vendus'], ['p', 'Prix de vente'], ['c', 'Coûts variables unitaires'],
    ['f', 'Charges fixes et personnel']].forEach(function (k) {
     s += '<tr><td>' + esc(k[1]) + '</td>';
@@ -4052,15 +4312,15 @@ function pageDiagnostic() {
   s += '<h2 class="sec">Les constats, point par point</h2><div class="scroll"><table>' +
     '<tr><th>Sujet</th><th>Constat</th><th>Catégorie</th><th class="n">Gravité</th><th>Ce que vous pourriez faire</th></tr>';
   G.constats.slice().sort(function (a, b) { return b.gravite - a.gravite; }).forEach(function (c) {
-    s += '<tr><td><b>' + esc(c.sujet) + '</b></td><td>' + esc(c.constat) + '</td><td>' + feu(c.categorie) +
+    s += '<tr><td><b>' + escL(c.sujet) + '</b></td><td>' + esc(c.constat) + '</td><td>' + feu(c.categorie) +
       '</td><td class="n">' + c.gravite + '</td><td style="font-size:12px">' + esc(c.reco) + '</td></tr>';
   });
   s += '</table></div>';
 
-  s += '<h2 class="sec">Score de viabilité : le détail</h2><table><tr><th>Dimension</th><th>Ce qui est mesure</th>' +
+  s += '<h2 class="sec">Score de viabilité : le détail</h2><table><tr><th>Dimension</th><th>Ce qui est mesuré</th>' +
     '<th class="n">Poids</th><th class="n">Note sur 20</th><th class="n">Points</th></tr>';
   G.dimensions.forEach(function (d2) {
-    s += '<tr><td><b>' + esc(d2.nom) + '</b></td><td style="font-size:12px">' + esc(d2.mesure) + '</td><td class="n">' +
+    s += '<tr><td><b>' + escL(d2.nom) + '</b></td><td style="font-size:12px">' + esc(d2.mesure) + '</td><td class="n">' +
       d2.poids + '</td><td class="n">' + rat(d2.note) + '</td><td class="n">' + rat(d2.points) + '</td></tr>';
   });
   s += '<tr class="tot"><td colspan="4">SCORE SUR 100</td><td class="n">' + G.score + '</td></tr></table>';
@@ -4075,7 +4335,7 @@ function pageDiagnostic() {
 
   s += '<h2 class="sec">Mon projet peut-il démarrer ?</h2><table><tr><th>Dimension</th><th>Réponse</th><th>Feu</th><th>Question posée</th></tr>';
   G.test.forEach(function (t) {
-    s += '<tr><td><b>' + esc(t.dim) + '</b></td><td class="n">' + esc(t.valeur) + '</td><td>' + feu(t.feu) +
+    s += '<tr><td><b>' + escL(t.dim) + '</b></td><td class="n">' + esc(t.valeur) + '</td><td>' + feu(t.feu) +
       '</td><td style="font-size:12px">' + esc(t.comment) + '</td></tr>';
   });
   s += '</table>';
@@ -4110,7 +4370,7 @@ function pageOrientation() {
   s += '<p class="intro">Le chiffre d\'affaires et les charges de chaque option sont estimés à partir des pourcentages ' +
     'saisis en jaune : ajustez-les si vous pensez pouvoir réaliser plus ou moins d\'activité avec moins d\'équipement.</p>';
   s += '<div class="scroll"><table class="grille"><tr><th>Élément</th>' +
-    G.options.map(function (o2) { return '<th class="n">' + esc(o2.nom) + '</th>'; }).join('') + '</tr>';
+    G.options.map(function (o2) { return '<th class="n">' + escL(o2.nom) + '</th>'; }).join('') + '</tr>';
   s += '<tr><td class="lab">Investissement total</td>' + G.options.map(function (o2) { return celN(o2.inv, 'mon'); }).join('') + '</tr>';
   s += '<tr><td class="lab">Part d\'activité atteignable</td>' +
     [0, 1, 2].map(function (i) { return '<td>' + inp('orientation.partAct.' + i, 'pct') + '</td>'; }).join('') + '</tr>';
@@ -4127,7 +4387,7 @@ function pageOrientation() {
       G.options.map(function (o2) { return celN(o2[l[1]], l[2]); }).join('') + '</tr>';
   });
   s += '</table></div>';
-  s += '<div class="note"><b>Option la plus équilibrée selon le logiciel : ' + esc(G.meilleure) + '.</b> ' +
+  s += '<div class="note"><b>Option la plus équilibrée selon le logiciel : ' + escL(G.meilleure) + '.</b> ' +
     'Votre projet complet nécessite ' + mon(G.options[2].inv) + '. ' +
     (G.meilleure === 'Aucune option ne satisfait tous les criteres'
       ? 'Aucune des trois options ne satisfait à la fois la rentabilité, la trésorerie et la capacité de remboursement. ' +
@@ -4175,7 +4435,7 @@ function pageOrientation() {
       mon(G.durees[1].interets) + ' à ' + mon(G.durees[3].interets) + '.</div>';
   }
 
-  s += '<h2 class="sec">Conseils cibles sur vos chiffres</h2>';
+  s += '<h2 class="sec">Conseils ciblés sur vos chiffres</h2>';
   G.conseils.forEach(function (c) {
     s += '<div class="note"><b>' + esc(c.titre) + ' : </b>' + esc(c.texte) + '</div>';
   });
@@ -5185,7 +5445,9 @@ function render(garderFocus) {
   var f = RENDUS[PAGE] || pageAccueil;
   var bandeau = (D.config.bandeauPartout === 'Oui' && PAGE !== 'accueil' && PAGE !== 'rapport' && (D.config.photos || []).length)
     ? '<div class="page" style="padding-bottom:0">' + bandeauPhotos() + '</div>' : '';
-  document.getElementById('main').innerHTML = renderBar() + guideEtape() + bandeau + f() + renderSuite();
+  document.getElementById('main').innerHTML = renderBar() + filEtapes() + guideEtape() + bandeau + f() + renderSuite();
+  organiserSections();
+  memoriserGroupes();
   if (garderFocus && chemin) {
     var el = document.querySelector('#main [data-p="' + chemin + '"]');
     if (el) {
@@ -5265,7 +5527,7 @@ function onClick(e) {
   var go = el.getAttribute('data-go');
   if (go) {
     e.preventDefault();
-    PAGE = go; MSG = ''; MSG_COPIE = false;
+    PAGE = go; MSG = ''; MSG_COPIE = false; GROUPES_OUVERTS = {};
     window.scrollTo(0, 0);
     render();
     return;
@@ -5548,7 +5810,7 @@ function chargerPhotos(e) {
 var TITRE_AVANT = '';
 function demarrer() {
   var sauve = chargerLocal();
-  D = sauve ? fusion(donneesDemo(), sauve) : donneesDemo();
+  D = sauve ? fusion(donneesVides(), sauve) : donneesVides();
   /* projet enregistre avant l'arrivee du logo : on le remet, sauf retrait volontaire */
   if (!D.config.logo && D.config.logoRetire !== 'Oui' && typeof LOGO_UBORA === 'string') D.config.logo = LOGO_UBORA;
   var zone = document.getElementById('main');
@@ -5564,6 +5826,11 @@ function demarrer() {
     if (e.key === 'Escape' && document.getElementById('modal')) { CONFIRMATION = null; fermerFenetre(); }
   });
   window.addEventListener('beforeunload', sauverLocal);
+  var etroitAvant = window.innerWidth < 760;
+  window.addEventListener('resize', function () {
+    var e = window.innerWidth < 760;
+    if (e !== etroitAvant) { etroitAvant = e; render(); }
+  });
   /* les couleurs des graphiques sont lues dans le theme : on redessine si le
      mode clair ou sombre du systeme change pendant l'utilisation */
   if (window.matchMedia) {

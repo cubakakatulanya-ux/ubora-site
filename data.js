@@ -27,7 +27,7 @@ const CONFIG = {
 const TICKER_MESSAGES = [
   ["Nouveau dans AKIBA : un reçu imprimé pour chaque membre, et bientôt sur terminal POS", "/outils#akiba"],
   ["AKIBA mesure la qualité des données et le niveau « prête pour une IMF » de chaque AVEC", "/outils#akiba"],
-  ["Le générateur de business plan est en ligne sur bp.uborardc.com", "https://bp.uborardc.com"],
+  ["Nouvelle version du générateur de business plan : parcours guidé, score de viabilité et trois scénarios", "https://bp.uborardc.com"],
   ["Le projet se termine, l'accompagnement continue : Ubora prend le relais des ONG sur le terrain", "/conseil#relais"],
   ["Groupes d'épargne, ONG, réseaux : demandez notre boîte à outils AVEC", "/avec#boite"],
   ["Ubora Fin : un fonds de roulement pour les AVEC que nous accompagnons", "/financement#intermediation"],
@@ -442,8 +442,8 @@ const OUTILS = [
   {
     id: "bp", nom: "Générateur de business plan", pole: "pme", statut: "en-ligne", mock: "pme", couleur: "#B0622A", initiales: "Bp",
     sousDomaine: "bp.uborardc.com", url: "https://bp.uborardc.com",
-    resume: "Il guide l'entrepreneur question par question et produit un plan d'affaires complet, avec les prévisions financières.",
-    points: ["Projet, marché, concurrence et stratégie", "Compte de résultat et trésorerie calculés", "Seuil de rentabilité", "Dossier prêt à présenter", "Utilisable hors connexion une fois ouvert"]
+    resume: "Il guide l'entrepreneur étape par étape, à partir de huit questions sur son projet, et produit un business plan complet : prévisions financières, diagnostic de viabilité et conseils sur ses propres chiffres.",
+    points: ["Un parcours étape par étape, adapté au projet en huit réponses", "Ventes avec saisonnalité, investissements, crédits et besoin en fonds de roulement", "Compte de résultat, bilan et trésorerie calculés, mois par mois", "Seuil de rentabilité et trois scénarios, avec calculs inverses", "Score de viabilité : « Mon projet peut-il démarrer ? »", "Conseils ciblés : phasage des investissements, durée du crédit, module agricole", "En francs congolais ou en dollars ; imprimable en PDF ou exportable vers Word"]
   },
   {
     id: "hub", nom: "Ubora Hub", pole: "pme", statut: "en-ligne", mock: "hub", couleur: "#0F3170", initiales: "Hb",
@@ -484,7 +484,7 @@ const CATALOGUE = [
   ["AKIBA pour les trésoriers et les comités", "avec", "Tenir la réunion sur téléphone, imprimer les reçus, lire l'indice de qualité, préparer le partage de fin de cycle."],
   ["Devenir formateur relais AVEC", "avec", "Animer les séances, accompagner et suivre les groupes."],
   ["De l'idée au premier client", "pme", "Tester une idée d'entreprise avec très peu de moyens."],
-  ["Rédiger son plan d'affaires", "pme", "Construire son dossier avec le générateur en ligne."],
+  ["Rédiger son plan d'affaires", "pme", "Construire son dossier avec le générateur en ligne, lire son score de viabilité et ses scénarios."],
   ["Gérer une coopérative", "cooperatives", "Gouvernance, registres, caisse et comptabilité simplifiée."],
   ["Préparer un dossier de crédit", "financement", "Ce qu'une institution financière attend, et comment le présenter."],
   ["Ubora Hub pour les équipes d'accompagnement", "pme", "Suivre une cohorte, ses séances de coaching et ses résultats."]
