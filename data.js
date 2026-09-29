@@ -30,7 +30,8 @@ const TICKER_MESSAGES = [
   ["Groupes d'épargne, ONG, réseaux : demandez notre boîte à outils AVEC", "/avec#boite"],
   ["Ubora Fin : un fonds de roulement pour les AVEC que nous accompagnons", "/financement#intermediation"],
   ["Ubora Market prépare une plateforme qui relie vendeurs et acheteurs", "/marche"],
-  ["Notre siège est à Lubumbashi. Nous travaillons dans toute la RDC", "/contact"]
+  ["Nouveau : Ubora Vert, pour protéger l'environnement et en vivre", "/vert"],
+  ["Basés à Lubumbashi, nous intervenons partout en RDC", "/contact"]
 ];
 
 /* ---------- La méthode Ubora (page « Notre approche ») ---------- */
@@ -54,7 +55,7 @@ const METHODE = {
 };
 
 /* ==========================================================================
-   LES CINQ PÔLES
+   LES SIX PÔLES
    Chaque pôle a sa page (et son sous-domaine), avec la même construction :
    le contexte en RDC, notre démarche, les outils liés, la boîte à outils.
    ========================================================================== */
@@ -164,9 +165,9 @@ const POLES = [
     accroche: "Produire ensemble, vendre mieux, être payé à temps.",
     photo: ["coop", "Des cultivateurs au travail dans un champ"],
     nom: "Ubora Coop", initiales: "Co", couleur: "#4E8F2A",
-    carte: "Des statuts conformes à l'OHADA, des registres tenus, des ventes groupées et des producteurs payés par mobile money.",
+    carte: "Des statuts OHADA à la vente groupée : nous renforçons chaque maillon de la chaîne de valeur, et les producteurs sont payés à temps.",
     titre: `Des coopératives bien gérées, et des producteurs <span class="serif">payés à temps</span>.`,
-    lead: "Nous partons de ce qui existe : une organisation paysanne, un groupement de producteurs ou une coopérative qui ne fonctionne plus. Nous l'aidons à se constituer ou à se remettre en ordre, puis à gérer, vendre et se financer.",
+    lead: "Nous partons de ce qui existe : une organisation paysanne, un groupement de producteurs ou une coopérative qui ne fonctionne plus. Nous l'aidons à se constituer ou à se remettre en ordre, puis à gérer, vendre et se financer. Nous travaillons sur toute la chaîne de valeur, des intrants jusqu'au paiement du producteur.",
     contexte: {
       intro: "Nous arrivons rarement devant une page blanche. Il y a presque toujours déjà un groupe de producteurs qui travaille ensemble, ou une coopérative créée il y a des années et restée en sommeil. Notre travail commence là.",
       constats: [
@@ -180,6 +181,19 @@ const POLES = [
       ["Vous êtes une organisation paysanne ou un groupement", "Nous vous aidons à constituer la coopérative : assemblée constitutive, statuts conformes à l'OHADA, immatriculation, ouverture du compte."],
       ["Vous êtes une coopérative qui ne fonctionne plus", "Nous faisons le diagnostic, puis nous remettons les choses en ordre : révision des statuts, renouvellement des organes, reconstitution des comptes."]
     ],
+    chaine: {
+      titre: "Toute la chaîne de valeur, du champ jusqu'au paiement",
+      intro: "Une coopérative ne gagne pas seulement en produisant plus. Elle gagne à chaque maillon qu'elle maîtrise : acheter ensemble, stocker au lieu de brader, transformer pour vendre plus cher. Nous analysons la filière avec les membres, puis nous renforçons les maillons qui rapportent le plus.",
+      maillons: [
+        ["Intrants", "Semences, engrais et outils achetés en groupe, à crédit si besoin.", "Des coûts en baisse, des intrants à temps."],
+        ["Production", "Bonnes pratiques agricoles, calendrier de campagne, suivi des parcelles.", "Des rendements et une qualité réguliers."],
+        ["Collecte", "Points de collecte, pesée contrôlée, fiche par producteur.", "Des volumes connus et vérifiables."],
+        ["Stockage", "Entrepôt, séchage, conservation, crédit sur stock (warrantage).", "Vendre au bon moment, sans brader."],
+        ["Transformation", "Décorticage, mouture, conditionnement, étiquetage.", "Plus de valeur gardée par la coopérative."],
+        ["Vente", "Contrats de vente groupée avec les acheteurs, avec Ubora Market.", "Un meilleur prix, négocié ensemble."],
+        ["Paiement", "Décompte par producteur, paiement par mobile money.", "Des producteurs payés à temps, qui restent."]
+      ]
+    },
     parcours: [
       ["Faire le diagnostic", "Statuts, gouvernance, comptes, activité : on regarde où en est l'organisation.", "Un point de départ clair, et le choix entre créer ou redresser."],
       ["Constituer ou remettre en ordre", "Assemblée constitutive et parts sociales, ou révision des statuts et renouvellement des organes.", "Une coopérative qui existe vraiment, avec des membres engagés."],
@@ -221,9 +235,9 @@ const POLES = [
     accroche: "Le crédit, jusqu'où il n'allait pas.",
     photo: ["fin", "Trois femmes échangent autour d'une table de réunion"],
     nom: "Ubora Fin", initiales: "Fi", couleur: "#1D5FB8",
-    carte: "Nous préparons les emprunteurs, équipons les institutions et prêtons aux AVEC des fonds levés auprès des financeurs.",
+    carte: "Nous préparons les emprunteurs, les présentons aux institutions financières et prêtons aux AVEC des fonds levés auprès des financeurs.",
     titre: `Rapprocher ceux qui ont besoin de crédit de ceux qui <span class="serif">prêtent</span>.`,
-    lead: "Le crédit existe en RDC, mais il atteint mal les petits emprunteurs. Nous travaillons des deux côtés, et entre les deux : nous préparons les groupes, les coopératives et les PME, nous équipons les institutions financières, et nous faisons circuler l'argent des unes vers les autres.",
+    lead: "Le crédit existe en RDC, mais il atteint mal les petits emprunteurs. Nous travaillons des deux côtés, et entre les deux : nous préparons les groupes, les coopératives et les PME, nous les présentons aux institutions financières, et nous faisons circuler l'argent des financeurs jusqu'aux groupes.",
     contexte: {
       intro: "D'un côté, des emprunteurs qui n'ont rien à présenter. De l'autre, des institutions qui n'ont pas les moyens d'étudier de petits dossiers sans y perdre de l'argent. Tant que l'on ne travaille qu'un seul côté, rien ne bouge.",
       constats: [
@@ -237,7 +251,6 @@ const POLES = [
       ["Former et coacher", "Éducation financière, gestion du crédit, tenue des comptes. On apprend à bien gérer avant d'emprunter.", "Des emprunteurs préparés, pas seulement demandeurs."],
       ["Monter le dossier", "Comptes tenus, plan d'affaires chiffré, garanties réalistes.", "Un dossier qu'une institution peut réellement étudier."],
       ["Constituer un historique", "Les cotisations, les prêts et les remboursements enregistrés dans nos outils servent de preuves.", "Des indicateurs qu'un financier sait lire."],
-      ["Équiper l'institution", "Un logiciel pour gérer les membres, l'épargne, les crédits, la caisse et les rapports.", "De petits crédits suivis sans y perdre d'argent."],
       ["Mettre en relation", "Nous présentons les dossiers aux IMF, aux COOPEC et aux banques, et nous suivons la discussion.", "Un premier crédit, à des conditions supportables."],
       ["Apporter un fonds de roulement", "Pour les AVEC que nous suivons, Ubora Fin prête elle-même un fonds de roulement au groupe, remboursable sur le cycle, en plus de l'épargne des membres.", "Plus de prêts possibles pour les membres, sans attendre une banque."],
       ["Suivre le remboursement", "Échéances, relances, appui en cas de difficulté, des deux côtés.", "Un bon historique, qui ouvre la porte au crédit suivant."]
@@ -263,7 +276,7 @@ const POLES = [
       etat: "Projet en préparation. L'étude de faisabilité, le cadre réglementaire et la recherche de partenaires financiers sont en cours.",
       appel: "Institution, bailleur ou investisseur intéressé ? Parlons-en."
     },
-    outils: ["logiciel-fin", "akiba"],
+    outils: ["akiba"],
     publics: ["Groupes AVEC", "Coopératives et PME qui cherchent un crédit", "Petites IMF et COOPEC", "Mutuelles d'épargne et de crédit", "Programmes de crédit des ONG"],
     boite: {
       statut: "bientot",
@@ -333,6 +346,48 @@ const POLES = [
         ["Calendrier de campagne", "Prévoir la récolte, la collecte et la livraison."]
       ]
     }
+  },
+
+  {
+    id: "vert", chemin: "/vert", sousDomaine: "vert.uborardc.com",
+    accroche: "Protéger la terre, et en vivre.",
+    photo: ["vert", "Des mains tiennent un jeune plant dans un sachet de pépinière"],
+    nom: "Ubora Vert", initiales: "Ve", couleur: "#6E9A1E",
+    carte: "Reboisement, recyclage, agroécologie, énergie propre : nous faisons de la protection de l'environnement une source de revenus pour les communautés.",
+    titre: `Protéger l'environnement, et en faire une <span class="serif">source de revenus</span>.`,
+    lead: "Ubora Vert réunit tout ce que nous faisons pour l'environnement : reboisement, recyclage et valorisation des déchets, agriculture durable, énergie propre, sensibilisation. Notre conviction : une action pour l'environnement dure quand elle fait vivre ceux qui la portent.",
+    contexte: {
+      intro: "Dans les villes minières comme dans les villages, la pression sur l'environnement se voit chaque jour : collines déboisées pour le charbon de bois, déchets plastiques dans les caniveaux, sols épuisés, saisons des pluies de moins en moins prévisibles. Ce sont d'abord les familles modestes qui en paient le prix.",
+      constats: [
+        ["Des forêts qui reculent", "Le charbon de bois reste la première énergie pour cuisiner. Chaque année, on coupe les arbres un peu plus loin des villes."],
+        ["Des déchets sans filière", "Plastique, ferraille, déchets organiques : peu de collecte et peu de tri, alors que beaucoup de ces déchets ont une valeur."],
+        ["Des sols fatigués", "Sans rotation ni fumure organique, les rendements baissent, et les engrais coûtent de plus en plus cher."],
+        ["Un climat moins prévisible", "Pluies décalées, sécheresses : une récolte perdue emporte souvent l'épargne de toute une famille."]
+      ]
+    },
+    parcours: [
+      ["Diagnostiquer", "Les pressions sur l'environnement du territoire, les pratiques actuelles, les acteurs présents et les activités vertes possibles.", "Des priorités claires, décidées avec la communauté."],
+      ["Sensibiliser", "Causeries, écoles, groupes d'épargne, radios communautaires : expliquer simplement ce qui se joue, et ce que chacun peut faire.", "Une communauté qui comprend l'enjeu et s'engage."],
+      ["Reboiser", "Pépinières communautaires, plantations, agroforesterie, suivi de la survie des plants.", "Des arbres qui poussent, et des pépiniéristes qui en vivent."],
+      ["Recycler et valoriser", "Tri à la source, collecte, recyclage du plastique et de la ferraille, compostage des déchets organiques.", "Des déchets qui deviennent des revenus."],
+      ["Produire autrement", "Agroécologie, compost, gestion de l'eau, foyers améliorés, énergie solaire.", "Moins de dépenses, des sols et des récoltes qui tiennent."],
+      ["Financer", "Crédit vert par Ubora Fin, montage de projets pour les fonds climat et les programmes environnementaux.", "Des activités vertes qui trouvent leur financement."],
+      ["Mesurer et suivre", "Arbres plantés et vivants, déchets valorisés, énergie économisée, revenus créés.", "Des résultats que l'on peut montrer aux partenaires."]
+    ],
+    outils: [],
+    publics: ["Communautés et groupes AVEC", "Coopératives agricoles", "Recycleurs, PME et artisans", "Écoles et jeunes", "ONG et programmes environnementaux", "Entreprises et collectivités locales"],
+    boite: {
+      statut: "bientot",
+      titre: "La boîte à outils verte",
+      intro: "Les guides pratiques que nous utilisons sur le terrain seront bientôt disponibles.",
+      outils: [
+        ["Diagnostic environnemental communautaire", "Repérer les pressions et choisir les actions prioritaires."],
+        ["Monter une pépinière", "Semences, sachets, arrosage, calendrier : de la graine au plant."],
+        ["Tri et valorisation des déchets", "Organiser la collecte, et vendre ce qui peut l'être."],
+        ["Guide du compostage", "Transformer les déchets organiques en fumure."],
+        ["Monter un projet vert finançable", "Ce qu'attendent les fonds climat et les bailleurs."]
+      ]
+    }
   }
 ];
 
@@ -344,6 +399,7 @@ const PHOTOS = [
   ["akiba", "Le téléphone au quotidien"],
   ["fin", "Accès au crédit"],
   ["market", "Accès au marché"],
+  ["vert", "Environnement"],
   ["formation", "Formation"],
   ["terrain", "Communautés"]
 ];
@@ -389,11 +445,6 @@ const OUTILS = [
     sousDomaine: "hub.uborardc.com", url: "https://www.uborahub.com",
     resume: "La plateforme des incubateurs et des programmes d'entrepreneuriat : candidatures, suivi des cohortes, coaching et rapports.",
     points: ["Appels à candidatures et sélection", "Fiche de suivi par entrepreneur", "Séances de coaching", "Indicateurs d'impact", "Rapports pour les bailleurs"]
-  },
-  {
-    id: "logiciel-fin", nom: "Ubora Fin, le logiciel", pole: "financement", statut: "en-cours", mock: "fin", couleur: "#1D5FB8", initiales: "Fi",
-    resume: "Un logiciel de gestion pour les petites IMF et les COOPEC : membres, épargne, crédits, caisse et rapports.",
-    points: ["Dossiers des membres et des clients", "Épargne et dépôts", "Crédits, échéanciers et retards", "Caisse en francs congolais et en dollars", "Rapports et indicateurs"]
   },
   {
     id: "logiciel-coop", nom: "Ubora Coop, le logiciel", pole: "cooperatives", statut: "en-cours", mock: "coop", couleur: "#4E8F2A", initiales: "Co",
@@ -443,6 +494,7 @@ const FAQ = [
   ["Faut-il être une entreprise déclarée pour être accompagné ?", "Non. Nous accompagnons justement beaucoup d'entrepreneurs et de groupements vers la formalisation, étape par étape."],
   ["Que devient l'accompagnement quand le projet d'une ONG se termine ?", "Nous restons. Les groupes, les entrepreneurs et les coopératives continuent d'être suivis après la clôture du projet. Notre modèle économique finance une partie de ces activités de terrain, et les outils mis en place restent en service."],
   ["Ubora peut-elle financer notre groupe d'épargne ?", "Oui, par Ubora Fin, notre branche financière. Pour les AVEC que nous accompagnons, nous pouvons apporter un fonds de roulement, remboursable sur le cycle, en plus de l'épargne des membres. Nous pouvons aussi présenter le groupe à une IMF, une COOPEC ou une banque partenaire."],
+  ["Que fait Ubora pour l'environnement ?", "Par Ubora Vert, nous accompagnons les communautés, les coopératives et les PME dans le reboisement, le recyclage et la valorisation des déchets, l'agroécologie et l'énergie propre. Notre principe : une action pour l'environnement dure quand elle crée des revenus pour ceux qui la portent."],
   ["Combien coûte l'accompagnement ?", "Cela dépend du programme et du nombre de bénéficiaires. Les prestations facturées aux organisations nous permettent de proposer des tarifs solidaires aux groupes d'épargne et aux micro-entrepreneurs. Contactez-nous pour en parler."]
 ];
 

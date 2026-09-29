@@ -145,7 +145,7 @@ function statut(o) {
 function poleCard(p, feature, compact) {
   const img = !compact && p.photo;
   return `<article class="pole${feature ? " feature" : ""}${img ? " has-img" : ""}" style="--c:${p.couleur}">
-    ${img ? `<div class="pole-img">${photo(p.photo[0], feature ? "(max-width: 860px) 100vw, 800px" : "(max-width: 560px) 100vw, 400px", "", ' loading="lazy"')}</div>` : ""}
+    ${img ? `<div class="pole-img">${photo(p.photo[0], feature ? "(max-width: 860px) 100vw, 800px" : "(max-width: 560px) 100vw, (max-width: 900px) 50vw, 380px", "", ' loading="lazy"')}</div>` : ""}
     <div class="pole-body">
       <div class="pole-top"><span class="mk">${esc(p.initiales)}</span><a class="pole-sub" href="https://${p.sousDomaine}">${esc(p.sousDomaine)}</a></div>
       <h3><a class="stretch" href="${p.chemin}">${esc(p.nom)}</a></h3>
@@ -342,9 +342,9 @@ function pageHome() {
   <section class="deep hero">
     <div class="wrap hero-grid">
       <div>
-        <span class="pill"><b>Entreprise sociale</b> Lubumbashi · RDC</span>
+        <span class="pill"><b>Entreprise sociale</b> Basée à Lubumbashi · partout en RDC</span>
         <h1>Des familles qui épargnent, des entrepreneurs qui vendent, des coopératives qui <span class="serif">durent</span>.</h1>
-        <p class="lead">Depuis Lubumbashi, nous formons, outillons et suivons les groupes d'épargne, les entrepreneurs, les coopératives et les institutions financières de la RDC. Sur le terrain, avec des outils qui marchent sans réseau. Et nous restons quand le projet qui nous a fait venir se termine.</p>
+        <p class="lead">Partout en RDC, nous formons, outillons et suivons les groupes d'épargne, les entrepreneurs et les coopératives. Nous les relions aux institutions financières et aux acheteurs, et nous agissons pour l'environnement. Sur le terrain, avec des outils qui marchent sans réseau. Et nous restons quand le projet qui nous a fait venir se termine.</p>
         <div class="btn-row"><a class="btn btn-accent" href="#poles" data-scroll="poles">Découvrir nos pôles ${ICON.arrow}</a><a class="btn btn-glass" href="/contact">Nous contacter</a></div>
       </div>
       <div class="stage stage-photo">
@@ -365,8 +365,8 @@ function pageHome() {
   ${bandePhotos()}
 
   <section id="poles"><div class="wrap">
-    ${secHead("Nos pôles", `De la première épargne au premier <span class="serif">contrat de vente</span>`, "Un groupe qui s'organise, un entrepreneur qui teste son idée, une coopérative qui vend ensemble, un crédit qui arrive enfin, un acheteur trouvé : chaque pôle tient un maillon, et tous se passent le relais.")}
-    <div class="poles">${POLES.map((p, i) => poleCard(p, i === 0)).join("")}</div>
+    ${secHead("Nos pôles", `De la première épargne au premier <span class="serif">contrat de vente</span>`, "Un groupe qui s'organise, un entrepreneur qui teste son idée, une coopérative qui vend ensemble, un crédit qui arrive enfin, un acheteur trouvé, une terre protégée : chaque pôle tient un maillon, et tous se passent le relais.")}
+    <div class="poles">${POLES.map(p => poleCard(p)).join("")}</div>
   </div></section>
 
   <section class="tight-top" id="expertise"><div class="wrap">
@@ -529,7 +529,12 @@ function pagePole(id) {
     <div class="grid-2">${P.entrees.map(([t, x]) => `<div class="fcard reveal"><h3>${esc(t)}</h3><p>${esc(x)}</p></div>`).join("")}</div>
   </div></section>` : ""}
 
-  <section${P.programmes || P.entrees ? "" : ' class="band"'}><div class="wrap">
+  ${P.chaine ? `<section id="chaine"><div class="wrap">
+    ${secHead("Chaîne de valeur", esc(P.chaine.titre), esc(P.chaine.intro))}
+    <ol class="chaine">${P.chaine.maillons.map(([t, x, r], i) => `<li class="reveal"><span class="pn">${String(i + 1).padStart(2, "0")}</span><h3>${esc(t)}</h3><p>${esc(x)}</p><p class="resultat">${esc(r)}</p></li>`).join("")}</ol>
+  </div></section>` : ""}
+
+  <section${(P.programmes || P.entrees) && !P.chaine ? "" : ' class="band"'}><div class="wrap">
     ${secHead("Notre démarche", "Étape par étape", "Chaque étape doit produire un résultat concret avant que l'on passe à la suivante.")}
     ${parcoursList(P.parcours)}
   </div></section>
@@ -575,8 +580,8 @@ function pagePole(id) {
   </div></section>` : ""}
 
   <section><div class="wrap">
-    ${secHead("Outils et publics", `Les outils du pôle ${esc(P.nom)}`)}
-    <div class="tools">${outilsLies.map(outilCard).join("")}</div>
+    ${outilsLies.length ? `${secHead("Outils et publics", `Les outils du pôle ${esc(P.nom)}`)}
+    <div class="tools">${outilsLies.map(outilCard).join("")}</div>` : secHead("Nos publics", "Avec qui nous travaillons")}
     <div class="publics"><b>Pour qui</b>${P.publics.map(x => `<span>${esc(x)}</span>`).join("")}</div>
   </div></section>
 
@@ -742,7 +747,7 @@ function pageCareers(openId) {
 
 function pageContact(params) {
   const sujet = params.get("sujet") || "";
-  const besoins = ["Ubora AVEC (groupes d'épargne)", "Ubora PME (entrepreneuriat)", "Ubora Coop (coopératives)", "Ubora Fin (accès au financement)", "Ubora Market (accès au marché)", "Boîte à outils", "Conseil et programmes", "Formation", "Partenariat", "Recrutement", "Autre"];
+  const besoins = ["Ubora AVEC (groupes d'épargne)", "Ubora PME (entrepreneuriat)", "Ubora Coop (coopératives)", "Ubora Fin (accès au financement)", "Ubora Market (accès au marché)", "Ubora Vert (environnement)", "Boîte à outils", "Conseil et programmes", "Formation", "Partenariat", "Recrutement", "Autre"];
   const low = sujet.toLowerCase();
   const sel = !low ? "" : low.includes("boîte") ? "Boîte à outils"
     : besoins.find(b => low.includes(b.split(" (")[0].toLowerCase()) || b.toLowerCase().includes(low)) || "";
@@ -786,7 +791,7 @@ function pageMentions() {
     <p>Ces données ne sont ni vendues ni cédées. Pour les consulter, les corriger ou les faire supprimer, écrivez à <a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a>.</p>
     <h2>Cookies</h2><p>Le site n'utilise aucun cookie publicitaire ni outil de mesure d'audience. Votre navigateur garde seulement votre choix d'affichage clair ou sombre.</p>
     <h2>Photos</h2><p>Les photos d'ambiance du site proviennent de la banque d'images Unsplash et sont utilisées selon sa licence. Elles illustrent nos domaines d'intervention et ne représentent pas des bénéficiaires ni des projets d'Ubora. Les photos des pages « Notre équipe » et « Nos réalisations » sont les nôtres.</p>
-    <h2>Propriété intellectuelle</h2><p>Le logo, les noms Ubora AVEC, Ubora PME, Ubora Coop, Ubora Fin, Ubora Market et AKIBA, ainsi que les textes et les documents de ce site, appartiennent à Ubora. Toute reproduction sans autorisation est interdite.</p>
+    <h2>Propriété intellectuelle</h2><p>Le logo, les noms Ubora AVEC, Ubora PME, Ubora Coop, Ubora Fin, Ubora Market, Ubora Vert et AKIBA, ainsi que les textes et les documents de ce site, appartiennent à Ubora. Toute reproduction sans autorisation est interdite.</p>
   </div></section>`;
 }
 
@@ -798,7 +803,7 @@ function notFound() {
 /* ==========================================================================
    ROUTAGE
    ========================================================================== */
-const SOUS_DOMAINES = { avec: "avec", pme: "pme", coop: "cooperatives", fin: "financement", market: "marche", admin: "admin" };
+const SOUS_DOMAINES = { avec: "avec", pme: "pme", coop: "cooperatives", fin: "financement", market: "marche", vert: "vert", admin: "admin" };
 /* bp. et hub. mènent directement à l'outil ; akiba. est servi à part (GitHub Pages). */
 const EXTERNES = { hub: "https://www.uborahub.com", bp: "/generateur/" };
 const ANCIENNES = {
@@ -824,8 +829,9 @@ const DESCR = {
 const SEO_POLES = {
   avec: ["Ubora AVEC : accompagner les groupes d'épargne en RDC", "Création, formation et suivi des groupes d'épargne (AVEC), application AKIBA, fonds de roulement par Ubora Fin et lien avec les institutions financières, en RDC."],
   pme: ["Ubora PME : incubation et accélération d'entrepreneurs en RDC", "Idéation, incubation et accélération d'entrepreneurs et de PME en RDC, avec une démarche lean startup adaptée et un générateur de business plan."],
-  cooperatives: ["Ubora Coop : créer et gérer une coopérative en RDC", "Structuration, formalisation et gestion de coopératives en RDC, à partir d'une organisation paysanne, d'un groupement ou d'une coopérative existante."],
-  financement: ["Ubora Fin : accès au crédit et microfinance en RDC", "Ubora Fin prépare les emprunteurs, équipe les institutions financières et fait le lien : des fonds levés auprès des financeurs, prêtés aux AVEC en RDC."],
+  cooperatives: ["Ubora Coop : créer et gérer une coopérative en RDC", "Structurer, gérer et renforcer la chaîne de valeur des coopératives en RDC : statuts OHADA, collecte, stockage, transformation, vente groupée, paiement."],
+  financement: ["Ubora Fin : accès au crédit et microfinance en RDC", "Ubora Fin prépare les emprunteurs, les présente aux institutions financières et prête aux AVEC des fonds levés auprès des financeurs, en RDC."],
+  vert: ["Ubora Vert : environnement et recyclage en RDC", "Reboisement, recyclage des déchets, agroécologie, énergie propre : Ubora Vert fait de la protection de l'environnement une source de revenus en RDC."],
   marche: ["Ubora Market : vendre plus, trouver des acheteurs en RDC", "Relier les PME, les coopératives et les entrepreneurs de la RDC à des acheteurs : ventes B2B et B2C, marchés institutionnels et export."]
 };
 const TITRES = { "": "Ubora, entreprise sociale à Lubumbashi, RDC", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos outils numériques", conseil: "Conseil et programmes", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
