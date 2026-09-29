@@ -57,7 +57,8 @@ const ORG = {
   url: "https://uborardc.com",
   logo: { "@type": "ImageObject", url: "https://uborardc.com/icon-512.png", width: 512, height: 512 },
   image: "https://uborardc.com/partage.jpg",
-  slogan: "Bâtir la résilience économique des familles, des entreprises et des coopératives congolaises.",
+  slogan: "Des familles qui épargnent, des entrepreneurs qui vendent, des coopératives qui durent.",
+  founder: { "@type": "Person", name: "Christian Cubaka Katulanya", jobTitle: "Directeur Gérant", image: "https://uborardc.com/img/equipe/christian-cubaka-800.webp" },
   email: "contact@uborardc.com",
   telephone: "+243998275144",
   description: "Entreprise sociale basée à Lubumbashi : appui aux groupes d'épargne (AVEC), accompagnement des entrepreneurs et des coopératives, accès au financement et au marché, dans toute la RDC.",
@@ -65,7 +66,7 @@ const ORG = {
   openingHoursSpecification: [{ "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "08:00", closes: "17:00" }],
   areaServed: { "@type": "Country", name: "République démocratique du Congo" },
   contactPoint: [{ "@type": "ContactPoint", telephone: "+243998275144", contactType: "customer service", availableLanguage: ["fr", "sw"] }],
-  knowsAbout: ["Associations villageoises d'épargne et de crédit", "inclusion financière", "entrepreneuriat", "coopératives agricoles", "microfinance", "accès au marché"]
+  knowsAbout: ["Associations villageoises d'épargne et de crédit", "inclusion financière", "entrepreneuriat", "coopératives agricoles", "microfinance", "accès au marché", "protection de l'environnement", "recyclage"]
 };
 const legal = S.CONFIG.legal || {};
 ORG.identifier = [["RCCM", legal.rccm], ["Identification nationale", legal.idnat], ["Numéro d'impôt", legal.impot]]

@@ -1658,3 +1658,37 @@ section.band { padding-block: clamp(40px, 4.8vw, 66px); }
 .faq details { padding: 2px 18px; }
 .member-txt, .real-txt { padding: 16px 18px 18px; }
 .empty { padding: 22px 22px; }
+
+/* ==========================================================================
+   Page « Notre équipe » : fiche du Directeur Gérant
+   ========================================================================== */
+.dirigeant { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: clamp(24px, 4vw, 52px); align-items: start; max-width: 1040px; margin-inline: auto;
+  padding: clamp(22px, 3.4vw, 40px); border: 1px solid var(--bord-fin); border-radius: 16px; background: var(--carte); box-shadow: var(--ombre-carte); }
+.dir-id { position: sticky; top: 130px; display: grid; gap: 14px; justify-items: start; }
+.dir-photo { width: 100%; max-width: 300px; aspect-ratio: 1; object-fit: cover; border-radius: 14px; background: var(--surface-2); }
+.dir-nom h2 { font-family: var(--f-titre); font-size: 22px; font-weight: 600; line-height: 1.2; }
+.dir-nom p { margin-top: 2px; color: var(--vert-texte); font-weight: 500; font-size: 15px; }
+.dir-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.dir-tags li { padding: 4px 10px; border-radius: 99px; background: var(--surface-2); border: 1px solid var(--bord-fin); font-size: 12.5px; color: var(--ink); }
+.dir-txt { display: grid; gap: 14px; }
+.dir-txt .eyebrow { justify-self: start; }
+.dir-accroche { font-family: var(--f-titre); font-size: clamp(19px, 2vw, 23px); font-weight: 600; line-height: 1.35; color: var(--ink); }
+.dir-txt > p { color: var(--muted); font-size: 15.5px; }
+.dir-txt h3 { margin-top: 8px; font-family: var(--f-titre); font-size: 17px; font-weight: 600; }
+.dir-parcours { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; border-left: 2px solid color-mix(in srgb, var(--green) 30%, var(--line)); }
+.dir-parcours li { position: relative; display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 14px; padding: 0 0 16px 18px; }
+.dir-parcours li::before { content: ""; position: absolute; left: -6px; top: 5px; width: 10px; height: 10px; border-radius: 50%; background: var(--carte); border: 2px solid var(--green); }
+.dir-parcours li:first-child::before { background: var(--green); }
+.dir-date { font-family: var(--f-display); font-size: 13px; font-weight: 700; color: var(--vert-texte); white-space: nowrap; }
+.dir-parcours b { display: block; font-size: 15px; line-height: 1.35; color: var(--ink); }
+.dir-org { display: block; font-size: 13.5px; font-weight: 500; color: var(--copper); }
+.dir-parcours span:not(.dir-date):not(.dir-org) { display: block; margin-top: 2px; font-size: 14px; color: var(--muted); line-height: 1.5; }
+.dir-plus { font-size: 14.5px !important; }
+.dir-plus b { margin-right: 6px; color: var(--ink); }
+@media (max-width: 760px) {
+  .dirigeant { grid-template-columns: minmax(0, 1fr); }
+  .dir-id { position: static; }
+  .dir-photo { max-width: 220px; }
+  .dir-parcours li { grid-template-columns: minmax(0, 1fr); gap: 2px; }
+}
+.dir-photo { height: auto; }

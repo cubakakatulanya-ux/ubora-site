@@ -687,14 +687,35 @@ function pageArticle(slug) {
   </article></div></section>`;
 }
 
+function profilDirigeant() {
+  const D = DIRIGEANT;
+  return `<article class="dirigeant">
+    <div class="dir-id">
+      <img class="dir-photo" src="${D.photo}" srcset="${D.photoPetite} 400w, ${D.photo} 800w" sizes="(max-width: 760px) 60vw, 280px" alt="${esc(D.nom)}, ${esc(D.fonction)} d'Ubora" width="800" height="800" loading="lazy">
+      <div class="dir-nom"><h2>${esc(D.nom)}</h2><p>${esc(D.fonction)}</p></div>
+      <ul class="dir-tags">${D.domaines.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+      <a class="btn btn-ghost btn-sm" href="/contact?sujet=${encodeURIComponent("CV du Directeur Gérant")}">Demander le CV complet</a>
+    </div>
+    <div class="dir-txt">
+      <span class="eyebrow">Le Directeur Gérant</span>
+      <p class="dir-accroche">${esc(D.accroche)}</p>
+      <p>${esc(D.bio)}</p>
+      <h3>Parcours</h3>
+      <ol class="dir-parcours">${D.parcours.map(([p, o, f, x]) => `<li><span class="dir-date">${esc(p)}</span><div><b>${esc(f)}</b><span class="dir-org">${esc(o)}</span><span>${esc(x)}</span></div></li>`).join("")}</ol>
+      <p class="dir-plus"><b>Formation</b> ${esc(D.formation)}</p>
+      <p class="dir-plus"><b>Langues</b> ${esc(D.langues)}</p>
+    </div>
+  </article>`;
+}
 function pageEquipe() {
   const membres = DATA.equipe;
   return pageHead({ eyebrow: "Notre équipe", title: `Des gens de terrain, et des <span class="serif">spécialistes</span>.`, crumbs: [["Qui sommes-nous", "/a-propos"], ["Notre équipe"]],
-    lead: "Consultants, formateurs, agents de terrain et développeurs : l'équipe qui accompagne les groupes d'épargne, les entrepreneurs, les coopératives et les institutions financières, à Lubumbashi et dans les provinces." }) + `
-  <section><div class="wrap">
-    ${membres.length ? `<div class="team-grid">${membres.map(memberCard).join("")}</div>`
-      : `<div class="empty"><b>Les membres de l'équipe seront présentés ici très bientôt.</b><p>En attendant, écrivez-nous ou appelez-nous : nous vous mettrons en relation avec la bonne personne.</p><a class="btn btn-primary" href="/contact">Nous contacter</a></div>`}
-  </div></section>
+    lead: "Consultants, formateurs, agents de terrain et développeurs : l'équipe qui accompagne les groupes d'épargne, les entrepreneurs et les coopératives, partout en RDC." }) + `
+  <section><div class="wrap">${profilDirigeant()}</div></section>
+  ${membres.length ? `<section class="band"><div class="wrap">
+    ${secHead("L'équipe", "Celles et ceux qui travaillent avec lui")}
+    <div class="team-grid">${membres.map(memberCard).join("")}</div>
+  </div></section>` : ""}
   <section class="tight-top"><div class="wrap">${teamBand(true)}</div></section>
   <section><div class="wrap">${finalCta()}</div></section>`;
 }

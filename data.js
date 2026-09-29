@@ -20,7 +20,7 @@ const CONFIG = {
   zone: "Partout en RDC, sur le terrain et à distance",
   horaires: "Du lundi au vendredi, de 8 h à 17 h",
   /* Mentions légales. Un champ laissé vide n'est pas affiché sur le site. */
-  legal: { rccm: "CD/KNM/RCCM/24-A-04755", idnat: "01-G4701-N86995I", impot: "", directeur: "" }
+  legal: { rccm: "CD/KNM/RCCM/24-A-04755", idnat: "01-G4701-N86995I", impot: "", directeur: "Christian Cubaka Katulanya, Directeur Gérant" }
 };
 
 /* Bande déroulante. Les dernières actualités publiées s'y ajoutent d'elles-mêmes. */
@@ -35,6 +35,28 @@ const TICKER_MESSAGES = [
   ["Nouveau : Ubora Vert, pour protéger l'environnement et en vivre", "/vert"],
   ["Basés à Lubumbashi, nous intervenons partout en RDC", "/contact"]
 ];
+
+/* ---------- Le Directeur Gérant (page « Notre équipe ») ----------
+   Tiré de son CV. Les coordonnées personnelles et les références n'apparaissent pas sur le site. */
+const DIRIGEANT = {
+  nom: "Christian Cubaka Katulanya",
+  fonction: "Directeur Gérant et fondateur",
+  photo: "/img/equipe/christian-cubaka-800.webp",
+  photoPetite: "/img/equipe/christian-cubaka-400.webp",
+  accroche: "Plus de dix ans aux côtés des entrepreneurs, des coopératives et des groupes d'épargne en RDC.",
+  bio: "Agronome de formation, Christian accompagne depuis plus de dix ans des entrepreneurs, des PME, des coopératives agricoles et des groupes d'épargne, en ville comme en zone rurale. Il a travaillé avec Equity Bank, Mercy Corps, Enabel et le projet TRANSFORME financé par la Banque mondiale. Il a fondé Ubora pour que cet accompagnement dure au-delà des projets, et il y conçoit Ubora Hub et l'application AKIBA.",
+  parcours: [
+    ["Depuis 2026", "Entreprise sociale Ubora", "Fondateur et Directeur Gérant", "Conception d'Ubora Hub, incubateur numérique, et d'AKIBA, l'application hors ligne des AVEC."],
+    ["Depuis 2026", "Enabel, projet Agriculture SAD, Sud-Ubangi", "Expert en entrepreneuriat agricole", "PME, coopératives, AVEC et incubateur provincial : structuration, plans d'affaires, accès au financement."],
+    ["2024 – 2025", "Projet TRANSFORME, Banque mondiale, Kinshasa", "Expert junior en entrepreneuriat et mutualisation des investissements", "Centres de PME, chaînes de valeur, modèles économiques et investissements partagés."],
+    ["2021 – 2024", "Enabel, programme KinEmploi, Kinshasa", "Expert en incubation et entrepreneuriat urbain", "Deux incubateurs, programmes de formation et d'accélération, formation de formateurs."],
+    ["2018 – 2021", "Mercy Corps, Food Security Project (USAID), Sud-Kivu", "Coordinateur des activités génératrices de revenus", "Mise en place des AVEC, appui aux coopératives agricoles, aux jeunes et aux femmes entrepreneurs."],
+    ["2015 – 2018", "Equity Bank, Goma et Bukavu", "Chargé de clientèle agrobusiness", "Portefeuille de PME et de coopératives : analyse de viabilité, préparation au crédit."]
+  ],
+  domaines: ["Coopératives et AVEC", "Incubation et accompagnement des PME", "Modèles économiques et plans d'affaires", "Formation de formateurs et coaching", "Accès au financement", "Outils numériques"],
+  formation: "Licence en agronomie (sciences du sol), Université catholique de Bukavu. Formations complémentaires : coaching entrepreneurial, développement des systèmes de marché (Mercy Corps), jeunes agri-preneurs (FAO).",
+  langues: "Français, swahili, lingala, anglais"
+};
 
 /* ---------- La méthode Ubora (page « Notre approche ») ---------- */
 const METHODE = {
