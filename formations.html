@@ -34,7 +34,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="/styles.css?v=9de1a77cc1">
+<link rel="stylesheet" href="/styles.css?v=c30fed9852">
 </head>
 <body>
 <div class="progress-top" id="readBar"></div>
@@ -96,12 +96,13 @@
   </div></section>
   <section class="band"><div class="wrap">
     <div class="sec-head"><div><span class="eyebrow">Ce que nous enseignons</span><h2>Le catalogue</h2></div></div>
-    <div class="grid-3"><div class="fcard reveal"><span class="tag" style="background:#23843A;color:#fff">Ubora AVEC</span><h3>AKIBA pour les trésoriers et les comités</h3><p>Tenir les comptes du groupe sur téléphone, préparer le partage de fin de cycle.</p></div><div class="fcard reveal"><span class="tag" style="background:#23843A;color:#fff">Ubora AVEC</span><h3>Devenir formateur relais AVEC</h3><p>Animer les séances, accompagner et suivre les groupes.</p></div><div class="fcard reveal"><span class="tag" style="background:#B0622A;color:#fff">Ubora PME</span><h3>De l&#39;idée au premier client</h3><p>Tester une idée d&#39;entreprise avec très peu de moyens.</p></div><div class="fcard reveal"><span class="tag" style="background:#B0622A;color:#fff">Ubora PME</span><h3>Rédiger son plan d&#39;affaires</h3><p>Construire son dossier avec le générateur en ligne.</p></div><div class="fcard reveal"><span class="tag" style="background:#4E8F2A;color:#fff">Ubora Coop</span><h3>Gérer une coopérative</h3><p>Gouvernance, registres, caisse et comptabilité simplifiée.</p></div><div class="fcard reveal"><span class="tag" style="background:#1D5FB8;color:#fff">Ubora Fin</span><h3>Préparer un dossier de crédit</h3><p>Ce qu&#39;une institution financière attend, et comment le présenter.</p></div><div class="fcard reveal"><span class="tag" style="background:#B0622A;color:#fff">Ubora PME</span><h3>Ubora Hub pour les équipes d&#39;accompagnement</h3><p>Suivre une cohorte, ses séances de coaching et ses résultats.</p></div></div>
+    <div class="chips filtres" role="group" aria-label="Filtrer par pôle"><button class="chip" type="button" data-f="*" aria-pressed="true">Tous</button><button class="chip" type="button" data-f="avec" aria-pressed="false">Ubora AVEC</button><button class="chip" type="button" data-f="pme" aria-pressed="false">Ubora PME</button><button class="chip" type="button" data-f="cooperatives" aria-pressed="false">Ubora Coop</button><button class="chip" type="button" data-f="financement" aria-pressed="false">Ubora Fin</button></div>
+    <div class="grid-3"><div class="fcard reveal" data-f="avec"><span class="tag" style="background:#23843A;color:#fff">Ubora AVEC</span><h3>AKIBA pour les trésoriers et les comités</h3><p>Tenir les comptes du groupe sur téléphone, préparer le partage de fin de cycle.</p></div><div class="fcard reveal" data-f="avec"><span class="tag" style="background:#23843A;color:#fff">Ubora AVEC</span><h3>Devenir formateur relais AVEC</h3><p>Animer les séances, accompagner et suivre les groupes.</p></div><div class="fcard reveal" data-f="pme"><span class="tag" style="background:#B0622A;color:#fff">Ubora PME</span><h3>De l&#39;idée au premier client</h3><p>Tester une idée d&#39;entreprise avec très peu de moyens.</p></div><div class="fcard reveal" data-f="pme"><span class="tag" style="background:#B0622A;color:#fff">Ubora PME</span><h3>Rédiger son plan d&#39;affaires</h3><p>Construire son dossier avec le générateur en ligne.</p></div><div class="fcard reveal" data-f="cooperatives"><span class="tag" style="background:#4E8F2A;color:#fff">Ubora Coop</span><h3>Gérer une coopérative</h3><p>Gouvernance, registres, caisse et comptabilité simplifiée.</p></div><div class="fcard reveal" data-f="financement"><span class="tag" style="background:#1D5FB8;color:#fff">Ubora Fin</span><h3>Préparer un dossier de crédit</h3><p>Ce qu&#39;une institution financière attend, et comment le présenter.</p></div><div class="fcard reveal" data-f="pme"><span class="tag" style="background:#B0622A;color:#fff">Ubora PME</span><h3>Ubora Hub pour les équipes d&#39;accompagnement</h3><p>Suivre une cohorte, ses séances de coaching et ses résultats.</p></div></div>
   </div></section>
   <section><div class="wrap"><div class="deep final">
     <span class="eyebrow">Travaillons ensemble</span>
-    <h2>Un projet, un programme, une question ?</h2>
-    <p>Dites-nous où vous en êtes. Nous vous répondons sous deux jours ouvrés.</p>
+    <h2>Parlons de ce que vous voulez faire avancer.</h2>
+    <p>Un groupe à structurer, un programme à lancer, un crédit à obtenir, un acheteur à trouver : dites-nous où vous en êtes. Une personne de l'équipe vous répond sous deux jours ouvrés.</p>
     <div class="btn-row"><a class="btn btn-wa" href="https://wa.me/243998275144?text=Bonjour%20Ubora%2C%20je%20souhaite%20%C3%A9changer%20avec%20vous." target="_blank" rel="noopener">Écrire sur WhatsApp</a><a class="btn btn-glass" href="/contact">Nous écrire</a></div></div></div></section></main>
 
 <footer class="site-footer" id="footer"><div class="wrap">
@@ -141,10 +142,10 @@
 
 <script type="application/json" id="ubora-donnees">{"actualites":[],"formations":[],"offres":[],"equipe":[],"realisations":[]}</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" integrity="sha384-GFr3yTh5lJznCbZfpTtXnwboFsxqtTQoeTZCRHhE0579KrRmlCzen5AA8ohaB5ug" crossorigin="anonymous"></script>
-<script src="/data.js?v=9de1a77cc1"></script>
-<script src="/db.js?v=9de1a77cc1"></script>
-<script src="/admin.js?v=9de1a77cc1"></script>
-<script src="/app.js?v=9de1a77cc1"></script>
-<script src="/chat.js?v=9de1a77cc1"></script>
+<script src="/data.js?v=c30fed9852"></script>
+<script src="/db.js?v=c30fed9852"></script>
+<script src="/admin.js?v=c30fed9852"></script>
+<script src="/app.js?v=c30fed9852"></script>
+<script src="/chat.js?v=c30fed9852"></script>
 </body>
 </html>

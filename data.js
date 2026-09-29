@@ -64,7 +64,7 @@ const POLES = [
     photo: ["avec", "Des femmes réunies en groupe, en pagnes colorés"],
     nom: "Ubora AVEC", initiales: "Av", couleur: "#23843A",
     accroche: "Épargner ensemble, emprunter sans crainte.",
-    carte: "Nous créons, formons et suivons des groupes d'épargne, puis nous les aidons à accéder au crédit.",
+    carte: "Quinze à trente personnes qui épargnent chaque semaine. Nous structurons le groupe, remplaçons le cahier par AKIBA et l'accompagnons jusqu'au crédit.",
     titre: `Des groupes d'épargne solides, et un vrai accès au <span class="serif">crédit</span>.`,
     lead: "Les Associations Villageoises d'Épargne et de Crédit sont souvent le premier service financier auquel une famille congolaise a accès. Nous les accompagnons de la création du groupe jusqu'à son premier financement : un prêt d'une institution financière, ou un fonds de roulement apporté par Ubora Fin.",
     contexte: {
@@ -117,7 +117,7 @@ const POLES = [
     accroche: "De l'idée à l'entreprise qui vend.",
     photo: ["pme", "Un tailleur au travail sur sa machine à coudre"],
     nom: "Ubora PME", initiales: "Pm", couleur: "#B0622A",
-    carte: "Nos programmes pour entrepreneurs : trouver l'idée, la tester, lancer l'entreprise puis la faire grandir.",
+    carte: "Tester l'idée auprès de vrais clients avant d'investir, lancer l'entreprise, puis la faire grandir et la financer.",
     titre: `Aider les entrepreneurs à passer de l'idée à une entreprise qui <span class="serif">vend</span>.`,
     lead: "Ubora PME regroupe nos programmes d'accompagnement : idéation, incubation et accélération. Nous y appliquons la démarche lean startup, adaptée à ce que vivent réellement les entrepreneurs en RDC.",
     contexte: {
@@ -164,7 +164,7 @@ const POLES = [
     accroche: "Produire ensemble, vendre mieux, être payé à temps.",
     photo: ["coop", "Des cultivateurs au travail dans un champ"],
     nom: "Ubora Coop", initiales: "Co", couleur: "#4E8F2A",
-    carte: "Nous aidons les organisations paysannes à devenir des coopératives bien gérées, qui vendent mieux.",
+    carte: "Des statuts conformes à l'OHADA, des registres tenus, des ventes groupées et des producteurs payés par mobile money.",
     titre: `Des coopératives bien gérées, et des producteurs <span class="serif">payés à temps</span>.`,
     lead: "Nous partons de ce qui existe : une organisation paysanne, un groupement de producteurs ou une coopérative qui ne fonctionne plus. Nous l'aidons à se constituer ou à se remettre en ordre, puis à gérer, vendre et se financer.",
     contexte: {
@@ -221,7 +221,7 @@ const POLES = [
     accroche: "Le crédit, jusqu'où il n'allait pas.",
     photo: ["fin", "Trois femmes échangent autour d'une table de réunion"],
     nom: "Ubora Fin", initiales: "Fi", couleur: "#1D5FB8",
-    carte: "Nous préparons les emprunteurs, nous équipons les institutions et nous faisons le lien : des fonds levés auprès des financeurs, prêtés aux AVEC.",
+    carte: "Nous préparons les emprunteurs, équipons les institutions et prêtons aux AVEC des fonds levés auprès des financeurs.",
     titre: `Rapprocher ceux qui ont besoin de crédit de ceux qui <span class="serif">prêtent</span>.`,
     lead: "Le crédit existe en RDC, mais il atteint mal les petits emprunteurs. Nous travaillons des deux côtés, et entre les deux : nous préparons les groupes, les coopératives et les PME, nous équipons les institutions financières, et nous faisons circuler l'argent des unes vers les autres.",
     contexte: {
@@ -283,7 +283,7 @@ const POLES = [
     accroche: "Un bon produit mérite un acheteur.",
     photo: ["market", "Un étal de tomates et de légumes sur un marché"],
     nom: "Ubora Market", initiales: "Mk", couleur: "#1F7A6B",
-    carte: "Nous mettons en relation les PME, les coopératives et les entrepreneurs avec des acheteurs.",
+    carte: "Nous trouvons l'acheteur avant la récolte, et nous suivons chaque vente jusqu'au paiement du producteur.",
     titre: `Produire, c'est bien. Trouver des <span class="serif">acheteurs</span>, c'est mieux.`,
     lead: "Ubora Market met en relation les vendeurs que nous accompagnons, PME, coopératives et entrepreneurs, avec des acheteurs : entreprises, institutions et particuliers. Une plateforme dédiée est en préparation.",
     contexte: {

@@ -34,7 +34,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..800&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="/styles.css?v=9de1a77cc1">
+<link rel="stylesheet" href="/styles.css?v=c30fed9852">
 </head>
 <body>
 <div class="progress-top" id="readBar"></div>
@@ -84,10 +84,12 @@
 
 <main id="app" tabindex="-1"><section class="deep page-head"><div class="wrap"><nav class="crumbs" aria-label="Fil d'Ariane"><a href="/">Accueil</a><span>Nos outils</span></nav>
       <span class="eyebrow">Nos outils</span>
-      <h1>Des outils numériques pensés pour la <span class="serif">RDC</span>.</h1>
-      <p class="lead">Ils fonctionnent avec un réseau instable, en francs congolais et en dollars, et ils sont toujours livrés avec une formation. Chacun est rattaché à l'un de nos pôles.</p>
+      <h1>Des outils qui tiennent là où le réseau <span class="serif">lâche</span>.</h1>
+      <p class="lead">Pas de réseau au village ? Des comptes en francs congolais et en dollars ? Des utilisateurs qui n'ont jamais ouvert un tableur ? Nos outils sont conçus pour cela, et chacun est livré avec une formation. Trois sont déjà en ligne : essayez-les.</p>
       </div></section>
-  <section><div class="wrap outil-rows"><article class="outil-row" id="akiba">
+  <section><div class="wrap">
+    <div class="chips filtres" role="group" aria-label="Filtrer les outils"><button class="chip" type="button" data-f="*" aria-pressed="true">Tous</button><button class="chip" type="button" data-f="en-ligne" aria-pressed="false">En ligne</button><button class="chip" type="button" data-f="en-cours" aria-pressed="false">En préparation</button><button class="chip" type="button" data-f="avec" aria-pressed="false">Ubora AVEC</button><button class="chip" type="button" data-f="pme" aria-pressed="false">Ubora PME</button><button class="chip" type="button" data-f="financement" aria-pressed="false">Ubora Fin</button><button class="chip" type="button" data-f="cooperatives" aria-pressed="false">Ubora Coop</button><button class="chip" type="button" data-f="marche" aria-pressed="false">Ubora Market</button></div>
+    <div class="outil-rows"><article class="outil-row" id="akiba" data-f="en-ligne avec">
       <div class="outil-txt">
         <div class="pole-top"><span class="mk" style="background:#23843A">Ak</span><span class="status st-live">En ligne</span></div>
         <h2>AKIBA</h2><p class="lead">L&#39;application qui remplace le cahier des AVEC. Elle fonctionne sans réseau, sur un simple téléphone Android.</p>
@@ -105,7 +107,7 @@
       <div class="ph-tx out"><span>Prêt · membre 03</span><span>−150 000</span></div>
       <div class="ph-btn">+ Nouvelle cotisation</div>
     </div></div></div><span class="mock-note">Écran illustratif</span></div>
-    </article><article class="outil-row flip" id="bp">
+    </article><article class="outil-row flip" id="bp" data-f="en-ligne pme">
       <div class="outil-txt">
         <div class="pole-top"><span class="mk" style="background:#B0622A">Bp</span><span class="status st-live">En ligne</span></div>
         <h2>Générateur de business plan</h2><p class="lead">Il guide l&#39;entrepreneur question par question et produit un plan d&#39;affaires complet, avec les prévisions financières.</p>
@@ -117,7 +119,7 @@
     <div class="mock-title"><b>Plan d'affaires</b><span>62 % complété</span></div>
     <div class="hub-list"><div class="bp-row"><span class="bp-dot done"></span><span>Projet et équipe</span><span class="bar"><i style="width:100%"></i></span></div><div class="bp-row"><span class="bp-dot done"></span><span>Marché</span><span class="bar"><i style="width:100%"></i></span></div><div class="bp-row"><span class="bp-dot"></span><span>Stratégie commerciale</span><span class="bar"><i style="width:70%"></i></span></div><div class="bp-row"><span class="bp-dot"></span><span>Prévisions financières</span><span class="bar"><i style="width:40%"></i></span></div><div class="bp-row"><span class="bp-dot"></span><span>Dossier final</span><span class="bar"><i style="width:0%"></i></span></div></div>
     <div class="hub-kpis"><div><small>Investissement</small><b>8 500 $</b></div><div><small>Rentable au</small><b>mois 9</b></div><div><small>Marge an 2</small><b>21 %</b></div></div></div></div><span class="mock-note">Écran illustratif</span></div>
-    </article><article class="outil-row" id="hub">
+    </article><article class="outil-row" id="hub" data-f="en-ligne pme">
       <div class="outil-txt">
         <div class="pole-top"><span class="mk" style="background:#0F3170">Hb</span><span class="status st-live">En ligne</span></div>
         <h2>Ubora Hub</h2><p class="lead">La plateforme des incubateurs et des programmes d&#39;entrepreneuriat : candidatures, suivi des cohortes, coaching et rapports.</p>
@@ -130,12 +132,12 @@
     <div class="hub-main">
       <div class="hub-kpis"><div><small>Entrepreneurs</small><b>25</b></div><div><small>Séances</small><b>142</b></div><div><small>Ventes</small><b>+18 %</b></div></div>
       <div class="hub-chart"><small>Ventes cumulées de la cohorte</small><svg viewBox="0 0 300 84" aria-hidden="true"><defs><linearGradient id="ag" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#5FC48E" stop-opacity=".4"/><stop offset="1" stop-color="#5FC48E" stop-opacity="0"/></linearGradient></defs>
-    <line x1="0" x2="300" y1="20" y2="20" stroke="rgba(255,255,255,.07)"/><line x1="0" x2="300" y1="40" y2="40" stroke="rgba(255,255,255,.07)"/><line x1="0" x2="300" y1="60" y2="60" stroke="rgba(255,255,255,.07)"/>
-    <path d="M0.0 61.0 L27.3 56.3 L54.5 57.9 L81.8 50.0 L109.1 45.2 L136.4 46.8 L163.6 37.3 L190.9 31.0 L218.2 32.6 L245.5 23.1 L272.7 15.2 L300.0 7.3 L300 80 L0 80Z" fill="url(#ag)"/><path d="M0.0 61.0 L27.3 56.3 L54.5 57.9 L81.8 50.0 L109.1 45.2 L136.4 46.8 L163.6 37.3 L190.9 31.0 L218.2 32.6 L245.5 23.1 L272.7 15.2 L300.0 7.3" fill="none" stroke="#7FD8A6" stroke-width="2.2" stroke-linejoin="round"/>
+    <line x1="0" x2="300" y1="20" y2="20" stroke="currentColor" stroke-opacity=".09"/><line x1="0" x2="300" y1="40" y2="40" stroke="currentColor" stroke-opacity=".09"/><line x1="0" x2="300" y1="60" y2="60" stroke="currentColor" stroke-opacity=".09"/>
+    <path d="M0.0 61.0 L27.3 56.3 L54.5 57.9 L81.8 50.0 L109.1 45.2 L136.4 46.8 L163.6 37.3 L190.9 31.0 L218.2 32.6 L245.5 23.1 L272.7 15.2 L300.0 7.3 L300 80 L0 80Z" fill="url(#ag)"/><path d="M0.0 61.0 L27.3 56.3 L54.5 57.9 L81.8 50.0 L109.1 45.2 L136.4 46.8 L163.6 37.3 L190.9 31.0 L218.2 32.6 L245.5 23.1 L272.7 15.2 L300.0 7.3" fill="none" stroke="#2FA36B" stroke-width="2.2" stroke-linejoin="round"/>
     <circle cx="297" cy="7.2727272727272805" r="4.5" fill="#fff" stroke="#2FA36B" stroke-width="2.5"/></svg></div>
       <div class="hub-list"><div><span class="av" style="background:#7FD8A6">01</span><span>Entreprise 01</span><span class="bar"><i style="width:82%"></i></span></div><div><span class="av" style="background:#7FB3FF">02</span><span>Entreprise 02</span><span class="bar"><i style="width:64%"></i></span></div><div><span class="av" style="background:#E3A064">03</span><span>Entreprise 03</span><span class="bar"><i style="width:47%"></i></span></div></div>
     </div></div></div><span class="mock-note">Écran illustratif</span></div>
-    </article><article class="outil-row flip" id="logiciel-fin">
+    </article><article class="outil-row flip" id="logiciel-fin" data-f="en-cours financement">
       <div class="outil-txt">
         <div class="pole-top"><span class="mk" style="background:#1D5FB8">Fi</span><span class="status st-soon">En préparation</span></div>
         <h2>Ubora Fin, le logiciel</h2><p class="lead">Un logiciel de gestion pour les petites IMF et les COOPEC : membres, épargne, crédits, caisse et rapports.</p>
@@ -146,12 +148,12 @@
       <div class="screen"><div class="browser"><div class="browser-bar"><i></i><i></i><i></i><span>ubora-fin · portefeuille</span></div><div class="mock-pad">
     <div class="hub-kpis"><div><small>Encours</small><b>48 200 $</b></div><div><small>Épargne</small><b>61 900 $</b></div><div><small>Retards</small><b>3,1 %</b></div></div>
     <div class="hub-chart"><small>Encours de crédit sur douze mois</small><svg viewBox="0 0 300 84" aria-hidden="true"><defs><linearGradient id="ag" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="#5FC48E" stop-opacity=".4"/><stop offset="1" stop-color="#5FC48E" stop-opacity="0"/></linearGradient></defs>
-    <line x1="0" x2="300" y1="20" y2="20" stroke="rgba(255,255,255,.07)"/><line x1="0" x2="300" y1="40" y2="40" stroke="rgba(255,255,255,.07)"/><line x1="0" x2="300" y1="60" y2="60" stroke="rgba(255,255,255,.07)"/>
-    <path d="M0.0 52.7 L27.3 49.7 L54.5 46.7 L81.8 42.1 L109.1 39.1 L136.4 36.1 L163.6 33.0 L190.9 28.5 L218.2 22.4 L245.5 17.9 L272.7 11.8 L300.0 7.3 L300 80 L0 80Z" fill="url(#ag)"/><path d="M0.0 52.7 L27.3 49.7 L54.5 46.7 L81.8 42.1 L109.1 39.1 L136.4 36.1 L163.6 33.0 L190.9 28.5 L218.2 22.4 L245.5 17.9 L272.7 11.8 L300.0 7.3" fill="none" stroke="#7FD8A6" stroke-width="2.2" stroke-linejoin="round"/>
+    <line x1="0" x2="300" y1="20" y2="20" stroke="currentColor" stroke-opacity=".09"/><line x1="0" x2="300" y1="40" y2="40" stroke="currentColor" stroke-opacity=".09"/><line x1="0" x2="300" y1="60" y2="60" stroke="currentColor" stroke-opacity=".09"/>
+    <path d="M0.0 52.7 L27.3 49.7 L54.5 46.7 L81.8 42.1 L109.1 39.1 L136.4 36.1 L163.6 33.0 L190.9 28.5 L218.2 22.4 L245.5 17.9 L272.7 11.8 L300.0 7.3 L300 80 L0 80Z" fill="url(#ag)"/><path d="M0.0 52.7 L27.3 49.7 L54.5 46.7 L81.8 42.1 L109.1 39.1 L136.4 36.1 L163.6 33.0 L190.9 28.5 L218.2 22.4 L245.5 17.9 L272.7 11.8 L300.0 7.3" fill="none" stroke="#2FA36B" stroke-width="2.2" stroke-linejoin="round"/>
     <circle cx="297" cy="7.2727272727272805" r="4.5" fill="#fff" stroke="#2FA36B" stroke-width="2.5"/></svg></div>
     <div class="table-x"><table class="mock-t"><thead><tr><th>Client</th><th>Crédit</th><th>Échéance</th><th>État</th></tr></thead>
     <tbody><tr><td>Client 01</td><td>1 200 $</td><td>28/09</td><td class="ok">À jour</td></tr><tr><td>Client 02</td><td>650 $</td><td>30/09</td><td class="ok">À jour</td></tr><tr><td>Client 03</td><td>900 $</td><td>15/09</td><td class="wait">En retard</td></tr></tbody></table></div></div></div><span class="mock-note">Écran illustratif</span></div>
-    </article><article class="outil-row" id="logiciel-coop">
+    </article><article class="outil-row" id="logiciel-coop" data-f="en-cours cooperatives">
       <div class="outil-txt">
         <div class="pole-top"><span class="mk" style="background:#4E8F2A">Co</span><span class="status st-soon">En préparation</span></div>
         <h2>Ubora Coop, le logiciel</h2><p class="lead">Le registre numérique de la coopérative : membres, parcelles, collectes, stocks, ventes et paiements.</p>
@@ -164,7 +166,7 @@
     
     <div class="table-x"><table class="mock-t"><thead><tr><th>Producteur</th><th>Village</th><th>Maïs (kg)</th><th>Paiement</th></tr></thead>
     <tbody><tr><td>Producteur 01</td><td>Village A</td><td>1 250</td><td class="ok">Payé</td></tr><tr><td>Producteur 02</td><td>Village A</td><td>980</td><td class="ok">Payé</td></tr><tr><td>Producteur 03</td><td>Village B</td><td>1 540</td><td class="wait">En attente</td></tr><tr><td>Producteur 04</td><td>Village C</td><td>720</td><td class="ok">Payé</td></tr></tbody></table></div></div></div><span class="mock-note">Écran illustratif</span></div>
-    </article><article class="outil-row flip" id="plateforme-market">
+    </article><article class="outil-row flip" id="plateforme-market" data-f="en-cours marche">
       <div class="outil-txt">
         <div class="pole-top"><span class="mk" style="background:#1F7A6B">Mk</span><span class="status st-soon">En préparation</span></div>
         <h2>Ubora Market, la plateforme</h2><p class="lead">Une place de marché où les vendeurs accompagnés publient leur offre et où les acheteurs trouvent des fournisseurs vérifiés.</p>
@@ -177,11 +179,12 @@
     
     <div class="table-x"><table class="mock-t"><thead><tr><th>Produit</th><th>Origine</th><th>Volume</th><th>État</th></tr></thead>
     <tbody><tr><td>Maïs blanc</td><td>Coopérative A</td><td>18 t</td><td class="ok">Sous contrat</td></tr><tr><td>Soja</td><td>Coopérative B</td><td>7 t</td><td class="wait">En discussion</td></tr><tr><td>Farine de manioc</td><td>Atelier C</td><td>2,5 t</td><td class="ok">Sous contrat</td></tr></tbody></table></div></div></div><span class="mock-note">Écran illustratif</span></div>
-    </article></div></section>
+    </article></div>
+  </div></section>
   <section class="tight-top"><div class="wrap"><div class="deep final">
     <span class="eyebrow">Travaillons ensemble</span>
-    <h2>Un projet, un programme, une question ?</h2>
-    <p>Dites-nous où vous en êtes. Nous vous répondons sous deux jours ouvrés.</p>
+    <h2>Parlons de ce que vous voulez faire avancer.</h2>
+    <p>Un groupe à structurer, un programme à lancer, un crédit à obtenir, un acheteur à trouver : dites-nous où vous en êtes. Une personne de l'équipe vous répond sous deux jours ouvrés.</p>
     <div class="btn-row"><a class="btn btn-wa" href="https://wa.me/243998275144?text=Bonjour%20Ubora%2C%20je%20souhaite%20%C3%A9changer%20avec%20vous." target="_blank" rel="noopener">Écrire sur WhatsApp</a><a class="btn btn-glass" href="/contact">Nous écrire</a></div></div></div></section></main>
 
 <footer class="site-footer" id="footer"><div class="wrap">
@@ -221,10 +224,10 @@
 
 <script type="application/json" id="ubora-donnees">{"actualites":[],"formations":[],"offres":[],"equipe":[],"realisations":[]}</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" integrity="sha384-GFr3yTh5lJznCbZfpTtXnwboFsxqtTQoeTZCRHhE0579KrRmlCzen5AA8ohaB5ug" crossorigin="anonymous"></script>
-<script src="/data.js?v=9de1a77cc1"></script>
-<script src="/db.js?v=9de1a77cc1"></script>
-<script src="/admin.js?v=9de1a77cc1"></script>
-<script src="/app.js?v=9de1a77cc1"></script>
-<script src="/chat.js?v=9de1a77cc1"></script>
+<script src="/data.js?v=c30fed9852"></script>
+<script src="/db.js?v=c30fed9852"></script>
+<script src="/admin.js?v=c30fed9852"></script>
+<script src="/app.js?v=c30fed9852"></script>
+<script src="/chat.js?v=c30fed9852"></script>
 </body>
 </html>
