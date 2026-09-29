@@ -1586,3 +1586,75 @@ details.definition { background: var(--menthe); border-color: var(--menthe-bord)
 .model b { font-size: 15.5px; line-height: 1.3; margin-bottom: 4px; }
 .model span:not(.bn) { font-size: 14px; line-height: 1.45; }
 @media (max-width: 560px) { .model { grid-template-columns: minmax(0, 1fr); } }
+
+/* ==========================================================================
+   Pied de page vert, allégé et réorganisé
+   ========================================================================== */
+.site-footer, :root[data-theme="dark"] .site-footer { padding-block: 0 22px; border-top: 0; color: #E3F1E8;
+  background: radial-gradient(700px 300px at 100% 0%, rgba(127, 216, 166, .18), transparent 70%), linear-gradient(160deg, #0D3B28 0%, #115437 55%, #156443 100%); }
+.site-footer::before { display: none; }
+.foot-news { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 32px; margin-bottom: 36px; padding-block: 26px; border-bottom: 1px solid rgba(255, 255, 255, .14); }
+.foot-news-txt b { display: block; font-family: var(--f-titre); font-size: 18px; font-weight: 600; color: #fff; }
+.foot-news-txt span { font-size: 14.5px; color: rgba(227, 241, 232, .75); }
+.foot-news .news-form { flex: 1 1 320px; max-width: 440px; }
+.foot-news .news-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.site-footer .news-row input:not(.hp) { border-color: rgba(255, 255, 255, .28); background: rgba(255, 255, 255, .1); color: #fff; border-radius: 8px; }
+.site-footer .news-row input::placeholder { color: rgba(255, 255, 255, .6); }
+.site-footer .btn-accent { background: #fff; color: #0D3B28; }
+.site-footer .btn-accent:hover { background: #E3F1E8; }
+.foot-grid { grid-template-columns: minmax(0, 1.4fr) repeat(3, minmax(0, 1fr)) minmax(0, 1.3fr); gap: 26px 32px; }
+@media (max-width: 1100px) { .foot-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .foot-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+.site-footer h4 { margin-bottom: 12px; color: #A6E6C1; font-family: var(--f-display); font-size: 12px; font-weight: 700; letter-spacing: .1em; }
+.site-footer ul { gap: 7px; font-size: 14.5px; }
+.site-footer a { color: #fff; }
+.site-footer a:hover { color: #A6E6C1; }
+.site-footer .brand, .site-footer .brand-name { color: #fff; }
+.site-footer .brand-name b { color: #7FD8A6; }
+.site-footer .brand-sub { color: rgba(255, 255, 255, .6); }
+.site-footer .logo-img { width: 52px; height: 52px; box-shadow: none; }
+.foot-accroche { max-width: 30ch !important; font-size: 14.5px !important; color: rgba(227, 241, 232, .82) !important; }
+.foot-contact .ic { background: rgba(255, 255, 255, .1); border-color: rgba(255, 255, 255, .16); color: #A6E6C1; }
+.foot-wa { margin-top: 14px; }
+.foot-pole::before { box-shadow: 0 0 0 3px rgba(255, 255, 255, .12); }
+.foot-bottom { margin-top: 32px; padding-top: 18px; border-top-color: rgba(255, 255, 255, .14); color: rgba(227, 241, 232, .7); font-size: 13px; }
+.foot-bottom a { color: rgba(227, 241, 232, .85); }
+.foot-legal { display: inline; margin: 0; font-family: var(--f-display); font-size: 13px; opacity: 1; }
+
+/* ==========================================================================
+   Cartes plus basses partout : moins de marge intérieure, textes resserrés
+   ========================================================================== */
+section { padding-block: clamp(40px, 4.8vw, 66px); }
+section.band { padding-block: clamp(40px, 4.8vw, 66px); }
+.sec-head { margin-bottom: clamp(22px, 2.6vw, 32px); }
+.fcard, .svc, .notice { padding: 20px 22px; gap: 8px; }
+.tool { padding: 18px 20px; gap: 8px; }
+.tool p, .fcard p, .svc p, .lecon figcaption { font-size: 14.5px; line-height: 1.5; }
+.lecon { padding: 20px 22px 18px; gap: 10px; }
+.lecon blockquote { font-size: 17px; line-height: 1.4; }
+.preuves li { padding: 18px 20px 16px; gap: 4px; }
+.preuves b { font-size: 30px; }
+.preuves p { font-size: 14px; }
+.reperes li, .reperes li + li, .reperes li:nth-child(3) { padding: 14px 18px; }
+.reperes b { font-size: clamp(26px, 2.6vw, 34px); }
+.reperes span { font-size: 13.5px; }
+.parcours li { padding: 16px 18px; gap: 12px; }
+.parcours h3 { font-size: 17px; }
+.parcours p { font-size: 14.5px; line-height: 1.5; }
+.parcours .resultat { margin-top: 6px; }
+.steps li { padding: 18px 20px; gap: 6px; }
+.relais { padding: clamp(24px, 3.2vw, 40px); gap: clamp(20px, 3vw, 40px); }
+.relais-temps li, .team-list li { padding: 12px 14px; gap: 12px; }
+.relais-temps span:not(.bn), .team-list span { font-size: 14px; }
+.team-band { padding: clamp(24px, 3.2vw, 40px); }
+.final { padding: clamp(24px, 3vw, 36px) clamp(24px, 3.6vw, 44px); gap: 10px; }
+.final h2 { font-size: clamp(22px, 2.4vw, 30px); }
+.final p { font-size: 15px; }
+.projet { padding: clamp(24px, 3.2vw, 40px); gap: 12px; }
+.boite li, .bridge li { padding: 12px 14px; gap: 10px; }
+.boite b, .bridge b { font-size: 15.5px; }
+.boite span:not(.bn), .bridge span:not(.bn) { font-size: 14px; }
+.chaine li { padding: 14px 13px; gap: 6px; }
+.faq details { padding: 2px 18px; }
+.member-txt, .real-txt { padding: 16px 18px 18px; }
+.empty { padding: 22px 22px; }
