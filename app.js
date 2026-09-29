@@ -353,7 +353,7 @@ function pageHome() {
         <span class="pierre" aria-hidden="true"></span>
         <figure class="hero-photo">${photo("avec", "(max-width: 1080px) 100vw, 40vw", "Des femmes réunies en groupe, en pagnes colorés", ' fetchpriority="high"')}</figure>
         ${mockAkiba()}
-        <div class="float-card"><span class="ic">${ICON.check}</span><span><b>Cotisation reçue</b>+20 000 FC par Airtel Money</span></div>
+        <div class="float-card"><span class="ic">${ICON.check}</span><span><b>Reçu imprimé</b>Membre 07 · épargne 20 000 FC</span></div>
         <span class="mock-note">Application AKIBA, écran illustratif</span></div>
     </div>
     <div class="wrap"><ul class="reperes">

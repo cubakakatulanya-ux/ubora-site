@@ -25,7 +25,8 @@ const CONFIG = {
 
 /* Bande déroulante. Les dernières actualités publiées s'y ajoutent d'elles-mêmes. */
 const TICKER_MESSAGES = [
-  ["Nouveau dans AKIBA : qualité des données, niveau « prête pour une IMF » et écran Impact", "/outils#akiba"],
+  ["Nouveau dans AKIBA : un reçu imprimé pour chaque membre, sur terminal POS ou imprimante Bluetooth", "/outils#akiba"],
+  ["AKIBA mesure la qualité des données et le niveau « prête pour une IMF » de chaque AVEC", "/outils#akiba"],
   ["Le générateur de business plan est en ligne sur bp.uborardc.com", "https://bp.uborardc.com"],
   ["Le projet se termine, l'accompagnement continue : Ubora prend le relais des ONG sur le terrain", "/conseil#relais"],
   ["Groupes d'épargne, ONG, réseaux : demandez notre boîte à outils AVEC", "/avec#boite"],
@@ -414,6 +415,8 @@ const AVEC = {
     ["Transparence", "Seul le trésorier connaît les soldes", "Chaque membre voit sa situation"],
     ["Suivi des prêts", "Les retards sont repérés tard", "Échéances et alertes pour l'animateur"],
     ["Fraude", "Une page arrachée, un chiffre corrigé, et personne ne le voit", "Un registre scellé : toute modification se voit"],
+    ["Reçu du membre", "Rien, ou un chiffre noté à la main dans le carnet", "Un reçu imprimé ou envoyé par WhatsApp, vérifiable contre le journal"],
+    ["Langue", "Des comptes en français, que tous ne lisent pas", "L'application en lingala, kiswahili, kikongo, tshiluba, avec un guide audio"],
     ["Accès au crédit", "Aucune trace en dehors du groupe", "Un niveau « prête pour une IMF » et un dossier à lui présenter"],
     ["Suivi d'un programme", "Des données lentes à collecter, souvent incomplètes", "Tableau de bord, écran Impact et export Excel pour l'ONG ou le bailleur"]
   ],
@@ -433,8 +436,8 @@ const OUTILS = [
   {
     id: "akiba", nom: "AKIBA", pole: "avec", statut: "en-ligne", mock: "akiba", couleur: "#23843A", initiales: "Ak",
     sousDomaine: "akiba.uborardc.com", url: "https://akiba.uborardc.com",
-    resume: "Le cahier de l'AVEC dans le téléphone, même sans réseau. Chaque franc est écrit au moment où il bouge, et l'historique du groupe devient un dossier qu'une IMF peut étudier.",
-    points: ["Réunion guidée en 8 étapes, de la présence à la clôture à trois clés", "Registre scellé : toute modification se voit", "Indice de qualité des données et niveau « prête pour une IMF »", "Dossier pour l'IMF et export Excel, sans données personnelles", "Crédit d'une IMF suivi de bout en bout, garantie comprise", "Espaces AVEC, animateur et organisation, avec un écran Impact", "Démonstration libre ; code de validation Ubora pour une vraie AVEC"]
+    resume: "Le cahier de l'AVEC dans le téléphone, même sans réseau. Chaque franc est écrit au moment où il bouge, chaque membre repart avec son reçu, et l'historique du groupe devient un dossier qu'une IMF peut étudier.",
+    points: ["Réunion guidée en 8 étapes, de la présence à la clôture à trois clés", "Registre scellé : toute modification se voit", "Reçus des membres et journal imprimés sur terminal POS ou imprimante Bluetooth, ou envoyés par WhatsApp et SMS", "Indice de qualité des données et niveau « prête pour une IMF »", "Dossier pour l'IMF et export Excel, sans données personnelles", "Crédit d'une IMF suivi de bout en bout, garantie comprise", "Espaces AVEC, animateur et organisation, avec un écran Impact", "Langues de la RDC, guide audio et 7 modules de formation AVEC", "Démonstration libre ; code de validation Ubora pour une vraie AVEC"]
   },
   {
     id: "bp", nom: "Générateur de business plan", pole: "pme", statut: "en-ligne", mock: "pme", couleur: "#B0622A", initiales: "Bp",
@@ -478,7 +481,7 @@ const CONSEIL = [
 
 /* ---------- Catalogue des formations proposées ---------- */
 const CATALOGUE = [
-  ["AKIBA pour les trésoriers et les comités", "avec", "Tenir la réunion sur téléphone, lire l'indice de qualité, préparer le partage de fin de cycle."],
+  ["AKIBA pour les trésoriers et les comités", "avec", "Tenir la réunion sur téléphone, imprimer les reçus, lire l'indice de qualité, préparer le partage de fin de cycle."],
   ["Devenir formateur relais AVEC", "avec", "Animer les séances, accompagner et suivre les groupes."],
   ["De l'idée au premier client", "pme", "Tester une idée d'entreprise avec très peu de moyens."],
   ["Rédiger son plan d'affaires", "pme", "Construire son dossier avec le générateur en ligne."],
