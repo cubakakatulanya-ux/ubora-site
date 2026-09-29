@@ -25,6 +25,7 @@ const CONFIG = {
 
 /* Bande déroulante. Les dernières actualités publiées s'y ajoutent d'elles-mêmes. */
 const TICKER_MESSAGES = [
+  ["Nouveau dans AKIBA : qualité des données, niveau « prête pour une IMF » et écran Impact", "/outils#akiba"],
   ["Le générateur de business plan est en ligne sur bp.uborardc.com", "https://bp.uborardc.com"],
   ["Le projet se termine, l'accompagnement continue : Ubora prend le relais des ONG sur le terrain", "/conseil#relais"],
   ["Groupes d'épargne, ONG, réseaux : demandez notre boîte à outils AVEC", "/avec#boite"],
@@ -81,7 +82,7 @@ const POLES = [
       ["Diagnostiquer", "Étude de référence, repérage des communautés, diagnostic des groupes qui existent déjà.", "On sait avec qui travailler, et par où commencer."],
       ["Mettre en place", "Sensibilisation, constitution du groupe, statuts, règlement intérieur, élection du comité.", "Un groupe organisé, avec des règles connues de tous."],
       ["Former", "Modules de formation des membres, éducation financière, formation des animateurs et des relais.", "Des membres qui comprennent ce qu'ils font, et des relais sur place."],
-      ["Digitaliser", "Passage du cahier à AKIBA pour les cotisations, les prêts, les remboursements et le partage.", "Des comptes justes, que chaque membre peut vérifier."],
+      ["Digitaliser", "Passage du cahier à AKIBA : réunion guidée en huit étapes, registre scellé, partage de fin de cycle calculé par le téléphone.", "Des comptes justes, que chaque membre peut vérifier."],
       ["Financer", "Deux voies : présenter l'historique du groupe aux IMF, aux COOPEC et aux banques, ou lui apporter un fonds de roulement par Ubora Fin, notre branche financière.", "Un groupe qui peut prêter davantage à ses membres, à des conditions raisonnables."],
       ["Suivre et faire grandir", "Supervision, graduation, activités génératrices de revenus, puis regroupement en fédération.", "Des groupes qui durent, et qui se renforcent ensemble."]
     ],
@@ -260,7 +261,7 @@ const POLES = [
       intro: "Une banque ne peut pas étudier des centaines de petits dossiers dans des villages éloignés. Un groupe d'épargne ne sait pas à quelle porte frapper. Ubora Fin se place entre les deux : nous levons des fonds auprès de ceux qui veulent financer, et nous les prêtons aux AVEC que nous connaissons, sous forme de fonds de roulement.",
       etapes: [
         ["Lever des fonds", "Lignes de crédit d'institutions de microfinance et de banques, capitaux d'investisseurs d'impact, fonds de garantie apportés par des bailleurs."],
-        ["Prêter aux groupes", "Un fonds de roulement accordé au groupe, et non à chaque membre, par paliers, selon l'historique enregistré dans AKIBA."],
+        ["Prêter aux groupes", "Un fonds de roulement accordé au groupe, et non à chaque membre, par paliers, selon l'historique enregistré dans AKIBA et son niveau « prête pour une IMF »."],
         ["Suivre et rendre compte", "Les remboursements sont suivis semaine après semaine. Chaque financeur reçoit des rapports clairs sur l'usage de son argent."],
         ["Faire grandir", "Les groupes les plus solides passent en relation directe avec l'institution partenaire. Les sommes remboursées financent d'autres groupes."]
       ],
@@ -411,14 +412,15 @@ const AVEC = {
     ["Tenue des comptes", "Un cahier recopié à chaque réunion", "Une saisie sur téléphone, même sans réseau"],
     ["Calcul du partage", "Plusieurs heures, et souvent des contestations", "Immédiat, selon l'épargne de chacun"],
     ["Transparence", "Seul le trésorier connaît les soldes", "Chaque membre voit sa situation"],
-    ["Suivi des prêts", "Les retards sont repérés tard", "Échéances et rappels automatiques"],
-    ["Historique", "Aucune trace en dehors du groupe", "Un historique à présenter à une institution financière"],
-    ["Suivi d'un programme", "Des données lentes à collecter, souvent incomplètes", "Un tableau de bord pour l'ONG ou le bailleur"]
+    ["Suivi des prêts", "Les retards sont repérés tard", "Échéances et alertes pour l'animateur"],
+    ["Fraude", "Une page arrachée, un chiffre corrigé, et personne ne le voit", "Un registre scellé : toute modification se voit"],
+    ["Accès au crédit", "Aucune trace en dehors du groupe", "Un niveau « prête pour une IMF » et un dossier à lui présenter"],
+    ["Suivi d'un programme", "Des données lentes à collecter, souvent incomplètes", "Tableau de bord, écran Impact et export Excel pour l'ONG ou le bailleur"]
   ],
   passerelle: [
     ["Le groupe", "Quinze à trente membres qui épargnent chaque semaine et se prêtent entre eux."],
-    ["AKIBA", "Les comptes sont tenus sur téléphone, sans réseau, et chacun peut les vérifier."],
-    ["L'historique", "La régularité et les remboursements deviennent des indicateurs lisibles."],
+    ["AKIBA", "Les comptes sont tenus sur téléphone, sans réseau, dans un registre scellé que chacun peut vérifier."],
+    ["L'historique", "Un indice de qualité des données et un niveau « prête pour une IMF » rendent la régularité du groupe lisible."],
     ["Le financement", "Une IMF, une COOPEC, une banque, ou Ubora Fin elle-même, apporte un fonds de roulement au groupe. Nous suivons le remboursement."]
   ]
 };
@@ -431,8 +433,8 @@ const OUTILS = [
   {
     id: "akiba", nom: "AKIBA", pole: "avec", statut: "en-ligne", mock: "akiba", couleur: "#23843A", initiales: "Ak",
     sousDomaine: "akiba.uborardc.com", url: "https://akiba.uborardc.com",
-    resume: "L'application qui remplace le cahier des AVEC. Elle fonctionne sans réseau, sur un simple téléphone Android.",
-    points: ["Cotisations, prêts, remboursements et amendes", "Fonds social et partage de fin de cycle", "Fonctionne hors ligne", "Francs congolais et dollars", "Historique à présenter à une institution"]
+    resume: "Le cahier de l'AVEC dans le téléphone, même sans réseau. Chaque franc est écrit au moment où il bouge, et l'historique du groupe devient un dossier qu'une IMF peut étudier.",
+    points: ["Réunion guidée en 8 étapes, de la présence à la clôture à trois clés", "Registre scellé : toute modification se voit", "Indice de qualité des données et niveau « prête pour une IMF »", "Dossier pour l'IMF et export Excel, sans données personnelles", "Crédit d'une IMF suivi de bout en bout, garantie comprise", "Espaces AVEC, animateur et organisation, avec un écran Impact", "Démonstration libre ; code de validation Ubora pour une vraie AVEC"]
   },
   {
     id: "bp", nom: "Générateur de business plan", pole: "pme", statut: "en-ligne", mock: "pme", couleur: "#B0622A", initiales: "Bp",
@@ -476,7 +478,7 @@ const CONSEIL = [
 
 /* ---------- Catalogue des formations proposées ---------- */
 const CATALOGUE = [
-  ["AKIBA pour les trésoriers et les comités", "avec", "Tenir les comptes du groupe sur téléphone, préparer le partage de fin de cycle."],
+  ["AKIBA pour les trésoriers et les comités", "avec", "Tenir la réunion sur téléphone, lire l'indice de qualité, préparer le partage de fin de cycle."],
   ["Devenir formateur relais AVEC", "avec", "Animer les séances, accompagner et suivre les groupes."],
   ["De l'idée au premier client", "pme", "Tester une idée d'entreprise avec très peu de moyens."],
   ["Rédiger son plan d'affaires", "pme", "Construire son dossier avec le générateur en ligne."],
@@ -489,7 +491,7 @@ const CATALOGUE = [
 const FAQ = [
   ["Qui peut travailler avec Ubora ?", "Les groupes d'épargne, les entrepreneurs et les PME, les coopératives et les organisations paysannes, les petites institutions financières, ainsi que les ONG, les incubateurs et les bailleurs qui accompagnent ces publics."],
   ["Travaillez-vous en dehors de Lubumbashi ?", "Oui. Notre siège est à Lubumbashi, mais nous intervenons dans toute la RDC, sur place ou à distance."],
-  ["Vos outils fonctionnent-ils sans internet ?", "AKIBA fonctionne sans réseau et synchronise les données dès que la connexion revient. Le générateur de business plan reste utilisable une fois ouvert."],
+  ["Vos outils fonctionnent-ils sans internet ?", "Oui. AKIBA fonctionne entièrement sans réseau ; dès que le réseau revient, le groupe envoie ses données à l'animateur et à l'organisation, et l'application se met à jour d'elle-même. Le générateur de business plan reste utilisable une fois ouvert."],
   ["Proposez-vous des formations sur vos outils ?", "Oui. Chaque déploiement comprend une formation de prise en main, puis un suivi. Nous organisons aussi des sessions sur demande, dans votre province ou en ligne."],
   ["Faut-il être une entreprise déclarée pour être accompagné ?", "Non. Nous accompagnons justement beaucoup d'entrepreneurs et de groupements vers la formalisation, étape par étape."],
   ["Que devient l'accompagnement quand le projet d'une ONG se termine ?", "Nous restons. Les groupes, les entrepreneurs et les coopératives continuent d'être suivis après la clôture du projet. Notre modèle économique finance une partie de ces activités de terrain, et les outils mis en place restent en service."],
