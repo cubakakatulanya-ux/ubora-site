@@ -147,7 +147,7 @@ function poleCard(p, feature, compact) {
   return `<article class="pole${feature ? " feature" : ""}${img ? " has-img" : ""}" style="--c:${p.couleur}">
     ${img ? `<div class="pole-img">${photo(p.photo[0], feature ? "(max-width: 860px) 100vw, 800px" : "(max-width: 560px) 100vw, (max-width: 900px) 50vw, 380px", "", ' loading="lazy"')}</div>` : ""}
     <div class="pole-body">
-      <div class="pole-top"><span class="mk">${esc(p.initiales)}</span><a class="pole-sub" href="https://${p.sousDomaine}">${esc(p.sousDomaine)}</a></div>
+      <div class="pole-top"><span class="mk">${esc(p.initiales)}</span><span class="pole-sub">${esc(p.sousDomaine)}</span></div>
       <h3><a class="stretch" href="${p.chemin}">${esc(p.nom)}</a></h3>
       ${p.accroche ? `<p class="accroche">${esc(p.accroche)}</p>` : ""}
       <p>${esc(p.carte)}</p>
@@ -344,8 +344,8 @@ function pageHome() {
   <section class="deep hero">
     <div class="wrap hero-grid">
       <div>
-        <span class="pill"><b>Entreprise sociale</b> Basée à Lubumbashi · partout en RDC</span>
-        <h1>Des familles qui épargnent, des entrepreneurs qui vendent, des coopératives qui <span class="serif">durent</span>.</h1>
+        <h1 class="pill"><b>Ubora</b> Entreprise sociale à Lubumbashi, partout en RDC</h1>
+        <p class="hero-titre">Des familles qui épargnent, des entrepreneurs qui vendent, des coopératives qui <span class="serif">durent</span>.</p>
         <p class="lead">Partout en RDC, nous formons, outillons et suivons les groupes d'épargne, les entrepreneurs et les coopératives. Nous les relions aux institutions financières et aux acheteurs, et nous agissons pour l'environnement. Sur le terrain, avec des outils qui marchent sans réseau. Et nous restons quand le projet qui nous a fait venir se termine.</p>
         <div class="btn-row"><a class="btn btn-accent" href="#poles" data-scroll="poles">Découvrir nos pôles ${ICON.arrow}</a><a class="btn btn-glass" href="/contact">Nous contacter</a></div>
       </div>
@@ -508,7 +508,7 @@ function pagePole(id) {
     extra: `<div class="btn-row"><a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent(P.nom)}">Parler de votre projet ${ICON.arrow}</a>
       ${P.boite ? `<a class="btn btn-glass" href="#boite" data-scroll="boite">La boîte à outils</a>` : ""}
       ${enLigne.map(o => `<a class="btn btn-glass" href="${o.url}" target="_blank" rel="noopener">Ouvrir ${esc(o.nom)} ${ICON.ext}</a>`).join("")}</div>
-      <a class="sub-chip" href="https://${P.sousDomaine}">${esc(P.sousDomaine)}</a>`
+      <span class="sub-chip">${esc(P.sousDomaine)}</span>`
   }) + `
 
   <section><div class="wrap two">
@@ -772,8 +772,8 @@ function pageContact(params) {
   const sujet = params.get("sujet") || "";
   const besoins = ["Ubora AVEC (groupes d'épargne)", "Ubora PME (entrepreneuriat)", "Ubora Coop (coopératives)", "Ubora Fin (accès au financement)", "Ubora Market (accès au marché)", "Ubora Vert (environnement)", "Boîte à outils", "Conseil et programmes", "Formation", "Partenariat", "Recrutement", "Autre"];
   const low = sujet.toLowerCase();
-  const sel = !low ? "" : low.includes("boîte") ? "Boîte à outils"
-    : besoins.find(b => low.includes(b.split(" (")[0].toLowerCase()) || b.toLowerCase().includes(low)) || "";
+  const sel = !low ? "" : low.includes("boîte") || low.startsWith("les outils de") ? "Boîte à outils"
+    : besoins.find(b => low.includes(b.split(" (")[0].toLowerCase()) || b.toLowerCase().includes(low)) || "Autre";
   return pageHead({ eyebrow: "Contact", title: `Karibu. Parlons de votre <span class="serif">projet</span>.`, crumbs: [["Contact"]],
     lead: "Une question, une demande de boîte à outils, un programme à monter ? Où que vous soyez en RDC, nous vous répondons sous deux jours ouvrés." }) + `
   <section><div class="wrap contact-grid">
@@ -791,8 +791,8 @@ function pageContact(params) {
         <label>Organisation<input id="c-org" maxlength="160" autocomplete="organization"></label>
         <label>Téléphone<input id="c-tel" type="tel" maxlength="30" autocomplete="tel" placeholder="+243"></label>
         <label>E-mail<input id="c-mail" type="email" maxlength="160" autocomplete="email"></label>
-        <label class="full">Objet<select id="c-besoin">${besoins.map(b => `<option${b === sel ? " selected" : ""}>${esc(b)}</option>`).join("")}</select></label>
-        <label class="full">Message<textarea id="c-msg" required maxlength="3000" placeholder="Présentez-vous en quelques lignes et dites-nous ce dont vous avez besoin.">${sujet && !sel ? esc(sujet) : ""}</textarea></label>
+        <label class="full">Objet<select id="c-besoin"><option value="" disabled${sel ? "" : " selected"}>Choisissez un objet</option>${besoins.map(b => `<option${b === sel ? " selected" : ""}>${esc(b)}</option>`).join("")}</select></label>
+        <label class="full">Message<textarea id="c-msg" required maxlength="3000" placeholder="Présentez-vous en quelques lignes et dites-nous ce dont vous avez besoin.">${sujet && sujet !== sel ? esc(sujet) : ""}</textarea></label>
         <input class="hp" id="c-site" tabindex="-1" autocomplete="off" aria-hidden="true">
         <p class="form-err full" id="c-err" hidden></p>
         <div class="full"><button class="btn btn-primary" type="submit">Envoyer ${ICON.arrow}</button></div>
@@ -857,6 +857,9 @@ const SEO_POLES = {
   vert: ["Ubora Vert : environnement et recyclage en RDC", "Reboisement, recyclage des déchets, agroécologie, énergie propre : Ubora Vert fait de la protection de l'environnement une source de revenus en RDC."],
   marche: ["Ubora Market : vendre plus, trouver des acheteurs en RDC", "Relier les PME, les coopératives et les entrepreneurs de la RDC à des acheteurs : ventes B2B et B2C, marchés institutionnels et export."]
 };
+/* Titres complets pour la balise <title> ; TITRES reste court (fil d'Ariane, menus) */
+const SEO_TITRES = { "a-propos": "Qui sommes-nous : Ubora, entreprise sociale en RDC", approche: "Notre approche : la méthode Ubora en six temps", outils: "Outils numériques pour les AVEC et les PME en RDC · Ubora", conseil: "Conseil et programmes pour ONG et bailleurs en RDC · Ubora", formations: "Formations AVEC, entrepreneuriat et coopératives · Ubora", actualites: "Actualités d'Ubora : nouvelles du terrain en RDC", realisations: "Nos réalisations en RDC · Ubora, entreprise sociale", equipe: "Notre équipe · Ubora, entreprise sociale à Lubumbashi", carrieres: "Carrières : rejoindre Ubora à Lubumbashi, RDC", contact: "Contacter Ubora à Lubumbashi, RDC", mentions: "Mentions légales · Ubora, entreprise sociale" };
+const ROBOTS = "index, follow, max-image-preview:large";
 const TITRES = { "": "Ubora, entreprise sociale à Lubumbashi, RDC", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos outils numériques", conseil: "Conseil et programmes", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
 
 /* Construit une page à partir d'une adresse. */
@@ -873,7 +876,8 @@ function resolve(pathname, search, host) {
 
   let html, title, desc, canon = "/" + path;
   const P = pole(base);
-  if (P) { html = pagePole(base); [title, desc] = SEO_POLES[P.id] || [P.nom, P.lead]; canon = P.chemin; }
+  if (sub && !["actualites", "carrieres"].includes(base)) { html = notFound(); title = "Page introuvable"; }
+  else if (P) { html = pagePole(base); [title, desc] = SEO_POLES[P.id] || [P.nom, P.lead]; canon = P.chemin; }
   else switch (base) {
     case "": html = pageHome(); break;
     case "a-propos": html = pageAbout(); break;
@@ -888,15 +892,20 @@ function resolve(pathname, search, host) {
     }
     case "equipe": html = pageEquipe(); break;
     case "realisations": html = pageRealisations(params); break;
-    case "carrieres": html = pageCareers(sub); break;
+    case "carrieres": html = pageCareers(sub); canon = "/carrieres"; break;
     case "contact": html = pageContact(params); break;
     case "mentions": html = pageMentions(); break;
     case "admin": html = typeof pageAdmin === "function" ? pageAdmin() : notFound(); break;
     default: html = notFound(); title = "Page introuvable";
   }
-  title = title || TITRES[base] || "Ubora";
+  const court = title || TITRES[base] || "Ubora";
+  title = title || SEO_TITRES[base] || TITRES[base] || "Ubora";
   desc = desc || DESCR[base] || DESCR[""];
-  return { html, title: base === "" ? TITRES[""] : /Ubora/.test(title) ? title : title + " · Ubora", desc, canon: canon === "/" ? "/" : canon, base, sub, found: !html.includes("Page introuvable") };
+  const found = !html.includes("Page introuvable");
+  /* une rubrique encore vide n'est pas proposée aux moteurs de recherche */
+  const vide = (base === "actualites" && !sub && !allNews().length) || (base === "realisations" && !DATA.realisations.length);
+  const robots = base === "admin" || !found ? "noindex" : vide ? "noindex, follow" : ROBOTS;
+  return { html, title: base === "" ? TITRES[""] : /Ubora/.test(title) ? title : title + " · Ubora", court, desc, canon: canon === "/" ? "/" : canon, base, sub, found, robots };
 }
 
 /* ==========================================================================
@@ -927,6 +936,8 @@ function boot() {
   window.nav = nav;
   function setMeta(sel, attr, val) { const el = document.head.querySelector(sel); if (el) el.setAttribute(attr, val); }
 
+  const fermerDD = () => $$(".has-dd").forEach(x => { x.classList.remove("open"); const b = x.querySelector(".dd-btn"); if (b) b.setAttribute("aria-expanded", "false"); });
+  let premier = true, baseConsultee = false;
   function route(opts) {
     const keep = !!(opts && opts.keep === true);
     if (location.hash.startsWith("#/")) history.replaceState({}, "", location.hash.slice(1));
@@ -934,31 +945,34 @@ function boot() {
     if (r.redirect) { history.replaceState({}, "", r.redirect); return route(); }
     /* l'espace équipe a sa propre adresse */
     if (r.base === "admin" && sd !== "admin" && /(^|\.)uborardc\.com$/.test(location.hostname)) { location.replace("https://admin.uborardc.com/"); return; }
+    /* article publié depuis le dernier pré-rendu : on attend la base avant de conclure « introuvable » */
+    if (!r.found && r.base === "actualites" && r.sub && !baseConsultee) { premier = false; app.innerHTML = '<div class="wrap"><div class="empty" style="margin-block:80px">Chargement de l\'article…</div></div>'; return; }
     stopNet();
-    app.innerHTML = `<div class="fade">${r.html}</div>`;
+    const garder = premier && !keep && app.dataset.pre === CONFIG.site + r.canon && !location.search && !["formations", "carrieres"].includes(r.base);
+    premier = false; delete app.dataset.pre;
+    if (!garder) app.innerHTML = `<div class="fade">${r.html}</div>`;
     document.title = r.title;
     setMeta('meta[name="description"]', "content", r.desc);
     setMeta('meta[property="og:description"]', "content", r.desc);
     setMeta('meta[property="og:title"]', "content", r.title);
     setMeta('link[rel="canonical"]', "href", CONFIG.site + r.canon);
     setMeta('meta[property="og:url"]', "content", CONFIG.site + r.canon);
-    setMeta('meta[name="robots"]', "content", r.base === "admin" || !r.found ? "noindex" : "index, follow");
+    setMeta('meta[name="robots"]', "content", r.robots);
     $$("#menu [data-r]").forEach(a => {
       const on = a.dataset.r === r.base || (a.dataset.r === "poles" && (!!pole(r.base) || ["outils", "formations"].includes(r.base))) || (a.dataset.r === "a-propos" && ["a-propos", "approche", "conseil", "carrieres", "equipe"].includes(r.base));
       a.classList.toggle("current", on);
       if (a.tagName === "A") on ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current");
     });
-    $("#menu").classList.remove("open"); $("#burger").setAttribute("aria-expanded", "false"); document.body.classList.remove("menu-open");
-    $$(".has-dd").forEach(x => x.classList.remove("open"));
+    if (!keep) { $("#menu").classList.remove("open"); $("#burger").setAttribute("aria-expanded", "false"); document.body.classList.remove("menu-open"); fermerDD(); }
     if (r.base === "") startNet();
     if (r.base === "contact") bindContact();
     if (r.base === "admin" && typeof bindAdmin === "function") bindAdmin();
     $$("[data-scroll]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); document.getElementById(a.dataset.scroll)?.scrollIntoView({ behavior: "smooth" }); }));
-    reveal(); typo(app);
+    reveal(); if (!garder) typo(app);
     if (keep) return;
     const anchor = location.hash.slice(1);
     if (anchor && !anchor.startsWith("/")) requestAnimationFrame(() => document.getElementById(anchor)?.scrollIntoView({ behavior: "smooth" }));
-    else window.scrollTo(0, 0);
+    else if (!garder) window.scrollTo(0, 0);
   }
   window.route = route;
 
@@ -972,6 +986,8 @@ function boot() {
       if (v("c-site") || Date.now() - debut < 2500) return;
       if (!v("c-nom") || !v("c-msg")) { err.hidden = false; err.textContent = "Merci d'indiquer votre nom et votre message."; return; }
       if (!v("c-tel") && !v("c-mail")) { err.hidden = false; err.textContent = "Laissez-nous un téléphone ou une adresse e-mail pour que nous puissions vous répondre."; return; }
+      if (v("c-mail") && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v("c-mail"))) { err.hidden = false; err.textContent = "L'adresse e-mail semble incomplète (exemple : nom@domaine.com)."; $("#c-mail").focus(); return; }
+      if (!v("c-besoin")) { err.hidden = false; err.textContent = "Choisissez l'objet de votre message."; $("#c-besoin").focus(); return; }
       err.hidden = true;
       const btn = f.querySelector("button[type=submit]"); btn.disabled = true; btn.textContent = "Envoi en cours…";
       const res = await UboraDB.sendMessage({ nom: v("c-nom"), organisation: v("c-org") || null, telephone: v("c-tel") || null, email: v("c-mail") || null, besoin: v("c-besoin"), message: v("c-msg") });
@@ -1035,7 +1051,7 @@ function boot() {
     if (open) { li.classList.add("open"); b.setAttribute("aria-expanded", "true"); }
   }));
   document.addEventListener("click", e => {
-    if (!e.target.closest(".has-dd")) $$(".has-dd").forEach(x => x.classList.remove("open"));
+    if (!e.target.closest(".has-dd")) fermerDD();
     const a = e.target.closest && e.target.closest("a");
     if (!a || e.metaKey || e.ctrlKey || e.shiftKey || a.target === "_blank") return;
     const href = a.getAttribute("href") || "";
@@ -1051,7 +1067,7 @@ function boot() {
     if ((p || "/") === location.pathname && h) { document.getElementById(h)?.scrollIntoView({ behavior: "smooth" }); return; }
     nav(href);
   });
-  document.addEventListener("keydown", e => { if (e.key === "Escape") $$(".has-dd").forEach(x => x.classList.remove("open")); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape") fermerDD(); });
   document.addEventListener("click", e => {
     const b = e.target.closest && e.target.closest("[data-plus]"); if (!b) return;
     const bloc = b.previousElementSibling; if (!bloc) return;
@@ -1071,9 +1087,11 @@ function boot() {
     const o = $("#menu").classList.toggle("open");
     $("#burger").setAttribute("aria-expanded", o); document.body.classList.toggle("menu-open", o);
   });
+  $("#themeBtn").setAttribute("aria-pressed", String(document.documentElement.dataset.theme === "dark"));
   $("#themeBtn").addEventListener("click", () => {
     const r = document.documentElement, next = r.dataset.theme === "dark" ? "light" : "dark";
     r.dataset.theme = next; store.set("ubora_theme_2026", next);
+    $("#themeBtn").setAttribute("aria-pressed", String(next === "dark"));
   });
   $("#newsForm").addEventListener("submit", async e => {
     e.preventDefault();
@@ -1097,7 +1115,10 @@ function boot() {
   /* contenu publié dans la base : on ne réaffiche la page que si quelque chose a changé depuis sa génération */
   const empreinte = () => JSON.stringify([DATA.actualites, DATA.formations, DATA.offres, DATA.equipe, DATA.realisations]);
   const avant = empreinte();
-  UboraDB.load().then(() => {
+  UboraDB.load().catch(() => {}).then(() => {
+    baseConsultee = true;
+    const ici = resolve(location.pathname, location.search, location.hostname);
+    if (ici.base === "actualites" && ici.sub) { route({ keep: true }); return; }
     if (empreinte() === avant) return;
     $("#tickerMove").innerHTML = tickerHTML();
     const r = resolve(location.pathname, location.search, location.hostname);

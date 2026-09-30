@@ -27,7 +27,7 @@ const UboraChat = (() => {
     push("Ubora Vert, l'environnement", "Par Ubora Vert, nous agissons pour l'environnement : reboisement et pépinières, recyclage et valorisation des déchets, agroécologie, énergie propre et sensibilisation. Ces actions créent aussi des revenus pour les communautés.", "/vert", "environnement recyclage dechets reboisement arbre arbres climat vert ecologie plastique compost energie solaire pepiniere");
     push("Après la fin d'un projet", "Quand le projet d'une ONG ou d'un bailleur se termine, Ubora reste. Nous poursuivons le suivi des groupes, des entrepreneurs et des coopératives, et notre modèle économique finance une partie de ces activités de terrain.", "/conseil#relais", "fin projet apres cloture perenniser perennite durabilite ong bailleur relais suite continuer");
     push("Financer les AVEC : le rôle d'Ubora Fin", "Ubora Fin lève des fonds auprès d'institutions financières, d'investisseurs d'impact et de bailleurs, puis les prête aux AVEC que nous accompagnons, sous forme de fonds de roulement accordé au groupe. Les remboursements sont suivis dans AKIBA et les sommes remboursées financent d'autres groupes.", "/financement#intermediation", "fonds roulement financement pret credit financer groupe avec argent capital investisseur banque imf");
-    push("Contact", `Téléphone et WhatsApp : ${CONFIG.telephone}. E-mail : ${CONFIG.email}. Siège : ${CONFIG.adresse}. ${CONFIG.horaires}.`, "/contact", "contact telephone numero adresse mail bureau joindre rendez-vous horaires ou situes whatsapp");
+    push("Contact", `Téléphone et WhatsApp : ${CONFIG.telephone}. E-mail : ${CONFIG.email}. Siège : ${CONFIG.adresse}. ${CONFIG.horaires}.`, "/contact", "contact contacter appeler ecrire telephone numero adresse mail bureau joindre rendez-vous horaires ou situes whatsapp");
     push("Formations", "Nous formons les utilisateurs de nos outils et des formateurs relais, et nous organisons des sessions sur demande, dans votre province ou en ligne.", "/formations", "formation former session calendrier atelier apprendre cours");
     push("Offres d'emploi", "Nos postes ouverts, stages et consultances sont publiés sur la page Carrières. Vous pouvez aussi envoyer une candidature spontanée.", "/carrieres", "emploi recrutement poste stage carriere candidature travailler job cv");
     push("Zone d'intervention", "Notre siège est à Lubumbashi, dans le Haut-Katanga. Nous intervenons partout en RDC, sur place ou à distance.", "/contact", "zone intervention ou province kinshasa lubumbashi katanga kivu lualaba campagne rurale pays");
@@ -38,8 +38,8 @@ const UboraChat = (() => {
     POLES.filter(p => p.boite).forEach(p => push(p.boite.titre, `${p.boite.intro} ${p.boite.statut === "disponible" ? "Elle est disponible sur demande." : "Elle sera bientôt disponible."}`, p.chemin + "#boite", "boite outils documents modeles telecharger " + p.id));
     OUTILS.forEach(o => push(o.nom, `${o.resume} ${o.statut === "en-ligne" ? "En ligne à l'adresse " + o.sousDomaine + "." : "En préparation."}`, o.statut === "en-ligne" ? o.url : "/outils#" + o.id, o.nom.replace(/\s/g, "") + " outil logiciel application"));
     FAQ.forEach(([q, r]) => push(q, r, "/a-propos#faq", "question"));
-    DATA.formations.slice(0, 8).forEach(f => push(f.titre, `Session du ${fmtDate(f.date)} · ${f.mode} · ${f.lieu} · ${f.places} places. Public : ${f.public}.`, "/formations", "formation session date calendrier"));
-    DATA.offres.forEach(o => push(o.titre, `${o.type} · ${o.lieu}. ${o.resume} Candidatures jusqu'au ${fmtDate(o.cloture)}.`, "/carrieres/" + o.id, "emploi poste recrutement"));
+    DATA.formations.filter(f => f.date >= todayISO()).slice(0, 8).forEach(f => push(f.titre, `Session du ${fmtDate(f.date)} · ${f.mode} · ${f.lieu} · ${f.places} places. Public : ${f.public}.`, "/formations", "formation session date calendrier"));
+    DATA.offres.filter(o => o.cloture >= todayISO()).forEach(o => push(o.titre, `${o.type} · ${o.lieu}. ${o.resume} Candidatures jusqu'au ${fmtDate(o.cloture)}.`, "/carrieres/" + o.id + "#offre-" + o.id, "emploi poste recrutement"));
     push("Notre équipe", "Consultants, formateurs, agents de terrain et développeurs, basés à Lubumbashi et présents dans toute la RDC.", "/equipe", "equipe personnes qui directeur staff collaborateurs responsable");
     DATA.equipe.forEach(m => push(m.nom, `${m.fonction}. ${m.bio || ""}`, "/equipe", "equipe membre"));
     push("Nos réalisations", "Les programmes que nous avons menés, avec leur contexte, nos actions et les résultats obtenus.", "/realisations", "realisations projets references experience resultats deja fait");
@@ -60,8 +60,8 @@ const UboraChat = (() => {
 
   /* --- Recherche --- */
   function answer(q) {
-    KB = KB || knowledge();
-    const mots = WORDS(q).filter(w => !STOP.has(w));
+    if (!KB || KB.src !== DATA.source) { KB = knowledge(); KB.src = DATA.source; }
+    const mots = WORDS(q.replace(/\bAVECS?\b/g, "vsla")).filter(w => !STOP.has(w));
     if (!mots.length) return null;
     const scored = KB.map(k => {
       let score = 0;

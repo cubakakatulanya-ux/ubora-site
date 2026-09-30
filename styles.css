@@ -1692,3 +1692,14 @@ section.band { padding-block: clamp(40px, 4.8vw, 66px); }
   .dir-parcours li { grid-template-columns: minmax(0, 1fr); gap: 2px; }
 }
 .dir-photo { height: auto; }
+
+/* ==========================================================================
+   Corrections de l'audit
+   ========================================================================== */
+/* Titre principal de l'accueil : le nom et la ville, dans la pastille ; la phrase d'accroche reste en grand */
+.hero h1.pill { margin: 0; font-family: var(--f-body); font-size: 13.5px; font-weight: 400; line-height: 1.4; letter-spacing: 0; color: var(--ink); text-wrap: nowrap; }
+.hero-titre { margin: 22px 0 0; font-family: var(--f-display); font-size: clamp(30px, 3.4vw, 46px); font-weight: 700; line-height: 1.12; letter-spacing: -.02em; color: var(--ink); text-wrap: balance; }
+.hero-titre .serif { font-size: 1.04em; }
+@media (max-width: 420px) { .hero h1.pill { text-wrap: wrap; } }
+/* Ancres : le titre visé n'est plus caché sous l'en-tête collant */
+:where([id]) { scroll-margin-top: 120px; }

@@ -130,7 +130,7 @@ async function renderMessages() {
 
 /* Suppression d'un message indésirable, d'un abonné ou d'une question */
 function bindSuppr(el, table, apres) {
-  $("[data-suppr]", el).forEach(b => b.onclick = async () => {
+  $$("[data-suppr]", el).forEach(b => b.onclick = async () => {
     if (!confirm("Supprimer définitivement cet élément ?")) return;
     const r = await UboraDB.removeRow(table, b.dataset.suppr);
     toast(r.ok ? "Supprimé." : "La suppression a échoué."); apres();

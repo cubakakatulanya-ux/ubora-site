@@ -1,11 +1,15 @@
 {
   // Worker qui sert le site (Cloudflare Workers Static Assets).
-  // single-page-application : toute adresse inconnue renvoie index.html,
-  // ce qui permet les adresses propres du type /avec ou /solutions/ubora-fin.
+  // worker.js passe en premier sur chaque requête : https, sans www, une seule
+  // adresse par page, sous-domaines des pôles, en-têtes de sécurité.
+  // 404-page : une adresse inconnue reçoit 404.html avec le code 404.
   "name": "ubora-site",
   "compatibility_date": "2026-09-01",
+  "main": "worker.js",
   "assets": {
     "directory": ".",
-    "not_found_handling": "single-page-application"
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": true
   }
 }

@@ -12,10 +12,9 @@
   <url><loc>https://uborardc.com/outils</loc><priority>0.7</priority></url>
   <url><loc>https://uborardc.com/conseil</loc><priority>0.7</priority></url>
   <url><loc>https://uborardc.com/formations</loc><priority>0.7</priority></url>
-  <url><loc>https://uborardc.com/actualites</loc><priority>0.7</priority></url>
-  <url><loc>https://uborardc.com/realisations</loc><priority>0.8</priority></url>
   <url><loc>https://uborardc.com/equipe</loc><priority>0.7</priority></url>
   <url><loc>https://uborardc.com/carrieres</loc><priority>0.7</priority></url>
   <url><loc>https://uborardc.com/contact</loc><priority>0.7</priority></url>
   <url><loc>https://uborardc.com/mentions</loc><priority>0.7</priority></url>
+  <url><loc>https://bp.uborardc.com/</loc><priority>0.8</priority></url>
 </urlset>

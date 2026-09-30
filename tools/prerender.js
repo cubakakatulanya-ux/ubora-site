@@ -53,7 +53,7 @@ const ORG = {
   "@type": ["Organization", "ProfessionalService"],
   "@id": "https://uborardc.com/#organisation",
   name: "Ubora",
-  alternateName: "Ubora, entreprise sociale",
+  alternateName: ["Ubora, entreprise sociale", "Ubora RDC", "Ubora Lubumbashi", "Entreprise sociale Ubora"],
   url: "https://uborardc.com",
   logo: { "@type": "ImageObject", url: "https://uborardc.com/icon-512.png", width: 512, height: 512 },
   image: "https://uborardc.com/partage.jpg",
@@ -83,7 +83,7 @@ function donneesStructurees(chemin, r) {
     const n = S.allNews().find(x => x.slug === parts[1]);
     if (n) graph.push({ "@type": "NewsArticle", headline: n.titre, description: n.extrait, datePublished: n.date, inLanguage: "fr", mainEntityOfPage: url, image: "https://uborardc.com/partage.jpg", author: { "@id": ORG["@id"] }, publisher: { "@id": ORG["@id"] } });
   } else {
-    miettes.itemListElement.push({ "@type": "ListItem", position: 2, name: texte(r.title.replace(/ · Ubora$/, "")), item: url });
+    miettes.itemListElement.push({ "@type": "ListItem", position: 2, name: texte(r.court), item: url });
     const P = S.POLES.find(p => p.chemin === chemin);
     if (P) graph.push({ "@type": "Service", name: P.nom, description: texte(P.lead), url, serviceType: texte(P.carte), areaServed: { "@type": "Country", name: "République démocratique du Congo" }, provider: { "@id": ORG["@id"] } });
   }
@@ -103,11 +103,17 @@ async function main() {
 
   const donnees = `<script type="application/json" id="ubora-donnees">${JSON.stringify({ actualites: S.DATA.actualites, formations: S.DATA.formations, offres: S.DATA.offres, equipe: S.DATA.equipe, realisations: S.DATA.realisations }).replace(/</g, String.fromCharCode(92) + "u003c")}</script>`;
 
+  /* les articles retirés de la base ne doivent plus répondre : on efface les anciens fichiers */
+  if (fs.existsSync(path.join(ROOT, "actualites"))) {
+    const garder = new Set(S.allNews().map(n => n.slug + ".html"));
+    for (const f of fs.readdirSync(path.join(ROOT, "actualites"))) if (f.endsWith(".html") && !garder.has(f)) fs.unlinkSync(path.join(ROOT, "actualites", f));
+  }
+
   for (const chemin of chemins) {
     const r = S.resolve(chemin, "", "uborardc.com");
     if (r.redirect) continue;
     const canon = S.CONFIG.site + (chemin === "/" ? "/" : chemin);
-    const robots = "index, follow, max-image-preview:large";
+    const robots = r.robots;
     const html = shell
       .replace(/{{TITLE}}/g, attr(fine(texte(r.title))))
       .replace(/{{DESC}}/g, attr(fine(texte(r.desc))))
@@ -123,8 +129,26 @@ async function main() {
       .replace("{{APP}}", () => S.typoHTML(r.html));
     const fichier = chemin === "/" ? "index.html" : chemin.slice(1) + ".html";
     write(fichier, html);
-    pages.push(chemin);
+    if (robots.startsWith("index")) pages.push(chemin);
   }
+
+  /* Page 404 : vraie erreur, jamais indexée, sans adresse canonique */
+  const r404 = S.resolve("/page-introuvable", "", "uborardc.com");
+  write("404.html", shell
+    .replace(/[ \t]*<link rel="canonical"[^>]*>\r?\n?/, "")
+    .replace(/[ \t]*<meta property="og:url"[^>]*>\r?\n?/, "")
+    .replace(/{{TITLE}}/g, attr(fine(texte(r404.title))))
+    .replace(/{{DESC}}/g, attr(fine(texte(r404.desc))))
+    .replace(/{{CANON}}/g, "")
+    .replace("{{ROBOTS}}", "noindex, follow")
+    .replace("{{OGTYPE}}", "website")
+    .replace("{{JSONLD}}", "")
+    .replace("{{DONNEES}}", () => donnees)
+    .replace(/{{VERSION}}/g, version)
+    .replace("{{MENU}}", () => S.typoHTML(menu))
+    .replace("{{TICKER}}", () => S.typoHTML(ticker))
+    .replace("{{FOOTER}}", () => S.typoHTML(footer))
+    .replace("{{APP}}", () => S.typoHTML(r404.html)));
 
   /* Plan du site */
   const prio = c => c === "/" ? "1.0" : S.POLES.some(p => p.chemin === c) ? "0.9" : c === "/realisations" ? "0.8" : c.startsWith("/actualites/") ? "0.6" : "0.7";
@@ -133,6 +157,7 @@ async function main() {
   write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${pages.map(c => `  <url><loc>${S.CONFIG.site}${c === "/" ? "/" : c}</loc>${modif(c)}<priority>${prio(c)}</priority></url>`).join("\n")}
+  <url><loc>https://bp.uborardc.com/</loc><priority>0.8</priority></url>
 </urlset>
 `);
 
