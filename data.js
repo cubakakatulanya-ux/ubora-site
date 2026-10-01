@@ -25,6 +25,7 @@ const CONFIG = {
 
 /* Bande déroulante. Les dernières actualités publiées s'y ajoutent d'elles-mêmes. */
 const TICKER_MESSAGES = [
+  ["Nouveau : l'Académie Ubora, 26 cours en ligne sur les AVEC, les AGR et l'éducation financière", "https://academie.uborardc.com"],
   ["Nouveau dans AKIBA : un reçu imprimé pour chaque membre, et bientôt sur terminal POS", "/outils#akiba"],
   ["AKIBA mesure la qualité des données et le niveau « prête pour une IMF » de chaque AVEC", "/outils#akiba"],
   ["Nouvelle version du générateur de business plan : parcours guidé, score de viabilité et trois scénarios", "https://bp.uborardc.com"],
@@ -110,7 +111,7 @@ const POLES = [
       ["Suivre et faire grandir", "Supervision, graduation, activités génératrices de revenus, puis regroupement en fédération.", "Des groupes qui durent, et qui se renforcent ensemble."]
     ],
     avec: true,
-    outils: ["akiba"],
+    outils: ["akiba", "academie"],
     publics: ["Groupes AVEC et mutuelles de solidarité", "Réseaux et fédérations d'AVEC", "ONG et programmes d'inclusion financière", "IMF, COOPEC et banques"],
     boite: {
       statut: "disponible",
@@ -300,7 +301,7 @@ const POLES = [
       etat: "Projet en préparation. L'étude de faisabilité, le cadre réglementaire et la recherche de partenaires financiers sont en cours.",
       appel: "Institution, bailleur ou investisseur intéressé ? Parlons-en."
     },
-    outils: ["akiba"],
+    outils: ["akiba", "academie"],
     publics: ["Groupes AVEC", "Coopératives et PME qui cherchent un crédit", "Petites IMF et COOPEC", "Mutuelles d'épargne et de crédit", "Programmes de crédit des ONG"],
     boite: {
       statut: "bientot",
@@ -474,6 +475,12 @@ const OUTILS = [
     points: ["Appels à candidatures et sélection", "Fiche de suivi par entrepreneur", "Séances de coaching", "Indicateurs d'impact", "Rapports pour les bailleurs"]
   },
   {
+    id: "academie", nom: "Académie Ubora", pole: "avec", statut: "en-ligne", mock: "academie", couleur: "#9A5522", initiales: "Ac",
+    sousDomaine: "academie.uborardc.com", url: "https://academie.uborardc.com",
+    resume: "L'école en ligne d'Ubora : 26 cours d'environ 50 minutes sur les AVEC, les activités génératrices de revenus et l'éducation financière, utilisables même sans réseau, avec badges et certificats vérifiables.",
+    points: ["Six parcours, du membre d'AVEC au formateur", "Les 5 modules du PNEF de la Banque centrale du Congo", "Exercices corrigés et quiz chronométrés", "Cours téléchargés utilisables sans réseau", "Badges et certificats vérifiables en ligne"]
+  },
+  {
     id: "logiciel-coop", nom: "Ubora Coop, le logiciel", pole: "cooperatives", statut: "en-cours", mock: "coop", couleur: "#3E7A1F", initiales: "Co",
     resume: "Le registre numérique de la coopérative : membres, parcelles, collectes, stocks, ventes et paiements.",
     points: ["Membres, parcelles et parts sociales", "Collecte et pesées", "Stocks et intrants à crédit", "Ventes groupées", "Paiements par mobile money"]
@@ -517,7 +524,7 @@ const FAQ = [
   ["Qui peut travailler avec Ubora ?", "Les groupes d'épargne, les entrepreneurs et les PME, les coopératives et les organisations paysannes, les petites institutions financières, ainsi que les ONG, les incubateurs et les bailleurs qui accompagnent ces publics."],
   ["Travaillez-vous en dehors de Lubumbashi ?", "Oui. Notre siège est à Lubumbashi, mais nous intervenons dans toute la RDC, sur place ou à distance."],
   ["Vos outils fonctionnent-ils sans internet ?", "Oui. AKIBA fonctionne entièrement sans réseau ; dès que le réseau revient, le groupe envoie ses données à l'animateur et à l'organisation, et l'application se met à jour d'elle-même. Le générateur de business plan reste utilisable une fois ouvert."],
-  ["Proposez-vous des formations sur vos outils ?", "Oui. Chaque déploiement comprend une formation de prise en main, puis un suivi. Nous organisons aussi des sessions sur demande, dans votre province ou en ligne."],
+  ["Proposez-vous des formations sur vos outils ?", "Oui. Chaque déploiement comprend une formation de prise en main, puis un suivi. Notre Académie en ligne, academie.uborardc.com, propose aussi 26 cours avec certificat. Nous organisons aussi des sessions sur demande, dans votre province ou en ligne."],
   ["Faut-il être une entreprise déclarée pour être accompagné ?", "Non. Nous accompagnons justement beaucoup d'entrepreneurs et de groupements vers la formalisation, étape par étape."],
   ["Que devient l'accompagnement quand le projet d'une ONG se termine ?", "Nous restons. Les groupes, les entrepreneurs et les coopératives continuent d'être suivis après la clôture du projet. Notre modèle économique finance une partie de ces activités de terrain, et les outils mis en place restent en service."],
   ["Ubora peut-elle financer notre groupe d'épargne ?", "Oui, par Ubora Fin, notre branche financière. Pour les AVEC que nous accompagnons, nous pouvons apporter un fonds de roulement, remboursable sur le cycle, en plus de l'épargne des membres. Nous pouvons aussi présenter le groupe à une IMF, une COOPEC ou une banque partenaire."],
@@ -530,3 +537,16 @@ const FAQ = [
 const ACTUALITES = [];
 const FORMATIONS = [];
 const OFFRES = [];
+
+/* ---------- L'Académie Ubora (page « Formations ») ---------- */
+const ACADEMIE = {
+  url: "https://academie.uborardc.com",
+  parcours: [
+    ["AVEC : bureau et membres", "4 cours", "Les principes, le bureau et le règlement, la réunion pas à pas, le partage et le nouveau cycle."],
+    ["AVEC : animateur", "6 cours", "Créer des AVEC, animer les 7 modules, les calculs sans erreur, le kit et Akiba, le suivi, l'éthique."],
+    ["AVEC : comprendre et piloter", "3 cours", "Le modèle AVEC, la conduite et l'évaluation d'un programme, la croissance du réseau."],
+    ["AGR individuelles et collectives", "4 cours", "L'idée et le marché, les coûts et le prix, les comptes et la vente, le crédit."],
+    ["Éducation financière (PNEF)", "5 cours", "Le budget, l'épargne, le crédit, la négociation, la finance numérique."],
+    ["Formateur AVEC et AGR", "4 cours", "Former des adultes, certifier des animateurs, préparer et évaluer une séance."]
+  ]
+};

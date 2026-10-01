@@ -102,6 +102,10 @@ function mockTable(url, kpis, head, rows, chart) {
 const MOCKS = {
   akiba: mockAkiba,
   hub: mockHub,
+  academie: () => browser("academie.uborardc.com", `<div class="mock-pad">
+    <div class="mock-title"><b>Mon carnet</b><span>2 badges</span></div>
+    <div class="hub-list">${[["Mon AVEC : principes, droits et devoirs", 100], ["La réunion pas à pas", 100], ["Le partage et le nouveau cycle", 60], ["Gérer le budget de son ménage", 25]].map(([n, p]) => `<div class="bp-row"><span class="bp-dot${p === 100 ? " done" : ""}"></span><span>${n}</span><span class="bar"><i style="width:${p}%"></i></span></div>`).join("")}</div>
+    <div class="hub-kpis"><div><small>Cours suivis</small><b>4</b></div><div><small>Quiz réussis</small><b>2</b></div><div><small>Temps</small><b>3 h 20</b></div></div></div>`),
   coop: () => mockTable("ubora-coop · collecte", [["Membres", "184"], ["Collecté", "62 t"], ["Payé", "78 %"]], ["Producteur", "Village", "Maïs (kg)", "Paiement"],
     [["Producteur 01", "Village A", "1 250", "Payé", 1], ["Producteur 02", "Village A", "980", "Payé", 1], ["Producteur 03", "Village B", "1 540", "En attente", 0], ["Producteur 04", "Village C", "720", "Payé", 1]]),
   fin: () => mockTable("ubora-fin · portefeuille", [["Encours", "48 200 $"], ["Épargne", "61 900 $"], ["Retards", "3,1 %"]], ["Client", "Crédit", "Échéance", "État"],
@@ -216,7 +220,7 @@ function expertise() {
     ["marche", "Le maillon qui casse le plus souvent n'est ni la production ni le crédit. C'est la vente.", "Alors nous cherchons l'acheteur avant la récolte, et nous suivons la vente jusqu'au paiement du producteur."]
   ];
   const preuves = [
-    [String(OUTILS.filter(o => o.statut === "en-ligne").length), "outils en ligne", "AKIBA, le générateur de business plan et Ubora Hub. Essayez-les avant même de nous appeler.", "/outils", "Les essayer"],
+    [String(OUTILS.filter(o => o.statut === "en-ligne").length), "outils en ligne", "AKIBA, le générateur de business plan, Ubora Hub et l'Académie Ubora. Essayez-les avant même de nous appeler.", "/outils", "Les essayer"],
     [String(pole("avec").boite.outils.length), "documents de terrain", "La boîte à outils AVEC, de l'étude de référence jusqu'au partage de fin de cycle.", "/avec#boite", "La demander"],
     [String(METHODE.etapes.length), "temps de méthode", "Toujours dans le même ordre, et pour chacun la raison qui le justifie en RDC.", "/approche", "Lire la méthode"],
     [ICON.check, "entreprise immatriculée", [L.rccm && "RCCM " + L.rccm, L.idnat && "ID NAT " + L.idnat].filter(Boolean).join(" · "), "/mentions", "Nos mentions légales"]
@@ -315,7 +319,7 @@ function footerHTML() {
       </div>
       <nav aria-label="Nos pôles"><h4>Nos pôles</h4><ul>${POLES.map(p => `<li><a class="foot-pole" href="${p.chemin}" style="--c:${p.couleur}">${esc(p.nom)}</a></li>`).join("")}</ul></nav>
       <nav aria-label="Ubora"><h4>Ubora</h4><ul><li><a href="/a-propos">Qui sommes-nous</a></li><li><a href="/equipe">Notre équipe</a></li><li><a href="/realisations">Nos réalisations</a></li><li><a href="/approche">Notre approche</a></li><li><a href="/conseil">Conseil et programmes</a></li></ul></nav>
-      <nav aria-label="Ressources"><h4>Ressources</h4><ul><li><a href="/outils">Outils numériques</a></li><li><a href="/formations">Formations</a></li><li><a href="/actualites">Actualités</a></li><li><a href="/carrieres">Carrières</a></li><li><a href="/contact">Contact</a></li></ul></nav>
+      <nav aria-label="Ressources"><h4>Ressources</h4><ul><li><a href="https://academie.uborardc.com">Académie Ubora</a></li><li><a href="/outils">Outils numériques</a></li><li><a href="/formations">Formations</a></li><li><a href="/actualites">Actualités</a></li><li><a href="/carrieres">Carrières</a></li><li><a href="/contact">Contact</a></li></ul></nav>
       <div class="foot-contact"><h4>Nous joindre</h4><ul>
         <li><span class="ic">${ICON.phone}</span><a href="tel:${tel}">${esc(CONFIG.telephone)}</a></li>
         <li><span class="ic">${ICON.mail}</span><a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a></li>
@@ -594,7 +598,7 @@ function pagePole(id) {
 
 function pageOutils() {
   return pageHead({ eyebrow: "Nos outils", title: `Des outils qui tiennent là où le réseau <span class="serif">lâche</span>.`, crumbs: [["Nos outils"]],
-    lead: "Pas de réseau au village ? Des comptes en francs congolais et en dollars ? Des utilisateurs qui n'ont jamais ouvert un tableur ? Nos outils sont conçus pour cela, et chacun est livré avec une formation. Trois sont déjà en ligne : essayez-les." }) + `
+    lead: "Pas de réseau au village ? Des comptes en francs congolais et en dollars ? Des utilisateurs qui n'ont jamais ouvert un tableur ? Nos outils sont conçus pour cela, et chacun est livré avec une formation. Quatre sont déjà en ligne : essayez-les." }) + `
   <section><div class="wrap">
     ${filtres("Filtrer les outils", [["en-ligne", "En ligne"], ["en-cours", "En préparation"], ...[...new Set(OUTILS.map(o => o.pole))].map(id => [id, pole(id).nom])])}
     <div class="outil-rows">${OUTILS.map((o, i) => {
@@ -630,8 +634,20 @@ function pageFormations() {
   const t = todayISO();
   const sessions = [...DATA.formations].filter(f => f.date >= t).sort((a, b) => a.date.localeCompare(b.date));
   return pageHead({ eyebrow: "Formations", title: `Apprendre à utiliser les outils, puis à s'en servir seul.`, crumbs: [["Formations"]], photo: ["formation", "Un formateur s'adresse à un groupe dans une salle"],
-    lead: "Chaque déploiement comprend une formation de prise en main et un suivi. Nous organisons aussi des sessions à Lubumbashi, dans votre province ou en ligne." }) + `
-  <section><div class="wrap">
+    lead: "Chaque déploiement comprend une formation de prise en main et un suivi. Nous organisons aussi des sessions à Lubumbashi, dans votre province ou en ligne, et notre Académie propose 26 cours en ligne avec certificat." }) + `
+  <section id="academie"><div class="wrap">
+    <div class="academie">
+      <div class="academie-txt">
+        <span class="eyebrow">Académie Ubora</span>
+        <h2>Se former à son rythme, même sans réseau</h2>
+        <p class="lead">26 cours d'environ 50 minutes, écrits à partir de nos documents de terrain : leçons illustrées, exercices corrigés automatiquement, quiz chronométrés, badges et certificats vérifiables. Un cours téléchargé fonctionne sans réseau ; les résultats partent dès que la connexion revient.</p>
+        <div class="btn-row"><a class="btn btn-primary" href="${ACADEMIE.url}" target="_blank" rel="noopener">Ouvrir l'Académie ${ICON.ext}</a></div>
+        <p class="muted small">academie.uborardc.com</p>
+      </div>
+      <ol class="academie-parcours" aria-label="Les six parcours">${ACADEMIE.parcours.map(([t, n, x]) => `<li><b>${esc(t)}</b><span class="tag">${esc(n)}</span><span>${esc(x)}</span></li>`).join("")}</ol>
+    </div>
+  </div></section>
+  <section class="tight-top"><div class="wrap">
     ${secHead("Prochaines sessions", "Le calendrier")}
     ${sessions.length ? `<div class="list-rows">${sessions.map(f => {
       const d = d12(f.date), p = pole(f.outil);
@@ -840,7 +856,7 @@ const DESCR = {
   approche: "La méthode Ubora en six temps : écouter, structurer, former, outiller, connecter et suivre, pensée pour les réalités de la RDC.",
   outils: "AKIBA, le générateur de business plan, Ubora Hub et les outils en préparation : des outils numériques conçus pour la RDC.",
   conseil: "Conseil, études, gestion de projets, digitalisation de l'accompagnement et formation d'équipes, pour les ONG, les bailleurs et les institutions en RDC.",
-  formations: "Les formations d'Ubora : prise en main des outils, formateurs relais, entrepreneuriat, gestion coopérative et dossier de crédit.",
+  formations: "Formations d'Ubora en RDC : Académie en ligne (26 cours avec certificat), prise en main des outils, AVEC, entrepreneuriat et gestion coopérative.",
   actualites: "Les actualités d'Ubora : programmes, déploiements, formations et nouvelles du terrain en RDC.",
   carrieres: "Offres d'emploi, de stage et de consultance chez Ubora, entreprise sociale basée à Lubumbashi.",
   contact: "Contacter Ubora par téléphone, WhatsApp ou e-mail. Siège à Lubumbashi, interventions dans toute la RDC.",
