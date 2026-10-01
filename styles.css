@@ -1738,3 +1738,20 @@ section.band { padding-block: clamp(40px, 4.8vw, 66px); }
 @media (max-width: 480px) { .academie-parcours { grid-template-columns: minmax(0, 1fr); } }
 @media (min-width: 1100px) { .tools:has(> .tool:nth-child(4):last-child) { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 @media (min-width: 901px) and (max-width: 1099px) { .tools:has(> .tool:nth-child(4):last-child) { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* ==========================================================================
+   Pôle transversal (Ubora Académie) : toute la largeur, sous les six autres
+   ========================================================================== */
+.poles > .pole.transversal { grid-column: 1 / -1; }
+.poles > .pole.transversal.has-img { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr); }
+.poles > .pole.transversal.has-img .pole-img { aspect-ratio: auto; height: 100%; min-height: 200px; }
+.poles > .pole.transversal.has-img .pole-body { justify-content: center; padding: 22px 26px; }
+.poles > .pole.transversal.has-img .pole-top { position: static; }
+.poles > .pole.transversal .pole-top { display: flex; align-items: center; gap: 10px; }
+.pole-tag { padding: 3px 10px; border-radius: 99px; background: color-mix(in srgb, var(--c) 12%, transparent); color: var(--c); font-family: var(--f-display); font-size: 12px; font-weight: 700; letter-spacing: .02em; }
+:root[data-theme="dark"] .pole-tag { color: color-mix(in srgb, var(--c) 40%, #fff); }
+@media (max-width: 760px) {
+  .poles > .pole.transversal.has-img { grid-template-columns: minmax(0, 1fr); }
+  .poles > .pole.transversal.has-img .pole-img { aspect-ratio: 2 / 1; min-height: 0; }
+}
+.poles > .pole.transversal .link { margin-top: 6px; }

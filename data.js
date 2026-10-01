@@ -80,7 +80,7 @@ const METHODE = {
 };
 
 /* ==========================================================================
-   LES SIX PÔLES
+   LES SEPT PÔLES (Ubora Académie est transversale : elle sert tous les autres)
    Chaque pôle a sa page (et son sous-domaine), avec la même construction :
    le contexte en RDC, notre démarche, les outils liés, la boîte à outils.
    ========================================================================== */
@@ -413,6 +413,44 @@ const POLES = [
         ["Monter un projet vert finançable", "Ce qu'attendent les fonds climat et les bailleurs."]
       ]
     }
+  },
+
+  {
+    id: "academie", chemin: "/academie", sousDomaine: "academie.uborardc.com", transversal: true,
+    accroche: "Apprendre, pratiquer, être certifié.",
+    photo: ["formation", "Un formateur s'adresse à un groupe dans une salle"],
+    nom: "Ubora Académie", initiales: "Ac", couleur: "#9A5522",
+    carte: "L'école d'Ubora, au service de tous nos pôles : cours en ligne utilisables sans réseau, sessions sur le terrain, formation de formateurs et certificats vérifiables.",
+    titre: `Une académie pour tous nos pôles : apprendre, pratiquer, être <span class="serif">certifié</span>.`,
+    lead: "Ubora Académie forme celles et ceux que nos pôles accompagnent, et les équipes qui les accompagnent : membres d'AVEC, animateurs, entrepreneurs, coopératives, agents de terrain. Ses cours en ligne fonctionnent même sans réseau, et chaque parcours mène à un certificat vérifiable.",
+    contexte: {
+      intro: "La formation est au cœur de chacun de nos pôles. Mais une formation donnée une seule fois, en salle, pendant la durée d'un projet, s'oublie vite. L'Académie la rend durable : accessible partout, à son rythme, et reconnue.",
+      constats: [
+        ["Des formations qui s'arrêtent avec le projet", "Les supports restent dans les bureaux, et les nouveaux membres ne sont jamais formés."],
+        ["Former loin coûte cher", "Déplacer un formateur prend du temps et de l'argent, et le réseau manque souvent en zone rurale."],
+        ["Des compétences difficiles à prouver", "Un animateur ou un trésorier formé n'a rien à montrer à un employeur ou à une institution financière."],
+        ["Des relais à former", "Sans formateurs relais bien préparés, la qualité baisse à chaque nouvelle génération de formés."]
+      ]
+    },
+    programmesTitre: ["Les parcours de l'Académie", "Six parcours, du membre d'AVEC au formateur"],
+    programmes: [
+      ["AVEC : bureau et membres", "4 cours", "Les principes, le bureau et le règlement, la réunion pas à pas, le partage et le nouveau cycle."],
+      ["AVEC : animateur", "6 cours", "Créer des AVEC, animer les 7 modules, les calculs sans erreur, le kit et Akiba, le suivi, l'éthique."],
+      ["AVEC : comprendre et piloter", "3 cours", "Le modèle AVEC, la conduite et l'évaluation d'un programme, la croissance du réseau."],
+      ["AGR individuelles et collectives", "4 cours", "L'idée et le marché, les coûts et le prix, les comptes et la vente, le crédit."],
+      ["Éducation financière (PNEF)", "5 cours", "Le budget, l'épargne, le crédit, la négociation, la finance numérique."],
+      ["Formateur AVEC et AGR", "4 cours", "Former des adultes, certifier des animateurs, préparer et évaluer une séance."]
+    ],
+    parcours: [
+      ["Identifier les besoins", "Avec chaque pôle et chaque partenaire : qui former, à quoi, et à quel niveau.", "Un plan de formation adapté au programme."],
+      ["Concevoir les cours", "À partir de nos documents de terrain : leçons courtes, exemples congolais, exercices avec de vrais chiffres.", "Des cours d'environ 50 minutes, éprouvés sur le terrain."],
+      ["Former en ligne et en salle", "L'Académie en ligne, utilisable sans réseau, et des sessions en présentiel pour la pratique.", "Chacun avance à son rythme, accompagné."],
+      ["Évaluer et certifier", "Quiz chronométrés, test final, certificat numéroté avec code QR, vérifiable en ligne.", "Des compétences prouvées."],
+      ["Former les formateurs", "Parcours formateur, micro-enseignement, plan de progrès.", "Des relais locaux qui forment à leur tour."],
+      ["Suivre et améliorer", "Taux de réussite, questionnaires de satisfaction, mise à jour des cours.", "Des formations qui progressent avec le terrain."]
+    ],
+    outils: ["academie"],
+    publics: ["Membres et bureaux d'AVEC", "Animateurs et agents de terrain", "Entrepreneurs et coopératives", "Formateurs relais", "ONG, programmes et institutions"]
   }
 ];
 
@@ -475,7 +513,7 @@ const OUTILS = [
     points: ["Appels à candidatures et sélection", "Fiche de suivi par entrepreneur", "Séances de coaching", "Indicateurs d'impact", "Rapports pour les bailleurs"]
   },
   {
-    id: "academie", nom: "Académie Ubora", pole: "avec", statut: "en-ligne", mock: "academie", couleur: "#9A5522", initiales: "Ac",
+    id: "academie", nom: "Académie Ubora", pole: "academie", statut: "en-ligne", mock: "academie", couleur: "#9A5522", initiales: "Ac",
     sousDomaine: "academie.uborardc.com", url: "https://academie.uborardc.com",
     resume: "L'école en ligne d'Ubora : 26 cours d'environ 50 minutes sur les AVEC, les activités génératrices de revenus et l'éducation financière, utilisables même sans réseau, avec badges et certificats vérifiables.",
     points: ["Six parcours, du membre d'AVEC au formateur", "Les 5 modules du PNEF de la Banque centrale du Congo", "Exercices corrigés et quiz chronométrés", "Cours téléchargés utilisables sans réseau", "Badges et certificats vérifiables en ligne"]
@@ -538,15 +576,5 @@ const ACTUALITES = [];
 const FORMATIONS = [];
 const OFFRES = [];
 
-/* ---------- L'Académie Ubora (page « Formations ») ---------- */
-const ACADEMIE = {
-  url: "https://academie.uborardc.com",
-  parcours: [
-    ["AVEC : bureau et membres", "4 cours", "Les principes, le bureau et le règlement, la réunion pas à pas, le partage et le nouveau cycle."],
-    ["AVEC : animateur", "6 cours", "Créer des AVEC, animer les 7 modules, les calculs sans erreur, le kit et Akiba, le suivi, l'éthique."],
-    ["AVEC : comprendre et piloter", "3 cours", "Le modèle AVEC, la conduite et l'évaluation d'un programme, la croissance du réseau."],
-    ["AGR individuelles et collectives", "4 cours", "L'idée et le marché, les coûts et le prix, les comptes et la vente, le crédit."],
-    ["Éducation financière (PNEF)", "5 cours", "Le budget, l'épargne, le crédit, la négociation, la finance numérique."],
-    ["Formateur AVEC et AGR", "4 cours", "Former des adultes, certifier des animateurs, préparer et évaluer une séance."]
-  ]
-};
+/* ---------- L'Académie en ligne (adresse) ---------- */
+const ACADEMIE = { url: "https://academie.uborardc.com" };

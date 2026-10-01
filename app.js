@@ -148,10 +148,10 @@ function statut(o) {
 }
 function poleCard(p, feature, compact) {
   const img = !compact && p.photo;
-  return `<article class="pole${feature ? " feature" : ""}${img ? " has-img" : ""}" style="--c:${p.couleur}">
+  return `<article class="pole${feature ? " feature" : ""}${img ? " has-img" : ""}${p.transversal ? " transversal" : ""}" style="--c:${p.couleur}">
     ${img ? `<div class="pole-img">${photo(p.photo[0], feature ? "(max-width: 860px) 100vw, 800px" : "(max-width: 560px) 100vw, (max-width: 900px) 50vw, 380px", "", ' loading="lazy"')}</div>` : ""}
     <div class="pole-body">
-      <div class="pole-top"><span class="mk">${esc(p.initiales)}</span><span class="pole-sub">${esc(p.sousDomaine)}</span></div>
+      <div class="pole-top"><span class="mk">${esc(p.initiales)}</span><span class="pole-sub">${esc(p.sousDomaine)}</span>${p.transversal ? '<span class="pole-tag">Pour tous les pôles</span>' : ""}</div>
       <h3><a class="stretch" href="${p.chemin}">${esc(p.nom)}</a></h3>
       ${p.accroche ? `<p class="accroche">${esc(p.accroche)}</p>` : ""}
       <p>${esc(p.carte)}</p>
@@ -371,7 +371,7 @@ function pageHome() {
   ${bandePhotos()}
 
   <section id="poles"><div class="wrap">
-    ${secHead("Nos pôles", `De la première épargne au premier <span class="serif">contrat de vente</span>`, "Un groupe qui s'organise, un entrepreneur qui teste son idée, une coopérative qui vend ensemble, un crédit qui arrive enfin, un acheteur trouvé, une terre protégée : chaque pôle tient un maillon, et tous se passent le relais.")}
+    ${secHead("Nos pôles", `De la première épargne au premier <span class="serif">contrat de vente</span>`, "Un groupe qui s'organise, un entrepreneur qui teste son idée, une coopérative qui vend ensemble, un crédit qui arrive enfin, un acheteur trouvé, une terre protégée : chaque pôle tient un maillon, tous se passent le relais, et notre Académie forme chacun en chemin.")}
     <div class="poles">${POLES.map(p => poleCard(p)).join("")}</div>
   </div></section>
 
@@ -526,7 +526,7 @@ function pagePole(id) {
   </div></section>
 
   ${P.programmes ? `<section class="band"><div class="wrap">
-    ${secHead("Nos programmes", "Trois programmes, selon le stade de l'entreprise")}
+    ${secHead(P.programmesTitre ? P.programmesTitre[0] : "Nos programmes", P.programmesTitre ? P.programmesTitre[1] : "Trois programmes, selon le stade de l'entreprise")}
     <div class="grid-3">${P.programmes.map(([t, q, x]) => `<div class="fcard reveal"><h3>${esc(t)}</h3><p class="sub">${esc(q)}</p><p>${esc(x)}</p></div>`).join("")}</div>
   </div></section>` : ""}
 
@@ -642,9 +642,9 @@ function pageFormations() {
         <h2>Se former à son rythme, même sans réseau</h2>
         <p class="lead">26 cours d'environ 50 minutes, écrits à partir de nos documents de terrain : leçons illustrées, exercices corrigés automatiquement, quiz chronométrés, badges et certificats vérifiables. Un cours téléchargé fonctionne sans réseau ; les résultats partent dès que la connexion revient.</p>
         <div class="btn-row"><a class="btn btn-primary" href="${ACADEMIE.url}" target="_blank" rel="noopener">Ouvrir l'Académie ${ICON.ext}</a></div>
-        <p class="muted small">academie.uborardc.com</p>
+        <p class="muted small">academie.uborardc.com · <a href="/academie">Découvrir le pôle Ubora Académie</a></p>
       </div>
-      <ol class="academie-parcours" aria-label="Les six parcours">${ACADEMIE.parcours.map(([t, n, x]) => `<li><b>${esc(t)}</b><span class="tag">${esc(n)}</span><span>${esc(x)}</span></li>`).join("")}</ol>
+      <ol class="academie-parcours" aria-label="Les six parcours">${pole("academie").programmes.map(([t, n, x]) => `<li><b>${esc(t)}</b><span class="tag">${esc(n)}</span><span>${esc(x)}</span></li>`).join("")}</ol>
     </div>
   </div></section>
   <section class="tight-top"><div class="wrap">
@@ -786,7 +786,7 @@ function pageCareers(openId) {
 
 function pageContact(params) {
   const sujet = params.get("sujet") || "";
-  const besoins = ["Ubora AVEC (groupes d'épargne)", "Ubora PME (entrepreneuriat)", "Ubora Coop (coopératives)", "Ubora Fin (accès au financement)", "Ubora Market (accès au marché)", "Ubora Vert (environnement)", "Boîte à outils", "Conseil et programmes", "Formation", "Partenariat", "Recrutement", "Autre"];
+  const besoins = ["Ubora AVEC (groupes d'épargne)", "Ubora PME (entrepreneuriat)", "Ubora Coop (coopératives)", "Ubora Fin (accès au financement)", "Ubora Market (accès au marché)", "Ubora Vert (environnement)", "Ubora Académie (formations)", "Boîte à outils", "Conseil et programmes", "Formation", "Partenariat", "Recrutement", "Autre"];
   const low = sujet.toLowerCase();
   const sel = !low ? "" : low.includes("boîte") || low.startsWith("les outils de") ? "Boîte à outils"
     : besoins.find(b => low.includes(b.split(" (")[0].toLowerCase()) || b.toLowerCase().includes(low)) || "Autre";
@@ -830,7 +830,7 @@ function pageMentions() {
     <p>Ces données ne sont ni vendues ni cédées. Pour les consulter, les corriger ou les faire supprimer, écrivez à <a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a>.</p>
     <h2>Cookies</h2><p>Le site n'utilise aucun cookie publicitaire ni outil de mesure d'audience. Votre navigateur garde seulement votre choix d'affichage clair ou sombre.</p>
     <h2>Photos</h2><p>Les photos d'ambiance du site proviennent de la banque d'images Unsplash et sont utilisées selon sa licence. Elles illustrent nos domaines d'intervention et ne représentent pas des bénéficiaires ni des projets d'Ubora. Les photos des pages « Notre équipe » et « Nos réalisations » sont les nôtres.</p>
-    <h2>Propriété intellectuelle</h2><p>Le logo, les noms Ubora AVEC, Ubora PME, Ubora Coop, Ubora Fin, Ubora Market, Ubora Vert et AKIBA, ainsi que les textes et les documents de ce site, appartiennent à Ubora. Toute reproduction sans autorisation est interdite.</p>
+    <h2>Propriété intellectuelle</h2><p>Le logo, les noms Ubora AVEC, Ubora PME, Ubora Coop, Ubora Fin, Ubora Market, Ubora Vert, Ubora Académie et AKIBA, ainsi que les textes et les documents de ce site, appartiennent à Ubora. Toute reproduction sans autorisation est interdite.</p>
   </div></section>`;
 }
 
@@ -870,6 +870,7 @@ const SEO_POLES = {
   pme: ["Ubora PME : incubation et accélération d'entrepreneurs en RDC", "Idéation, incubation et accélération d'entrepreneurs et de PME en RDC, avec une démarche lean startup adaptée et un générateur de business plan."],
   cooperatives: ["Ubora Coop : créer et gérer une coopérative en RDC", "Structurer, gérer et renforcer la chaîne de valeur des coopératives en RDC : statuts OHADA, collecte, stockage, transformation, vente groupée, paiement."],
   financement: ["Ubora Fin : accès au crédit et microfinance en RDC", "Ubora Fin prépare les emprunteurs, les présente aux institutions financières et prête aux AVEC des fonds levés auprès des financeurs, en RDC."],
+  academie: ["Ubora Académie : formations en ligne certifiantes en RDC", "Cours en ligne utilisables sans réseau sur les AVEC, les AGR et l'éducation financière, formation de formateurs et certificats vérifiables, pour tous les pôles d'Ubora."],
   vert: ["Ubora Vert : environnement et recyclage en RDC", "Reboisement, recyclage des déchets, agroécologie, énergie propre : Ubora Vert fait de la protection de l'environnement une source de revenus en RDC."],
   marche: ["Ubora Market : vendre plus, trouver des acheteurs en RDC", "Relier les PME, les coopératives et les entrepreneurs de la RDC à des acheteurs : ventes B2B et B2C, marchés institutionnels et export."]
 };
