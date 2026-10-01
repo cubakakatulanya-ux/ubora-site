@@ -57,7 +57,7 @@ function typoHTML(html) {
 
 /* ---------- Écrans illustratifs ---------- */
 function browser(url, inner) {
-  return `<div class="browser"><div class="browser-bar"><i></i><i></i><i></i><span>${esc(url)}</span></div>${inner}</div>`;
+  return `<div class="browser" role="img" aria-label="Écran illustratif : ${esc(url)}"><div class="browser-bar"><i></i><i></i><i></i><span>${esc(url)}</span></div>${inner}</div>`;
 }
 function areaChart(pts, w = 300, h = 80) {
   const max = Math.max(...pts) * 1.1, step = w / (pts.length - 1);
@@ -70,7 +70,7 @@ function areaChart(pts, w = 300, h = 80) {
     <circle cx="${last[0] - 3}" cy="${last[1]}" r="4.5" fill="#fff" stroke="#2FA36B" stroke-width="2.5"/></svg>`;
 }
 function mockAkiba() {
-  return `<div class="phone"><div class="phone-screen">
+  return `<div class="phone" role="img" aria-label="Écran illustratif de l'application AKIBA"><div class="phone-screen">
     <div class="ph-top"><div class="ph-row"><span>AKIBA</span><span>Groupe n° 12</span></div>
       <small>Caisse commune</small><b>4 860 000 FC</b>
       <small class="ph-gap">Semaine 24 sur 36 · 25 membres</small><div class="ph-prog"><i></i></div></div>
@@ -117,7 +117,7 @@ const mockFor = id => (MOCKS[id] || mockHub)();
 
 /* ---------- Photos : trois tailles, le navigateur choisit selon l'écran ---------- */
 const photo = (nom, sizes, alt = "", extra = "") =>
-  `<img src="/img/${nom}-1600.webp" srcset="/img/${nom}-800.webp 800w, /img/${nom}-1600.webp 1600w, /img/${nom}-2400.webp 2400w" sizes="${sizes}" alt="${esc(alt)}" width="1600" height="1067" decoding="async"${extra}>`;
+  `<img src="/img/${nom}-1600.webp" srcset="/img/${nom}-800.webp 800w, /img/${nom}-1200.webp 1200w, /img/${nom}-1600.webp 1600w, /img/${nom}-2400.webp 2400w" sizes="${sizes}" alt="${esc(alt)}" width="1600" height="1067" decoding="async"${extra}>`;
 
 /* ---------- Composants ---------- */
 function pageHead({ eyebrow, title, lead, crumbs = [], extra = "", photo: visuel }) {
@@ -133,7 +133,7 @@ function pageHead({ eyebrow, title, lead, crumbs = [], extra = "", photo: visuel
     </div></section>`;
 }
 function bandePhotos() {
-  const une = PHOTOS.map(([nom, t]) => `<figure>${photo(nom, "360px", t, ' loading="lazy"')}<figcaption>${esc(t)}</figcaption></figure>`).join("");
+  const une = PHOTOS.map(([nom, t]) => `<figure>${photo(nom, "360px", "", ' loading="lazy"')}<figcaption>${esc(t)}</figcaption></figure>`).join("");
   return `<section class="photos" aria-label="Sur le terrain"><div class="photos-track"><div class="photos-move">${une}${une.replace(/<figure>/g, '<figure aria-hidden="true">')}</div></div></section>`;
 }
 function secHead(eyebrow, title, lead, action) {
@@ -221,7 +221,7 @@ function expertise() {
     [String(METHODE.etapes.length), "temps de méthode", "Toujours dans le même ordre, et pour chacun la raison qui le justifie en RDC.", "/approche", "Lire la méthode"],
     [ICON.check, "entreprise immatriculée", [L.rccm && "RCCM " + L.rccm, L.idnat && "ID NAT " + L.idnat].filter(Boolean).join(" · "), "/mentions", "Nos mentions légales"]
   ];
-  return `<div class="lecons">${lecons.map(([id, q, r]) => { const p = pole(id); return `<figure class="lecon reveal" style="--c:${p.couleur}"><span class="lecon-pole">${esc(p.nom)}</span><blockquote>${esc(q)}</blockquote><figcaption>${esc(r)}</figcaption><a class="link" href="${p.chemin}">Voir comment ${ICON.arrow}</a></figure>`; }).join("")}</div>
+  return `<div class="lecons">${lecons.map(([id, q, r]) => { const p = pole(id); return `<figure class="lecon reveal" style="--c:${p.couleur}"><span class="lecon-pole">${esc(p.nom)}</span><blockquote>${esc(q)}</blockquote><figcaption>${esc(r)}</figcaption><a class="link" href="${p.chemin}" aria-label="Voir comment : ${esc(p.nom)}">Voir comment ${ICON.arrow}</a></figure>`; }).join("")}</div>
     <ul class="preuves" aria-label="À vérifier par vous-même">${preuves.map(([n, t, x, h, l]) => `<li><b>${n}</b><span class="preuve-t">${esc(t)}</span><p>${esc(x)}</p><a class="link" href="${h}">${esc(l)} ${ICON.arrow}</a></li>`).join("")}</ul>`;
 }
 /* Pastilles de filtre : elles filtrent les enfants du bloc qui suit (attribut data-f) */
@@ -305,7 +305,7 @@ function footerHTML() {
       <div class="foot-news-txt"><b>Nouvelles du terrain</b><span>Nos programmes, nos outils et nos formations, dans votre boîte e-mail.</span></div>
       <form class="news-form" id="newsForm" aria-label="Lettre d'information">
         <label class="news-label" for="nlEmail">Votre adresse e-mail</label>
-        <div class="news-row"><input id="nlEmail" type="email" required maxlength="160" placeholder="Votre adresse e-mail"><input class="hp" id="nlSite" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn btn-accent btn-sm" type="submit">S'inscrire</button></div>
+        <div class="news-row"><input id="nlEmail" type="email" required maxlength="160" autocomplete="email" placeholder="Votre adresse e-mail"><input class="hp" id="nlSite" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn btn-accent btn-sm" type="submit">S'inscrire</button></div>
       </form>
     </div>
     <div class="foot-grid">
@@ -353,8 +353,8 @@ function pageHome() {
         <span class="pierre" aria-hidden="true"></span>
         <figure class="hero-photo">${photo("avec", "(max-width: 1080px) 100vw, 40vw", "Des femmes réunies en groupe, en pagnes colorés", ' fetchpriority="high"')}</figure>
         ${mockAkiba()}
-        <div class="float-card"><span class="ic">${ICON.check}</span><span><b>Reçu imprimé</b>Membre 07 · épargne 20 000 FC</span></div>
-        <span class="mock-note">Application AKIBA, écran illustratif</span></div>
+        <div class="float-card" aria-hidden="true"><span class="ic">${ICON.check}</span><span><b>Reçu imprimé</b>Membre 07 · épargne 20 000 FC</span></div>
+        <span class="mock-note" aria-hidden="true">Application AKIBA, écran illustratif</span></div>
     </div>
     <div class="wrap"><ul class="reperes">
       <li><b>${POLES.length}</b><span>pôles d'intervention</span></li>
@@ -451,10 +451,10 @@ function pageAbout() {
   <section><div class="wrap">
     ${secHead("Nos valeurs", `Quatre mots <span class="serif">swahili</span> qui nous guident`)}
     <div class="grid-4">
-      <div class="value"><small>ubora</small><h3>L'excellence</h3><p>Un travail sérieux et des outils fiables. Nos bénéficiaires ne méritent pas moins.</p></div>
-      <div class="value"><small>ustahimilivu</small><h3>La résilience</h3><p>Aider les familles et les entreprises à traverser les crises, puis à repartir.</p></div>
-      <div class="value"><small>uwazi</small><h3>La transparence</h3><p>Des comptes clairs et des données partagées. La confiance se construit ainsi.</p></div>
-      <div class="value"><small>umoja</small><h3>La solidarité</h3><p>Personne n'est laissé de côté. Les femmes, les jeunes et les zones rurales d'abord.</p></div>
+      <div class="value"><small lang="sw">ubora</small><h3>L'excellence</h3><p>Un travail sérieux et des outils fiables. Nos bénéficiaires ne méritent pas moins.</p></div>
+      <div class="value"><small lang="sw">ustahimilivu</small><h3>La résilience</h3><p>Aider les familles et les entreprises à traverser les crises, puis à repartir.</p></div>
+      <div class="value"><small lang="sw">uwazi</small><h3>La transparence</h3><p>Des comptes clairs et des données partagées. La confiance se construit ainsi.</p></div>
+      <div class="value"><small lang="sw">umoja</small><h3>La solidarité</h3><p>Personne n'est laissé de côté. Les femmes, les jeunes et les zones rurales d'abord.</p></div>
     </div>
   </div></section>
 
@@ -555,7 +555,7 @@ function pagePole(id) {
 
   ${P.intermediation ? `<section id="intermediation"><div class="wrap">
     ${secHead("Notre rôle d'intermédiaire", esc(P.intermediation.titre), esc(P.intermediation.intro))}
-    <div class="flux" aria-label="Circulation des fonds">
+    <div class="flux" role="group" aria-label="Circulation des fonds">
       <span>Institutions financières, investisseurs, bailleurs</span><i aria-hidden="true">${ICON.arrow}</i>
       <span class="on">Ubora Fin</span><i aria-hidden="true">${ICON.arrow}</i>
       <span>AVEC</span><i aria-hidden="true">${ICON.arrow}</i><span>Membres</span>
@@ -607,7 +607,7 @@ function pageOutils() {
         <p class="muted small">Pôle <a href="${p.chemin}">${esc(p.nom)}</a>${o.sousDomaine ? ` · adresse directe <a href="https://${o.sousDomaine}" target="_blank" rel="noopener">${esc(o.sousDomaine)}</a>` : ""}</p>
         <div class="btn-row">${o.statut === "en-ligne" ? `<a class="btn btn-primary" href="${o.url}" target="_blank" rel="noopener">Ouvrir l'outil ${ICON.ext}</a>` : `<a class="btn btn-primary" href="/contact?sujet=${encodeURIComponent(o.nom)}">Être informé du lancement</a>`}<a class="btn btn-ghost" href="/formations">Formations</a></div>
       </div>
-      <div class="screen">${mockFor(o.mock)}<span class="mock-note">Écran illustratif</span></div>
+      <div class="screen">${mockFor(o.mock)}<span class="mock-note" aria-hidden="true">Écran illustratif</span></div>
     </article>`;
   }).join("")}</div>
   </div></section>
@@ -774,7 +774,7 @@ function pageContact(params) {
   const low = sujet.toLowerCase();
   const sel = !low ? "" : low.includes("boîte") || low.startsWith("les outils de") ? "Boîte à outils"
     : besoins.find(b => low.includes(b.split(" (")[0].toLowerCase()) || b.toLowerCase().includes(low)) || "Autre";
-  return pageHead({ eyebrow: "Contact", title: `Karibu. Parlons de votre <span class="serif">projet</span>.`, crumbs: [["Contact"]],
+  return pageHead({ eyebrow: "Contact", title: `<span lang="sw">Karibu</span>. Parlons de votre <span class="serif">projet</span>.`, crumbs: [["Contact"]],
     lead: "Une question, une demande de boîte à outils, un programme à monter ? Où que vous soyez en RDC, nous vous répondons sous deux jours ouvrés." }) + `
   <section><div class="wrap contact-grid">
     <ul class="contact-list">
@@ -794,10 +794,10 @@ function pageContact(params) {
         <label class="full">Objet<select id="c-besoin"><option value="" disabled${sel ? "" : " selected"}>Choisissez un objet</option>${besoins.map(b => `<option${b === sel ? " selected" : ""}>${esc(b)}</option>`).join("")}</select></label>
         <label class="full">Message<textarea id="c-msg" required maxlength="3000" placeholder="Présentez-vous en quelques lignes et dites-nous ce dont vous avez besoin.">${sujet && sujet !== sel ? esc(sujet) : ""}</textarea></label>
         <input class="hp" id="c-site" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <p class="form-err full" id="c-err" hidden></p>
+        <p class="form-err full" id="c-err" role="alert"></p>
         <div class="full"><button class="btn btn-primary" type="submit">Envoyer ${ICON.arrow}</button></div>
       </form>
-      <div id="sent" hidden></div>
+      <div id="sent" tabindex="-1" hidden></div>
     </div>
   </div></section>`;
 }
@@ -828,7 +828,7 @@ function notFound() {
    ========================================================================== */
 const SOUS_DOMAINES = { avec: "avec", pme: "pme", coop: "cooperatives", fin: "financement", market: "marche", vert: "vert", admin: "admin" };
 /* bp. et hub. mènent directement à l'outil ; akiba. est servi à part (GitHub Pages). */
-const EXTERNES = { hub: "https://www.uborahub.com", bp: "/generateur/" };
+const EXTERNES = { hub: "https://uborahub.com", bp: "/generateur/" };
 const ANCIENNES = {
   "solutions/ubora-avec": "/avec", "solutions/akiba": "/avec", "solutions/ubora-pme": "/pme", "solutions/ubora-coop": "/cooperatives",
   "solutions/ubora-fin": "/financement", "solutions/ubora-market": "/marche", "solutions/ubora-hub": "/outils#hub", "solutions/uborahub": "/outils#hub",
@@ -970,6 +970,8 @@ function boot() {
     $$("[data-scroll]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); document.getElementById(a.dataset.scroll)?.scrollIntoView({ behavior: "smooth" }); }));
     reveal(); if (!garder) typo(app);
     if (keep) return;
+    if (route.deja) app.focus({ preventScroll: true });
+    route.deja = true;
     const anchor = location.hash.slice(1);
     if (anchor && !anchor.startsWith("/")) requestAnimationFrame(() => document.getElementById(anchor)?.scrollIntoView({ behavior: "smooth" }));
     else if (!garder) window.scrollTo(0, 0);
@@ -984,11 +986,13 @@ function boot() {
       const v = id => $("#" + id).value.trim();
       const err = $("#c-err");
       if (v("c-site") || Date.now() - debut < 2500) return;
-      if (!v("c-nom") || !v("c-msg")) { err.hidden = false; err.textContent = "Merci d'indiquer votre nom et votre message."; return; }
-      if (!v("c-tel") && !v("c-mail")) { err.hidden = false; err.textContent = "Laissez-nous un téléphone ou une adresse e-mail pour que nous puissions vous répondre."; return; }
-      if (v("c-mail") && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v("c-mail"))) { err.hidden = false; err.textContent = "L'adresse e-mail semble incomplète (exemple : nom@domaine.com)."; $("#c-mail").focus(); return; }
-      if (!v("c-besoin")) { err.hidden = false; err.textContent = "Choisissez l'objet de votre message."; $("#c-besoin").focus(); return; }
-      err.hidden = true;
+      $$("#contactForm [aria-invalid]").forEach(x => x.removeAttribute("aria-invalid"));
+      const signaler = (msg, id) => { err.textContent = msg; const c = $("#" + id); if (c) { c.setAttribute("aria-invalid", "true"); c.focus(); } };
+      if (!v("c-nom") || !v("c-msg")) { signaler("Merci d'indiquer votre nom et votre message.", v("c-nom") ? "c-msg" : "c-nom"); return; }
+      if (!v("c-tel") && !v("c-mail")) { signaler("Laissez-nous un téléphone ou une adresse e-mail pour que nous puissions vous répondre.", "c-tel"); return; }
+      if (v("c-mail") && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v("c-mail"))) { signaler("L'adresse e-mail semble incomplète (exemple : nom@domaine.com).", "c-mail"); return; }
+      if (!v("c-besoin")) { signaler("Choisissez l'objet de votre message.", "c-besoin"); return; }
+      err.textContent = "";
       const btn = f.querySelector("button[type=submit]"); btn.disabled = true; btn.textContent = "Envoi en cours…";
       const res = await UboraDB.sendMessage({ nom: v("c-nom"), organisation: v("c-org") || null, telephone: v("c-tel") || null, email: v("c-mail") || null, besoin: v("c-besoin"), message: v("c-msg") });
       const texte = `Bonjour Ubora,\n\n${v("c-msg")}\n\n${v("c-nom")}${v("c-org") ? " (" + v("c-org") + ")" : ""}\nObjet : ${v("c-besoin")}${v("c-tel") ? "\nTél. : " + v("c-tel") : ""}${v("c-mail") ? "\nE-mail : " + v("c-mail") : ""}`;
@@ -997,7 +1001,7 @@ function boot() {
       s.innerHTML = res.ok
         ? `<div class="sent"><b>Merci, votre message est bien arrivé.</b><p>Nous vous répondons sous deux jours ouvrés. Si c'est urgent, écrivez-nous aussi sur WhatsApp.</p><div class="btn-row"><a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="${waLink(texte)}">Envoyer aussi par WhatsApp</a></div></div>`
         : `<div class="sent"><b>Votre message n'a pas pu être enregistré.</b><p>Envoyez-le directement par WhatsApp ou par e-mail : il est déjà rédigé.</p><div class="btn-row"><a class="btn btn-wa" target="_blank" rel="noopener" href="${waLink(texte)}">WhatsApp</a><a class="btn btn-ghost" href="mailto:${CONFIG.email}?subject=${encodeURIComponent(v("c-besoin"))}&body=${encodeURIComponent(texte)}">E-mail</a></div></div>`;
-      typo(s);
+      typo(s); s.focus();
     });
   }
 
@@ -1068,6 +1072,7 @@ function boot() {
     nav(href);
   });
   document.addEventListener("keydown", e => { if (e.key === "Escape") fermerDD(); });
+  $$(".has-dd").forEach(li => li.addEventListener("focusout", e => { if (!li.contains(e.relatedTarget)) { li.classList.remove("open"); li.querySelector(".dd-btn").setAttribute("aria-expanded", "false"); } }));
   document.addEventListener("click", e => {
     const b = e.target.closest && e.target.closest("[data-plus]"); if (!b) return;
     const bloc = b.previousElementSibling; if (!bloc) return;

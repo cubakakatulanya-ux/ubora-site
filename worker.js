@@ -54,7 +54,7 @@ export default {
 
     /* 3. Sous-domaines */
     let cible = null;
-    if (sd === "hub") return renvoi("https://www.uborahub.com/");
+    if (sd === "hub") return renvoi("https://uborahub.com/");
     if (POLES[sd]) {
       if (chemin === "/") cible = POLES[sd];
       else if (!FICHIER.test(chemin)) return versSite();
@@ -83,6 +83,9 @@ export default {
     if (sd === "admin") r.headers.set("X-Robots-Tag", "noindex, nofollow");
     if (chemin.startsWith("/img/")) r.headers.set("Cache-Control", "public, max-age=2592000");
     else if (chemin === "/logo.png") r.headers.set("Cache-Control", "public, max-age=604800");
+    /* fichiers versionnés (?v=…) : leur adresse change à chaque mise à jour, on peut les garder un an */
+    if (reponse.ok && /\.(css|js)$/.test(chemin) && url.searchParams.has("v")) r.headers.set("Cache-Control", "public, max-age=31536000, immutable");
+    else if (reponse.ok && (/^\/(favicon|icon-|apple-touch-icon)/.test(chemin) || chemin === "/partage.jpg")) r.headers.set("Cache-Control", "public, max-age=604800");
     return r;
   }
 };

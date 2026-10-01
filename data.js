@@ -188,7 +188,7 @@ const POLES = [
     id: "cooperatives", chemin: "/cooperatives", sousDomaine: "coop.uborardc.com",
     accroche: "Produire ensemble, vendre mieux, être payé à temps.",
     photo: ["coop", "Des cultivateurs au travail dans un champ"],
-    nom: "Ubora Coop", initiales: "Co", couleur: "#4E8F2A",
+    nom: "Ubora Coop", initiales: "Co", couleur: "#3E7A1F",
     carte: "Des statuts OHADA à la vente groupée : nous renforçons chaque maillon de la chaîne de valeur, et les producteurs sont payés à temps.",
     titre: `Des coopératives bien gérées, et des producteurs <span class="serif">payés à temps</span>.`,
     lead: "Nous partons de ce qui existe : une organisation paysanne, un groupement de producteurs ou une coopérative qui ne fonctionne plus. Nous l'aidons à se constituer ou à se remettre en ordre, puis à gérer, vendre et se financer. Nous travaillons sur toute la chaîne de valeur, des intrants jusqu'au paiement du producteur.",
@@ -376,7 +376,7 @@ const POLES = [
     id: "vert", chemin: "/vert", sousDomaine: "vert.uborardc.com",
     accroche: "Protéger la terre, et en vivre.",
     photo: ["vert", "Des mains tiennent un jeune plant dans un sachet de pépinière"],
-    nom: "Ubora Vert", initiales: "Ve", couleur: "#6E9A1E",
+    nom: "Ubora Vert", initiales: "Ve", couleur: "#557A17",
     carte: "Reboisement, recyclage, agroécologie, énergie propre : nous faisons de la protection de l'environnement une source de revenus pour les communautés.",
     titre: `Protéger l'environnement, et en faire une <span class="serif">source de revenus</span>.`,
     lead: "Ubora Vert réunit tout ce que nous faisons pour l'environnement : reboisement, recyclage et valorisation des déchets, agriculture durable, énergie propre, sensibilisation. Notre conviction : une action pour l'environnement dure quand elle fait vivre ceux qui la portent.",
@@ -469,12 +469,12 @@ const OUTILS = [
   },
   {
     id: "hub", nom: "Ubora Hub", pole: "pme", statut: "en-ligne", mock: "hub", couleur: "#0F3170", initiales: "Hb",
-    sousDomaine: "hub.uborardc.com", url: "https://www.uborahub.com",
+    sousDomaine: "hub.uborardc.com", url: "https://uborahub.com",
     resume: "La plateforme des incubateurs et des programmes d'entrepreneuriat : candidatures, suivi des cohortes, coaching et rapports.",
     points: ["Appels à candidatures et sélection", "Fiche de suivi par entrepreneur", "Séances de coaching", "Indicateurs d'impact", "Rapports pour les bailleurs"]
   },
   {
-    id: "logiciel-coop", nom: "Ubora Coop, le logiciel", pole: "cooperatives", statut: "en-cours", mock: "coop", couleur: "#4E8F2A", initiales: "Co",
+    id: "logiciel-coop", nom: "Ubora Coop, le logiciel", pole: "cooperatives", statut: "en-cours", mock: "coop", couleur: "#3E7A1F", initiales: "Co",
     resume: "Le registre numérique de la coopérative : membres, parcelles, collectes, stocks, ventes et paiements.",
     points: ["Membres, parcelles et parts sociales", "Collecte et pesées", "Stocks et intrants à crédit", "Ventes groupées", "Paiements par mobile money"]
   },

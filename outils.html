@@ -34,9 +34,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700&family=Ubuntu:ital,wght@0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="/styles.css?v=983eaa2821">
+<link rel="stylesheet" href="/styles.css?v=ffe6c9c7ab">
 </head>
 <body>
+<a class="skip" href="#app">Aller au contenu</a>
 <div class="progress-top" id="readBar"></div>
 
 <header class="site-header">
@@ -45,7 +46,7 @@
       <img class="logo-img" src="/logo-ubora.png" alt="" width="50" height="50">
       <span class="brand-txt"><span class="brand-name">ub<b>o</b>ra</span><span class="brand-sub">Entreprise sociale</span></span>
     </a>
-    <ul class="menu" id="menu">
+    <nav class="site-nav" aria-label="Menu principal"><ul class="menu" id="menu">
     <li><a href="/" data-r="">Accueil</a></li>
     <li class="has-dd"><button class="dd-btn" type="button" data-r="a-propos" aria-expanded="false">Ubora <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
       <div class="dd dd-list">
@@ -57,14 +58,14 @@
       </div></li>
     <li class="has-dd"><button class="dd-btn" type="button" data-r="poles" aria-expanded="false">Pôles et outils <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
       <div class="dd dd-mega">
-        <div class="dd-col"><h5>Nos pôles</h5><a href="/avec" class="dd-item"><span class="mk" style="background:#23843A">Av</span><span><b>Ubora AVEC</b><small>avec.uborardc.com</small></span></a><a href="/pme" class="dd-item"><span class="mk" style="background:#B0622A">Pm</span><span><b>Ubora PME</b><small>pme.uborardc.com</small></span></a><a href="/cooperatives" class="dd-item"><span class="mk" style="background:#4E8F2A">Co</span><span><b>Ubora Coop</b><small>coop.uborardc.com</small></span></a><a href="/financement" class="dd-item"><span class="mk" style="background:#1D5FB8">Fi</span><span><b>Ubora Fin</b><small>fin.uborardc.com</small></span></a><a href="/marche" class="dd-item"><span class="mk" style="background:#1F7A6B">Mk</span><span><b>Ubora Market</b><small>market.uborardc.com</small></span></a><a href="/vert" class="dd-item"><span class="mk" style="background:#6E9A1E">Ve</span><span><b>Ubora Vert</b><small>vert.uborardc.com</small></span></a></div>
-        <div class="dd-col"><h5>Nos outils</h5><a href="https://akiba.uborardc.com" target="_blank" rel="noopener" class="dd-item"><span class="mk" style="background:#23843A">Ak</span><span><b>AKIBA</b><small>akiba.uborardc.com</small></span></a><a href="https://bp.uborardc.com" target="_blank" rel="noopener" class="dd-item"><span class="mk" style="background:#B0622A">Bp</span><span><b>Générateur de business plan</b><small>bp.uborardc.com</small></span></a><a href="https://www.uborahub.com" target="_blank" rel="noopener" class="dd-item"><span class="mk" style="background:#0F3170">Hb</span><span><b>Ubora Hub</b><small>hub.uborardc.com</small></span></a>
+        <div class="dd-col"><h5>Nos pôles</h5><a href="/avec" class="dd-item"><span class="mk" style="background:#23843A">Av</span><span><b>Ubora AVEC</b><small>avec.uborardc.com</small></span></a><a href="/pme" class="dd-item"><span class="mk" style="background:#B0622A">Pm</span><span><b>Ubora PME</b><small>pme.uborardc.com</small></span></a><a href="/cooperatives" class="dd-item"><span class="mk" style="background:#3E7A1F">Co</span><span><b>Ubora Coop</b><small>coop.uborardc.com</small></span></a><a href="/financement" class="dd-item"><span class="mk" style="background:#1D5FB8">Fi</span><span><b>Ubora Fin</b><small>fin.uborardc.com</small></span></a><a href="/marche" class="dd-item"><span class="mk" style="background:#1F7A6B">Mk</span><span><b>Ubora Market</b><small>market.uborardc.com</small></span></a><a href="/vert" class="dd-item"><span class="mk" style="background:#557A17">Ve</span><span><b>Ubora Vert</b><small>vert.uborardc.com</small></span></a></div>
+        <div class="dd-col"><h5>Nos outils</h5><a href="https://akiba.uborardc.com" target="_blank" rel="noopener" class="dd-item"><span class="mk" style="background:#23843A">Ak</span><span><b>AKIBA</b><small>akiba.uborardc.com</small></span></a><a href="https://bp.uborardc.com" target="_blank" rel="noopener" class="dd-item"><span class="mk" style="background:#B0622A">Bp</span><span><b>Générateur de business plan</b><small>bp.uborardc.com</small></span></a><a href="https://uborahub.com" target="_blank" rel="noopener" class="dd-item"><span class="mk" style="background:#0F3170">Hb</span><span><b>Ubora Hub</b><small>hub.uborardc.com</small></span></a>
           <a href="/outils" class="dd-more">Tous les outils <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a href="/formations" class="dd-more">Formations <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div>
       </div></li>
     <li><a href="/realisations" data-r="realisations">Réalisations</a></li>
     <li><a href="/actualites" data-r="actualites">Actualités</a></li>
     <li><a href="/contact" data-r="contact">Contact</a></li>
-    <li class="m-cta"><a class="btn btn-accent" href="/contact">Nous contacter</a></li></ul>
+    <li class="m-cta"><a class="btn btn-accent" href="/contact">Nous contacter</a></li></ul></nav>
     <div class="nav-actions">
       <button class="icon-btn" id="themeBtn" type="button" aria-label="Thème sombre" aria-pressed="false">
         <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
@@ -97,7 +98,7 @@
         <p class="muted small">Pôle <a href="/avec">Ubora AVEC</a> · adresse directe <a href="https://akiba.uborardc.com" target="_blank" rel="noopener">akiba.uborardc.com</a></p>
         <div class="btn-row"><a class="btn btn-primary" href="https://akiba.uborardc.com" target="_blank" rel="noopener">Ouvrir l'outil <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a><a class="btn btn-ghost" href="/formations">Formations</a></div>
       </div>
-      <div class="screen"><div class="phone"><div class="phone-screen">
+      <div class="screen"><div class="phone" role="img" aria-label="Écran illustratif de l'application AKIBA"><div class="phone-screen">
     <div class="ph-top"><div class="ph-row"><span>AKIBA</span><span>Groupe n° 12</span></div>
       <small>Caisse commune</small><b>4 860 000 FC</b>
       <small class="ph-gap">Semaine 24 sur 36 · 25 membres</small><div class="ph-prog"><i></i></div></div>
@@ -106,7 +107,7 @@
       <div class="ph-tx"><span>Remboursement · membre 14</span><span>+55 000</span></div>
       <div class="ph-tx out"><span>Prêt · membre 03</span><span>−150 000</span></div>
       <div class="ph-btn">+ Nouvelle cotisation</div>
-    </div></div></div><span class="mock-note">Écran illustratif</span></div>
+    </div></div></div><span class="mock-note" aria-hidden="true">Écran illustratif</span></div>
     </article><article class="outil-row flip" id="bp" data-f="en-ligne pme">
       <div class="outil-txt">
         <div class="pole-top"><span class="mk" style="background:#B0622A">Bp</span><span class="status st-live">En ligne</span></div>
@@ -115,19 +116,19 @@
         <p class="muted small">Pôle <a href="/pme">Ubora PME</a> · adresse directe <a href="https://bp.uborardc.com" target="_blank" rel="noopener">bp.uborardc.com</a></p>
         <div class="btn-row"><a class="btn btn-primary" href="https://bp.uborardc.com" target="_blank" rel="noopener">Ouvrir l'outil <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a><a class="btn btn-ghost" href="/formations">Formations</a></div>
       </div>
-      <div class="screen"><div class="browser"><div class="browser-bar"><i></i><i></i><i></i><span>bp.uborardc.com</span></div><div class="mock-pad">
+      <div class="screen"><div class="browser" role="img" aria-label="Écran illustratif : bp.uborardc.com"><div class="browser-bar"><i></i><i></i><i></i><span>bp.uborardc.com</span></div><div class="mock-pad">
     <div class="mock-title"><b>Plan d'affaires</b><span>62 % complété</span></div>
     <div class="hub-list"><div class="bp-row"><span class="bp-dot done"></span><span>Projet et équipe</span><span class="bar"><i style="width:100%"></i></span></div><div class="bp-row"><span class="bp-dot done"></span><span>Marché</span><span class="bar"><i style="width:100%"></i></span></div><div class="bp-row"><span class="bp-dot"></span><span>Stratégie commerciale</span><span class="bar"><i style="width:70%"></i></span></div><div class="bp-row"><span class="bp-dot"></span><span>Prévisions financières</span><span class="bar"><i style="width:40%"></i></span></div><div class="bp-row"><span class="bp-dot"></span><span>Dossier final</span><span class="bar"><i style="width:0%"></i></span></div></div>
-    <div class="hub-kpis"><div><small>Investissement</small><b>8 500 $</b></div><div><small>Rentable au</small><b>mois 9</b></div><div><small>Marge an 2</small><b>21 %</b></div></div></div></div><span class="mock-note">Écran illustratif</span></div>
+    <div class="hub-kpis"><div><small>Investissement</small><b>8 500 $</b></div><div><small>Rentable au</small><b>mois 9</b></div><div><small>Marge an 2</small><b>21 %</b></div></div></div></div><span class="mock-note" aria-hidden="true">Écran illustratif</span></div>
     </article><article class="outil-row" id="hub" data-f="en-ligne pme">
       <div class="outil-txt">
         <div class="pole-top"><span class="mk" style="background:#0F3170">Hb</span><span class="status st-live">En ligne</span></div>
         <h2>Ubora Hub</h2><p class="lead">La plateforme des incubateurs et des programmes d&#39;entrepreneuriat : candidatures, suivi des cohortes, coaching et rapports.</p>
         <ul class="checks"><li>Appels à candidatures et sélection</li><li>Fiche de suivi par entrepreneur</li><li>Séances de coaching</li><li>Indicateurs d&#39;impact</li><li>Rapports pour les bailleurs</li></ul>
         <p class="muted small">Pôle <a href="/pme">Ubora PME</a> · adresse directe <a href="https://hub.uborardc.com" target="_blank" rel="noopener">hub.uborardc.com</a></p>
-        <div class="btn-row"><a class="btn btn-primary" href="https://www.uborahub.com" target="_blank" rel="noopener">Ouvrir l'outil <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a><a class="btn btn-ghost" href="/formations">Formations</a></div>
+        <div class="btn-row"><a class="btn btn-primary" href="https://uborahub.com" target="_blank" rel="noopener">Ouvrir l'outil <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a><a class="btn btn-ghost" href="/formations">Formations</a></div>
       </div>
-      <div class="screen"><div class="browser"><div class="browser-bar"><i></i><i></i><i></i><span>uborahub.com/cohortes</span></div><div class="hub">
+      <div class="screen"><div class="browser" role="img" aria-label="Écran illustratif : uborahub.com/cohortes"><div class="browser-bar"><i></i><i></i><i></i><span>uborahub.com/cohortes</span></div><div class="hub">
     <div class="hub-side"><div class="on">Tableau de bord</div><div>Candidatures</div><div>Cohortes</div><div>Coaching</div><div>Rapports</div></div>
     <div class="hub-main">
       <div class="hub-kpis"><div><small>Entrepreneurs</small><b>25</b></div><div><small>Séances</small><b>142</b></div><div><small>Ventes</small><b>+18 %</b></div></div>
@@ -136,20 +137,20 @@
     <path d="M0.0 61.0 L27.3 56.3 L54.5 57.9 L81.8 50.0 L109.1 45.2 L136.4 46.8 L163.6 37.3 L190.9 31.0 L218.2 32.6 L245.5 23.1 L272.7 15.2 L300.0 7.3 L300 80 L0 80Z" fill="url(#ag)"/><path d="M0.0 61.0 L27.3 56.3 L54.5 57.9 L81.8 50.0 L109.1 45.2 L136.4 46.8 L163.6 37.3 L190.9 31.0 L218.2 32.6 L245.5 23.1 L272.7 15.2 L300.0 7.3" fill="none" stroke="#2FA36B" stroke-width="2.2" stroke-linejoin="round"/>
     <circle cx="297" cy="7.2727272727272805" r="4.5" fill="#fff" stroke="#2FA36B" stroke-width="2.5"/></svg></div>
       <div class="hub-list"><div><span class="av" style="background:#7FD8A6">01</span><span>Entreprise 01</span><span class="bar"><i style="width:82%"></i></span></div><div><span class="av" style="background:#7FB3FF">02</span><span>Entreprise 02</span><span class="bar"><i style="width:64%"></i></span></div><div><span class="av" style="background:#E3A064">03</span><span>Entreprise 03</span><span class="bar"><i style="width:47%"></i></span></div></div>
-    </div></div></div><span class="mock-note">Écran illustratif</span></div>
+    </div></div></div><span class="mock-note" aria-hidden="true">Écran illustratif</span></div>
     </article><article class="outil-row flip" id="logiciel-coop" data-f="en-cours cooperatives">
       <div class="outil-txt">
-        <div class="pole-top"><span class="mk" style="background:#4E8F2A">Co</span><span class="status st-soon">En préparation</span></div>
+        <div class="pole-top"><span class="mk" style="background:#3E7A1F">Co</span><span class="status st-soon">En préparation</span></div>
         <h2>Ubora Coop, le logiciel</h2><p class="lead">Le registre numérique de la coopérative : membres, parcelles, collectes, stocks, ventes et paiements.</p>
         <ul class="checks"><li>Membres, parcelles et parts sociales</li><li>Collecte et pesées</li><li>Stocks et intrants à crédit</li><li>Ventes groupées</li><li>Paiements par mobile money</li></ul>
         <p class="muted small">Pôle <a href="/cooperatives">Ubora Coop</a></p>
         <div class="btn-row"><a class="btn btn-primary" href="/contact?sujet=Ubora%20Coop%2C%20le%20logiciel">Être informé du lancement</a><a class="btn btn-ghost" href="/formations">Formations</a></div>
       </div>
-      <div class="screen"><div class="browser"><div class="browser-bar"><i></i><i></i><i></i><span>ubora-coop · collecte</span></div><div class="mock-pad">
+      <div class="screen"><div class="browser" role="img" aria-label="Écran illustratif : ubora-coop · collecte"><div class="browser-bar"><i></i><i></i><i></i><span>ubora-coop · collecte</span></div><div class="mock-pad">
     <div class="hub-kpis"><div><small>Membres</small><b>184</b></div><div><small>Collecté</small><b>62 t</b></div><div><small>Payé</small><b>78 %</b></div></div>
     
     <div class="table-x"><table class="mock-t"><thead><tr><th>Producteur</th><th>Village</th><th>Maïs (kg)</th><th>Paiement</th></tr></thead>
-    <tbody><tr><td>Producteur 01</td><td>Village A</td><td>1 250</td><td class="ok">Payé</td></tr><tr><td>Producteur 02</td><td>Village A</td><td>980</td><td class="ok">Payé</td></tr><tr><td>Producteur 03</td><td>Village B</td><td>1 540</td><td class="wait">En attente</td></tr><tr><td>Producteur 04</td><td>Village C</td><td>720</td><td class="ok">Payé</td></tr></tbody></table></div></div></div><span class="mock-note">Écran illustratif</span></div>
+    <tbody><tr><td>Producteur 01</td><td>Village A</td><td>1 250</td><td class="ok">Payé</td></tr><tr><td>Producteur 02</td><td>Village A</td><td>980</td><td class="ok">Payé</td></tr><tr><td>Producteur 03</td><td>Village B</td><td>1 540</td><td class="wait">En attente</td></tr><tr><td>Producteur 04</td><td>Village C</td><td>720</td><td class="ok">Payé</td></tr></tbody></table></div></div></div><span class="mock-note" aria-hidden="true">Écran illustratif</span></div>
     </article><article class="outil-row" id="plateforme-market" data-f="en-cours marche">
       <div class="outil-txt">
         <div class="pole-top"><span class="mk" style="background:#1F7A6B">Mk</span><span class="status st-soon">En préparation</span></div>
@@ -158,11 +159,11 @@
         <p class="muted small">Pôle <a href="/marche">Ubora Market</a></p>
         <div class="btn-row"><a class="btn btn-primary" href="/contact?sujet=Ubora%20Market%2C%20la%20plateforme">Être informé du lancement</a><a class="btn btn-ghost" href="/formations">Formations</a></div>
       </div>
-      <div class="screen"><div class="browser"><div class="browser-bar"><i></i><i></i><i></i><span>ubora-market · offre</span></div><div class="mock-pad">
+      <div class="screen"><div class="browser" role="img" aria-label="Écran illustratif : ubora-market · offre"><div class="browser-bar"><i></i><i></i><i></i><span>ubora-market · offre</span></div><div class="mock-pad">
     <div class="hub-kpis"><div><small>Offre</small><b>38 t</b></div><div><small>Acheteurs</small><b>6</b></div><div><small>Sous contrat</small><b>54 %</b></div></div>
     
     <div class="table-x"><table class="mock-t"><thead><tr><th>Produit</th><th>Origine</th><th>Volume</th><th>État</th></tr></thead>
-    <tbody><tr><td>Maïs blanc</td><td>Coopérative A</td><td>18 t</td><td class="ok">Sous contrat</td></tr><tr><td>Soja</td><td>Coopérative B</td><td>7 t</td><td class="wait">En discussion</td></tr><tr><td>Farine de manioc</td><td>Atelier C</td><td>2,5 t</td><td class="ok">Sous contrat</td></tr></tbody></table></div></div></div><span class="mock-note">Écran illustratif</span></div>
+    <tbody><tr><td>Maïs blanc</td><td>Coopérative A</td><td>18 t</td><td class="ok">Sous contrat</td></tr><tr><td>Soja</td><td>Coopérative B</td><td>7 t</td><td class="wait">En discussion</td></tr><tr><td>Farine de manioc</td><td>Atelier C</td><td>2,5 t</td><td class="ok">Sous contrat</td></tr></tbody></table></div></div></div><span class="mock-note" aria-hidden="true">Écran illustratif</span></div>
     </article></div>
   </div></section>
   <section class="tight-top"><div class="wrap"><div class="deep final">
@@ -176,7 +177,7 @@
       <div class="foot-news-txt"><b>Nouvelles du terrain</b><span>Nos programmes, nos outils et nos formations, dans votre boîte e-mail.</span></div>
       <form class="news-form" id="newsForm" aria-label="Lettre d'information">
         <label class="news-label" for="nlEmail">Votre adresse e-mail</label>
-        <div class="news-row"><input id="nlEmail" type="email" required maxlength="160" placeholder="Votre adresse e-mail"><input class="hp" id="nlSite" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn btn-accent btn-sm" type="submit">S'inscrire</button></div>
+        <div class="news-row"><input id="nlEmail" type="email" required maxlength="160" autocomplete="email" placeholder="Votre adresse e-mail"><input class="hp" id="nlSite" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn btn-accent btn-sm" type="submit">S'inscrire</button></div>
       </form>
     </div>
     <div class="foot-grid">
@@ -184,7 +185,7 @@
         <a class="brand" href="/"><img class="logo-img" src="/logo-ubora.png" alt="" width="56" height="56" loading="lazy"><span class="brand-txt"><span class="brand-name">ub<b>o</b>ra</span><span class="brand-sub">Entreprise sociale</span></span></a>
         <p class="foot-accroche">Basée à Lubumbashi, présente partout en RDC. Et nous restons quand les projets se terminent.</p>
       </div>
-      <nav aria-label="Nos pôles"><h4>Nos pôles</h4><ul><li><a class="foot-pole" href="/avec" style="--c:#23843A">Ubora AVEC</a></li><li><a class="foot-pole" href="/pme" style="--c:#B0622A">Ubora PME</a></li><li><a class="foot-pole" href="/cooperatives" style="--c:#4E8F2A">Ubora Coop</a></li><li><a class="foot-pole" href="/financement" style="--c:#1D5FB8">Ubora Fin</a></li><li><a class="foot-pole" href="/marche" style="--c:#1F7A6B">Ubora Market</a></li><li><a class="foot-pole" href="/vert" style="--c:#6E9A1E">Ubora Vert</a></li></ul></nav>
+      <nav aria-label="Nos pôles"><h4>Nos pôles</h4><ul><li><a class="foot-pole" href="/avec" style="--c:#23843A">Ubora AVEC</a></li><li><a class="foot-pole" href="/pme" style="--c:#B0622A">Ubora PME</a></li><li><a class="foot-pole" href="/cooperatives" style="--c:#3E7A1F">Ubora Coop</a></li><li><a class="foot-pole" href="/financement" style="--c:#1D5FB8">Ubora Fin</a></li><li><a class="foot-pole" href="/marche" style="--c:#1F7A6B">Ubora Market</a></li><li><a class="foot-pole" href="/vert" style="--c:#557A17">Ubora Vert</a></li></ul></nav>
       <nav aria-label="Ubora"><h4>Ubora</h4><ul><li><a href="/a-propos">Qui sommes-nous</a></li><li><a href="/equipe">Notre équipe</a></li><li><a href="/realisations">Nos réalisations</a></li><li><a href="/approche">Notre approche</a></li><li><a href="/conseil">Conseil et programmes</a></li></ul></nav>
       <nav aria-label="Ressources"><h4>Ressources</h4><ul><li><a href="/outils">Outils numériques</a></li><li><a href="/formations">Formations</a></li><li><a href="/actualites">Actualités</a></li><li><a href="/carrieres">Carrières</a></li><li><a href="/contact">Contact</a></li></ul></nav>
       <div class="foot-contact"><h4>Nous joindre</h4><ul>
@@ -210,10 +211,10 @@
 
 <script type="application/json" id="ubora-donnees">{"actualites":[],"formations":[],"offres":[],"equipe":[],"realisations":[]}</script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" integrity="sha384-GFr3yTh5lJznCbZfpTtXnwboFsxqtTQoeTZCRHhE0579KrRmlCzen5AA8ohaB5ug" crossorigin="anonymous"></script>
-<script src="/data.js?v=983eaa2821"></script>
-<script src="/db.js?v=983eaa2821"></script>
-<script src="/admin.js?v=983eaa2821"></script>
-<script src="/app.js?v=983eaa2821"></script>
-<script src="/chat.js?v=983eaa2821"></script>
+<script src="/data.js?v=ffe6c9c7ab"></script>
+<script src="/db.js?v=ffe6c9c7ab"></script>
+<script src="/admin.js?v=ffe6c9c7ab"></script>
+<script src="/app.js?v=ffe6c9c7ab"></script>
+<script src="/chat.js?v=ffe6c9c7ab"></script>
 </body>
 </html>

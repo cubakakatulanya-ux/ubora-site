@@ -83,8 +83,9 @@ function donneesStructurees(chemin, r) {
     const n = S.allNews().find(x => x.slug === parts[1]);
     if (n) graph.push({ "@type": "NewsArticle", headline: n.titre, description: n.extrait, datePublished: n.date, inLanguage: "fr", mainEntityOfPage: url, image: "https://uborardc.com/partage.jpg", author: { "@id": ORG["@id"] }, publisher: { "@id": ORG["@id"] } });
   } else {
-    miettes.itemListElement.push({ "@type": "ListItem", position: 2, name: texte(r.court), item: url });
     const P = S.POLES.find(p => p.chemin === chemin);
+    if (chemin === "/equipe") miettes.itemListElement.push({ "@type": "ListItem", position: 2, name: "Qui sommes-nous", item: "https://uborardc.com/a-propos" });
+    miettes.itemListElement.push({ "@type": "ListItem", position: miettes.itemListElement.length + 1, name: texte(P ? P.nom : r.court), item: url });
     if (P) graph.push({ "@type": "Service", name: P.nom, description: texte(P.lead), url, serviceType: texte(P.carte), areaServed: { "@type": "Country", name: "République démocratique du Congo" }, provider: { "@id": ORG["@id"] } });
   }
   return jsonld({ "@context": "https://schema.org", "@graph": graph });

@@ -145,7 +145,7 @@ section.tight-top { padding-top: 0; }
 .has-dd.open .dd-btn svg { transform: rotate(180deg); }
 .dd { position: absolute; top: calc(100% + 12px); left: 50%; z-index: 10; padding: 12px; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow-lg); opacity: 0; visibility: hidden; transform: translate(-50%, 6px); transition: opacity .18s, transform .18s, visibility .18s; }
 .dd::before { content: ""; position: absolute; left: 0; right: 0; top: -14px; height: 14px; }
-.has-dd:hover .dd, .has-dd:focus-within .dd, .has-dd.open .dd { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+.has-dd:hover .dd, .has-dd.open .dd { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
 .dd-list { width: 300px; display: grid; gap: 2px; }
 .dd-list a { display: grid; gap: 2px; padding: 11px 12px; border-radius: 12px; color: var(--ink); text-decoration: none; }
 .dd-list a:hover, .dd-item:hover { background: var(--surface-2); }
@@ -401,7 +401,7 @@ table.compare tbody tr:last-child > * { border-bottom: 0; }
 .bridge { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
 @media (max-width: 900px) { .bridge { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 520px) { .bridge { grid-template-columns: 1fr; } }
-.bridge .bn { background: var(--green-2); }
+.bridge .bn { background: var(--green); }
 .projet { display: grid; gap: 16px; padding: clamp(28px, 5vw, 56px); border-radius: var(--r-lg); }
 .projet h2 { max-width: 24ch; font-size: clamp(26px, 2.8vw, 36px); letter-spacing: -.03em; }
 .projet .etat { padding-left: 14px; border-left: 2px solid var(--lime); color: var(--lime); font-family: var(--f-mono); font-size: 13px; }
@@ -1703,3 +1703,22 @@ section.band { padding-block: clamp(40px, 4.8vw, 66px); }
 @media (max-width: 420px) { .hero h1.pill { text-wrap: wrap; } }
 /* Ancres : le titre visé n'est plus caché sous l'en-tête collant */
 :where([id]) { scroll-margin-top: 120px; }
+
+/* ==========================================================================
+   Accessibilité (audit)
+   ========================================================================== */
+/* Lien d'évitement, visible au clavier */
+.skip { position: absolute; left: -9999px; top: 8px; z-index: 100; padding: 8px 14px; border-radius: 8px; background: var(--surface); color: var(--ink); box-shadow: var(--shadow); font-weight: 600; }
+.skip:focus { left: 16px; }
+/* Le repère de navigation ne change pas la mise en page */
+.site-nav { display: contents; }
+/* Formulaire : le message d'erreur n'occupe pas de place quand il est vide */
+.form-err:empty { display: none; }
+.form [aria-invalid="true"] { border-color: #B42318; }
+/* Contrastes */
+.site-footer a.btn-wa, .site-footer a.btn-wa:hover { color: #04361C; }
+:root[data-theme="dark"] .boite .bn { color: var(--vert-texte); }
+.foot-bottom { color: rgba(227, 241, 232, .85); }
+.dir-org { color: #9A5522; }
+:root[data-theme="dark"] .dir-org { color: #E3A064; }
+:root[data-theme="dark"] :is(.tool-foot .mono, .lecon-pole, .lecon .link, .pole .link, .pole-sub) { color: color-mix(in srgb, var(--c, var(--navy)) 40%, #fff); }
