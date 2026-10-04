@@ -83,7 +83,7 @@ function mockAkiba() {
 }
 function mockHub() {
   const ppl = [["01", "Entreprise 01", 82, "#7FD8A6"], ["02", "Entreprise 02", 64, "#7FB3FF"], ["03", "Entreprise 03", 47, "#E3A064"]];
-  return browser("uborahub.com/cohortes", `<div class="hub">
+  return browser("hub.uborardc.com/cohortes", `<div class="hub">
     <div class="hub-side"><div class="on">Tableau de bord</div><div>Candidatures</div><div>Cohortes</div><div>Coaching</div><div>Rapports</div></div>
     <div class="hub-main">
       <div class="hub-kpis"><div><small>Entrepreneurs</small><b>25</b></div><div><small>Séances</small><b>142</b></div><div><small>Ventes</small><b>+18 %</b></div></div>
@@ -319,7 +319,7 @@ function footerHTML() {
       </div>
       <nav aria-label="Nos pôles"><h4>Nos pôles</h4><ul>${POLES.map(p => `<li><a class="foot-pole" href="${p.chemin}" style="--c:${p.couleur}">${esc(p.nom)}</a></li>`).join("")}</ul></nav>
       <nav aria-label="Ubora"><h4>Ubora</h4><ul><li><a href="/a-propos">Qui sommes-nous</a></li><li><a href="/equipe">Notre équipe</a></li><li><a href="/realisations">Nos réalisations</a></li><li><a href="/approche">Notre approche</a></li><li><a href="/conseil">Conseil et programmes</a></li></ul></nav>
-      <nav aria-label="Ressources"><h4>Ressources</h4><ul><li><a href="https://academie.uborardc.com">Académie Ubora</a></li><li><a href="/outils">Outils numériques</a></li><li><a href="/formations">Formations</a></li><li><a href="/actualites">Actualités</a></li><li><a href="/carrieres">Carrières</a></li><li><a href="/contact">Contact</a></li></ul></nav>
+      <nav aria-label="Ressources"><h4>Ressources</h4><ul><li><a href="https://academie.uborardc.com">Académie Ubora</a></li><li><a href="https://hub.uborardc.com">Ubora Hub</a></li><li><a href="/outils">Outils numériques</a></li><li><a href="/formations">Formations</a></li><li><a href="/actualites">Actualités</a></li><li><a href="/carrieres">Carrières</a></li><li><a href="/contact">Contact</a></li></ul></nav>
       <div class="foot-contact"><h4>Nous joindre</h4><ul>
         <li><span class="ic">${ICON.phone}</span><a href="tel:${tel}">${esc(CONFIG.telephone)}</a></li>
         <li><span class="ic">${ICON.mail}</span><a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a></li>
@@ -844,11 +844,11 @@ function notFound() {
    ========================================================================== */
 const SOUS_DOMAINES = { avec: "avec", pme: "pme", coop: "cooperatives", fin: "financement", market: "marche", vert: "vert", admin: "admin" };
 /* bp. et hub. mènent directement à l'outil ; akiba. est servi à part (GitHub Pages). */
-const EXTERNES = { hub: "https://uborahub.com", bp: "/generateur/" };
+const EXTERNES = { bp: "/generateur/" };
 const ANCIENNES = {
   "solutions/ubora-avec": "/avec", "solutions/akiba": "/avec", "solutions/ubora-pme": "/pme", "solutions/ubora-coop": "/cooperatives",
   "solutions/ubora-fin": "/financement", "solutions/ubora-market": "/marche", "solutions/ubora-hub": "/outils#hub", "solutions/uborahub": "/outils#hub",
-  "solutions": "/outils", "services": "/conseil", "diagnostic": "/contact", "rediger": "/admin"
+  "solutions": "/outils", "services": "/conseil", "diagnostic": "/contact", "rediger": "/admin", "hub": "https://hub.uborardc.com/"
 };
 const DESCR = {
   "": "Ubora, entreprise sociale à Lubumbashi : groupes d'épargne (AVEC), entrepreneurs, coopératives, accès au financement et au marché, partout en RDC.",
@@ -959,6 +959,7 @@ function boot() {
     const keep = !!(opts && opts.keep === true);
     if (location.hash.startsWith("#/")) history.replaceState({}, "", location.hash.slice(1));
     const r = resolve(location.pathname, location.search, location.hostname);
+    if (r.redirect && /^https?:/.test(r.redirect)) { location.replace(r.redirect); return; }
     if (r.redirect) { history.replaceState({}, "", r.redirect); return route(); }
     /* l'espace équipe a sa propre adresse */
     if (r.base === "admin" && sd !== "admin" && /(^|\.)uborardc\.com$/.test(location.hostname)) { location.replace("https://admin.uborardc.com/"); return; }

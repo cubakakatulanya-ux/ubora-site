@@ -11,7 +11,7 @@
 # Le générateur de business plan fonctionne en un seul fichier, avec son code intégré.
 /generateur/*
   ! Content-Security-Policy
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://hub.uborardc.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
 
 # L'espace équipe ne doit pas apparaître dans les moteurs de recherche.
 https://admin.uborardc.com/*

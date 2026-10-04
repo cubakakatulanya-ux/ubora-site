@@ -508,7 +508,7 @@ const OUTILS = [
   },
   {
     id: "hub", nom: "Ubora Hub", pole: "pme", statut: "en-ligne", mock: "hub", couleur: "#0F3170", initiales: "Hb",
-    sousDomaine: "hub.uborardc.com", url: "https://uborahub.com",
+    sousDomaine: "hub.uborardc.com", url: "https://hub.uborardc.com",
     resume: "La plateforme des incubateurs et des programmes d'entrepreneuriat : candidatures, suivi des cohortes, coaching et rapports.",
     points: ["Appels à candidatures et sélection", "Fiche de suivi par entrepreneur", "Séances de coaching", "Indicateurs d'impact", "Rapports pour les bailleurs"]
   },

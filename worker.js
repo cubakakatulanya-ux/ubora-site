@@ -6,7 +6,7 @@
      (avec.uborardc.com affiche /avec, dont l'adresse canonique est
      https://uborardc.com/avec) ; ses autres pages renvoient vers uborardc.com ;
    - bp.uborardc.com affiche le générateur de business plan ;
-   - hub.uborardc.com renvoie vers uborahub.com ;
+   - hub.uborardc.com est servi par un autre Worker (Ubora Incubation) : il ne passe plus ici ;
    - une adresse inconnue reçoit une vraie erreur 404 (fichier 404.html).
    Les en-têtes de sécurité sont posés ici, sur toutes les réponses.
    ========================================================================== */
@@ -16,12 +16,12 @@ const ANCIENNES = {
   "/solutions/ubora-avec": "/avec", "/solutions/akiba": "/avec", "/solutions/ubora-pme": "/pme", "/solutions/ubora-coop": "/cooperatives",
   "/solutions/ubora-fin": "/financement", "/solutions/ubora-market": "/marche", "/solutions/ubora-hub": "/outils#hub", "/solutions/uborahub": "/outils#hub",
   "/solutions": "/outils", "/services": "/conseil", "/diagnostic": "/contact",
-  "/rediger": "https://admin.uborardc.com/", "/admin": "https://admin.uborardc.com/"
+  "/rediger": "https://admin.uborardc.com/", "/admin": "https://admin.uborardc.com/", "/hub": "https://hub.uborardc.com/"
 };
 const FICHIER = /\.[a-z0-9]{2,5}$/i;
 
 const CSP_SITE = "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://uoshpvqdszygezkuhhco.supabase.co; connect-src 'self' https://uoshpvqdszygezkuhhco.supabase.co wss://uoshpvqdszygezkuhhco.supabase.co https://cloudflareinsights.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests";
-const CSP_GENERATEUR = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'";
+const CSP_GENERATEUR = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://hub.uborardc.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'";
 const ENTETES = {
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
   "X-Content-Type-Options": "nosniff",
@@ -54,7 +54,6 @@ export default {
 
     /* 3. Sous-domaines */
     let cible = null;
-    if (sd === "hub") return renvoi("https://uborahub.com/");
     if (POLES[sd]) {
       if (chemin === "/") cible = POLES[sd];
       else if (!FICHIER.test(chemin)) return versSite();

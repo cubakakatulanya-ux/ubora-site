@@ -2,7 +2,7 @@
 
 /* Les sous-domaines d'outils mènent tout de suite à l'outil, sans afficher le site. */
 (function () {
-  var outils = { bp: "/generateur/", hub: "https://uborahub.com" };
+  var outils = { bp: "/generateur/" };
   var sd = location.hostname.split(".")[0];
   if (location.hostname.split(".").length > 2 && outils[sd] && location.pathname === "/") location.replace(outils[sd]);
 })();
