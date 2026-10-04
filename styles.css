@@ -1812,10 +1812,42 @@ section.band { padding-block: clamp(40px, 4.8vw, 66px); }
    pour que la page remplisse l'écran au lieu de rester une colonne étroite au centre.
    Les photos sont servies jusqu'en 2400 px : elles restent nettes à ces tailles.
    ========================================================================== */
-@media (min-width: 1800px) { html { zoom: 1.12; } }
-@media (min-width: 2000px) { html { zoom: 1.25; } }
-@media (min-width: 2300px) { html { zoom: 1.38; } }
+@media (min-width: 2200px) { html { zoom: 1.25; } }
 @media (min-width: 2560px) { html { zoom: 1.5; } }
 @media (min-width: 3000px) { html { zoom: 1.8; } }
 @media (min-width: 3400px) { html { zoom: 2.05; } }
 @media (min-width: 3800px) { html { zoom: 2.25; } }
+
+/* Accueil : outils en cartes compactes */
+.tools-mini { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+.tool-mini { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border: 1px solid var(--bord-fin); border-radius: 12px; background: var(--carte); color: var(--ink); text-decoration: none; transition: border-color .16s, transform .16s; }
+.tool-mini:hover { border-color: var(--green); transform: translateY(-1px); }
+.tool-mini .mk { width: 36px; height: 36px; border-radius: 9px; font-size: 13px; }
+.tool-mini > span:nth-child(2) { display: grid; gap: 1px; min-width: 0; }
+.tool-mini b { font-family: var(--f-display); font-size: 15.5px; font-weight: 600; line-height: 1.25; }
+.tool-mini small { font-size: 13px; line-height: 1.35; color: var(--muted); }
+.tool-mini svg { width: 16px; height: 16px; flex: none; margin-left: auto; color: var(--vert-texte); }
+@media (max-width: 1100px) { .tools-mini { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .tools-mini { grid-template-columns: minmax(0, 1fr); } }
+
+/* ==========================================================================
+   En-tête : le bandeau « À la une », fin et clair, passe au-dessus du menu.
+   Il s'efface quand on fait défiler la page ; seul le menu reste en haut.
+   ========================================================================== */
+.site-header { display: flex; flex-direction: column; top: -34px; transition: box-shadow .2s; }
+.site-header.scrolled { box-shadow: 0 10px 26px -20px rgba(16, 24, 40, .45); }
+body.menu-open .site-header { top: 0; }
+body.menu-open .ticker { display: none; }
+.site-header .ticker { order: -1; height: 34px; font-size: 13px; background: var(--menthe); border-bottom: 1px solid var(--menthe-bord); color: var(--ink); }
+.site-header .ticker-label { padding: 0 16px 0 max(24px, calc((100% - 1180px) / 2 + 24px)); background: transparent; color: var(--vert-texte); font-size: 10.5px; font-weight: 700; letter-spacing: .12em; }
+.site-header .ticker-label i { width: 6px; height: 6px; background: var(--green); }
+.site-header .ticker-move a { padding: 0 26px; color: var(--ink); }
+.site-header .ticker-move a::before { width: 4px; height: 4px; border-radius: 50%; transform: none; background: var(--green); opacity: .7; }
+.nav { height: 68px; gap: 14px; }
+.logo-img { width: 42px; height: 42px; }
+.brand-sub { font-family: var(--f-display); font-size: 9.5px; font-weight: 500; letter-spacing: .2em; color: var(--muted); }
+.menu > li > a, .dd-btn { padding: 8px 13px; font-size: 14.5px; }
+@media (max-width: 1100px) { .menu > li > a, .dd-btn { padding: 14px 10px; font-size: 18px; } }
+@media (max-width: 560px) { .site-header .ticker-label { padding: 0 10px 0 16px; } }
+.site-header > .wrap { width: 100%; }
+@media (max-width: 1100px) { .nav { height: 70px; } }

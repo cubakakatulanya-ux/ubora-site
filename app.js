@@ -292,18 +292,18 @@ function menuHTML() {
         <a href="/a-propos"><b>Qui sommes-nous</b><small>Mission, modèle social, valeurs</small></a>
         <a href="/equipe"><b>Notre équipe</b><small>Les personnes derrière Ubora</small></a>
         <a href="/approche"><b>Notre approche</b><small>La méthode Ubora</small></a>
-        <a href="/conseil"><b>Conseil et programmes</b><small>Pour les ONG et les bailleurs</small></a>
         <a href="/carrieres"><b>Carrières</b><small>Rejoindre l'équipe</small></a>
       </div></li>
     <li class="has-dd"><button class="dd-btn" type="button" data-r="poles" aria-expanded="false">Pôles et outils ${ICON.chev}</button>
       <div class="dd dd-mega">
-        <div class="dd-col dd-poles"><h5>Nos pôles</h5><div class="dd-grille">${POLES.map(p => `<a href="${p.chemin}" class="dd-item${p.transversal ? " large" : ""}"><span class="mk" style="background:${p.couleur}">${p.initiales}</span><span><b>${esc(p.nom)}${p.transversal ? '<i class="dd-tag">Pour tous les pôles</i>' : ""}</b><small>${esc(p.accroche)}</small></span></a>`).join("")}</div></div>
+        <div class="dd-col dd-poles"><h5>Nos pôles</h5><div class="dd-grille">${POLES.map(p => `<a href="${p.chemin}" class="dd-item${p.transversal ? " large" : ""}"><span class="mk" style="background:${p.couleur}">${p.initiales}</span><span><b>${esc(p.nom)}</b><small>${esc(p.accroche)}</small></span></a>`).join("")}</div></div>
         <div class="dd-col dd-outils"><h5>Nos logiciels</h5>${OUTILS.filter(o => o.statut === "en-ligne").map(o => `<a href="${lienOutil(o)}" class="dd-item"><span class="mk" style="background:${o.couleur}">${o.initiales}</span><span><b>${esc(o.nom)}</b><small>${esc(o.court || o.sousDomaine)}</small></span></a>`).join("")}</div>
-        <div class="dd-pied"><a href="/outils" class="dd-more">Tous les outils ${ICON.arrow}</a><a href="/formations" class="dd-more">Formations ${ICON.arrow}</a><a href="/conseil" class="dd-more">Conseil et programmes ${ICON.arrow}</a></div>
+        <div class="dd-pied"><a href="/outils" class="dd-more">Tous les outils ${ICON.arrow}</a></div>
       </div></li>
-    <li><a href="/realisations" data-r="realisations">Réalisations</a></li>
-    <li><a href="/actualites" data-r="actualites">Actualités</a></li>
-    <li><a href="/contact" data-r="contact">Contact</a></li>
+    <li><a href="/conseil" data-r="conseil">Conseil</a></li>
+    <li><a href="/formations" data-r="formations">Formations</a></li>
+    ${/* une rubrique encore vide n'encombre pas le menu : elle y revient dès qu'elle a du contenu */ ""}${DATA.realisations.length ? `<li><a href="/realisations" data-r="realisations">Réalisations</a></li>` : ""}
+    ${allNews().length ? `<li><a href="/actualites" data-r="actualites">Actualités</a></li>` : ""}
     <li class="m-cta"><a class="btn btn-accent" href="/contact">Nous contacter</a></li>`;
 }
 function footerHTML() {
@@ -374,15 +374,13 @@ function pageHome() {
     </ul></div>
   </section>
 
-  ${bandePhotos()}
-
   <section id="poles"><div class="wrap">
-    ${secHead("Nos pôles", `De la première épargne au premier <span class="serif">contrat de vente</span>`, "Un groupe qui s'organise, un entrepreneur qui teste son idée, une coopérative qui vend ensemble, un crédit qui arrive enfin, un acheteur trouvé, une terre protégée : chaque pôle tient un maillon, tous se passent le relais, et notre Académie forme chacun en chemin.")}
+    ${secHead("Nos pôles", `De la première épargne au premier <span class="serif">contrat de vente</span>`, "Chaque pôle tient un maillon, tous se passent le relais, et notre Académie forme chacun en chemin.")}
     <div class="poles">${POLES.map(p => poleCard(p)).join("")}</div>
   </div></section>
 
   <section class="tight-top" id="expertise"><div class="wrap">
-    ${secHead("Notre expertise", `Ce que le terrain nous a <span class="serif">appris</span>`, "Nos consultants, formateurs et développeurs ont passé des années auprès des groupes d'épargne, des entrepreneurs et des coopératives. Quelques leçons simples guident tout ce que nous faisons, et vous pouvez vérifier le reste par vous-même.")}
+    ${secHead("Notre expertise", `Ce que le terrain nous a <span class="serif">appris</span>`, "Des années auprès des groupes d'épargne, des entrepreneurs et des coopératives nous ont laissé quelques leçons simples.")}
     ${expertise()}
   </div></section>
 
@@ -404,8 +402,8 @@ function pageHome() {
   <section><div class="wrap">${relais(true)}</div></section>
 
   <section class="tight-top"><div class="wrap">
-    ${secHead("Nos outils numériques", `Des outils faits pour le <span class="serif">terrain</span> congolais`, "Des outils qui marchent sans réseau, en francs congolais comme en dollars. Chacun est livré avec une formation.", `<a class="btn btn-ghost" href="/outils">Voir tous les outils ${ICON.arrow}</a>`)}
-    <div class="tools">${OUTILS.filter(o => o.statut === "en-ligne").map(outilCard).join("")}</div>
+    ${secHead("Nos outils numériques", `Des outils faits pour le <span class="serif">terrain</span> congolais`, "", `<a class="btn btn-ghost" href="/outils">Voir tous les outils ${ICON.arrow}</a>`)}
+    <div class="tools-mini">${OUTILS.filter(o => o.statut === "en-ligne").map(o => `<a class="tool-mini" href="${lienOutil(o)}" style="--c:${o.couleur}"><span class="mk">${esc(o.initiales)}</span><span><b>${esc(o.nom)}</b><small>${esc(o.court || "")}</small></span>${ICON.arrow}</a>`).join("")}</div>
   </div></section>
 
   ${DATA.realisations.length ? `<section><div class="wrap">
@@ -632,11 +630,6 @@ function pageOutil(o) {
     <div class="publics"><b>Pour qui</b>${F.pour.map(x => `<span>${esc(x)}</span>`).join("")}</div>
   </div></section>
 
-  ${F.espaces ? `<section class="band"><div class="wrap">
-    ${secHead("Pour chaque rôle", esc(F.espaces[0]))}
-    <div class="grid-3">${F.espaces[1].map(([t, x]) => `<div class="fcard reveal"><h3>${esc(t)}</h3><p>${esc(x)}</p></div>`).join("")}</div>
-  </div></section>` : ""}
-
   ${o.id === "akiba" ? `<section class="band"><div class="wrap">
     ${secHead("Avant, après", `Ce qui change avec <span class="serif">AKIBA</span>`, "Le groupe garde ses règles et ses réunions. Seule la tenue des comptes change, et tout le monde peut désormais la vérifier.")}
     <div class="table-wrap replie"><table class="compare"><thead><tr><th></th><th>Avec le cahier</th><th>Avec AKIBA</th></tr></thead>
@@ -647,10 +640,8 @@ function pageOutil(o) {
     ${secHead("Pour commencer", esc(F.accesTitre || "Trois étapes pour démarrer"))}
     <ol class="bridge">${F.acces.map(([t, x], i) => `<li><span class="bn">${i + 1}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`).join("")}</ol>
     <div class="btn-row centre">${inscription || ouvrir("btn-primary")}${inscription ? ouvrir("btn-ghost") : `<a class="btn btn-ghost" href="/contact?sujet=${encodeURIComponent(o.nom)}">Nous écrire</a>`}</div>
-    <p class="suite">Ce logiciel accompagne le pôle <a class="link" href="${p.chemin}">${esc(p.nom)}</a> · <a class="link" href="/formations">Formations</a> · <a class="link" href="/outils">Tous les outils</a></p>
-  </div></section>
-
-  <section class="tight-top"><div class="wrap">${finalCta()}</div></section>`;
+    <p class="suite">Ce logiciel accompagne le pôle <a class="link" href="${p.chemin}">${esc(p.nom)}</a>.</p>
+  </div></section>`;
 }
 
 function pageConseil() {
@@ -1017,7 +1008,7 @@ function boot() {
     setMeta('meta[property="og:url"]', "content", CONFIG.site + r.canon);
     setMeta('meta[name="robots"]', "content", r.robots);
     $$("#menu [data-r]").forEach(a => {
-      const on = a.dataset.r === r.base || (a.dataset.r === "poles" && (!!pole(r.base) || ["outils", "formations"].includes(r.base))) || (a.dataset.r === "a-propos" && ["a-propos", "approche", "conseil", "carrieres", "equipe"].includes(r.base));
+      const on = a.dataset.r === r.base || (a.dataset.r === "poles" && (!!pole(r.base) || r.base === "outils")) || (a.dataset.r === "a-propos" && ["a-propos", "approche", "carrieres", "equipe"].includes(r.base));
       a.classList.toggle("current", on);
       if (a.tagName === "A") on ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current");
     });
@@ -1168,6 +1159,7 @@ function boot() {
     const max = document.documentElement.scrollHeight - innerHeight;
     $("#readBar").style.width = (max > 0 ? scrollY / max * 100 : 0) + "%";
     $("#toTop").classList.toggle("show", scrollY > 900);
+    $(".site-header").classList.toggle("scrolled", scrollY > 40);
   }, { passive: true });
   $("#toTop").addEventListener("click", () => scrollTo({ top: 0, behavior: "smooth" }));
 

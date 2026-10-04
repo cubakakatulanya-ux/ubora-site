@@ -25,14 +25,9 @@ const CONFIG = {
 
 /* Bande déroulante. Les dernières actualités publiées s'y ajoutent d'elles-mêmes. */
 const TICKER_MESSAGES = [
-  ["Nouveau : l'Académie Ubora, 26 cours en ligne sur les AVEC, les AGR et l'éducation financière", "/academie"],
-  ["Nouveau dans AKIBA : un reçu imprimé pour chaque membre, et bientôt sur terminal POS", "/outils/akiba"],
-  ["AKIBA mesure la qualité des données et le niveau « prête pour une IMF » de chaque AVEC", "/outils/akiba"],
-  ["Nouvelle version du générateur de business plan : parcours guidé, score de viabilité et trois scénarios", "/outils/bp"],
-  ["Le projet se termine, l'accompagnement continue : Ubora prend le relais des ONG sur le terrain", "/conseil#relais"],
-  ["Groupes d'épargne, ONG, réseaux : demandez notre boîte à outils AVEC", "/avec#boite"],
-  ["Ubora Fin : un fonds de roulement pour les AVEC que nous accompagnons", "/financement#intermediation"],
-  ["Ubora Market prépare une plateforme qui relie vendeurs et acheteurs", "/marche"],
+  ["Nouveau : l'Académie Ubora, 26 cours en ligne avec certificat", "/academie"],
+  ["Nouveau dans AKIBA : un reçu imprimé pour chaque membre", "/outils/akiba"],
+  ["Nouvelle version du générateur de business plan", "/outils/bp"],
   ["Nouveau : Ubora Vert, pour protéger l'environnement et en vivre", "/vert"],
   ["Basés à Lubumbashi, nous intervenons partout en RDC", "/contact"]
 ];
