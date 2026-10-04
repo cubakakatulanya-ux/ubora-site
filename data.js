@@ -25,10 +25,10 @@ const CONFIG = {
 
 /* Bande déroulante. Les dernières actualités publiées s'y ajoutent d'elles-mêmes. */
 const TICKER_MESSAGES = [
-  ["Nouveau : l'Académie Ubora, 26 cours en ligne sur les AVEC, les AGR et l'éducation financière", "https://academie.uborardc.com"],
-  ["Nouveau dans AKIBA : un reçu imprimé pour chaque membre, et bientôt sur terminal POS", "/outils#akiba"],
-  ["AKIBA mesure la qualité des données et le niveau « prête pour une IMF » de chaque AVEC", "/outils#akiba"],
-  ["Nouvelle version du générateur de business plan : parcours guidé, score de viabilité et trois scénarios", "https://bp.uborardc.com"],
+  ["Nouveau : l'Académie Ubora, 26 cours en ligne sur les AVEC, les AGR et l'éducation financière", "/academie"],
+  ["Nouveau dans AKIBA : un reçu imprimé pour chaque membre, et bientôt sur terminal POS", "/outils/akiba"],
+  ["AKIBA mesure la qualité des données et le niveau « prête pour une IMF » de chaque AVEC", "/outils/akiba"],
+  ["Nouvelle version du générateur de business plan : parcours guidé, score de viabilité et trois scénarios", "/outils/bp"],
   ["Le projet se termine, l'accompagnement continue : Ubora prend le relais des ONG sur le terrain", "/conseil#relais"],
   ["Groupes d'épargne, ONG, réseaux : demandez notre boîte à outils AVEC", "/avec#boite"],
   ["Ubora Fin : un fonds de roulement pour les AVEC que nous accompagnons", "/financement#intermediation"],
@@ -497,24 +497,77 @@ const OUTILS = [
   {
     id: "akiba", nom: "AKIBA", pole: "avec", statut: "en-ligne", mock: "akiba", couleur: "#23843A", initiales: "Ak",
     sousDomaine: "akiba.uborardc.com", url: "https://akiba.uborardc.com",
+    fiche: {
+      titre: `Le cahier de l'AVEC dans le téléphone, même sans <span class="serif">réseau</span>.`,
+      seo: ["AKIBA : l'application des groupes d'épargne (AVEC) en RDC", "AKIBA tient les comptes de l'AVEC sur téléphone, même sans réseau : réunion guidée, registre scellé, reçus imprimés et dossier pour la microfinance. Une application d'Ubora."],
+      ouvrir: "Ouvrir AKIBA",
+      atouts: "Des comptes que tout le groupe peut vérifier",
+      pour: ["Trésoriers et comités d'AVEC", "Animateurs et agents de terrain", "ONG et programmes qui suivent des groupes", "Institutions de microfinance"],
+      acces: [
+        ["Essayez la démonstration", "Elle est libre : ouvrez akiba.uborardc.com sur un téléphone et parcourez une réunion complète, sans engagement."],
+        ["Demandez votre code de validation", "Pour une vraie AVEC, Ubora délivre un code de validation. Écrivez-nous : nous vous répondons rapidement."],
+        ["Formez le comité", "Chaque déploiement comprend une formation de prise en main, puis un suivi sur le terrain."]
+      ]
+    },
     resume: "Le cahier de l'AVEC dans le téléphone, même sans réseau. Chaque franc est écrit au moment où il bouge, chaque membre repart avec son reçu, et l'historique du groupe devient un dossier qu'une IMF peut étudier.",
     points: ["Réunion guidée en 8 étapes, de la présence à la clôture à trois clés", "Registre scellé : toute modification se voit", "Reçus des membres et journal imprimés sur imprimante Bluetooth (bientôt sur terminal POS), ou envoyés par WhatsApp et SMS", "Indice de qualité des données et niveau « prête pour une IMF »", "Dossier pour l'IMF et export Excel, sans données personnelles", "Crédit d'une IMF suivi de bout en bout, garantie comprise", "Espaces AVEC, animateur et organisation, avec un écran Impact", "Langues de la RDC, guide audio et 7 modules de formation AVEC", "Démonstration libre ; code de validation Ubora pour une vraie AVEC"]
   },
   {
     id: "bp", nom: "Générateur de business plan", pole: "pme", statut: "en-ligne", mock: "pme", couleur: "#B0622A", initiales: "Bp",
     sousDomaine: "bp.uborardc.com", url: "https://bp.uborardc.com",
+    fiche: {
+      titre: `Un business plan complet, construit <span class="serif">étape par étape</span>.`,
+      seo: ["Générateur de business plan en ligne pour la RDC · Ubora", "Construisez votre business plan étape par étape : prévisions financières, seuil de rentabilité, score de viabilité et conseils, en francs congolais ou en dollars. Un outil d'Ubora."],
+      ouvrir: "Ouvrir le générateur",
+      atouts: "Des chiffres calculés, des conseils sur votre projet",
+      pour: ["Porteurs de projet", "Entrepreneurs et PME", "Coopératives", "Incubateurs et coachs"],
+      acces: [
+        ["Ouvrez le générateur", "Il s'ouvre dans le navigateur, à l'adresse bp.uborardc.com."],
+        ["Répondez à huit questions", "Elles décrivent votre projet ; le parcours s'adapte à vos réponses."],
+        ["Complétez vos chiffres", "Ventes, investissements, crédits : les tableaux se calculent, avec un diagnostic et des conseils sur vos propres chiffres."]
+      ]
+    },
     resume: "Il guide l'entrepreneur étape par étape, à partir de huit questions sur son projet, et produit un business plan complet : prévisions financières, diagnostic de viabilité et conseils sur ses propres chiffres.",
     points: ["Un parcours étape par étape, adapté au projet en huit réponses", "Ventes avec saisonnalité, investissements, crédits et besoin en fonds de roulement", "Compte de résultat, bilan et trésorerie calculés, mois par mois", "Seuil de rentabilité et trois scénarios, avec calculs inverses", "Score de viabilité : « Mon projet peut-il démarrer ? »", "Conseils ciblés : phasage des investissements, durée du crédit, module agricole", "En francs congolais ou en dollars ; imprimable en PDF ou exportable vers Word"]
   },
   {
     id: "hub", nom: "Ubora Hub", pole: "pme", statut: "en-ligne", mock: "hub", couleur: "#0F3170", initiales: "Hb",
     sousDomaine: "hub.uborardc.com", url: "https://hub.uborardc.com",
-    resume: "La plateforme des incubateurs et des programmes d'entrepreneuriat : candidatures, suivi des cohortes, coaching et rapports.",
-    points: ["Appels à candidatures et sélection", "Fiche de suivi par entrepreneur", "Séances de coaching", "Indicateurs d'impact", "Rapports pour les bailleurs"]
+    resume: "Le logiciel des incubateurs et des programmes d'entrepreneuriat : il les aide à sélectionner, former et suivre leurs entrepreneurs, du premier jour jusqu'au business plan.",
+    points: ["Appels à candidatures en ligne, jury et sélection", "Parcours en trois phases : idéation, incubation, post-incubation", "Modules de formation, exercices et séances de coaching", "Business plan de chaque entrepreneur, relié au générateur", "Tableau de bord, indicateurs et rapports pour les bailleurs", "Un espace séparé pour chaque incubateur, utilisable hors ligne"],
+    /* inscriptionOuverte : à passer à true quand la page hub.uborardc.com/inscription est en ligne */
+    inscription: "https://hub.uborardc.com/inscription", inscriptionOuverte: false,
+    fiche: {
+      titre: `Le logiciel des incubateurs : sélectionner, accompagner, <span class="serif">rendre compte</span>.`,
+      seo: ["Ubora Hub : logiciel de gestion d'incubateurs en RDC", "Ubora Hub aide les incubateurs, universités, ONG et programmes publics à sélectionner, former et suivre leurs entrepreneurs, jusqu'au business plan. Inscription validée par Ubora."],
+      ouvrir: "Se connecter",
+      atouts: "De la candidature au rapport, dans un seul outil",
+      fonctions: [
+        ["Sélectionner", "Appels à candidatures en ligne, formulaire de candidature, jury et classement."],
+        ["Structurer le parcours", "Des programmes et des cohortes, en trois phases : idéation, incubation, post-incubation."],
+        ["Former", "Modules de formation, exercices et quiz, utilisables même hors ligne."],
+        ["Accompagner", "Séances de coaching, plans d'action et calendrier partagé."],
+        ["Bâtir le business plan", "Chaque entrepreneur construit son plan d'affaires dans le générateur, relié à son dossier."],
+        ["Rendre compte", "Tableau de bord, indicateurs et rapports en PDF pour la direction et les bailleurs."]
+      ],
+      phases: ["Candidature", "Idéation", "Incubation", "Post-incubation"],
+      pour: ["Incubateurs et hubs", "Universités", "ONG et programmes d'entrepreneuriat", "Structures publiques et bailleurs"],
+      espaces: ["Trois espaces, un seul logiciel", [
+        ["L'espace de direction", "Le directeur et son équipe pilotent les appels à candidatures, les cohortes, le calendrier et les rapports."],
+        ["L'espace du coach", "Chaque coach suit ses entrepreneurs, leurs exercices et leurs séances."],
+        ["L'espace de l'entrepreneur", "Son parcours, ses modules et son business plan, sur son téléphone."]
+      ]],
+      accesTitre: "Un accès ouvert après validation",
+      acces: [
+        ["Présentez votre incubateur", "Dites-nous qui vous êtes et décrivez votre incubateur : sa mission, son public, ses programmes."],
+        ["Ubora valide votre demande", "Nous étudions chaque demande. Une fois validée, l'espace de votre incubateur est ouvert et vous êtes prévenu."],
+        ["Invitez votre équipe et vos entrepreneurs", "Vous vous connectez, puis vous ajoutez vos chargés de programme, vos coachs et vos entrepreneurs."]
+      ]
+    }
   },
   {
     id: "academie", nom: "Académie Ubora", pole: "academie", statut: "en-ligne", mock: "academie", couleur: "#9A5522", initiales: "Ac",
-    sousDomaine: "academie.uborardc.com", url: "https://academie.uborardc.com",
+    sousDomaine: "academie.uborardc.com", url: "https://academie.uborardc.com", page: "/academie",
     resume: "L'école en ligne d'Ubora : 26 cours d'environ 50 minutes sur les AVEC, les activités génératrices de revenus et l'éducation financière, utilisables même sans réseau, avec badges et certificats vérifiables.",
     points: ["Six parcours, du membre d'AVEC au formateur", "Les 5 modules du PNEF de la Banque centrale du Congo", "Exercices corrigés et quiz chronométrés", "Cours téléchargés utilisables sans réseau", "Badges et certificats vérifiables en ligne"]
   },

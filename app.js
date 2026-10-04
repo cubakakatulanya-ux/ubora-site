@@ -43,6 +43,8 @@ const todayISO = () => new Date().toISOString().slice(0, 10);
 const waLink = txt => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(txt)}`;
 const pole = id => POLES.find(p => p.id === id);
 const outil = id => OUTILS.find(o => o.id === id);
+/* page qui présente un logiciel : sa fiche (/outils/<id>), la page de son pôle, ou à défaut le logiciel lui-même */
+const lienOutil = o => o.page || (o.fiche ? "/outils/" + o.id : pole(o.pole).chemin);
 const store = {
   get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
   set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
@@ -124,12 +126,16 @@ const photo = (nom, sizes, alt = "", extra = "") =>
   `<img src="/img/${nom}-1600.webp" srcset="/img/${nom}-800.webp 800w, /img/${nom}-1200.webp 1200w, /img/${nom}-1600.webp 1600w, /img/${nom}-2400.webp 2400w" sizes="${sizes}" alt="${esc(alt)}" width="1600" height="1067" decoding="async"${extra}>`;
 
 /* ---------- Composants ---------- */
-function pageHead({ eyebrow, title, lead, crumbs = [], extra = "", photo: visuel }) {
+function pageHead({ eyebrow, title, lead, crumbs = [], extra = "", photo: visuel, ecran }) {
   const texte = `<nav class="crumbs" aria-label="Fil d'Ariane"><a href="/">Accueil</a>${crumbs.map(([t, h]) => h ? `<span><a href="${h}">${t}</a></span>` : `<span>${t}</span>`).join("")}</nav>
       <span class="eyebrow">${eyebrow}</span>
       <h1>${title}</h1>
       ${lead ? `<p class="lead">${lead}</p>` : ""}
       ${extra}`;
+  if (ecran) return `<section class="deep page-head has-photo has-ecran"><div class="wrap head-grid">
+      <div>${texte}</div>
+      <div class="screen head-ecran">${ecran}<span class="mock-note" aria-hidden="true">Écran illustratif</span></div>
+    </div></section>`;
   if (!visuel) return `<section class="deep page-head"><div class="wrap">${texte}</div></section>`;
   return `<section class="deep page-head has-photo"><div class="wrap head-grid">
       <div>${texte}</div>
@@ -161,8 +167,8 @@ function poleCard(p, feature, compact) {
 }
 function outilCard(o) {
   const p = pole(o.pole);
-  const href = o.statut === "en-ligne" ? o.url : "/outils#" + o.id;
-  return `<article class="tool" style="--c:${o.couleur}">
+  const href = lienOutil(o);
+  return `<article class="tool" style="--c:${o.couleur}" data-f="${o.statut} ${o.pole}">
     <div class="pole-top"><span class="mk">${esc(o.initiales)}</span>${statut(o)}</div>
     <h3><a class="stretch" href="${href}"${ext(href)}>${esc(o.nom)}</a></h3>
     <p>${esc(o.resume)}</p>
@@ -292,7 +298,7 @@ function menuHTML() {
     <li class="has-dd"><button class="dd-btn" type="button" data-r="poles" aria-expanded="false">Pôles et outils ${ICON.chev}</button>
       <div class="dd dd-mega">
         <div class="dd-col"><h5>Nos pôles</h5>${POLES.map(p => `<a href="${p.chemin}" class="dd-item"><span class="mk" style="background:${p.couleur}">${p.initiales}</span><span><b>${esc(p.nom)}</b><small>${esc(p.sousDomaine)}</small></span></a>`).join("")}</div>
-        <div class="dd-col"><h5>Nos outils</h5>${OUTILS.filter(o => o.statut === "en-ligne").map(o => `<a href="${o.url}" target="_blank" rel="noopener" class="dd-item"><span class="mk" style="background:${o.couleur}">${o.initiales}</span><span><b>${esc(o.nom)}</b><small>${esc(o.sousDomaine)}</small></span></a>`).join("")}
+        <div class="dd-col"><h5>Nos outils</h5>${OUTILS.filter(o => o.statut === "en-ligne").map(o => `<a href="${lienOutil(o)}" class="dd-item"><span class="mk" style="background:${o.couleur}">${o.initiales}</span><span><b>${esc(o.nom)}</b><small>${esc(o.sousDomaine)}</small></span></a>`).join("")}
           <a href="/outils" class="dd-more">Tous les outils ${ICON.arrow}</a><a href="/formations" class="dd-more">Formations ${ICON.arrow}</a></div>
       </div></li>
     <li><a href="/realisations" data-r="realisations">Réalisations</a></li>
@@ -319,7 +325,7 @@ function footerHTML() {
       </div>
       <nav aria-label="Nos pôles"><h4>Nos pôles</h4><ul>${POLES.map(p => `<li><a class="foot-pole" href="${p.chemin}" style="--c:${p.couleur}">${esc(p.nom)}</a></li>`).join("")}</ul></nav>
       <nav aria-label="Ubora"><h4>Ubora</h4><ul><li><a href="/a-propos">Qui sommes-nous</a></li><li><a href="/equipe">Notre équipe</a></li><li><a href="/realisations">Nos réalisations</a></li><li><a href="/approche">Notre approche</a></li><li><a href="/conseil">Conseil et programmes</a></li></ul></nav>
-      <nav aria-label="Ressources"><h4>Ressources</h4><ul><li><a href="https://academie.uborardc.com">Académie Ubora</a></li><li><a href="https://hub.uborardc.com">Ubora Hub</a></li><li><a href="/outils">Outils numériques</a></li><li><a href="/formations">Formations</a></li><li><a href="/actualites">Actualités</a></li><li><a href="/carrieres">Carrières</a></li><li><a href="/contact">Contact</a></li></ul></nav>
+      <nav aria-label="Ressources"><h4>Ressources</h4><ul><li><a href="/outils">Outils numériques</a></li><li><a href="/formations">Formations</a></li><li><a href="/actualites">Actualités</a></li><li><a href="/carrieres">Carrières</a></li><li><a href="/contact">Contact</a></li></ul></nav>
       <div class="foot-contact"><h4>Nous joindre</h4><ul>
         <li><span class="ic">${ICON.phone}</span><a href="tel:${tel}">${esc(CONFIG.telephone)}</a></li>
         <li><span class="ic">${ICON.mail}</span><a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a></li>
@@ -511,7 +517,7 @@ function pagePole(id) {
     eyebrow: esc(P.nom), title: P.titre, lead: esc(P.lead), crumbs: [["Nos pôles", "/#poles"], [esc(P.nom)]], photo: P.photo,
     extra: `<div class="btn-row"><a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent(P.nom)}">Parler de votre projet ${ICON.arrow}</a>
       ${P.boite ? `<a class="btn btn-glass" href="#boite" data-scroll="boite">La boîte à outils</a>` : ""}
-      ${enLigne.map(o => `<a class="btn btn-glass" href="${o.url}" target="_blank" rel="noopener">Ouvrir ${esc(o.nom)} ${ICON.ext}</a>`).join("")}</div>
+      ${enLigne.filter(o => o.pole === P.id).map(o => lienOutil(o) === P.chemin ? `<a class="btn btn-glass" href="${o.url}" target="_blank" rel="noopener">Ouvrir ${esc(o.nom)} ${ICON.ext}</a>` : `<a class="btn btn-glass" href="${lienOutil(o)}">Découvrir ${esc(o.nom)} ${ICON.arrow}</a>`).join("")}</div>
       <span class="sub-chip">${esc(P.sousDomaine)}</span>`
   }) + `
 
@@ -547,9 +553,8 @@ function pagePole(id) {
 
   ${P.avec ? `<section class="band"><div class="wrap">
     ${secHead("Digitalisation", `Ce qui change avec <span class="serif">AKIBA</span>`, "Le groupe garde ses règles et ses réunions. Seule la tenue des comptes change, et tout le monde peut désormais la vérifier.")}
-    <div class="table-wrap replie"><table class="compare"><thead><tr><th></th><th>Avec le cahier</th><th>Avec AKIBA</th></tr></thead>
-      <tbody>${AVEC.avantApres.map(([q, a, b]) => `<tr><th scope="row">${esc(q)}</th><td>${esc(a)}</td><td class="ok">${esc(b)}</td></tr>`).join("")}</tbody></table></div>${plusBtn("Voir toute la comparaison")}
-    <p class="suite"><a class="link" href="${outil("akiba").url}" target="_blank" rel="noopener">Ouvrir AKIBA ${ICON.ext}</a></p>
+    <ul class="checks cols">${outil("akiba").points.slice(0, 4).map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+    <p class="suite"><a class="btn btn-primary" href="/outils/akiba">Découvrir AKIBA ${ICON.arrow}</a></p>
   </div></section>
   <section><div class="wrap">
     ${secHead("Vers le crédit", `Transformer la discipline d'un groupe en <span class="serif">accès au crédit</span>`, "Un groupe qui épargne depuis trois ans reste invisible pour une banque s'il ne peut rien prouver. Notre rôle est de rendre cette régularité lisible.")}
@@ -598,23 +603,53 @@ function pagePole(id) {
 
 function pageOutils() {
   return pageHead({ eyebrow: "Nos outils", title: `Des outils qui tiennent là où le réseau <span class="serif">lâche</span>.`, crumbs: [["Nos outils"]],
-    lead: "Pas de réseau au village ? Des comptes en francs congolais et en dollars ? Des utilisateurs qui n'ont jamais ouvert un tableur ? Nos outils sont conçus pour cela, et chacun est livré avec une formation. Quatre sont déjà en ligne : essayez-les." }) + `
+    lead: "Pas de réseau au village ? Des utilisateurs qui n'ont jamais ouvert un tableur ? Nos logiciels sont conçus pour cela, et chacun est livré avec une formation. Choisissez-en un pour le découvrir." }) + `
   <section><div class="wrap">
     ${filtres("Filtrer les outils", [["en-ligne", "En ligne"], ["en-cours", "En préparation"], ...[...new Set(OUTILS.map(o => o.pole))].map(id => [id, pole(id).nom])])}
-    <div class="outil-rows">${OUTILS.map((o, i) => {
-    const p = pole(o.pole);
-    return `<article class="outil-row${i % 2 ? " flip" : ""}" id="${o.id}" data-f="${o.statut} ${o.pole}">
-      <div class="outil-txt">
-        <div class="pole-top"><span class="mk" style="background:${o.couleur}">${esc(o.initiales)}</span>${statut(o)}</div>
-        <h2>${esc(o.nom)}</h2><p class="lead">${esc(o.resume)}</p>
-        <ul class="checks">${o.points.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
-        <p class="muted small">Pôle <a href="${p.chemin}">${esc(p.nom)}</a>${o.sousDomaine ? ` · adresse directe <a href="https://${o.sousDomaine}" target="_blank" rel="noopener">${esc(o.sousDomaine)}</a>` : ""}</p>
-        <div class="btn-row">${o.statut === "en-ligne" ? `<a class="btn btn-primary" href="${o.url}" target="_blank" rel="noopener">Ouvrir l'outil ${ICON.ext}</a>` : `<a class="btn btn-primary" href="/contact?sujet=${encodeURIComponent(o.nom)}">Être informé du lancement</a>`}<a class="btn btn-ghost" href="/formations">Formations</a></div>
-      </div>
-      <div class="screen">${mockFor(o.mock)}<span class="mock-note" aria-hidden="true">Écran illustratif</span></div>
-    </article>`;
-  }).join("")}</div>
+    <div class="tools">${OUTILS.map(outilCard).join("")}</div>
   </div></section>
+  <section class="tight-top"><div class="wrap">${finalCta()}</div></section>`;
+}
+
+/* ---------- Page de présentation d'un logiciel (/outils/<id>) ---------- */
+function pageOutil(o) {
+  const F = o.fiche, p = pole(o.pole);
+  const inscription = o.inscription ? (o.inscriptionOuverte
+    ? `<a class="btn btn-accent" href="${o.inscription}" target="_blank" rel="noopener">Inscrire mon incubateur ${ICON.ext}</a>`
+    : `<a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent(o.nom)}">Demander un accès ${ICON.arrow}</a>`) : "";
+  const ouvrir = classe => `<a class="btn ${classe}" href="${o.url}" target="_blank" rel="noopener">${esc(F.ouvrir)} ${ICON.ext}</a>`;
+  return pageHead({
+    eyebrow: esc(o.nom), title: F.titre, lead: esc(o.resume), crumbs: [["Nos outils", "/outils"], [esc(o.nom)]], ecran: mockFor(o.mock),
+    extra: `<div class="btn-row">${inscription}${ouvrir(inscription ? "btn-glass" : "btn-accent")}</div><span class="sub-chip">${esc(o.sousDomaine)}</span>`
+  }) + `
+
+  <section><div class="wrap">
+    ${secHead("Ce que fait " + esc(o.nom), esc(F.atouts))}
+    ${F.fonctions
+      ? `<div class="grid-3">${F.fonctions.map(([t, x], i) => `<div class="fcard fonction reveal"><span class="pn">${String(i + 1).padStart(2, "0")}</span><h3>${esc(t)}</h3><p>${esc(x)}</p></div>`).join("")}</div>`
+      : `<div class="panel"><ul class="checks cols">${o.points.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>`}
+    ${F.phases ? `<div class="flux phases" role="group" aria-label="Le parcours de l'entrepreneur"><b>Le parcours de l'entrepreneur</b>${F.phases.map(x => `<span>${esc(x)}</span>`).join(`<i aria-hidden="true">${ICON.arrow}</i>`)}</div>` : ""}
+    <div class="publics"><b>Pour qui</b>${F.pour.map(x => `<span>${esc(x)}</span>`).join("")}</div>
+  </div></section>
+
+  ${F.espaces ? `<section class="band"><div class="wrap">
+    ${secHead("Pour chaque rôle", esc(F.espaces[0]))}
+    <div class="grid-3">${F.espaces[1].map(([t, x]) => `<div class="fcard reveal"><h3>${esc(t)}</h3><p>${esc(x)}</p></div>`).join("")}</div>
+  </div></section>` : ""}
+
+  ${o.id === "akiba" ? `<section class="band"><div class="wrap">
+    ${secHead("Avant, après", `Ce qui change avec <span class="serif">AKIBA</span>`, "Le groupe garde ses règles et ses réunions. Seule la tenue des comptes change, et tout le monde peut désormais la vérifier.")}
+    <div class="table-wrap replie"><table class="compare"><thead><tr><th></th><th>Avec le cahier</th><th>Avec AKIBA</th></tr></thead>
+      <tbody>${AVEC.avantApres.map(([q, x, y]) => `<tr><th scope="row">${esc(q)}</th><td>${esc(x)}</td><td class="ok">${esc(y)}</td></tr>`).join("")}</tbody></table></div>${plusBtn("Voir toute la comparaison")}
+  </div></section>` : ""}
+
+  <section id="acces"><div class="wrap">
+    ${secHead("Pour commencer", esc(F.accesTitre || "Trois étapes pour démarrer"))}
+    <ol class="bridge">${F.acces.map(([t, x], i) => `<li><span class="bn">${i + 1}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`).join("")}</ol>
+    <div class="btn-row centre">${inscription || ouvrir("btn-primary")}${inscription ? ouvrir("btn-ghost") : `<a class="btn btn-ghost" href="/contact?sujet=${encodeURIComponent(o.nom)}">Nous écrire</a>`}</div>
+    <p class="suite">Ce logiciel accompagne le pôle <a class="link" href="${p.chemin}">${esc(p.nom)}</a> · <a class="link" href="/formations">Formations</a> · <a class="link" href="/outils">Tous les outils</a></p>
+  </div></section>
+
   <section class="tight-top"><div class="wrap">${finalCta()}</div></section>`;
 }
 
@@ -641,10 +676,9 @@ function pageFormations() {
         <span class="eyebrow">Académie Ubora</span>
         <h2>Se former à son rythme, même sans réseau</h2>
         <p class="lead">26 cours d'environ 50 minutes, écrits à partir de nos documents de terrain : leçons illustrées, exercices corrigés automatiquement, quiz chronométrés, badges et certificats vérifiables. Un cours téléchargé fonctionne sans réseau ; les résultats partent dès que la connexion revient.</p>
-        <div class="btn-row"><a class="btn btn-primary" href="${ACADEMIE.url}" target="_blank" rel="noopener">Ouvrir l'Académie ${ICON.ext}</a></div>
-        <p class="muted small">academie.uborardc.com · <a href="/academie">Découvrir le pôle Ubora Académie</a></p>
+        <div class="btn-row"><a class="btn btn-primary" href="/academie">Découvrir Ubora Académie ${ICON.arrow}</a><a class="btn btn-ghost" href="${ACADEMIE.url}" target="_blank" rel="noopener">Ouvrir l'Académie ${ICON.ext}</a></div>
       </div>
-      <ol class="academie-parcours" aria-label="Les six parcours">${pole("academie").programmes.map(([t, n, x]) => `<li><b>${esc(t)}</b><span class="tag">${esc(n)}</span><span>${esc(x)}</span></li>`).join("")}</ol>
+      <div class="screen">${mockFor("academie")}<span class="mock-note" aria-hidden="true">Écran illustratif</span></div>
     </div>
   </div></section>
   <section class="tight-top"><div class="wrap">
@@ -847,8 +881,8 @@ const SOUS_DOMAINES = { avec: "avec", pme: "pme", coop: "cooperatives", fin: "fi
 const EXTERNES = { bp: "/generateur/" };
 const ANCIENNES = {
   "solutions/ubora-avec": "/avec", "solutions/akiba": "/avec", "solutions/ubora-pme": "/pme", "solutions/ubora-coop": "/cooperatives",
-  "solutions/ubora-fin": "/financement", "solutions/ubora-market": "/marche", "solutions/ubora-hub": "/outils#hub", "solutions/uborahub": "/outils#hub",
-  "solutions": "/outils", "services": "/conseil", "diagnostic": "/contact", "rediger": "/admin", "hub": "https://hub.uborardc.com/"
+  "solutions/ubora-fin": "/financement", "solutions/ubora-market": "/marche", "solutions/ubora-hub": "/outils/hub", "solutions/uborahub": "/outils/hub",
+  "solutions": "/outils", "services": "/conseil", "diagnostic": "/contact", "rediger": "/admin", "hub": "/outils/hub"
 };
 const DESCR = {
   "": "Ubora, entreprise sociale à Lubumbashi : groupes d'épargne (AVEC), entrepreneurs, coopératives, accès au financement et au marché, partout en RDC.",
@@ -893,13 +927,19 @@ function resolve(pathname, search, host) {
 
   let html, title, desc, canon = "/" + path;
   const P = pole(base);
-  if (sub && !["actualites", "carrieres"].includes(base)) { html = notFound(); title = "Page introuvable"; }
+  if (sub && !["actualites", "carrieres", "outils"].includes(base)) { html = notFound(); title = "Page introuvable"; }
   else if (P) { html = pagePole(base); [title, desc] = SEO_POLES[P.id] || [P.nom, P.lead]; canon = P.chemin; }
   else switch (base) {
     case "": html = pageHome(); break;
     case "a-propos": html = pageAbout(); break;
     case "approche": html = pageApproche(); break;
-    case "outils": html = pageOutils(); break;
+    case "outils": {
+      const o = sub && outil(sub);
+      if (o && o.fiche) { html = pageOutil(o); [title, desc] = o.fiche.seo; }
+      else if (sub) { html = notFound(); title = "Page introuvable"; }
+      else html = pageOutils();
+      break;
+    }
     case "conseil": html = pageConseil(); break;
     case "formations": html = pageFormations(); break;
     case "actualites": {

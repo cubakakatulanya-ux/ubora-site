@@ -13,10 +13,10 @@
 const APEX = "uborardc.com";
 const POLES = { avec: "/avec", pme: "/pme", coop: "/cooperatives", fin: "/financement", market: "/marche", vert: "/vert" };
 const ANCIENNES = {
-  "/solutions/ubora-avec": "/avec", "/solutions/akiba": "/avec", "/solutions/ubora-pme": "/pme", "/solutions/ubora-coop": "/cooperatives",
-  "/solutions/ubora-fin": "/financement", "/solutions/ubora-market": "/marche", "/solutions/ubora-hub": "/outils#hub", "/solutions/uborahub": "/outils#hub",
+  "/solutions/ubora-avec": "/avec", "/solutions/akiba": "/outils/akiba", "/solutions/ubora-pme": "/pme", "/solutions/ubora-coop": "/cooperatives",
+  "/solutions/ubora-fin": "/financement", "/solutions/ubora-market": "/marche", "/solutions/ubora-hub": "/outils/hub", "/solutions/uborahub": "/outils/hub",
   "/solutions": "/outils", "/services": "/conseil", "/diagnostic": "/contact",
-  "/rediger": "https://admin.uborardc.com/", "/admin": "https://admin.uborardc.com/", "/hub": "https://hub.uborardc.com/"
+  "/rediger": "https://admin.uborardc.com/", "/admin": "https://admin.uborardc.com/", "/hub": "/outils/hub"
 };
 const FICHIER = /\.[a-z0-9]{2,5}$/i;
 

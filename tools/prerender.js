@@ -21,7 +21,7 @@ const write = (f, s) => { const p = path.join(ROOT, f); fs.mkdirSync(path.dirnam
 const ctx = { window: { UBORA_PRERENDER: true }, console, URLSearchParams, Date, Intl, Math, JSON };
 vm.createContext(ctx);
 const S = vm.runInContext(["data.js", "db.js", "admin.js", "app.js"].map(read).join("\n;\n") +
-  "\n;({ resolve, typoHTML, menuHTML, footerHTML, tickerHTML, allNews, esc, DATA, POLES, CONFIG, SUPABASE, UboraDB, TITRES })", ctx);
+  "\n;({ resolve, typoHTML, menuHTML, footerHTML, tickerHTML, allNews, esc, DATA, POLES, OUTILS, CONFIG, SUPABASE, UboraDB, TITRES })", ctx);
 
 async function chargerBase() {
   const h = { apikey: S.SUPABASE.anonKey, Authorization: "Bearer " + S.SUPABASE.anonKey };
@@ -82,6 +82,11 @@ function donneesStructurees(chemin, r) {
     miettes.itemListElement.push({ "@type": "ListItem", position: 2, name: "Actualités", item: "https://uborardc.com/actualites" }, { "@type": "ListItem", position: 3, name: texte(r.title.replace(/ · Ubora$/, "")), item: url });
     const n = S.allNews().find(x => x.slug === parts[1]);
     if (n) graph.push({ "@type": "NewsArticle", headline: n.titre, description: n.extrait, datePublished: n.date, inLanguage: "fr", mainEntityOfPage: url, image: "https://uborardc.com/partage.jpg", author: { "@id": ORG["@id"] }, publisher: { "@id": ORG["@id"] } });
+  } else if (parts[0] === "outils" && parts[1]) {
+    /* page de présentation d'un logiciel */
+    const o = S.OUTILS.find(x => x.id === parts[1]);
+    miettes.itemListElement.push({ "@type": "ListItem", position: 2, name: "Nos outils", item: "https://uborardc.com/outils" }, { "@type": "ListItem", position: 3, name: o.nom, item: url });
+    graph.push({ "@type": "SoftwareApplication", name: o.nom, description: texte(o.resume), url, applicationCategory: "BusinessApplication", operatingSystem: "Web", inLanguage: "fr", publisher: { "@id": ORG["@id"] } });
   } else {
     const P = S.POLES.find(p => p.chemin === chemin);
     if (chemin === "/equipe") miettes.itemListElement.push({ "@type": "ListItem", position: 2, name: "Qui sommes-nous", item: "https://uborardc.com/a-propos" });
@@ -99,6 +104,7 @@ async function main() {
   const menu = S.menuHTML(), footer = S.footerHTML(), ticker = S.tickerHTML();
 
   const chemins = ["/", ...S.POLES.map(p => p.chemin), "/approche", "/a-propos", "/outils", "/conseil", "/formations", "/actualites", "/realisations", "/equipe", "/carrieres", "/contact", "/mentions",
+    ...S.OUTILS.filter(o => o.fiche).map(o => "/outils/" + o.id),
     ...S.allNews().map(n => "/actualites/" + n.slug)];
   const pages = [];
 
@@ -152,7 +158,7 @@ async function main() {
     .replace("{{APP}}", () => S.typoHTML(r404.html)));
 
   /* Plan du site */
-  const prio = c => c === "/" ? "1.0" : S.POLES.some(p => p.chemin === c) ? "0.9" : c === "/realisations" ? "0.8" : c.startsWith("/actualites/") ? "0.6" : "0.7";
+  const prio = c => c === "/" ? "1.0" : S.POLES.some(p => p.chemin === c) ? "0.9" : c === "/realisations" || c.startsWith("/outils/") ? "0.8" : c.startsWith("/actualites/") ? "0.6" : "0.7";
   /* seule la date des articles est connue avec certitude ; les autres pages n'en indiquent pas */
   const modif = c => { const n = S.allNews().find(x => "/actualites/" + x.slug === c); return n ? `<lastmod>${n.date}</lastmod>` : ""; };
   write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>

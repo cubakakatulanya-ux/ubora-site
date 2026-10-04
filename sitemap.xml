@@ -17,5 +17,8 @@
   <url><loc>https://uborardc.com/carrieres</loc><priority>0.7</priority></url>
   <url><loc>https://uborardc.com/contact</loc><priority>0.7</priority></url>
   <url><loc>https://uborardc.com/mentions</loc><priority>0.7</priority></url>
+  <url><loc>https://uborardc.com/outils/akiba</loc><priority>0.8</priority></url>
+  <url><loc>https://uborardc.com/outils/bp</loc><priority>0.8</priority></url>
+  <url><loc>https://uborardc.com/outils/hub</loc><priority>0.8</priority></url>
   <url><loc>https://bp.uborardc.com/</loc><priority>0.8</priority></url>
 </urlset>
