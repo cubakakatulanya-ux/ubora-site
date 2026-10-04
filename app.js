@@ -312,7 +312,7 @@ function footerHTML() {
   const tel = CONFIG.telephone.replace(/\s/g, "");
   return `<div class="wrap">
     <div class="foot-news">
-      <div class="foot-news-txt"><b>Nouvelles du terrain</b><span>Nos programmes, nos outils et nos formations, dans votre boîte e-mail.</span></div>
+      <div class="foot-news-txt"><b>Nouvelles du terrain</b><span>Recevez nos nouvelles par e-mail.</span></div>
       <form class="news-form" id="newsForm" aria-label="Lettre d'information">
         <label class="news-label" for="nlEmail">Votre adresse e-mail</label>
         <div class="news-row"><input id="nlEmail" type="email" required maxlength="160" autocomplete="email" placeholder="Votre adresse e-mail"><input class="hp" id="nlSite" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn btn-accent btn-sm" type="submit">S'inscrire</button></div>
@@ -321,11 +321,10 @@ function footerHTML() {
     <div class="foot-grid">
       <div class="foot-brand">
         <a class="brand" href="/"><img class="logo-img" src="/logo-ubora.png" alt="" width="56" height="56" loading="lazy"><span class="brand-txt"><span class="brand-name">ub<b>o</b>ra</span><span class="brand-sub">Entreprise sociale</span></span></a>
-        <p class="foot-accroche">Basée à Lubumbashi, présente partout en RDC. Et nous restons quand les projets se terminent.</p>
+        <p class="foot-accroche">Basée à Lubumbashi, présente partout en RDC.</p>
       </div>
-      <nav aria-label="Nos pôles"><h4>Nos pôles</h4><ul>${POLES.map(p => `<li><a class="foot-pole" href="${p.chemin}" style="--c:${p.couleur}">${esc(p.nom)}</a></li>`).join("")}</ul></nav>
-      <nav aria-label="Ubora"><h4>Ubora</h4><ul><li><a href="/a-propos">Qui sommes-nous</a></li><li><a href="/equipe">Notre équipe</a></li><li><a href="/realisations">Nos réalisations</a></li><li><a href="/approche">Notre approche</a></li><li><a href="/conseil">Conseil et programmes</a></li></ul></nav>
-      <nav aria-label="Ressources"><h4>Ressources</h4><ul><li><a href="/outils">Outils numériques</a></li><li><a href="/formations">Formations</a></li><li><a href="/actualites">Actualités</a></li><li><a href="/carrieres">Carrières</a></li><li><a href="/contact">Contact</a></li></ul></nav>
+      <nav aria-label="Nos pôles"><h4>Nos pôles</h4><ul class="deux">${POLES.map(p => `<li><a class="foot-pole" href="${p.chemin}" style="--c:${p.couleur}">${esc(p.nom)}</a></li>`).join("")}</ul></nav>
+      <nav aria-label="Ubora"><h4>Ubora</h4><ul class="deux"><li><a href="/a-propos">Qui sommes-nous</a></li><li><a href="/equipe">Notre équipe</a></li><li><a href="/approche">Notre approche</a></li><li><a href="/conseil">Conseil</a></li><li><a href="/outils">Outils numériques</a></li><li><a href="/formations">Formations</a></li>${DATA.realisations.length ? `<li><a href="/realisations">Nos réalisations</a></li>` : ""}${allNews().length ? `<li><a href="/actualites">Actualités</a></li>` : ""}<li><a href="/carrieres">Carrières</a></li></ul></nav>
       <div class="foot-contact"><h4>Nous joindre</h4><ul>
         <li><span class="ic">${ICON.phone}</span><a href="tel:${tel}">${esc(CONFIG.telephone)}</a></li>
         <li><span class="ic">${ICON.mail}</span><a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a></li>
@@ -476,7 +475,7 @@ function pageAbout() {
     </div>
   </div></section>
 
-  <section id="faq"><div class="wrap narrow">${secHead("Questions fréquentes", "Vous vous demandez peut-être")}${faq(FAQ)}</div></section>`;
+  <section id="faq"><div class="wrap">${secHead("Questions fréquentes", "Vous vous demandez peut-être")}${faq(FAQ)}</div></section>`;
 }
 
 function pageApproche() {
