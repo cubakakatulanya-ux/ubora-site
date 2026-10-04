@@ -530,8 +530,8 @@ const OUTILS = [
     sousDomaine: "hub.uborardc.com", url: "https://hub.uborardc.com",
     resume: "Le logiciel des incubateurs et des programmes d'entrepreneuriat : il les aide à sélectionner, former et suivre leurs entrepreneurs, du premier jour jusqu'au business plan.",
     points: ["Appels à candidatures en ligne, jury et sélection", "Parcours en trois phases : idéation, incubation, post-incubation", "Modules de formation, exercices et séances de coaching", "Business plan de chaque entrepreneur, relié au générateur", "Tableau de bord, indicateurs et rapports pour les bailleurs", "Un espace séparé pour chaque incubateur, utilisable hors ligne"],
-    /* inscriptionOuverte : à passer à true quand la page hub.uborardc.com/inscription est en ligne */
-    inscription: "https://hub.uborardc.com/inscription", inscriptionOuverte: false,
+    /* inscriptionOuverte : la page hub.uborardc.com/inscription est en ligne (remettre false pour revenir au formulaire de contact) */
+    inscription: "https://hub.uborardc.com/inscription", inscriptionOuverte: true,
     fiche: {
       titre: `Le logiciel des incubateurs : sélectionner, accompagner, <span class="serif">rendre compte</span>.`,
       seo: ["Ubora Hub : logiciel de gestion d'incubateurs en RDC", "Ubora Hub aide les incubateurs, universités, ONG et programmes publics à sélectionner, former et suivre leurs entrepreneurs, jusqu'au business plan. Inscription validée par Ubora."],
