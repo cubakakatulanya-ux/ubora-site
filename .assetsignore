@@ -10,3 +10,4 @@ wrangler.jsonc
 tools
 node_modules
 worker.js
+.wrangler/

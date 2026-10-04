@@ -157,14 +157,28 @@ async function main() {
     .replace("{{FOOTER}}", () => S.typoHTML(footer))
     .replace("{{APP}}", () => S.typoHTML(r404.html)));
 
+  /* Dates de dernière modification : l'empreinte du contenu de chaque page est gardée dans tools/lastmod.json ;
+     la date n'avance que lorsque le contenu change réellement (une date fausse serait ignorée par les moteurs). */
+  const fichierDates = path.join(ROOT, "tools/lastmod.json");
+  const dates = fs.existsSync(fichierDates) ? JSON.parse(fs.readFileSync(fichierDates, "utf8")) : {};
+  const aujourdhui = new Date().toISOString().slice(0, 10);
+  for (const c of pages) {
+    const empreinte = crypto.createHash("sha1").update(S.resolve(c, "", "uborardc.com").html).digest("hex").slice(0, 12);
+    if (!dates[c] || dates[c].empreinte !== empreinte) dates[c] = { empreinte, date: aujourdhui };
+  }
+  for (const c of Object.keys(dates)) if (!pages.includes(c)) delete dates[c];
+  fs.writeFileSync(fichierDates, JSON.stringify(dates, null, 1) + "\n");
+
   /* Plan du site */
   const prio = c => c === "/" ? "1.0" : S.POLES.some(p => p.chemin === c) ? "0.9" : c === "/realisations" || c.startsWith("/outils/") ? "0.8" : c.startsWith("/actualites/") ? "0.6" : "0.7";
   /* seule la date des articles est connue avec certitude ; les autres pages n'en indiquent pas */
-  const modif = c => { const n = S.allNews().find(x => "/actualites/" + x.slug === c); return n ? `<lastmod>${n.date}</lastmod>` : ""; };
+  const modif = c => { const n = S.allNews().find(x => "/actualites/" + x.slug === c); return `<lastmod>${n ? n.date : dates[c].date}</lastmod>`; };
   write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${pages.map(c => `  <url><loc>${S.CONFIG.site}${c === "/" ? "/" : c}</loc>${modif(c)}<priority>${prio(c)}</priority></url>`).join("\n")}
   <url><loc>https://bp.uborardc.com/</loc><priority>0.8</priority></url>
+  <url><loc>https://akiba.uborardc.com/</loc><priority>0.8</priority></url>
+  <url><loc>https://academie.uborardc.com/</loc><priority>0.8</priority></url>
 </urlset>
 `);
 

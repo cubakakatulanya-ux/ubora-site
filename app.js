@@ -875,7 +875,7 @@ const ANCIENNES = {
   "solutions": "/outils", "services": "/conseil", "diagnostic": "/contact", "rediger": "/admin", "hub": "/outils/hub"
 };
 const DESCR = {
-  "": "Ubora, entreprise sociale à Lubumbashi : groupes d'épargne (AVEC), entrepreneurs, coopératives, accès au financement et au marché, partout en RDC.",
+  "": "Ubora RDC, entreprise sociale basée à Lubumbashi : groupes d'épargne (AVEC), incubation d'entrepreneurs et de PME, coopératives, accès au crédit et au marché, partout en RDC.",
   "a-propos": "Qui est Ubora : une entreprise sociale née à Lubumbashi, sa mission, son modèle, ses valeurs et son équipe de terrain.",
   approche: "La méthode Ubora en six temps : écouter, structurer, former, outiller, connecter et suivre, pensée pour les réalités de la RDC.",
   outils: "AKIBA, le générateur de business plan, Ubora Hub et les outils en préparation : des outils numériques conçus pour la RDC.",
@@ -901,7 +901,7 @@ const SEO_POLES = {
 /* Titres complets pour la balise <title> ; TITRES reste court (fil d'Ariane, menus) */
 const SEO_TITRES = { "a-propos": "Qui sommes-nous : Ubora, entreprise sociale en RDC", approche: "Notre approche : la méthode Ubora en six temps", outils: "Outils numériques pour les AVEC et les PME en RDC · Ubora", conseil: "Conseil et programmes pour ONG et bailleurs en RDC · Ubora", formations: "Formations AVEC, entrepreneuriat et coopératives · Ubora", actualites: "Actualités d'Ubora : nouvelles du terrain en RDC", realisations: "Nos réalisations en RDC · Ubora, entreprise sociale", equipe: "Notre équipe · Ubora, entreprise sociale à Lubumbashi", carrieres: "Carrières : rejoindre Ubora à Lubumbashi, RDC", contact: "Contacter Ubora à Lubumbashi, RDC", mentions: "Mentions légales · Ubora, entreprise sociale" };
 const ROBOTS = "index, follow, max-image-preview:large";
-const TITRES = { "": "Ubora, entreprise sociale à Lubumbashi, RDC", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos outils numériques", conseil: "Conseil et programmes", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
+const TITRES = { "": "Ubora RDC : entreprise sociale à Lubumbashi (AVEC, PME, coopératives)", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos outils numériques", conseil: "Conseil et programmes", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
 
 /* Construit une page à partir d'une adresse. */
 function resolve(pathname, search, host) {
