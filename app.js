@@ -297,9 +297,9 @@ function menuHTML() {
       </div></li>
     <li class="has-dd"><button class="dd-btn" type="button" data-r="poles" aria-expanded="false">Pôles et outils ${ICON.chev}</button>
       <div class="dd dd-mega">
-        <div class="dd-col"><h5>Nos pôles</h5>${POLES.map(p => `<a href="${p.chemin}" class="dd-item"><span class="mk" style="background:${p.couleur}">${p.initiales}</span><span><b>${esc(p.nom)}</b><small>${esc(p.sousDomaine)}</small></span></a>`).join("")}</div>
-        <div class="dd-col"><h5>Nos outils</h5>${OUTILS.filter(o => o.statut === "en-ligne").map(o => `<a href="${lienOutil(o)}" class="dd-item"><span class="mk" style="background:${o.couleur}">${o.initiales}</span><span><b>${esc(o.nom)}</b><small>${esc(o.sousDomaine)}</small></span></a>`).join("")}
-          <a href="/outils" class="dd-more">Tous les outils ${ICON.arrow}</a><a href="/formations" class="dd-more">Formations ${ICON.arrow}</a></div>
+        <div class="dd-col dd-poles"><h5>Nos pôles</h5><div class="dd-grille">${POLES.map(p => `<a href="${p.chemin}" class="dd-item${p.transversal ? " large" : ""}"><span class="mk" style="background:${p.couleur}">${p.initiales}</span><span><b>${esc(p.nom)}${p.transversal ? '<i class="dd-tag">Pour tous les pôles</i>' : ""}</b><small>${esc(p.accroche)}</small></span></a>`).join("")}</div></div>
+        <div class="dd-col dd-outils"><h5>Nos logiciels</h5>${OUTILS.filter(o => o.statut === "en-ligne").map(o => `<a href="${lienOutil(o)}" class="dd-item"><span class="mk" style="background:${o.couleur}">${o.initiales}</span><span><b>${esc(o.nom)}</b><small>${esc(o.court || o.sousDomaine)}</small></span></a>`).join("")}</div>
+        <div class="dd-pied"><a href="/outils" class="dd-more">Tous les outils ${ICON.arrow}</a><a href="/formations" class="dd-more">Formations ${ICON.arrow}</a><a href="/conseil" class="dd-more">Conseil et programmes ${ICON.arrow}</a></div>
       </div></li>
     <li><a href="/realisations" data-r="realisations">Réalisations</a></li>
     <li><a href="/actualites" data-r="actualites">Actualités</a></li>

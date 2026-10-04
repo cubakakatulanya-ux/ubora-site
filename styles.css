@@ -1778,3 +1778,31 @@ section.band { padding-block: clamp(40px, 4.8vw, 66px); }
 #acces .bridge { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 @media (max-width: 900px) { #acces .bridge, .page-head.has-ecran .head-grid { grid-template-columns: minmax(0, 1fr); } }
 #acces .publics, section > .wrap > .publics { margin-top: 22px; }
+
+/* ==========================================================================
+   Menu « Pôles et outils » : pôles sur deux colonnes, logiciels à part, liens en pied
+   ========================================================================== */
+.dd-item .mk { width: 34px; height: 34px; border-radius: 9px; font-size: 12.5px; }
+.dd-item b { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; font-size: 15px; line-height: 1.25; }
+.dd-item small { font-family: var(--f-body); font-size: 12.5px; line-height: 1.35; color: var(--muted); }
+.dd-tag { padding: 1px 8px; border-radius: 99px; background: var(--menthe); border: 1px solid var(--menthe-bord); color: var(--vert-texte); font: 500 11px var(--f-display); font-style: normal; }
+.dd-col h5 { font-family: var(--f-display); font-size: 11.5px; font-weight: 700; letter-spacing: .1em; color: var(--vert-texte); }
+.dd-grille { display: grid; gap: 2px; }
+.dd-pied { display: flex; flex-wrap: wrap; gap: 4px 14px; }
+@media (min-width: 1101px) {
+  .dd-mega { width: min(860px, calc(100vw - 48px)); grid-template-columns: minmax(0, 1.75fr) minmax(0, 1fr); gap: 0; padding: 0; overflow: hidden; }
+  .dd-mega .dd-col { padding: 16px 14px 14px; }
+  .dd-grille { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 6px; }
+  .dd-grille .dd-item.large { grid-column: 1 / -1; }
+  .dd-mega .dd-item { align-items: flex-start; padding: 9px 10px; border-radius: 10px; }
+  .dd-mega .dd-item .mk { margin-top: 1px; }
+  .dd-outils { background: var(--gris-section); border-left: 1px solid var(--bord-fin); }
+  .dd-outils .dd-item:hover { background: var(--carte); }
+  .dd-pied { grid-column: 1 / -1; padding: 8px 16px; border-top: 1px solid var(--bord-fin); background: var(--menthe); }
+  .dd-pied .dd-more { padding: 6px 8px; border-radius: 8px; font-size: 13.5px; }
+  .dd-pied .dd-more:hover { background: var(--carte); }
+}
+@media (max-width: 1100px) {
+  .dd-pied { padding: 4px 0 0; }
+  .dd-tag { display: none; }
+}

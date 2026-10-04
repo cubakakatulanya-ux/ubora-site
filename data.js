@@ -495,7 +495,7 @@ const AVEC = {
    ========================================================================== */
 const OUTILS = [
   {
-    id: "akiba", nom: "AKIBA", pole: "avec", statut: "en-ligne", mock: "akiba", couleur: "#23843A", initiales: "Ak",
+    id: "akiba", nom: "AKIBA", court: "L'application des groupes d'épargne", pole: "avec", statut: "en-ligne", mock: "akiba", couleur: "#23843A", initiales: "Ak",
     sousDomaine: "akiba.uborardc.com", url: "https://akiba.uborardc.com",
     fiche: {
       titre: `Le cahier de l'AVEC dans le téléphone, même sans <span class="serif">réseau</span>.`,
@@ -513,7 +513,7 @@ const OUTILS = [
     points: ["Réunion guidée en 8 étapes, de la présence à la clôture à trois clés", "Registre scellé : toute modification se voit", "Reçus des membres et journal imprimés sur imprimante Bluetooth (bientôt sur terminal POS), ou envoyés par WhatsApp et SMS", "Indice de qualité des données et niveau « prête pour une IMF »", "Dossier pour l'IMF et export Excel, sans données personnelles", "Crédit d'une IMF suivi de bout en bout, garantie comprise", "Espaces AVEC, animateur et organisation, avec un écran Impact", "Langues de la RDC, guide audio et 7 modules de formation AVEC", "Démonstration libre ; code de validation Ubora pour une vraie AVEC"]
   },
   {
-    id: "bp", nom: "Générateur de business plan", pole: "pme", statut: "en-ligne", mock: "pme", couleur: "#B0622A", initiales: "Bp",
+    id: "bp", nom: "Générateur de business plan", court: "Votre plan d'affaires, étape par étape", pole: "pme", statut: "en-ligne", mock: "pme", couleur: "#B0622A", initiales: "Bp",
     sousDomaine: "bp.uborardc.com", url: "https://bp.uborardc.com",
     fiche: {
       titre: `Un business plan complet, construit <span class="serif">étape par étape</span>.`,
@@ -531,7 +531,7 @@ const OUTILS = [
     points: ["Un parcours étape par étape, adapté au projet en huit réponses", "Ventes avec saisonnalité, investissements, crédits et besoin en fonds de roulement", "Compte de résultat, bilan et trésorerie calculés, mois par mois", "Seuil de rentabilité et trois scénarios, avec calculs inverses", "Score de viabilité : « Mon projet peut-il démarrer ? »", "Conseils ciblés : phasage des investissements, durée du crédit, module agricole", "En francs congolais ou en dollars ; imprimable en PDF ou exportable vers Word"]
   },
   {
-    id: "hub", nom: "Ubora Hub", pole: "pme", statut: "en-ligne", mock: "hub", couleur: "#0F3170", initiales: "Hb",
+    id: "hub", nom: "Ubora Hub", court: "Le logiciel des incubateurs", pole: "pme", statut: "en-ligne", mock: "hub", couleur: "#0F3170", initiales: "Hb",
     sousDomaine: "hub.uborardc.com", url: "https://hub.uborardc.com",
     resume: "Le logiciel des incubateurs et des programmes d'entrepreneuriat : il les aide à sélectionner, former et suivre leurs entrepreneurs, du premier jour jusqu'au business plan.",
     points: ["Appels à candidatures en ligne, jury et sélection", "Parcours en trois phases : idéation, incubation, post-incubation", "Modules de formation, exercices et séances de coaching", "Business plan de chaque entrepreneur, relié au générateur", "Tableau de bord, indicateurs et rapports pour les bailleurs", "Un espace séparé pour chaque incubateur, utilisable hors ligne"],
@@ -566,7 +566,7 @@ const OUTILS = [
     }
   },
   {
-    id: "academie", nom: "Académie Ubora", pole: "academie", statut: "en-ligne", mock: "academie", couleur: "#9A5522", initiales: "Ac",
+    id: "academie", nom: "Académie Ubora", court: "L'école en ligne, avec certificats", pole: "academie", statut: "en-ligne", mock: "academie", couleur: "#9A5522", initiales: "Ac",
     sousDomaine: "academie.uborardc.com", url: "https://academie.uborardc.com", page: "/academie",
     resume: "L'école en ligne d'Ubora : 26 cours d'environ 50 minutes sur les AVEC, les activités génératrices de revenus et l'éducation financière, utilisables même sans réseau, avec badges et certificats vérifiables.",
     points: ["Six parcours, du membre d'AVEC au formateur", "Les 5 modules du PNEF de la Banque centrale du Congo", "Exercices corrigés et quiz chronométrés", "Cours téléchargés utilisables sans réseau", "Badges et certificats vérifiables en ligne"]
