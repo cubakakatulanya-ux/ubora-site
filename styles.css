@@ -1806,3 +1806,16 @@ section.band { padding-block: clamp(40px, 4.8vw, 66px); }
   .dd-pied { padding: 4px 0 0; }
   .dd-tag { display: none; }
 }
+
+/* ==========================================================================
+   Grands écrans (Full HD large, 2K, 4K) : tout le site est agrandi en proportion,
+   pour que la page remplisse l'écran au lieu de rester une colonne étroite au centre.
+   Les photos sont servies jusqu'en 2400 px : elles restent nettes à ces tailles.
+   ========================================================================== */
+@media (min-width: 1800px) { html { zoom: 1.12; } }
+@media (min-width: 2000px) { html { zoom: 1.25; } }
+@media (min-width: 2300px) { html { zoom: 1.38; } }
+@media (min-width: 2560px) { html { zoom: 1.5; } }
+@media (min-width: 3000px) { html { zoom: 1.8; } }
+@media (min-width: 3400px) { html { zoom: 2.05; } }
+@media (min-width: 3800px) { html { zoom: 2.25; } }
