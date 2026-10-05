@@ -16,9 +16,9 @@ const CONFIG = {
   email: "contact@uborardc.com",
   telephone: "+243 998 275 144",
   whatsapp: "243998275144",
-  adresse: "Lubumbashi, Haut-Katanga, RDC",
+  adresse: "Avenue Mapeno, Q. Kalubwe, Lubumbashi, RDC",
   zone: "Partout en RDC, sur le terrain et à distance",
-  horaires: "Du lundi au vendredi, de 8 h à 17 h",
+  horaires: "Du lundi au vendredi, de 8 h à 16 h",
   /* Mentions légales. Un champ laissé vide n'est pas affiché sur le site. */
   legal: { rccm: "CD/KNM/RCCM/24-A-04755", idnat: "01-G4701-N86995I", impot: "", directeur: "Christian Cubaka Katulanya, Directeur Gérant" }
 };
