@@ -63,7 +63,7 @@ const ORG = {
   telephone: "+243998275144",
   description: "Entreprise sociale basée à Lubumbashi : appui aux groupes d'épargne (AVEC), accompagnement des entrepreneurs et des coopératives, accès au financement et au marché, dans toute la RDC.",
   foundingDate: "2025-06",
-  address: { "@type": "PostalAddress", streetAddress: "Avenue Mapeno, Quartier Kalubwe", addressLocality: "Lubumbashi", addressRegion: "Haut-Katanga", addressCountry: "CD" },
+  address: { "@type": "PostalAddress", streetAddress: "Avenue Mapendo, Quartier Kalubwe", addressLocality: "Lubumbashi", addressRegion: "Haut-Katanga", addressCountry: "CD" },
   openingHoursSpecification: [{ "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "08:00", closes: "16:00" }],
   areaServed: { "@type": "Country", name: "République démocratique du Congo" },
   contactPoint: [{ "@type": "ContactPoint", telephone: "+243998275144", contactType: "customer service", availableLanguage: ["fr", "sw"] }],

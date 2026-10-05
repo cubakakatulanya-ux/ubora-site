@@ -16,7 +16,7 @@ const CONFIG = {
   email: "contact@uborardc.com",
   telephone: "+243 998 275 144",
   whatsapp: "243998275144",
-  adresse: "Avenue Mapeno, Q. Kalubwe, Lubumbashi, RDC",
+  adresse: "Avenue Mapendo, Q. Kalubwe, Lubumbashi, RDC",
   zone: "Partout en RDC, sur le terrain et à distance",
   horaires: "Du lundi au vendredi, de 8 h à 16 h",
   /* Mentions légales. Un champ laissé vide n'est pas affiché sur le site. */
