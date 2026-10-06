@@ -942,7 +942,8 @@ function resolve(pathname, search, host) {
     case "carrieres": html = pageCareers(sub); canon = "/carrieres"; break;
     case "contact": html = pageContact(params); break;
     case "mentions": html = pageMentions(); break;
-    case "admin": html = typeof pageAdmin === "function" ? pageAdmin() : notFound(); break;
+    /* adresse propre à l'espace équipe : sans elle, admin.uborardc.com garderait le contenu de l'accueil déjà dans la page */
+    case "admin": html = typeof pageAdmin === "function" ? pageAdmin() : notFound(); canon = "/admin"; break;
     default: html = notFound(); title = "Page introuvable";
   }
   const court = title || TITRES[base] || "Ubora";
