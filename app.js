@@ -852,7 +852,7 @@ function pageMentions() {
     <h2>Données personnelles</h2><p>Nous ne collectons que ce que vous nous transmettez :</p>
     <ul class="checks"><li>le formulaire de contact : nom, organisation, téléphone, e-mail et message, pour vous répondre ;</li><li>la lettre d'information : votre adresse e-mail, jusqu'à votre désinscription ;</li><li>l'assistant du site : le texte de vos questions, sans aucune donnée d'identification.</li></ul>
     <p>Ces données ne sont ni vendues ni cédées. Pour les consulter, les corriger ou les faire supprimer, écrivez à <a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a>.</p>
-    <h2>Cookies</h2><p>Le site n'utilise aucun cookie publicitaire ni outil de mesure d'audience. Votre navigateur garde seulement votre choix d'affichage clair ou sombre.</p>
+    <h2>Cookies et mesure des visites</h2><p>Le site n'utilise aucun cookie. Nous comptons les visites pour savoir quelles pages sont lues : la page consultée, le site d'où vous venez, votre pays et le type d'appareil. Nous n'enregistrons ni votre adresse IP ni rien qui permette de vous reconnaître. Votre navigateur garde seulement votre choix d'affichage clair ou sombre et la date de votre dernière visite.</p>
     <h2>Photos</h2><p>Les photos d'ambiance du site proviennent de la banque d'images Unsplash et sont utilisées selon sa licence. Elles illustrent nos domaines d'intervention et ne représentent pas des bénéficiaires ni des projets d'Ubora. Les photos des pages « Notre équipe » et « Nos réalisations » sont les nôtres.</p>
     <h2>Propriété intellectuelle</h2><p>Le logo, les noms Ubora AVEC, Ubora PME, Ubora Coop, Ubora Fin, Ubora Market, Ubora Vert, Ubora Académie et AKIBA, ainsi que les textes et les documents de ce site, appartiennent à Ubora. Toute reproduction sans autorisation est interdite.</p>
   </div></section>`;
@@ -985,6 +985,25 @@ function boot() {
 
   const fermerDD = () => $$(".has-dd").forEach(x => { x.classList.remove("open"); const b = x.querySelector(".dd-btn"); if (b) b.setAttribute("aria-expanded", "false"); });
   let premier = true, baseConsultee = false;
+
+  /* Compteur de visites, lu dans l'espace équipe : la page vue et le site d'où l'on vient.
+     Ni cookie ni identifiant ; le navigateur retient seulement la date de la dernière visite. */
+  const memoire = { lire: k => { try { return localStorage.getItem(k); } catch (e) { return null; } }, ecrire: (k, v) => { try { v === null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch (e) {} } };
+  let derniereVue = null, entree = true;
+  function compter(r) {
+    if (!/(^|\.)uborardc\.com$/.test(location.hostname) || sd === "admin" || r.base === "admin" || !r.found || navigator.webdriver) return;
+    /* l'équipe peut exclure ses propres visites : uborardc.com/?equipe=1 (et ?equipe=0 pour les compter à nouveau) */
+    const equipe = new URLSearchParams(location.search).get("equipe");
+    if (equipe === "1") memoire.ecrire("ubora-equipe", "1"); else if (equipe === "0") memoire.ecrire("ubora-equipe", null);
+    if (memoire.lire("ubora-equipe") || r.canon === derniereVue) return;
+    derniereVue = r.canon;
+    const jour = todayISO(), nouveau = memoire.lire("ubora-vu") !== jour;
+    if (nouveau) memoire.ecrire("ubora-vu", jour);
+    const corps = JSON.stringify({ c: r.canon, r: entree ? document.referrer : "", n: nouveau });
+    entree = false;
+    try { fetch("/_v", { method: "POST", keepalive: true, headers: { "Content-Type": "application/json" }, body: corps }).catch(() => {}); } catch (e) {}
+  }
+
   function route(opts) {
     const keep = !!(opts && opts.keep === true);
     if (location.hash.startsWith("#/")) history.replaceState({}, "", location.hash.slice(1));
@@ -996,6 +1015,7 @@ function boot() {
     /* article publié depuis le dernier pré-rendu : on attend la base avant de conclure « introuvable » */
     if (!r.found && r.base === "actualites" && r.sub && !baseConsultee) { premier = false; app.innerHTML = '<div class="wrap"><div class="empty" style="margin-block:80px">Chargement de l\'article…</div></div>'; return; }
     stopNet();
+    compter(r);
     const garder = premier && !keep && app.dataset.pre === CONFIG.site + r.canon && !location.search && !["formations", "carrieres"].includes(r.base);
     premier = false; delete app.dataset.pre;
     if (!garder) app.innerHTML = `<div class="fade">${r.html}</div>`;

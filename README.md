@@ -14,7 +14,7 @@ Site officiel d'Ubora, entreprise sociale basée à Lubumbashi et active dans to
 | `data.js` | Tous les textes : coordonnées, mentions légales, pôles, méthode, outils, catalogue de formations, FAQ. |
 | `app.js` | Construction des pages et navigation. |
 | `db.js` | Connexion à la base de données Supabase. |
-| `admin.js` | Espace équipe : messages, actualités, formations, offres, abonnés, questions. |
+| `admin.js` | Espace équipe : visites du site, messages, actualités, formations, offres, abonnés, questions. |
 | `chat.js` | Assistant du site (répond à partir du contenu, sans service extérieur). |
 | `styles.css` | Apparence : couleurs, typographies, mises en page, thème sombre. |
 | `theme.js` | Applique le thème choisi par le visiteur avant l'affichage. |
@@ -47,7 +47,7 @@ et envoyer les changements sur GitHub (`git push`). Le site se met à jour en un
 
 Projet Supabase **coopec-gestion** (`uoshpvqdszygezkuhhco`, eu-central-1). Les tables du site sont
 préfixées `site_` : `site_actualites`, `site_formations`, `site_offres`, `site_messages`,
-`site_abonnes`, `site_questions`, `site_equipe`, `site_realisations`, `site_admins`. Les photos sont dans le stockage `site-medias`.
+`site_abonnes`, `site_questions`, `site_equipe`, `site_realisations`, `site_visites`, `site_admins`. Les photos sont dans le stockage `site-medias`.
 
 La clé *anon* de `data.js` est faite pour être publique : les règles d'accès de la base empêchent
 un visiteur de lire les messages, les abonnés ou les brouillons, et de modifier quoi que ce soit.

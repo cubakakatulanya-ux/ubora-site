@@ -6,11 +6,11 @@
    ========================================================================== */
 
 const ONGLETS = [
-  ["tableau", "Tableau de bord"], ["messages", "Messages"], ["actualites", "Actualités"],
+  ["tableau", "Tableau de bord"], ["visites", "Visites"], ["messages", "Messages"], ["actualites", "Actualités"],
   ["formations", "Formations"], ["offres", "Offres d'emploi"], ["realisations", "Réalisations"], ["equipe", "Équipe"], ["abonnes", "Abonnés"], ["questions", "Questions"]
 ];
 const SINGULIER = { actualites: "une actualité", formations: "une formation", offres: "une offre", equipe: "un membre de l'équipe", realisations: "une réalisation" };
-let adminState = { onglet: "tableau", filtre: "a-traiter" };
+let adminState = { onglet: "tableau", filtre: "a-traiter", jours: 30 };
 
 const slugify = t => (t || "").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 70);
 const lignes = t => (t || "").split("\n").map(s => s.trim()).filter(Boolean);
@@ -20,7 +20,7 @@ function pageAdmin() {
   return `<section class="deep page-head admin-head"><div class="wrap">
       <span class="eyebrow">Espace équipe</span>
       <h1>Gérer le site</h1>
-      <p class="lead">Messages reçus, actualités, réalisations, équipe, formations, offres d'emploi et abonnés. Tout ce que vous publiez ici apparaît aussitôt sur le site.</p>
+      <p class="lead">Visites du site, messages reçus, actualités, réalisations, équipe, formations, offres d'emploi et abonnés. Tout ce que vous publiez ici apparaît aussitôt sur le site.</p>
     </div></section>
     <section><div class="wrap"><div id="adminPane"><div class="empty">Chargement…</div></div></div></section>`;
 }
@@ -74,6 +74,7 @@ function renderDash(pane, user) {
   $("#logout").onclick = async () => { await UboraDB.signOut(); toast("Vous êtes déconnecté."); bindAdmin(); };
   const o = adminState.onglet;
   if (o === "tableau") renderTableau(pane, user);
+  else if (o === "visites") renderVisites();
   else if (o === "messages") renderMessages();
   else if (o === "abonnes") renderAbonnes();
   else if (o === "questions") renderQuestions();
@@ -81,8 +82,10 @@ function renderDash(pane, user) {
 }
 
 async function renderTableau(pane, user) {
-  const c = await UboraDB.counts();
+  const [c, s] = await Promise.all([UboraDB.counts(), UboraDB.stats(7)]);
+  const sem = (s && s.semaine) || { vues: 0, visiteurs: 0 };
   const cartes = [
+    ["visites", "Visiteurs sur 7 jours", nombre(sem.visiteurs), pagesVues(sem.vues)],
     ["messages", "Messages à traiter", c.nonTraites, `${c.messages} au total`],
     ["actualites", "Actualités", c.actualites, "publiées ou en brouillon"],
     ["formations", "Formations", c.formations, "sessions enregistrées"],
@@ -92,7 +95,7 @@ async function renderTableau(pane, user) {
     ["abonnes", "Abonnés", c.abonnes, "à la lettre d'information"],
     ["questions", "Questions sans réponse", c.questionsSansReponse, "posées à l'assistant"]
   ];
-  $("#adminBody").innerHTML = `<div class="admin-kpis">${cartes.map(([k, t, n, s]) => `<button class="kpi-card" data-k="${k}"><span>${t}</span><b>${n ?? 0}</b><small>${s}</small></button>`).join("")}</div>
+  $("#adminBody").innerHTML = `<div class="admin-kpis trois">${cartes.map(([k, t, n, s]) => `<button class="kpi-card" data-k="${k}"><span>${t}</span><b>${n ?? 0}</b><small>${s}</small></button>`).join("")}</div>
     <div class="panel admin-help"><b>Bon à savoir</b>
       <ul class="checks"><li>Une actualité, une formation ou une offre décochée « Visible sur le site » reste enregistrée comme brouillon.</li>
       <li>Une formation dont la date est passée disparaît du calendrier public.</li>
@@ -101,6 +104,68 @@ async function renderTableau(pane, user) {
       <li>Les photos sont réduites automatiquement avant l'envoi : inutile de les retoucher.</li>
       <li>Équipe et réalisations s'affichent du plus petit au plus grand « ordre d'affichage ».</li></ul></div>`;
   $$(".kpi-card").forEach(b => b.onclick = () => { adminState.onglet = b.dataset.k; renderDash(pane, user); });
+}
+
+/* ---------- Visites du site ---------- */
+const nombre = n => Number(n || 0).toLocaleString("fr-FR");
+const pluriel = (n, mot) => `${nombre(n)} ${mot}${n > 1 ? "s" : ""}`;
+const pagesVues = n => `${pluriel(n, "page")} vue${n > 1 ? "s" : ""}`;
+const jourLong = j => new Date(j + "T12:00:00").toLocaleDateString("fr-FR", { weekday: "long", day: "numeric", month: "long" });
+const jourCourt = j => new Date(j + "T12:00:00").toLocaleDateString("fr-FR", { day: "numeric", month: "short" });
+const APPAREILS = { mobile: "Téléphone", tablette: "Tablette", ordinateur: "Ordinateur", inconnu: "Non reconnu" };
+function nomPays(code) {
+  if (!code || code === "??") return "Pays non reconnu";
+  if (code === "CD") return "RD Congo";
+  try { return new Intl.DisplayNames(["fr"], { type: "region" }).of(code) || code; } catch (e) { return code; }
+}
+
+/* liste classée : un libellé, une barre proportionnelle, un nombre */
+function classement(titre, lignes, libelle, vide) {
+  const max = Math.max(1, ...lignes.map(l => l.vues));
+  return `<div class="panel vz-bloc"><h3>${titre}</h3>
+    ${lignes.length ? `<ol class="vz-liste">${lignes.map(l => `<li><span class="vz-nom">${libelle(l.nom)}</span><span class="vz-jauge" aria-hidden="true"><i style="width:${Math.max(2, Math.round(l.vues / max * 100))}%"></i></span><b>${nombre(l.vues)}</b></li>`).join("")}</ol>` : `<p class="muted small">${vide}</p>`}</div>`;
+}
+
+async function renderVisites() {
+  const el = $("#adminBody");
+  el.innerHTML = `<div class="empty">Chargement…</div>`;
+  const s = await UboraDB.stats(adminState.jours);
+  if (!s) { el.innerHTML = `<div class="empty"><b>Les statistiques sont indisponibles.</b><p>Vérifiez votre connexion, puis rechargez la page.</p></div>`; return; }
+  const jours = s.par_jour || [], max = Math.max(1, ...jours.map(j => j.vues));
+  const resume = `${pagesVues(s.periode.vues)} par ${pluriel(s.periode.visiteurs, "visiteur")} sur ${s.jours} jours`;
+  const reperes = [0, Math.floor((jours.length - 1) / 2), jours.length - 1].filter((v, i, a) => a.indexOf(v) === i);
+  el.innerHTML = `
+    <div class="admin-tools"><p class="muted">Ce que les visiteurs regardent sur uborardc.com et d'où ils viennent.</p>
+      <div class="seg" role="group" aria-label="Période">${[7, 30, 90].map(n => `<button data-j="${n}" aria-pressed="${adminState.jours === n}">${n} jours</button>`).join("")}</div></div>
+    <div class="admin-kpis trois">
+      ${[["Aujourd'hui", s.aujourdhui], ["7 derniers jours", s.semaine], [`${s.jours} derniers jours`, s.periode]].map(([t, v]) => `<div class="kpi-card fixe"><span>${t}</span><b>${nombre(v.visiteurs)}</b><small>visiteur${v.visiteurs > 1 ? "s" : ""} · ${pagesVues(v.vues)}</small></div>`).join("")}
+    </div>
+    ${s.periode.vues ? `
+    <div class="panel vz-bloc"><h3>Pages vues par jour</h3>
+      <p class="vz-info" id="vzInfo" aria-live="polite">${resume}</p>
+      <div class="vz-graphe" role="img" aria-label="Pages vues par jour : ${resume}">
+        <span class="vz-max">${nombre(max)}</span>
+        <div class="vz-barres">${jours.map(j => `<span class="vz-col" tabindex="0" data-t="${esc(jourLong(j.jour))} : ${pagesVues(j.vues)}, ${pluriel(j.visiteurs, "visiteur")}"><i style="height:${j.vues ? Math.max(3, Math.round(j.vues / max * 100)) : 0}%"></i></span>`).join("")}</div>
+        <div class="vz-axe">${reperes.map(i => `<span>${jourCourt(jours[i].jour)}</span>`).join("")}</div>
+      </div></div>
+    <div class="vz-grille">
+      ${classement("Pages les plus vues", s.pages || [], n => `<a href="https://uborardc.com${esc(n)}" target="_blank" rel="noopener">${esc(n === "/" ? "Accueil" : n)}</a>`, "Aucune page vue sur la période.")}
+      ${classement("D'où viennent les visiteurs", s.sources || [], n => n === "direct" ? "Accès direct (adresse tapée, favori, lien WhatsApp)" : esc(n), "Aucune visite sur la période.")}
+      ${classement("Pays des visiteurs", s.pays || [], n => esc(nomPays(n)), "Aucune visite sur la période.")}
+      ${classement("Appareils", s.appareils || [], n => APPAREILS[n] || esc(n), "Aucune visite sur la période.")}
+    </div>` : `<div class="empty"><b>Aucune visite enregistrée sur cette période.</b><p>Le comptage a démarré avec la mise en ligne de cette rubrique : les visites plus anciennes ne sont pas connues.</p></div>`}
+    <div class="panel admin-help"><b>Comment lire ces chiffres</b>
+      <ul class="checks"><li>Un visiteur est un navigateur, compté une fois par jour ; une page vue est comptée à chaque page ouverte.</li>
+      <li>Les robots des moteurs de recherche ne sont pas comptés.</li>
+      <li>Rien ne permet de reconnaître une personne : ni cookie, ni adresse IP, ni nom.</li>
+      <li>Pour ne pas compter vos propres visites, ouvrez une fois <b>uborardc.com/?equipe=1</b> sur chacun de vos appareils.</li></ul></div>`;
+  $$(".seg button", el).forEach(b => b.onclick = () => { adminState.jours = +b.dataset.j; renderVisites(); });
+  const info = $("#vzInfo");
+  $$(".vz-col", el).forEach(c => {
+    const montrer = () => { info.textContent = c.dataset.t; }, cacher = () => { info.textContent = resume; };
+    c.addEventListener("mouseenter", montrer); c.addEventListener("focus", montrer); c.addEventListener("click", montrer);
+    c.addEventListener("mouseleave", cacher); c.addEventListener("blur", cacher);
+  });
 }
 
 async function renderMessages() {

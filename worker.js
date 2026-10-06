@@ -33,8 +33,41 @@ const ENTETES = {
 
 const renvoi = (adresse, code = 301) => Response.redirect(adresse, code);
 
+/* Compteur de visites : le site signale chaque page vue à /_v, le Worker ajoute le pays et le type
+   d'appareil, puis l'inscrit dans la base (table site_visites, lue dans l'espace équipe).
+   Ni cookie, ni adresse IP, ni identifiant de visiteur ne sont enregistrés. */
+const BASE = "https://uoshpvqdszygezkuhhco.supabase.co";
+const CLE_PUBLIQUE = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVvc2hwdnFkc3p5Z2V6a3VoaGNvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAyNjYwNzQsImV4cCI6MjEwNTg0MjA3NH0.mMV8Z2dl981BGl0o_CLSAsxPsO3QzQlAAWWwT4YVVW4";
+const ROBOT = /bot|crawl|spider|slurp|preview|monitor|headless|lighthouse|curl|wget|python|scrapy|facebookexternalhit|whatsapp|telegram/i;
+const duSite = h => h === APEX || h.endsWith("." + APEX);
+
+async function visite(request) {
+  const agent = request.headers.get("User-Agent") || "";
+  let origine = "";
+  try { origine = new URL(request.headers.get("Origin") || "").hostname; } catch (e) {}
+  if (!duSite(origine) || !agent || ROBOT.test(agent)) return null;
+  let b;
+  try { b = JSON.parse((await request.text()).slice(0, 1000)); } catch (e) { return null; }
+  if (!b || typeof b.c !== "string" || !b.c.startsWith("/")) return null;
+  let source = null;
+  try { const h = new URL(String(b.r || "")).hostname.toLowerCase().replace(/^www\./, ""); if (h && !duSite(h)) source = h.slice(0, 100); } catch (e) {}
+  const pays = String((request.cf && request.cf.country) || "").toUpperCase();
+  return {
+    chemin: b.c.split(/[?#]/)[0].slice(0, 200),
+    source,
+    pays: /^[A-Z]{2}$/.test(pays) ? pays : null,
+    appareil: /ipad|tablet|android(?!.*mobile)/i.test(agent) ? "tablette" : /mobi|iphone|android/i.test(agent) ? "mobile" : "ordinateur",
+    nouveau: b.n === true
+  };
+}
+const inscrire = ligne => fetch(BASE + "/rest/v1/site_visites", {
+  method: "POST",
+  headers: { apikey: CLE_PUBLIQUE, Authorization: "Bearer " + CLE_PUBLIQUE, "Content-Type": "application/json", Prefer: "return=minimal" },
+  body: JSON.stringify(ligne)
+}).catch(() => {});
+
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     const url = new URL(request.url);
     const hote = url.hostname.toLowerCase();
     const chemin = url.pathname;
@@ -46,6 +79,15 @@ export default {
       return renvoi(url.href);
     }
     const sd = hote.endsWith("." + APEX) ? hote.slice(0, -(APEX.length + 1)) : "";
+
+    /* 1 bis. Compteur de visites */
+    if (chemin === "/_v") {
+      if (request.method === "POST" && sd !== "admin") {
+        const ligne = await visite(request);
+        if (ligne) ctx.waitUntil(inscrire(ligne));
+      }
+      return new Response(null, { status: 204, headers: { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" } });
+    }
     const versSite = () => renvoi(`https://${APEX}${chemin}${url.search}`);
 
     /* 2. Anciennes adresses du site */

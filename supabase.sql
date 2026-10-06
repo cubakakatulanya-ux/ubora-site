@@ -274,3 +274,71 @@ revoke execute on function public.marquer_revision() from public, anon;
 revoke execute on function public.profil_agence() from public, anon;
 revoke execute on function public.profil_role() from public, anon;
 revoke execute on function public.reserver_bloc(text, integer) from public, anon;
+
+-- ==========================================================================
+-- Visites du site (6 octobre 2026)
+-- Une ligne par page vue, inscrite par le Worker (/_v). Ni cookie, ni adresse IP,
+-- ni identifiant de visiteur. « nouveau » = première page vue ce jour-là par ce navigateur.
+-- ==========================================================================
+create table if not exists public.site_visites (
+  id         bigint generated always as identity primary key,
+  jour       date not null default ((now() at time zone 'Africa/Lubumbashi')::date),
+  chemin     text not null,
+  source     text,
+  pays       text,
+  appareil   text,
+  nouveau    boolean not null default false,
+  created_at timestamptz not null default now(),
+  constraint site_visites_chemin_fmt check (char_length(chemin) between 1 and 200 and chemin like '/%'),
+  constraint site_visites_source_len check (source is null or char_length(source) <= 100),
+  constraint site_visites_pays_fmt check (pays is null or pays ~ '^[A-Z]{2}$'),
+  constraint site_visites_appareil_fmt check (appareil is null or appareil in ('mobile', 'tablette', 'ordinateur'))
+);
+create index if not exists site_visites_jour_idx on public.site_visites (jour desc);
+alter table public.site_visites enable row level security;
+
+drop policy if exists "visite publique" on public.site_visites;
+create policy "visite publique" on public.site_visites
+  for insert to anon, authenticated
+  with check (jour = (now() at time zone 'Africa/Lubumbashi')::date);
+
+drop policy if exists "equipe lit visites" on public.site_visites;
+create policy "equipe lit visites" on public.site_visites
+  for select to authenticated using (public.est_admin_site());
+
+-- Résumé des visites pour l'espace équipe. Les règles d'accès de la table s'appliquent :
+-- un compte qui n'est pas de l'équipe ne reçoit que des zéros.
+create or replace function public.site_stats(p_jours integer default 30)
+returns jsonb
+language sql
+stable
+set search_path = public
+as $$
+  with bornes as (
+    select (now() at time zone 'Africa/Lubumbashi')::date as auj, greatest(1, least(coalesce(p_jours, 30), 366)) as n
+  ),
+  v as (
+    select s.* from public.site_visites s, bornes b where s.jour > b.auj - b.n and s.jour <= b.auj
+  ),
+  jours as (
+    select d::date as jour from bornes b, generate_series(b.auj - (b.n - 1), b.auj, interval '1 day') d
+  )
+  select jsonb_build_object(
+    'jours', (select n from bornes),
+    'aujourdhui', (select jsonb_build_object('vues', count(*), 'visiteurs', count(*) filter (where nouveau)) from v, bornes b where v.jour = b.auj),
+    'semaine', (select jsonb_build_object('vues', count(*), 'visiteurs', count(*) filter (where s.nouveau)) from public.site_visites s, bornes b where s.jour > b.auj - 7 and s.jour <= b.auj),
+    'periode', (select jsonb_build_object('vues', count(*), 'visiteurs', count(*) filter (where nouveau)) from v),
+    'par_jour', (select coalesce(jsonb_agg(jsonb_build_object('jour', j.jour, 'vues', coalesce(x.vues, 0), 'visiteurs', coalesce(x.visiteurs, 0)) order by j.jour), '[]'::jsonb)
+                 from jours j left join (select jour, count(*) as vues, count(*) filter (where nouveau) as visiteurs from v group by jour) x using (jour)),
+    'pages', (select coalesce(jsonb_agg(jsonb_build_object('nom', chemin, 'vues', vues) order by vues desc, chemin), '[]'::jsonb)
+              from (select chemin, count(*) as vues from v group by chemin order by count(*) desc, chemin limit 15) p),
+    'sources', (select coalesce(jsonb_agg(jsonb_build_object('nom', source, 'vues', vues) order by vues desc, source), '[]'::jsonb)
+                from (select coalesce(nullif(source, ''), 'direct') as source, count(*) as vues from v where nouveau group by 1 order by count(*) desc, 1 limit 10) p),
+    'pays', (select coalesce(jsonb_agg(jsonb_build_object('nom', pays, 'vues', vues) order by vues desc, pays), '[]'::jsonb)
+             from (select coalesce(pays, '??') as pays, count(*) as vues from v where nouveau group by 1 order by count(*) desc, 1 limit 10) p),
+    'appareils', (select coalesce(jsonb_agg(jsonb_build_object('nom', appareil, 'vues', vues) order by vues desc, appareil), '[]'::jsonb)
+                  from (select coalesce(appareil, 'inconnu') as appareil, count(*) as vues from v where nouveau group by 1) p)
+  );
+$$;
+revoke execute on function public.site_stats(integer) from public, anon;
+grant execute on function public.site_stats(integer) to authenticated;

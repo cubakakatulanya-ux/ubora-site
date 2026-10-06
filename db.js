@@ -160,7 +160,15 @@ const UboraDB = (() => {
     return { messages: m.count || 0, nonTraites: mn.count || 0, actualites: a.count || 0, abonnes: s.count || 0, formations: f.count || 0, offres: o.count || 0, equipe: e.count || 0, realisations: re.count || 0, questionsSansReponse: qq.count || 0 };
   }
 
+  /* Résumé des visites sur les derniers jours (fonction site_stats de la base) */
+  async function stats(jours) {
+    const c = sb(); if (!c) return null;
+    const { data, error } = await c.rpc("site_stats", { p_jours: jours });
+    if (error) { console.warn(error); return null; }
+    return data;
+  }
+
   const mappers = { actualites: fromNews, formations: fromTrain, offres: fromJob, equipe: fromMember, realisations: fromReal };
 
-  return { configured, mappers, load, sendMessage, subscribe, logQuestion, signIn, signOut, currentUser, isAdmin, listAll, save, remove, list, uploadImage, removeRow, setTraite, counts };
+  return { configured, mappers, load, sendMessage, subscribe, logQuestion, signIn, signOut, currentUser, isAdmin, listAll, save, remove, list, uploadImage, removeRow, setTraite, counts, stats };
 })();
