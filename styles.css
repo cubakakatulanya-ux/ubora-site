@@ -1901,3 +1901,106 @@ body.menu-open .ticker { display: none; }
 .vz-jauge { height: 8px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
 .vz-jauge i { display: block; height: 100%; border-radius: 4px; background: var(--viz); }
 .vz-liste b { min-width: 2.2em; text-align: right; font-variant-numeric: tabular-nums; }
+
+/* ==========================================================================
+   Style sobre (7 octobre 2026) : le même que celui de l'Académie Ubora,
+   sur le modèle de l'académie de la FAO. Une passe d'unification par-dessus
+   les couches précédentes : fond blanc, filets fins à la place des ombres,
+   plus de dégradés ni d'ornements, un seul rayon de carte et de bouton,
+   titres fins, étiquettes en petites capitales, en-tête vert léger.
+   Le thème sombre garde ses couleurs.
+   ========================================================================== */
+:root {
+  --f-titre: "Ubuntu", ui-sans-serif, system-ui, "Segoe UI", sans-serif;
+  --r: 8px; --r-lg: 10px; --r-fenetre: 10px; --r-btn: 8px;
+  --ombre-carte: none; --ombre-survol: 0 10px 26px rgba(11, 26, 51, .10); --shadow: none; --shadow-sm: none; --reflet: 0 0 #0000;
+}
+:root:not([data-theme="dark"]) {
+  --ink: #1B2430; --muted: #556070; --line: #E0E6EB; --bord-fin: #E0E6EB; --bord-fort: #C5CED8;
+  --surface-2: #F3F6F4; --gris-section: #F6F8F7; --menthe: #EAF6EC; --menthe-bord: #CFE7D3;
+}
+:root[data-theme="dark"] { --ombre-survol: none; }
+
+/* --- titres : la finesse et l'air, pas le gras --- */
+h1, .hero h1, .page-head h1, .hero-titre { font-family: var(--f-display); font-weight: 300; letter-spacing: -.015em; }
+h2, .sec-head h2, .final h2, .social h2, .team-band h2, .projet h2, .outil-txt h2, .relais h2, .h2-md, .h2-sm { font-family: var(--f-display); font-weight: 400; letter-spacing: -.01em; }
+h3, h4, .poles .pole h3 { font-weight: 500; letter-spacing: 0; }
+b, strong { font-weight: 700; }
+.serif, .deep .serif, :root[data-theme="dark"] .serif, :root[data-theme="dark"] .deep .serif {
+  background: none; -webkit-background-clip: border-box; background-clip: border-box; -webkit-text-fill-color: currentColor;
+  color: var(--green); font-weight: 500; font-size: 1em; }
+.lead { font-weight: 400; }
+
+/* --- étiquettes : petites capitales, sans pastille --- */
+.eyebrow, .hero h1.pill {
+  display: inline-flex; align-items: center; gap: 8px; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none;
+  color: var(--green); font-family: var(--f-display); font-size: 12px; font-weight: 700; line-height: 1.4; letter-spacing: .14em; text-transform: uppercase; }
+.hero h1.pill { flex-wrap: wrap; text-wrap: wrap; }
+.hero h1.pill b { padding: 0; border-radius: 0; background: none; color: inherit; font: inherit; letter-spacing: inherit; }
+.hero h1.pill b::after { content: "·"; margin-left: 8px; opacity: .6; }
+.tag, .pole-tag, .lecon-pole, .sub-chip, .status, .mock-note { border-radius: 4px; }
+
+/* --- en-tête : vert léger, à plat --- */
+:root:not([data-theme="dark"]) .site-header { background: var(--menthe); border-bottom: 1px solid var(--menthe-bord); }
+.site-header, .site-header.scrolled { box-shadow: none; }
+:root:not([data-theme="dark"]) .site-header .ticker { background: #fff; border-bottom: 1px solid var(--menthe-bord); }
+.logo-img { box-shadow: none; }
+.brand-name { font-weight: 500; }
+.menu > li > a, .dd-btn { border-radius: var(--r-btn); font-weight: 500; }
+.icon-btn { border-radius: var(--r-btn); box-shadow: none; }
+.dd { border-radius: var(--r-lg); box-shadow: var(--ombre-survol); }
+:root[data-theme="dark"] .dd { box-shadow: 0 18px 40px -18px rgba(0, 0, 0, .7); }
+
+/* --- bandeaux d'accueil et de page : un aplat, sans ornement --- */
+.deep:not(.relais):not(.final):not(.team-band):not(.projet) { background: var(--menthe); border-bottom: 1px solid var(--menthe-bord); }
+:root[data-theme="dark"] .deep:not(.relais):not(.final):not(.team-band):not(.projet) { background: var(--surface); border-bottom: 1px solid var(--line); }
+.hero::before, .hero::after, .page-head::before, .page-head::after, .pierre { display: none; }
+.hero { padding-block: clamp(36px, 4.5vw, 60px) clamp(28px, 3.5vw, 44px); }
+.hero-titre { margin-top: 12px; font-size: clamp(30px, 3.5vw, 48px); line-height: 1.12; }
+.hero-photo, .head-photo, .head-ecran { border-radius: var(--r-lg); box-shadow: none; }
+.phone { box-shadow: 0 14px 30px -12px rgba(11, 26, 51, .28); }
+.float-card { border: 1px solid var(--line); border-radius: var(--r); box-shadow: var(--ombre-survol); }
+
+/* les repères chiffrés : une seule bande, séparée par des filets */
+.reperes { gap: 0; border: 1px solid var(--line); border-radius: var(--r-lg); background: var(--carte); overflow: hidden; }
+.reperes li, .reperes li + li, .reperes li:nth-child(3) { border: 0; border-right: 1px solid var(--line); border-radius: 0; background: none; box-shadow: none; }
+.reperes li:last-child { border-right: 0; }
+.reperes b { font-weight: 400; }
+@media (max-width: 760px) {
+  .reperes li:nth-child(2n) { border-right: 0; }
+  .reperes li:nth-child(-n+2) { border-bottom: 1px solid var(--line); }
+}
+
+/* --- cartes, boutons, champs : aplats, filets fins, un seul rayon --- */
+.pole, .tool, .fcard, .lecon, .member, .real, .svc, .row-card, .panel, .notice, .empty, .steps li, .parcours li, .contact-list li, .faq details,
+.table-wrap, .kpi-card, .chaine li, .preuves, .dirigeant, .browser, .screen, .model li, .bridge li, .boite li, .relais-temps li, .team-list li,
+.tools-mini a, .academie, .chat, details.boite-plus > summary { border-radius: var(--r-lg); box-shadow: none; }
+.relais, .final, .team-band, .projet { border-radius: var(--r-lg); box-shadow: none; }
+.pole:hover, .tool:hover, .fcard:hover, .lecon:hover, .member:hover, .real:hover, .svc:hover, .kpi-card:hover { transform: none; border-color: var(--green); box-shadow: var(--ombre-survol); }
+.pole-img, .pole-img img, .lecon img, .real img, .dir-photo { border-radius: 0; }
+.dir-photo { border-radius: var(--r); }
+.btn, .btn-sm, .plus-btn, .site-header .btn { border-radius: var(--r-btn); font-family: var(--f-display); font-weight: 500; box-shadow: none; background-image: none; transition: background .15s ease, color .15s ease, border-color .15s ease; }
+.btn:hover, .btn:active { transform: none; box-shadow: none; }
+.btn-accent, .btn-primary { background: var(--green); border-color: var(--green); }
+:root:not([data-theme="dark"]) .btn-accent:hover, :root:not([data-theme="dark"]) .btn-primary:hover { background: #166A41; border-color: #166A41; }
+.chip, .seg, .seg button { border-radius: var(--r-btn); font-family: var(--f-display); font-weight: 500; }
+input, select, textarea { border-radius: var(--r-btn); box-shadow: none; }
+:focus-visible { outline: 2px solid var(--green); outline-offset: 2px; }
+.kpi-card b, .kpi b { font-weight: 400; }
+table.compare thead th { font-family: var(--f-display); font-weight: 700; font-size: 11.5px; letter-spacing: .1em; }
+
+/* --- boutons flottants et messages : discrets --- */
+.wa-float, .chat-fab, .to-top { box-shadow: 0 8px 20px -10px rgba(11, 26, 51, .35); }
+.toast { border-radius: var(--r); box-shadow: var(--ombre-survol); }
+
+/* --- pied de page : un aplat vert, sans dégradé --- */
+.site-footer, :root[data-theme="dark"] .site-footer { background: #0F4A31; }
+.foot-news-txt b { font-family: var(--f-display); font-weight: 500; }
+.site-footer h4 { font-weight: 700; }
+
+@media (prefers-reduced-motion: reduce) { .btn, .pole, .tool, .fcard, .svc { transition: none; } }
+.relais::before, .relais::after, .final::before, .final::after, .team-band::before, .team-band::after, .projet::before, .projet::after, .academie::before, .academie::after { display: none; }
+.quote, p.quote, :root[data-theme="dark"] .quote { font-family: var(--f-display); font-weight: 400; color: var(--ink); letter-spacing: -.01em; }
+.academie-txt h2, .dir-nom h2 { font-family: var(--f-display); font-weight: 400; }
+.hero h1.pill { display: block; }
+.hero h1.pill b::after { content: " ·"; margin-left: 0; }

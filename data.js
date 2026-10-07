@@ -25,7 +25,7 @@ const CONFIG = {
 
 /* Bande déroulante. Les dernières actualités publiées s'y ajoutent d'elles-mêmes. */
 const TICKER_MESSAGES = [
-  ["Nouveau : l'Académie Ubora, 26 cours en ligne avec certificat", "/academie"],
+  ["Nouveau : l'Académie Ubora, plus de 100 cours en ligne avec certificat", "/academie"],
   ["Nouveau dans AKIBA : un reçu imprimé pour chaque membre", "/outils/akiba"],
   ["Nouvelle version du générateur de business plan", "/outils/bp"],
   ["Nouveau : Ubora Vert, pour protéger l'environnement et en vivre", "/vert"],
@@ -563,7 +563,7 @@ const OUTILS = [
   {
     id: "academie", nom: "Académie Ubora", court: "L'école en ligne, avec certificats", pole: "academie", statut: "en-ligne", mock: "academie", couleur: "#9A5522", initiales: "Ac",
     sousDomaine: "academie.uborardc.com", url: "https://academie.uborardc.com", page: "/academie",
-    resume: "L'école en ligne d'Ubora : 26 cours d'environ 50 minutes sur les AVEC, les activités génératrices de revenus et l'éducation financière, utilisables même sans réseau, avec badges et certificats vérifiables.",
+    resume: "L'école en ligne d'Ubora : plus de 100 cours, regroupés en parcours, sur les AVEC, les activités génératrices de revenus, les coopératives, l'entrepreneuriat, l'agriculture et l'éducation financière, utilisables même sans réseau, avec badges et certificats vérifiables.",
     points: ["Six parcours, du membre d'AVEC au formateur", "Les 5 modules du PNEF de la Banque centrale du Congo", "Exercices corrigés et quiz chronométrés", "Cours téléchargés utilisables sans réseau", "Badges et certificats vérifiables en ligne"]
   },
   {
@@ -610,7 +610,7 @@ const FAQ = [
   ["Qui peut travailler avec Ubora ?", "Les groupes d'épargne, les entrepreneurs et les PME, les coopératives et les organisations paysannes, les petites institutions financières, ainsi que les ONG, les incubateurs et les bailleurs qui accompagnent ces publics."],
   ["Travaillez-vous en dehors de Lubumbashi ?", "Oui. Notre siège est à Lubumbashi, mais nous intervenons dans toute la RDC, sur place ou à distance."],
   ["Vos outils fonctionnent-ils sans internet ?", "Oui. AKIBA fonctionne entièrement sans réseau ; dès que le réseau revient, le groupe envoie ses données à l'animateur et à l'organisation, et l'application se met à jour d'elle-même. Le générateur de business plan reste utilisable une fois ouvert."],
-  ["Proposez-vous des formations sur vos outils ?", "Oui. Chaque déploiement comprend une formation de prise en main, puis un suivi. Notre Académie en ligne, academie.uborardc.com, propose aussi 26 cours avec certificat. Nous organisons aussi des sessions sur demande, dans votre province ou en ligne."],
+  ["Proposez-vous des formations sur vos outils ?", "Oui. Chaque déploiement comprend une formation de prise en main, puis un suivi. Notre Académie en ligne, academie.uborardc.com, propose aussi plus de 100 cours avec certificat. Nous organisons aussi des sessions sur demande, dans votre province ou en ligne."],
   ["Faut-il être une entreprise déclarée pour être accompagné ?", "Non. Nous accompagnons justement beaucoup d'entrepreneurs et de groupements vers la formalisation, étape par étape."],
   ["Que devient l'accompagnement quand le projet d'une ONG se termine ?", "Nous restons. Les groupes, les entrepreneurs et les coopératives continuent d'être suivis après la clôture du projet. Notre modèle économique finance une partie de ces activités de terrain, et les outils mis en place restent en service."],
   ["Ubora peut-elle financer notre groupe d'épargne ?", "Oui, par Ubora Fin, notre branche financière. Pour les AVEC que nous accompagnons, nous pouvons apporter un fonds de roulement, remboursable sur le cycle, en plus de l'épargne des membres. Nous pouvons aussi présenter le groupe à une IMF, une COOPEC ou une banque partenaire."],

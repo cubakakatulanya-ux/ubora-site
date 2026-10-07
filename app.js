@@ -320,7 +320,7 @@ function footerHTML() {
     </div>
     <div class="foot-grid">
       <div class="foot-brand">
-        <a class="brand" href="/"><img class="logo-img" src="/logo-ubora.png" alt="" width="56" height="56" loading="lazy"><span class="brand-txt"><span class="brand-name">ub<b>o</b>ra</span><span class="brand-sub">Entreprise sociale</span></span></a>
+        <a class="brand" href="/"><img class="logo-img" src="/logo-ubora.png" alt="" width="56" height="56" loading="lazy"><span class="brand-txt"><span class="brand-name">Ub<b>o</b>ra</span><span class="brand-sub">Entreprise sociale</span></span></a>
         <p class="foot-accroche">Basée à Lubumbashi, présente partout en RDC.</p>
       </div>
       <nav aria-label="Nos pôles"><h4>Nos pôles</h4><ul class="deux">${POLES.map(p => `<li><a class="foot-pole" href="${p.chemin}" style="--c:${p.couleur}">${esc(p.nom)}</a></li>`).join("")}</ul></nav>
@@ -659,13 +659,13 @@ function pageFormations() {
   const t = todayISO();
   const sessions = [...DATA.formations].filter(f => f.date >= t).sort((a, b) => a.date.localeCompare(b.date));
   return pageHead({ eyebrow: "Formations", title: `Apprendre à utiliser les outils, puis à s'en servir seul.`, crumbs: [["Formations"]], photo: ["formation", "Un formateur s'adresse à un groupe dans une salle"],
-    lead: "Chaque déploiement comprend une formation de prise en main et un suivi. Nous organisons aussi des sessions à Lubumbashi, dans votre province ou en ligne, et notre Académie propose 26 cours en ligne avec certificat." }) + `
+    lead: "Chaque déploiement comprend une formation de prise en main et un suivi. Nous organisons aussi des sessions à Lubumbashi, dans votre province ou en ligne, et notre Académie propose plus de 100 cours en ligne avec certificat." }) + `
   <section id="academie"><div class="wrap">
     <div class="academie">
       <div class="academie-txt">
         <span class="eyebrow">Académie Ubora</span>
         <h2>Se former à son rythme, même sans réseau</h2>
-        <p class="lead">26 cours d'environ 50 minutes, écrits à partir de nos documents de terrain : leçons illustrées, exercices corrigés automatiquement, quiz chronométrés, badges et certificats vérifiables. Un cours téléchargé fonctionne sans réseau ; les résultats partent dès que la connexion revient.</p>
+        <p class="lead">Plus de 100 cours regroupés en parcours, écrits à partir de nos documents de terrain : leçons illustrées, exercices corrigés automatiquement, quiz chronométrés, badges et certificats vérifiables. Un cours téléchargé fonctionne sans réseau ; les résultats partent dès que la connexion revient.</p>
         <div class="btn-row"><a class="btn btn-primary" href="/academie">Découvrir Ubora Académie ${ICON.arrow}</a><a class="btn btn-ghost" href="${ACADEMIE.url}" target="_blank" rel="noopener">Ouvrir l'Académie ${ICON.ext}</a></div>
       </div>
       <div class="screen">${mockFor("academie")}<span class="mock-note" aria-hidden="true">Écran illustratif</span></div>
@@ -880,7 +880,7 @@ const DESCR = {
   approche: "La méthode Ubora en six temps : écouter, structurer, former, outiller, connecter et suivre, pensée pour les réalités de la RDC.",
   outils: "AKIBA, le générateur de business plan, Ubora Hub et les outils en préparation : des outils numériques conçus pour la RDC.",
   conseil: "Conseil, études, gestion de projets, digitalisation de l'accompagnement et formation d'équipes, pour les ONG, les bailleurs et les institutions en RDC.",
-  formations: "Formations d'Ubora en RDC : Académie en ligne (26 cours avec certificat), prise en main des outils, AVEC, entrepreneuriat et gestion coopérative.",
+  formations: "Formations d'Ubora en RDC : Académie en ligne (plus de 100 cours avec certificat), prise en main des outils, AVEC, entrepreneuriat et gestion coopérative.",
   actualites: "Les actualités d'Ubora : programmes, déploiements, formations et nouvelles du terrain en RDC.",
   carrieres: "Offres d'emploi, de stage et de consultance chez Ubora, entreprise sociale basée à Lubumbashi.",
   contact: "Contacter Ubora par téléphone, WhatsApp ou e-mail. Siège à Lubumbashi, interventions dans toute la RDC.",
