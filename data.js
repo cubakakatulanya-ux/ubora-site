@@ -587,14 +587,14 @@ const OUTILS = [
   }
 ];
 
-/* ---------- Conseil et programmes (pour les organisations) ---------- */
+/* ---------- Projets et conseil (pour les organisations) ---------- */
 const CONSEIL = [
+  { id: "projets", ico: "target", titre: "Mise en œuvre de projets",
+    texte: "Nous mettons en œuvre des projets de développement économique sur le terrain, pour le compte de nos partenaires ou à leurs côtés, du montage jusqu'au rapport final.",
+    points: ["Conception et montage du projet", "Propositions de financement", "Mise en œuvre et coordination sur le terrain", "Suivi, évaluation et rapports"] },
   { id: "etudes", ico: "compass", titre: "Conseil et études",
     texte: "Études de marché et de faisabilité, diagnostics de filières, évaluations de projets. Nous allons chercher l'information sur le terrain et nous rendons des recommandations que l'on peut appliquer.",
     points: ["Études de marché et de faisabilité", "Analyse de filières", "Enquêtes de terrain", "Évaluations de projets et d'impact"] },
-  { id: "projets", ico: "target", titre: "Gestion de projets",
-    texte: "Nous concevons et conduisons des projets de développement économique pour nos partenaires, ou à leurs côtés, du montage jusqu'au rapport final.",
-    points: ["Conception et montage", "Propositions de financement", "Coordination sur le terrain", "Suivi, évaluation et rapports"] },
   { id: "digitalisation", ico: "flow", titre: "Digitalisation de l'accompagnement",
     texte: "Beaucoup d'organisations suivent encore leurs bénéficiaires dans des fichiers dispersés. Nous les aidons à organiser et à outiller ce suivi, notamment avec Ubora Hub.",
     points: ["Analyse des pratiques existantes", "Mise en place d'Ubora Hub", "Indicateurs et tableaux de bord", "Formation des équipes"] },
@@ -602,6 +602,22 @@ const CONSEIL = [
     texte: "Nous formons les équipes des ONG, des institutions et des programmes à nos méthodes et à nos outils, et nous formons des formateurs relais.",
     points: ["Formation de formateurs", "Méthodologie AVEC", "Accompagnement d'entrepreneurs", "Gestion des coopératives"] }
 ];
+
+/* La mise en œuvre d'un projet, temps par temps (page « Projets et conseil »). */
+const MISE_EN_OEUVRE = {
+  intro: "ONG, bailleurs, institutions et programmes nous confient tout ou partie d'un projet de développement économique. Nous le conduisons sur le terrain, avec nos équipes, notre méthode et nos outils.",
+  formules: [
+    ["Nous mettons en œuvre pour vous", "Vous fixez les objectifs et le budget. Nous conduisons le projet de bout en bout et nous vous rendons compte."],
+    ["Nous mettons en œuvre avec vous", "Vos équipes restent en première ligne. Nous apportons la méthode, les outils, la formation et le suivi."]
+  ],
+  temps: [
+    ["Concevoir", "Diagnostic sur place, objectifs, budget et calendrier, construits avec vous.", "Un projet réaliste, que le terrain peut porter."],
+    ["Mettre en œuvre", "Nos équipes structurent, forment et outillent les groupes, les entrepreneurs et les coopératives ciblés.", "Des activités menées jusqu'au bout, pas seulement lancées."],
+    ["Suivre et mesurer", "Les données sont tenues dans nos outils dès le premier jour.", "Des indicateurs à jour, sans attendre la fin du projet."],
+    ["Rendre compte", "Rapports techniques et financiers, au rythme convenu avec vous.", "Un partenaire qui sait où va chaque activité."],
+    ["Rester", "À la clôture, les relais locaux, les outils et le suivi restent en place.", "Des résultats qui tiennent après le financement."]
+  ]
+};
 
 /* ---------- Catalogue des formations proposées ---------- */
 const CATALOGUE = [

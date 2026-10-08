@@ -2032,8 +2032,8 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
 .foot-accroche { max-width: 34ch !important; }
 .nav-actions { gap: 8px; }
 .nav-actions .btn-sm { padding-inline: 14px; }
-/* petits écrans d'ordinateur : le menu se centre dans la place qui reste, pour ne pas toucher les boutons */
-@media (min-width: 1101px) and (max-width: 1239px) { .nav { grid-template-columns: auto minmax(0, 1fr) auto; } }
+/* le menu se centre dans la place qui reste entre le logo et les boutons, pour ne jamais les toucher */
+@media (min-width: 1101px) { .nav { grid-template-columns: auto minmax(0, 1fr) auto; } }
 .site-footer .foot-social .btn, .site-footer .foot-social .btn:hover { color: #0D3B28; }
 .menu > li.m-cta > a.btn { border-radius: var(--r-btn); }
 
@@ -2042,3 +2042,13 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
 .pour-qui li { display: grid; gap: 1px; padding: 0; border: 0; background: none; box-shadow: none; }
 .pour-qui b { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--vert-texte); }
 .pour-qui span { font-size: 14.5px; line-height: 1.5; color: var(--ink); }
+
+/* Mise en œuvre de projets : cinq temps sur une ligne, puis les deux formules */
+.chaine.cinq { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+@media (max-width: 1100px) { .chaine.cinq { grid-template-columns: repeat(3, minmax(0, 1fr)); } .chaine.cinq li::after { display: none; } }
+@media (max-width: 700px) { .chaine.cinq { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 420px) { .chaine.cinq { grid-template-columns: minmax(0, 1fr); } }
+.formules { margin-top: 18px; }
+.formules .fcard h3 { font-size: 18px; }
+/* le menu compte un libellé plus long (« Projets et conseil ») : espacements un peu resserrés */
+@media (min-width: 1101px) { .menu > li > a, .dd-btn { padding-inline: 11px; } .menu { gap: 0; } }

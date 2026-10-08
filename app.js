@@ -212,8 +212,8 @@ function relais(lien) {
   return `<div class="deep relais">
     <div class="relais-txt"><span class="eyebrow">Pour les ONG, les bailleurs et les programmes</span>
       <h2>Le projet se termine. <span class="serif">L'accompagnement continue.</span></h2>
-      <p class="lead">Un programme dure deux ou trois ans. Les groupes d'épargne, les entrepreneurs et les coopératives ont besoin d'un suivi plus long. Nous prenons le relais : notre modèle économique finance une partie des activités sur le terrain après la fin du projet.</p>
-      ${lien ? `<a class="btn btn-accent" href="/conseil#relais">Préparer la suite de votre projet ${ICON.arrow}</a>` : `<a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent("Partenariat")}">Parlons de votre programme ${ICON.arrow}</a>`}</div>
+      <p class="lead">Nous mettons en œuvre des projets de développement économique sur le terrain, pour nos partenaires ou à leurs côtés. Un programme dure deux ou trois ans. Les groupes d'épargne, les entrepreneurs et les coopératives ont besoin d'un suivi plus long. Nous prenons le relais : notre modèle économique finance une partie des activités sur le terrain après la fin du projet.</p>
+      ${lien ? `<div class="btn-row"><a class="btn btn-accent" href="/conseil#mise-en-oeuvre">Mise en œuvre de projets ${ICON.arrow}</a><a class="btn btn-ghost" href="/conseil#relais">Préparer la suite de votre projet</a></div>` : `<a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent("Partenariat")}">Parlons de votre programme ${ICON.arrow}</a>`}</div>
     <ol class="relais-temps">${RELAIS.map(([t, x], i) => `<li><span class="bn">${i + 1}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`).join("")}</ol>
   </div>`;
 }
@@ -300,7 +300,7 @@ function menuHTML() {
         <div class="dd-col dd-outils"><h5>Nos logiciels</h5>${OUTILS.filter(o => o.statut === "en-ligne").map(o => `<a href="${lienOutil(o)}" class="dd-item"><span class="mk" style="background:${o.couleur}">${o.initiales}</span><span><b>${esc(o.nom)}</b><small>${esc(o.court || o.sousDomaine)}</small></span></a>`).join("")}</div>
         <div class="dd-pied"><a href="/outils" class="dd-more">Tous les outils ${ICON.arrow}</a></div>
       </div></li>
-    <li><a href="/conseil" data-r="conseil">Conseil</a></li>
+    <li><a href="/conseil" data-r="conseil">Projets et conseil</a></li>
     <li><a href="/formations" data-r="formations">Formations</a></li>
     ${/* une rubrique encore vide n'encombre pas le menu : elle y revient dès qu'elle a du contenu */ ""}${DATA.realisations.length ? `<li><a href="/realisations" data-r="realisations">Réalisations</a></li>` : ""}
     ${allNews().length ? `<li><a href="/actualites" data-r="actualites">Actualités</a></li>` : ""}
@@ -329,7 +329,7 @@ function footerHTML() {
         <p class="foot-accroche">Entreprise à caractère social, basée à Lubumbashi, présente partout en RDC.</p>
       </div>
       <nav aria-label="Nos pôles"><h4>Nos pôles</h4><ul class="deux">${POLES.map(p => `<li><a class="foot-pole" href="${p.chemin}" style="--c:${p.couleur}">${esc(p.nom)}</a></li>`).join("")}</ul></nav>
-      <nav aria-label="Ubora"><h4>Ubora</h4><ul class="deux"><li><a href="/a-propos">Qui sommes-nous</a></li><li><a href="/equipe">Notre équipe</a></li><li><a href="/approche">Notre approche</a></li><li><a href="/conseil">Conseil</a></li><li><a href="/outils">Outils numériques</a></li><li><a href="/formations">Formations</a></li>${DATA.realisations.length ? `<li><a href="/realisations">Nos réalisations</a></li>` : ""}${allNews().length ? `<li><a href="/actualites">Actualités</a></li>` : ""}<li><a href="/carrieres">Carrières</a></li><li><a href="/soutenir">Soutenir nos actions</a></li></ul></nav>
+      <nav aria-label="Ubora"><h4>Ubora</h4><ul class="deux"><li><a href="/a-propos">Qui sommes-nous</a></li><li><a href="/equipe">Notre équipe</a></li><li><a href="/approche">Notre approche</a></li><li><a href="/conseil">Projets et conseil</a></li><li><a href="/outils">Outils numériques</a></li><li><a href="/formations">Formations</a></li>${DATA.realisations.length ? `<li><a href="/realisations">Nos réalisations</a></li>` : ""}${allNews().length ? `<li><a href="/actualites">Actualités</a></li>` : ""}<li><a href="/carrieres">Carrières</a></li><li><a href="/soutenir">Soutenir nos actions</a></li></ul></nav>
       <div class="foot-contact"><h4>Nous joindre</h4><ul>
         <li><span class="ic">${ICON.phone}</span><a href="tel:${tel}">${esc(CONFIG.telephone)}</a></li>
         <li><span class="ic">${ICON.mail}</span><a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a></li>
@@ -649,12 +649,22 @@ function pageOutil(o) {
 }
 
 function pageConseil() {
-  return pageHead({ eyebrow: "Conseil et programmes", title: `Vos programmes méritent de durer plus longtemps que leur <span class="serif">financement</span>.`, crumbs: [["Conseil et programmes"]],
-    lead: "Vous accompagnez des groupes, des entrepreneurs ou des coopératives en RDC ? Nous concevons votre programme, le conduisons avec vous, équipons vos équipes, mesurons les résultats, et nous restons quand le financement s'arrête." }) + `
-  <section><div class="wrap grid-2">${CONSEIL.map(s => `<article class="svc reveal" id="${s.id}"><span class="ic">${ICON[s.ico]}</span><div><h2>${esc(s.titre)}</h2><p>${esc(s.texte)}</p><details class="inclus"><summary>Ce que cela comprend</summary><ul class="checks">${s.points.map(x => `<li>${esc(x)}</li>`).join("")}</ul></details></div></article>`).join("")}</div></section>
-  <section id="relais" class="tight-top"><div class="wrap">${relais(false)}</div></section>
+  return pageHead({ eyebrow: "Projets et conseil", title: `Vos programmes méritent de durer plus longtemps que leur <span class="serif">financement</span>.`, crumbs: [["Projets et conseil"]],
+    lead: "Vous accompagnez des groupes, des entrepreneurs ou des coopératives en RDC ? Nous concevons votre projet, le mettons en œuvre sur le terrain, équipons vos équipes, mesurons les résultats, et nous restons quand le financement s'arrête.",
+    extra: `<div class="btn-row"><a class="btn btn-accent" href="#mise-en-oeuvre" data-scroll="mise-en-oeuvre">Mise en œuvre de projets ${ICON.arrow}</a><a class="btn btn-glass" href="/contact?sujet=${encodeURIComponent("Conseil et programmes")}">Parlons de votre projet</a></div>` }) + `
+  <section id="mise-en-oeuvre"><div class="wrap">
+    ${secHead("Mise en œuvre de projets", `Nous ne faisons pas que conseiller : nous <span class="serif">mettons en œuvre</span>`, MISE_EN_OEUVRE.intro)}
+    <ol class="chaine cinq">${MISE_EN_OEUVRE.temps.map(([t, x, r], i) => `<li class="reveal"><span class="pn">${String(i + 1).padStart(2, "0")}</span><h3>${esc(t)}</h3><p>${esc(x)}</p><p class="resultat">${esc(r)}</p></li>`).join("")}</ol>
+    <div class="grid-2 formules">${MISE_EN_OEUVRE.formules.map(([t, x]) => `<div class="fcard"><h3>${esc(t)}</h3><p>${esc(x)}</p></div>`).join("")}</div>
+    <p class="suite"><a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent("Conseil et programmes")}">Nous confier un projet ${ICON.arrow}</a></p>
+  </div></section>
   <section class="band"><div class="wrap">
-    ${secHead("Nos pôles au service de votre programme", "Vous pouvez aussi mobiliser directement l'un de nos pôles")}
+    ${secHead("Nos prestations", "Quatre façons de travailler avec nous")}
+    <div class="grid-2">${CONSEIL.map(s => `<article class="svc reveal" id="${s.id}"><span class="ic">${ICON[s.ico]}</span><div><h2>${esc(s.titre)}</h2><p>${esc(s.texte)}</p><details class="inclus"><summary>Ce que cela comprend</summary><ul class="checks">${s.points.map(x => `<li>${esc(x)}</li>`).join("")}</ul></details></div></article>`).join("")}</div>
+  </div></section>
+  <section id="relais"><div class="wrap">${relais(false)}</div></section>
+  <section class="band"><div class="wrap">
+    ${secHead("Nos pôles au service de votre projet", "Vous pouvez aussi mobiliser directement l'un de nos pôles")}
     <div class="poles poles-sm">${POLES.map(p => poleCard(p, false, true)).join("")}</div>
   </div></section>
   <section><div class="wrap">${finalCta()}</div></section>`;
@@ -919,7 +929,7 @@ const DESCR = {
   "a-propos": "Qui est Ubora : une entreprise sociale née à Lubumbashi, sa mission, son modèle, ses valeurs et son équipe de terrain.",
   approche: "La méthode Ubora en six temps : écouter, structurer, former, outiller, connecter et suivre. La même pour les groupes d'épargne, les entrepreneurs et les coopératives, en RDC.",
   outils: "AKIBA, le générateur de business plan, Ubora Hub et les outils en préparation : des outils numériques conçus pour la RDC.",
-  conseil: "Conseil, études, gestion de projets, digitalisation de l'accompagnement et formation d'équipes, pour les ONG, les bailleurs et les institutions en RDC.",
+  conseil: "Mise en œuvre de projets de développement économique, conseil et études, digitalisation de l'accompagnement et formation d'équipes, pour les ONG, les bailleurs et les institutions en RDC.",
   formations: "Formations d'Ubora en RDC : Académie en ligne (plus de 100 cours avec certificat), prise en main des outils, AVEC, entrepreneuriat et gestion coopérative.",
   actualites: "Les actualités d'Ubora : programmes, déploiements, formations et nouvelles du terrain en RDC.",
   carrieres: "Offres d'emploi, de stage et de consultance chez Ubora, entreprise sociale basée à Lubumbashi.",
@@ -940,9 +950,9 @@ const SEO_POLES = {
   marche: ["Ubora Market : vendre plus, trouver des acheteurs en RDC", "Relier les PME, les coopératives et les entrepreneurs de la RDC à des acheteurs : ventes B2B et B2C, marchés institutionnels et export."]
 };
 /* Titres complets pour la balise <title> ; TITRES reste court (fil d'Ariane, menus) */
-const SEO_TITRES = { soutenir: "Soutenir Ubora : une entreprise à objectif social en RDC", "a-propos": "Qui sommes-nous : Ubora, entreprise sociale en RDC", approche: "Notre approche : la méthode Ubora en six temps", outils: "Outils numériques pour les AVEC et les PME en RDC · Ubora", conseil: "Conseil et programmes pour ONG et bailleurs en RDC · Ubora", formations: "Formations AVEC, entrepreneuriat et coopératives · Ubora", actualites: "Actualités d'Ubora : nouvelles du terrain en RDC", realisations: "Nos réalisations en RDC · Ubora, entreprise sociale", equipe: "Notre équipe · Ubora, entreprise sociale à Lubumbashi", carrieres: "Carrières : rejoindre Ubora à Lubumbashi, RDC", contact: "Contacter Ubora à Lubumbashi, RDC", mentions: "Mentions légales · Ubora, entreprise sociale" };
+const SEO_TITRES = { soutenir: "Soutenir Ubora : une entreprise à objectif social en RDC", "a-propos": "Qui sommes-nous : Ubora, entreprise sociale en RDC", approche: "Notre approche : la méthode Ubora en six temps", outils: "Outils numériques pour les AVEC et les PME en RDC · Ubora", conseil: "Mise en œuvre de projets, conseil et études en RDC · Ubora", formations: "Formations AVEC, entrepreneuriat et coopératives · Ubora", actualites: "Actualités d'Ubora : nouvelles du terrain en RDC", realisations: "Nos réalisations en RDC · Ubora, entreprise sociale", equipe: "Notre équipe · Ubora, entreprise sociale à Lubumbashi", carrieres: "Carrières : rejoindre Ubora à Lubumbashi, RDC", contact: "Contacter Ubora à Lubumbashi, RDC", mentions: "Mentions légales · Ubora, entreprise sociale" };
 const ROBOTS = "index, follow, max-image-preview:large";
-const TITRES = { soutenir: "Soutenir nos actions", "": "Ubora RDC : entreprise sociale à Lubumbashi (AVEC, PME, coopératives)", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos outils numériques", conseil: "Conseil et programmes", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
+const TITRES = { soutenir: "Soutenir nos actions", "": "Ubora RDC : entreprise sociale à Lubumbashi (AVEC, PME, coopératives)", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos outils numériques", conseil: "Projets et conseil", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
 
 /* Construit une page à partir d'une adresse. */
 function resolve(pathname, search, host) {
