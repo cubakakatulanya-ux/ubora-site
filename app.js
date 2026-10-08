@@ -222,7 +222,7 @@ function expertise() {
   const L = CONFIG.legal || {};
   const lecons = [
     ["avec", "Dans un groupe d'épargne, la plupart des conflits naissent de règles jamais écrites. Pas du manque d'argent.", "Alors nous écrivons les règles avec le groupe, et AKIBA rend chaque compte vérifiable par tous les membres."],
-    ["financement", "Étudier un crédit de 500 dollars coûte presque autant qu'un crédit de 50 000. Voilà pourquoi les petits emprunteurs sont oubliés.", "Alors Ubora Fin prête au groupe entier, pas dossier par dossier, en s'appuyant sur son historique d'épargne."],
+    ["financement", "Étudier un crédit de 500 dollars coûte presque autant qu'un crédit de 50 000. Voilà pourquoi les petits emprunteurs sont oubliés.", "Alors Ubora Fin mobilise le capital pour le groupe entier, pas dossier par dossier, en s'appuyant sur son historique d'épargne."],
     ["marche", "Le maillon qui casse le plus souvent n'est ni la production ni le crédit. C'est la vente.", "Alors nous cherchons l'acheteur avant la récolte, et nous suivons la vente jusqu'au paiement du producteur."]
   ];
   const preuves = [
@@ -304,6 +304,7 @@ function menuHTML() {
     <li><a href="/formations" data-r="formations">Formations</a></li>
     ${/* une rubrique encore vide n'encombre pas le menu : elle y revient dès qu'elle a du contenu */ ""}${DATA.realisations.length ? `<li><a href="/realisations" data-r="realisations">Réalisations</a></li>` : ""}
     ${allNews().length ? `<li><a href="/actualites" data-r="actualites">Actualités</a></li>` : ""}
+    <li class="m-cta"><a class="btn btn-ghost" href="/soutenir">Soutenir nos actions</a></li>
     <li class="m-cta"><a class="btn btn-accent" href="/contact">Nous contacter</a></li>`;
 }
 function footerHTML() {
@@ -311,6 +312,10 @@ function footerHTML() {
   const legal = [L.rccm && "RCCM " + L.rccm, L.idnat && "ID NAT " + L.idnat].filter(Boolean).join(" · ");
   const tel = CONFIG.telephone.replace(/\s/g, "");
   return `<div class="wrap">
+    <div class="foot-social">
+      <p><b>Ubora est une entreprise à caractère social.</b> Nos excédents sont réinvestis dans nos outils, dans la formation de relais locaux et dans notre présence sur le terrain.</p>
+      <a class="btn btn-accent btn-sm" href="/soutenir">Soutenir nos actions ${ICON.arrow}</a>
+    </div>
     <div class="foot-news">
       <div class="foot-news-txt"><b>Nouvelles du terrain</b><span>Recevez nos nouvelles par e-mail.</span></div>
       <form class="news-form" id="newsForm" aria-label="Lettre d'information">
@@ -321,10 +326,10 @@ function footerHTML() {
     <div class="foot-grid">
       <div class="foot-brand">
         <a class="brand" href="/"><img class="logo-img" src="/logo-ubora.png" alt="" width="56" height="56" loading="lazy"><span class="brand-txt"><span class="brand-name">Ub<b>o</b>ra</span><span class="brand-sub">Entreprise sociale</span></span></a>
-        <p class="foot-accroche">Basée à Lubumbashi, présente partout en RDC.</p>
+        <p class="foot-accroche">Entreprise à caractère social, basée à Lubumbashi, présente partout en RDC.</p>
       </div>
       <nav aria-label="Nos pôles"><h4>Nos pôles</h4><ul class="deux">${POLES.map(p => `<li><a class="foot-pole" href="${p.chemin}" style="--c:${p.couleur}">${esc(p.nom)}</a></li>`).join("")}</ul></nav>
-      <nav aria-label="Ubora"><h4>Ubora</h4><ul class="deux"><li><a href="/a-propos">Qui sommes-nous</a></li><li><a href="/equipe">Notre équipe</a></li><li><a href="/approche">Notre approche</a></li><li><a href="/conseil">Conseil</a></li><li><a href="/outils">Outils numériques</a></li><li><a href="/formations">Formations</a></li>${DATA.realisations.length ? `<li><a href="/realisations">Nos réalisations</a></li>` : ""}${allNews().length ? `<li><a href="/actualites">Actualités</a></li>` : ""}<li><a href="/carrieres">Carrières</a></li></ul></nav>
+      <nav aria-label="Ubora"><h4>Ubora</h4><ul class="deux"><li><a href="/a-propos">Qui sommes-nous</a></li><li><a href="/equipe">Notre équipe</a></li><li><a href="/approche">Notre approche</a></li><li><a href="/conseil">Conseil</a></li><li><a href="/outils">Outils numériques</a></li><li><a href="/formations">Formations</a></li>${DATA.realisations.length ? `<li><a href="/realisations">Nos réalisations</a></li>` : ""}${allNews().length ? `<li><a href="/actualites">Actualités</a></li>` : ""}<li><a href="/carrieres">Carrières</a></li><li><a href="/soutenir">Soutenir nos actions</a></li></ul></nav>
       <div class="foot-contact"><h4>Nous joindre</h4><ul>
         <li><span class="ic">${ICON.phone}</span><a href="tel:${tel}">${esc(CONFIG.telephone)}</a></li>
         <li><span class="ic">${ICON.mail}</span><a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a></li>
@@ -355,7 +360,7 @@ function pageHome() {
       <div>
         <h1 class="pill"><b>Ubora</b> Entreprise sociale à Lubumbashi, partout en RDC</h1>
         <p class="hero-titre">Des familles qui épargnent, des entrepreneurs qui vendent, des coopératives qui <span class="serif">durent</span>.</p>
-        <p class="lead">Partout en RDC, nous formons, outillons et suivons les groupes d'épargne, les entrepreneurs et les coopératives. Nous les relions aux institutions financières et aux acheteurs, et nous agissons pour l'environnement. Sur le terrain, avec des outils qui marchent sans réseau. Et nous restons quand le projet qui nous a fait venir se termine.</p>
+        <p class="lead">Ubora est une entreprise à caractère social. Partout en RDC, nous formons, outillons et suivons les groupes d'épargne, les entrepreneurs et les coopératives. Nous les relions aux institutions financières et aux acheteurs, et nous agissons pour l'environnement. Sur le terrain, avec des outils qui marchent sans réseau. Et nous restons quand le projet qui nous a fait venir se termine.</p>
         <div class="btn-row"><a class="btn btn-accent" href="#poles" data-scroll="poles">Découvrir nos pôles ${ICON.arrow}</a><a class="btn btn-glass" href="/contact">Nous contacter</a></div>
       </div>
       <div class="stage stage-photo">
@@ -388,12 +393,12 @@ function pageHome() {
       <span class="eyebrow">Une entreprise sociale</span>
       <h2>Notre modèle fait payer ceux qui peuvent, pour servir ceux qui ne peuvent pas.</h2>
       <p class="lead">Nous ne sommes ni une ONG qui dépend d'un financement, ni une entreprise qui ne sert que les clients solvables. Nos revenus viennent de nos prestations. Ils financent notre présence auprès de ceux qui en ont le plus besoin.</p>
-      <a class="btn btn-ghost" href="/a-propos#modele">Comprendre notre modèle ${ICON.arrow}</a>
+      <div class="btn-row"><a class="btn btn-accent" href="/soutenir">Soutenir nos actions ${ICON.arrow}</a><a class="btn btn-ghost" href="/a-propos#modele">Comprendre notre modèle</a></div>
     </div>
     <ol class="model">
       <li><span class="bn">1</span><div><b>Les organisations paient</b><span>ONG, bailleurs, institutions financières, programmes publics et privés financent nos prestations.</span></div></li>
       <li><span class="bn">2</span><div><b>Les plus fragiles accèdent à tarif solidaire</b><span>Groupes d'épargne, femmes et jeunes entrepreneurs, producteurs ruraux.</span></div></li>
-      <li><span class="bn">3</span><div><b>L'argent circule jusqu'aux groupes</b><span>Par Ubora Fin, nous levons des fonds auprès des financeurs et les prêtons aux AVEC en fonds de roulement. Ce qui est remboursé finance d'autres groupes.</span></div></li>
+      <li><span class="bn">3</span><div><b>Le capital arrive jusqu'aux groupes</b><span>Par Ubora Fin, nous mobilisons le capital des financeurs au profit des AVEC, des coopératives et des entrepreneurs que nous accompagnons. Nous ne prêtons pas nous-mêmes.</span></div></li>
       <li><span class="bn">4</span><div><b>Les excédents sont réinvestis</b><span>Dans nos outils, dans la formation de relais locaux et dans notre présence sur le terrain.</span></div></li>
     </ol>
   </div></section>
@@ -449,7 +454,7 @@ function pageAbout() {
     <div class="grid-4">
       <div class="fcard"><span class="ic">${ICON.briefcase}</span><h3>Qui paie</h3><p>Les ONG, les bailleurs, les institutions financières, les incubateurs et les programmes publics ou privés qui nous confient des missions.</p></div>
       <div class="fcard"><span class="ic">${ICON.heart}</span><h3>Qui en bénéficie</h3><p>Les groupes d'épargne, les femmes et les jeunes entrepreneurs, les producteurs ruraux, qui accèdent à nos services à tarif solidaire.</p></div>
-      <div class="fcard"><span class="ic">${ICON.coins}</span><h3>Ce que nous prêtons</h3><p>Par Ubora Fin, un fonds de roulement pour les AVEC que nous accompagnons, grâce à des fonds levés auprès d'institutions et d'investisseurs. Ce qui est remboursé repart vers d'autres groupes.</p></div>
+      <div class="fcard"><span class="ic">${ICON.coins}</span><h3>Ce que nous mobilisons</h3><p>Par Ubora Fin, le capital d'institutions financières, d'investisseurs et de bailleurs, au profit des groupes que nous accompagnons. Ubora Fin ne prête pas elle-même.</p></div>
       <div class="fcard"><span class="ic">${ICON.spark}</span><h3>Ce que nous réinvestissons</h3><p>Nos outils, la formation de relais locaux, et le suivi sur le terrain quand le projet d'un partenaire s'achève.</p></div>
     </div>
     <p class="note">Être rentables n'est pas une fin en soi. C'est ce qui nous permet d'être encore là au cycle suivant.</p>
@@ -556,7 +561,7 @@ function pagePole(id) {
   <section><div class="wrap">
     ${secHead("Vers le crédit", `Transformer la discipline d'un groupe en <span class="serif">accès au crédit</span>`, "Un groupe qui épargne depuis trois ans reste invisible pour une banque s'il ne peut rien prouver. Notre rôle est de rendre cette régularité lisible.")}
     <ol class="bridge">${AVEC.passerelle.map(([t, x], i) => `<li><span class="bn">${i + 1}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`).join("")}</ol>
-    <p class="suite"><a class="link" href="/financement#intermediation">Comment Ubora Fin finance les groupes ${ICON.arrow}</a></p>
+    <p class="suite"><a class="link" href="/financement#intermediation">Comment Ubora Fin mobilise le capital pour les groupes ${ICON.arrow}</a></p>
   </div></section>` : ""}
 
   ${P.intermediation ? `<section id="intermediation"><div class="wrap">
@@ -808,9 +813,44 @@ function pageCareers(openId) {
   </div></section>`;
 }
 
+/* Soutenir nos actions : ce qui distingue Ubora d'une entreprise classique, et les façons d'agir avec elle. */
+function pageSoutenir() {
+  const sujet = "/contact?sujet=" + encodeURIComponent("Soutenir nos actions");
+  const lignes = [
+    ["Le but", "Rémunérer ses propriétaires.", "Rendre plus solides les familles, les entrepreneurs et les coopératives que nous accompagnons."],
+    ["Qui est servi", "Ceux qui peuvent payer le prix du marché.", "Aussi ceux qui ne le peuvent pas : groupes d'épargne, femmes et jeunes entrepreneurs, producteurs ruraux, à tarif solidaire."],
+    ["Les excédents", "Distribués aux propriétaires.", "Réinvestis dans nos outils, dans la formation de relais locaux et dans notre présence sur le terrain."],
+    ["Quand le projet s'arrête", "La prestation s'arrête avec le contrat.", "Nous restons : les groupes, les entrepreneurs et les coopératives continuent d'être suivis."]
+  ];
+  const voies = [
+    [ICON.briefcase, "Confier une mission", "ONG, bailleurs, institutions, programmes : chaque prestation que vous nous confiez finance aussi nos services à tarif solidaire.", "/conseil", "Voir nos prestations"],
+    [ICON.coins, "Apporter du capital", "Institutions financières, investisseurs d'impact, bailleurs : Ubora Fin mobilise votre capital au profit des groupes que nous accompagnons, et vous en rend compte.", "/financement#intermediation", "Voir comment"],
+    [ICON.handshake, "Devenir partenaire", "Entreprises, fondations, universités, diaspora : compétences, équipements, mises en relation. Dites-nous ce que vous pouvez apporter.", sujet, "Nous écrire"],
+    [ICON.heart, "Faire connaître", "Parlez d'AKIBA, de l'Académie ou de nos formations à un groupe, une coopérative ou un entrepreneur qui en a besoin.", "/outils", "Voir nos outils"]
+  ];
+  return pageHead({ eyebrow: "Soutenir nos actions", title: `Pas une entreprise classique : notre objectif est <span class="serif">social</span>.`, crumbs: [["Soutenir nos actions"]],
+    lead: "Ubora est une entreprise sociale. Nos prestations font vivre l'entreprise ; ce qu'elles dégagent sert d'abord ceux qui n'auraient pas accès à nos services autrement. Vous pouvez nous aider à aller plus loin.",
+    extra: `<div class="btn-row"><a class="btn btn-accent" href="${sujet}">Proposer un soutien ${ICON.arrow}</a><a class="btn btn-glass" href="/a-propos#modele">Comprendre notre modèle</a></div>` }) + `
+  <section><div class="wrap">
+    ${secHead("Notre objectif social", `Ce qui nous distingue d'une <span class="serif">entreprise classique</span>`, "Nous vendons des prestations, comme une entreprise. Mais ce que nous en faisons n'est pas le même.")}
+    <div class="table-wrap"><table class="compare"><thead><tr><th></th><th>Une entreprise classique</th><th>Ubora, entreprise sociale</th></tr></thead>
+      <tbody>${lignes.map(([a, b, c]) => `<tr><th scope="row">${a}</th><td>${b}</td><td class="ok">${c}</td></tr>`).join("")}</tbody></table></div>
+  </div></section>
+  <section class="band" id="comment"><div class="wrap">
+    ${secHead("Comment nous soutenir", `Quatre façons d'<span class="serif">agir</span> avec nous`, "Nous ne collectons pas de dons en ligne. Écrivez-nous : nous voyons ensemble la forme de soutien la plus utile.")}
+    <div class="grid-4">${voies.map(([ic, t, x, lien, lib]) => `<div class="fcard"><span class="ic">${ic}</span><h3>${t}</h3><p>${x}</p><a class="link" href="${lien}">${lib} ${ICON.arrow}</a></div>`).join("")}</div>
+  </div></section>
+  <section class="tight-top"><div class="wrap"><div class="deep final">
+    <span class="eyebrow">Soutenir nos actions</span>
+    <h2>Dites-nous comment vous voulez agir.</h2>
+    <p>Une mission à confier, du capital à orienter vers des groupes d'épargne, un partenariat à construire : une personne de l'équipe vous répond sous deux jours ouvrés.</p>
+    <div class="btn-row"><a class="btn btn-accent" href="${sujet}">Proposer un soutien ${ICON.arrow}</a><a class="btn btn-ghost" href="/contact">Nous contacter</a></div>
+  </div></div></section>`;
+}
+
 function pageContact(params) {
   const sujet = params.get("sujet") || "";
-  const besoins = ["Ubora AVEC (groupes d'épargne)", "Ubora PME (entrepreneuriat)", "Ubora Coop (coopératives)", "Ubora Fin (accès au financement)", "Ubora Market (accès au marché)", "Ubora Vert (environnement)", "Ubora Académie (formations)", "Boîte à outils", "Conseil et programmes", "Formation", "Partenariat", "Recrutement", "Autre"];
+  const besoins = ["Ubora AVEC (groupes d'épargne)", "Ubora PME (entrepreneuriat)", "Ubora Coop (coopératives)", "Ubora Fin (accès au financement)", "Ubora Market (accès au marché)", "Ubora Vert (environnement)", "Ubora Académie (formations)", "Boîte à outils", "Conseil et programmes", "Formation", "Soutenir nos actions", "Partenariat", "Recrutement", "Autre"];
   const low = sujet.toLowerCase();
   const sel = !low ? "" : low.includes("boîte") || low.startsWith("les outils de") ? "Boîte à outils"
     : besoins.find(b => low.includes(b.split(" (")[0].toLowerCase()) || b.toLowerCase().includes(low)) || "Autre";
@@ -886,22 +926,23 @@ const DESCR = {
   contact: "Contacter Ubora par téléphone, WhatsApp ou e-mail. Siège à Lubumbashi, interventions dans toute la RDC.",
   mentions: "Mentions légales et politique de données personnelles du site d'Ubora.",
   equipe: "L'équipe d'Ubora : consultants, formateurs, agents de terrain et développeurs, basés à Lubumbashi et présents dans toute la RDC.",
+  soutenir: "Ubora n'est pas une entreprise classique : son objectif est social et ses excédents sont réinvestis. Confier une mission, apporter du capital, devenir partenaire : les façons de soutenir nos actions en RDC.",
   realisations: "Les réalisations d'Ubora en RDC : groupes d'épargne, entrepreneurs, coopératives, accès au financement et au marché. Contexte, actions et résultats."
 };
 /* Titre et description des pôles pour les moteurs de recherche */
 const SEO_POLES = {
-  avec: ["Ubora AVEC : accompagner les groupes d'épargne en RDC", "Création, formation et suivi des groupes d'épargne (AVEC), application AKIBA, fonds de roulement par Ubora Fin et lien avec les institutions financières, en RDC."],
+  avec: ["Ubora AVEC : accompagner les groupes d'épargne en RDC", "Création, formation et suivi des groupes d'épargne (AVEC), application AKIBA, capital mobilisé par Ubora Fin et lien avec les institutions financières, en RDC."],
   pme: ["Ubora PME : incubation et accélération d'entrepreneurs en RDC", "Idéation, incubation et accélération d'entrepreneurs et de PME en RDC, avec une démarche lean startup adaptée et un générateur de business plan."],
   cooperatives: ["Ubora Coop : créer et gérer une coopérative en RDC", "Structurer, gérer et renforcer la chaîne de valeur des coopératives en RDC : statuts OHADA, collecte, stockage, transformation, vente groupée, paiement."],
-  financement: ["Ubora Fin : accès au crédit et microfinance en RDC", "Ubora Fin prépare les emprunteurs, les présente aux institutions financières et prête aux AVEC des fonds levés auprès des financeurs, en RDC."],
+  financement: ["Ubora Fin : accès au crédit et microfinance en RDC", "Ubora Fin prépare les emprunteurs, les présente aux institutions financières et mobilise le capital des financeurs au profit des groupes d'épargne, des coopératives et des PME, en RDC."],
   academie: ["Ubora Académie : formations en ligne certifiantes en RDC", "Cours en ligne utilisables sans réseau sur les AVEC, les AGR et l'éducation financière, formation de formateurs et certificats vérifiables, pour tous les pôles d'Ubora."],
   vert: ["Ubora Vert : environnement et recyclage en RDC", "Reboisement, recyclage des déchets, agroécologie, énergie propre : Ubora Vert fait de la protection de l'environnement une source de revenus en RDC."],
   marche: ["Ubora Market : vendre plus, trouver des acheteurs en RDC", "Relier les PME, les coopératives et les entrepreneurs de la RDC à des acheteurs : ventes B2B et B2C, marchés institutionnels et export."]
 };
 /* Titres complets pour la balise <title> ; TITRES reste court (fil d'Ariane, menus) */
-const SEO_TITRES = { "a-propos": "Qui sommes-nous : Ubora, entreprise sociale en RDC", approche: "Notre approche : la méthode Ubora en six temps", outils: "Outils numériques pour les AVEC et les PME en RDC · Ubora", conseil: "Conseil et programmes pour ONG et bailleurs en RDC · Ubora", formations: "Formations AVEC, entrepreneuriat et coopératives · Ubora", actualites: "Actualités d'Ubora : nouvelles du terrain en RDC", realisations: "Nos réalisations en RDC · Ubora, entreprise sociale", equipe: "Notre équipe · Ubora, entreprise sociale à Lubumbashi", carrieres: "Carrières : rejoindre Ubora à Lubumbashi, RDC", contact: "Contacter Ubora à Lubumbashi, RDC", mentions: "Mentions légales · Ubora, entreprise sociale" };
+const SEO_TITRES = { soutenir: "Soutenir Ubora : une entreprise à objectif social en RDC", "a-propos": "Qui sommes-nous : Ubora, entreprise sociale en RDC", approche: "Notre approche : la méthode Ubora en six temps", outils: "Outils numériques pour les AVEC et les PME en RDC · Ubora", conseil: "Conseil et programmes pour ONG et bailleurs en RDC · Ubora", formations: "Formations AVEC, entrepreneuriat et coopératives · Ubora", actualites: "Actualités d'Ubora : nouvelles du terrain en RDC", realisations: "Nos réalisations en RDC · Ubora, entreprise sociale", equipe: "Notre équipe · Ubora, entreprise sociale à Lubumbashi", carrieres: "Carrières : rejoindre Ubora à Lubumbashi, RDC", contact: "Contacter Ubora à Lubumbashi, RDC", mentions: "Mentions légales · Ubora, entreprise sociale" };
 const ROBOTS = "index, follow, max-image-preview:large";
-const TITRES = { "": "Ubora RDC : entreprise sociale à Lubumbashi (AVEC, PME, coopératives)", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos outils numériques", conseil: "Conseil et programmes", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
+const TITRES = { soutenir: "Soutenir nos actions", "": "Ubora RDC : entreprise sociale à Lubumbashi (AVEC, PME, coopératives)", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos outils numériques", conseil: "Conseil et programmes", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
 
 /* Construit une page à partir d'une adresse. */
 function resolve(pathname, search, host) {
@@ -941,6 +982,7 @@ function resolve(pathname, search, host) {
     case "realisations": html = pageRealisations(params); break;
     case "carrieres": html = pageCareers(sub); canon = "/carrieres"; break;
     case "contact": html = pageContact(params); break;
+    case "soutenir": html = pageSoutenir(); break;
     case "mentions": html = pageMentions(); break;
     /* adresse propre à l'espace équipe : sans elle, admin.uborardc.com garderait le contenu de l'accueil déjà dans la page */
     case "admin": html = typeof pageAdmin === "function" ? pageAdmin() : notFound(); canon = "/admin"; break;

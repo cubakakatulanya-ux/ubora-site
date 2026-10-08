@@ -25,6 +25,7 @@ const CONFIG = {
 
 /* Bande déroulante. Les dernières actualités publiées s'y ajoutent d'elles-mêmes. */
 const TICKER_MESSAGES = [
+  ["Ubora est une entreprise à caractère social : ses excédents sont réinvestis", "/soutenir"],
   ["Nouveau : l'Académie Ubora, plus de 100 cours en ligne avec certificat", "/academie"],
   ["Nouveau dans AKIBA : un reçu imprimé pour chaque membre", "/outils/akiba"],
   ["Nouvelle version du générateur de business plan", "/outils/bp"],
@@ -87,7 +88,7 @@ const POLES = [
     accroche: "Épargner ensemble, emprunter sans crainte.",
     carte: "Quinze à trente personnes qui épargnent chaque semaine. Nous structurons le groupe, remplaçons le cahier par AKIBA et l'accompagnons jusqu'au crédit.",
     titre: `Des groupes d'épargne solides, et un vrai accès au <span class="serif">crédit</span>.`,
-    lead: "Les Associations Villageoises d'Épargne et de Crédit sont souvent le premier service financier auquel une famille congolaise a accès. Nous les accompagnons de la création du groupe jusqu'à son premier financement : un prêt d'une institution financière, ou un fonds de roulement apporté par Ubora Fin.",
+    lead: "Les Associations Villageoises d'Épargne et de Crédit sont souvent le premier service financier auquel une famille congolaise a accès. Nous les accompagnons de la création du groupe jusqu'à son premier financement : un prêt ou un fonds de roulement d'une institution financière, qu'Ubora Fin aide à mobiliser.",
     contexte: {
       intro: "En ville comme en zone rurale, beaucoup de ménages n'ont ni compte bancaire ni accès au crédit. L'AVEC comble ce vide avec des moyens très simples. Mais la plupart des groupes restent fragiles.",
       constats: [
@@ -102,7 +103,7 @@ const POLES = [
       ["Mettre en place", "Sensibilisation, constitution du groupe, statuts, règlement intérieur, élection du comité.", "Un groupe organisé, avec des règles connues de tous."],
       ["Former", "Modules de formation des membres, éducation financière, formation des animateurs et des relais.", "Des membres qui comprennent ce qu'ils font, et des relais sur place."],
       ["Digitaliser", "Passage du cahier à AKIBA : réunion guidée en huit étapes, registre scellé, partage de fin de cycle calculé par le téléphone.", "Des comptes justes, que chaque membre peut vérifier."],
-      ["Financer", "Deux voies : présenter l'historique du groupe aux IMF, aux COOPEC et aux banques, ou lui apporter un fonds de roulement par Ubora Fin, notre branche financière.", "Un groupe qui peut prêter davantage à ses membres, à des conditions raisonnables."],
+      ["Relier au financement", "Nous présentons l'historique du groupe aux IMF, aux COOPEC et aux banques, et Ubora Fin mobilise auprès des financeurs le capital dont le groupe a besoin.", "Un groupe qui peut prêter davantage à ses membres, à des conditions raisonnables."],
       ["Suivre et faire grandir", "Supervision, graduation, activités génératrices de revenus, puis regroupement en fédération.", "Des groupes qui durent, et qui se renforcent ensemble."]
     ],
     avec: true,
@@ -255,9 +256,9 @@ const POLES = [
     accroche: "Le crédit, jusqu'où il n'allait pas.",
     photo: ["fin", "Trois femmes échangent autour d'une table de réunion"],
     nom: "Ubora Fin", initiales: "Fi", couleur: "#1D5FB8",
-    carte: "Nous préparons les emprunteurs, les présentons aux institutions financières et prêtons aux AVEC des fonds levés auprès des financeurs.",
+    carte: "Nous préparons les emprunteurs, les présentons aux institutions financières et mobilisons le capital des financeurs au profit des groupes que nous accompagnons.",
     titre: `Rapprocher ceux qui ont besoin de crédit de ceux qui <span class="serif">prêtent</span>.`,
-    lead: "Le crédit existe en RDC, mais il atteint mal les petits emprunteurs. Nous travaillons des deux côtés, et entre les deux : nous préparons les groupes, les coopératives et les PME, nous les présentons aux institutions financières, et nous faisons circuler l'argent des financeurs jusqu'aux groupes.",
+    lead: "Le crédit existe en RDC, mais il atteint mal les petits emprunteurs. Nous travaillons des deux côtés, et entre les deux : nous préparons les groupes, les coopératives et les PME, nous les présentons aux institutions financières, et nous mobilisons le capital des financeurs à leur profit. Ubora Fin ne prête pas elle-même : elle fait venir le capital là où il manque.",
     contexte: {
       intro: "D'un côté, des emprunteurs qui n'ont rien à présenter. De l'autre, des institutions qui n'ont pas les moyens d'étudier de petits dossiers sans y perdre de l'argent. Tant que l'on ne travaille qu'un seul côté, rien ne bouge.",
       constats: [
@@ -272,17 +273,17 @@ const POLES = [
       ["Monter le dossier", "Comptes tenus, plan d'affaires chiffré, garanties réalistes.", "Un dossier qu'une institution peut réellement étudier."],
       ["Constituer un historique", "Les cotisations, les prêts et les remboursements enregistrés dans nos outils servent de preuves.", "Des indicateurs qu'un financier sait lire."],
       ["Mettre en relation", "Nous présentons les dossiers aux IMF, aux COOPEC et aux banques, et nous suivons la discussion.", "Un premier crédit, à des conditions supportables."],
-      ["Apporter un fonds de roulement", "Pour les AVEC que nous suivons, Ubora Fin prête elle-même un fonds de roulement au groupe, remboursable sur le cycle, en plus de l'épargne des membres.", "Plus de prêts possibles pour les membres, sans attendre une banque."],
+      ["Mobiliser le capital", "Pour les groupes que nous suivons, Ubora Fin mobilise le capital auprès d'institutions financières, d'investisseurs d'impact et de bailleurs. Ce sont eux qui financent ; nous préparons, présentons et suivons.", "Un fonds de roulement pour le groupe, en plus de l'épargne des membres."],
       ["Suivre le remboursement", "Échéances, relances, appui en cas de difficulté, des deux côtés.", "Un bon historique, qui ouvre la porte au crédit suivant."]
     ],
     intermediation: {
       titre: "Le lien entre ceux qui financent et les groupes d'épargne",
-      intro: "Une banque ne peut pas étudier des centaines de petits dossiers dans des villages éloignés. Un groupe d'épargne ne sait pas à quelle porte frapper. Ubora Fin se place entre les deux : nous levons des fonds auprès de ceux qui veulent financer, et nous les prêtons aux AVEC que nous connaissons, sous forme de fonds de roulement.",
+      intro: "Une banque ne peut pas étudier des centaines de petits dossiers dans des villages éloignés. Un groupe d'épargne ne sait pas à quelle porte frapper. Ubora Fin se place entre les deux : nous ne prêtons pas nous-mêmes, nous mobilisons le capital de ceux qui veulent financer au profit des AVEC que nous connaissons, sous forme de fonds de roulement.",
       etapes: [
-        ["Lever des fonds", "Lignes de crédit d'institutions de microfinance et de banques, capitaux d'investisseurs d'impact, fonds de garantie apportés par des bailleurs."],
-        ["Prêter aux groupes", "Un fonds de roulement accordé au groupe, et non à chaque membre, par paliers, selon l'historique enregistré dans AKIBA et son niveau « prête pour une IMF »."],
+        ["Mobiliser le capital", "Lignes de crédit d'institutions de microfinance et de banques, capitaux d'investisseurs d'impact, fonds de garantie apportés par des bailleurs."],
+        ["L'orienter vers les groupes", "Le capital va au groupe, et non à chaque membre, par paliers, selon l'historique enregistré dans AKIBA et son niveau « prête pour une IMF »."],
         ["Suivre et rendre compte", "Les remboursements sont suivis semaine après semaine. Chaque financeur reçoit des rapports clairs sur l'usage de son argent."],
-        ["Faire grandir", "Les groupes les plus solides passent en relation directe avec l'institution partenaire. Les sommes remboursées financent d'autres groupes."]
+        ["Faire grandir", "Les groupes les plus solides passent en relation directe avec l'institution partenaire. Le capital remboursé peut servir d'autres groupes."]
       ],
       gains: [
         ["Pour les institutions financières", "Une clientèle nouvelle, déjà formée et suivie, sans coût d'étude dossier par dossier. Le risque est réparti sur de nombreux groupes et porté par la caution solidaire des membres."],
@@ -391,7 +392,7 @@ const POLES = [
       ["Reboiser", "Pépinières communautaires, plantations, agroforesterie, suivi de la survie des plants.", "Des arbres qui poussent, et des pépiniéristes qui en vivent."],
       ["Recycler et valoriser", "Tri à la source, collecte, recyclage du plastique et de la ferraille, compostage des déchets organiques.", "Des déchets qui deviennent des revenus."],
       ["Produire autrement", "Agroécologie, compost, gestion de l'eau, foyers améliorés, énergie solaire.", "Moins de dépenses, des sols et des récoltes qui tiennent."],
-      ["Financer", "Crédit vert par Ubora Fin, montage de projets pour les fonds climat et les programmes environnementaux.", "Des activités vertes qui trouvent leur financement."],
+      ["Financer", "Capital vert mobilisé par Ubora Fin, montage de projets pour les fonds climat et les programmes environnementaux.", "Des activités vertes qui trouvent leur financement."],
       ["Mesurer et suivre", "Arbres plantés et vivants, déchets valorisés, énergie économisée, revenus créés.", "Des résultats que l'on peut montrer aux partenaires."]
     ],
     outils: [],
@@ -480,7 +481,7 @@ const AVEC = {
     ["Le groupe", "Quinze à trente membres qui épargnent chaque semaine et se prêtent entre eux."],
     ["AKIBA", "Les comptes sont tenus sur téléphone, sans réseau, dans un registre scellé que chacun peut vérifier."],
     ["L'historique", "Un indice de qualité des données et un niveau « prête pour une IMF » rendent la régularité du groupe lisible."],
-    ["Le financement", "Une IMF, une COOPEC, une banque, ou Ubora Fin elle-même, apporte un fonds de roulement au groupe. Nous suivons le remboursement."]
+    ["Le financement", "Une IMF, une COOPEC ou une banque apporte un fonds de roulement au groupe, avec l'appui d'Ubora Fin, qui mobilise le capital. Nous suivons le remboursement."]
   ]
 };
 
@@ -613,7 +614,7 @@ const FAQ = [
   ["Proposez-vous des formations sur vos outils ?", "Oui. Chaque déploiement comprend une formation de prise en main, puis un suivi. Notre Académie en ligne, academie.uborardc.com, propose aussi plus de 100 cours avec certificat. Nous organisons aussi des sessions sur demande, dans votre province ou en ligne."],
   ["Faut-il être une entreprise déclarée pour être accompagné ?", "Non. Nous accompagnons justement beaucoup d'entrepreneurs et de groupements vers la formalisation, étape par étape."],
   ["Que devient l'accompagnement quand le projet d'une ONG se termine ?", "Nous restons. Les groupes, les entrepreneurs et les coopératives continuent d'être suivis après la clôture du projet. Notre modèle économique finance une partie de ces activités de terrain, et les outils mis en place restent en service."],
-  ["Ubora peut-elle financer notre groupe d'épargne ?", "Oui, par Ubora Fin, notre branche financière. Pour les AVEC que nous accompagnons, nous pouvons apporter un fonds de roulement, remboursable sur le cycle, en plus de l'épargne des membres. Nous pouvons aussi présenter le groupe à une IMF, une COOPEC ou une banque partenaire."],
+  ["Ubora peut-elle financer notre groupe d'épargne ?", "Ubora ne prête pas elle-même. Par Ubora Fin, nous mobilisons le capital d'institutions financières, d'investisseurs et de bailleurs au profit des AVEC que nous accompagnons, et nous présentons le groupe à une IMF, une COOPEC ou une banque partenaire. Le groupe obtient ainsi un fonds de roulement, en plus de l'épargne de ses membres."],
   ["Que fait Ubora pour l'environnement ?", "Par Ubora Vert, nous accompagnons les communautés, les coopératives et les PME dans le reboisement, le recyclage et la valorisation des déchets, l'agroécologie et l'énergie propre. Notre principe : une action pour l'environnement dure quand elle crée des revenus pour ceux qui la portent."],
   ["Combien coûte l'accompagnement ?", "Cela dépend du programme et du nombre de bénéficiaires. Les prestations facturées aux organisations nous permettent de proposer des tarifs solidaires aux groupes d'épargne et aux micro-entrepreneurs. Contactez-nous pour en parler."]
 ];

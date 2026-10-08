@@ -2015,3 +2015,24 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
   .menu { margin: 0; justify-self: center; }
   .nav-actions { justify-self: end; }
 }
+
+/* ==========================================================================
+   Bouton « Soutenir nos actions » dans l'en-tête et dans le menu du téléphone
+   ========================================================================== */
+.nav-actions .btn-soutenir { border-color: var(--green); color: var(--vert-texte); background: var(--carte); white-space: nowrap; }
+.nav-actions .btn-soutenir:hover { background: var(--green); border-color: var(--green); color: #fff; }
+.menu > li.m-cta > a.btn.btn-ghost { background: var(--carte); color: var(--vert-texte); border: 1px solid var(--green); }
+.fcard > .link { margin-top: auto; }
+
+/* Pied de page de toutes les pages : rappel du caractère social d'Ubora */
+.foot-social { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 32px; padding-block: 22px 18px; border-bottom: 1px solid rgba(255, 255, 255, .14); }
+.foot-social p { margin: 0; max-width: 72ch; font-size: 15px; line-height: 1.55; color: #E3F1E8; }
+.foot-social b { color: #fff; }
+.foot-social .btn { flex: none; }
+.foot-accroche { max-width: 34ch !important; }
+.nav-actions { gap: 8px; }
+.nav-actions .btn-sm { padding-inline: 14px; }
+/* petits écrans d'ordinateur : le menu se centre dans la place qui reste, pour ne pas toucher les boutons */
+@media (min-width: 1101px) and (max-width: 1239px) { .nav { grid-template-columns: auto minmax(0, 1fr) auto; } }
+.site-footer .foot-social .btn, .site-footer .foot-social .btn:hover { color: #0D3B28; }
+.menu > li.m-cta > a.btn { border-radius: var(--r-btn); }

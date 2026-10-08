@@ -104,7 +104,7 @@ async function main() {
   const shell = read("tools/shell.html");
   const menu = S.menuHTML(), footer = S.footerHTML(), ticker = S.tickerHTML();
 
-  const chemins = ["/", ...S.POLES.map(p => p.chemin), "/approche", "/a-propos", "/outils", "/conseil", "/formations", "/actualites", "/realisations", "/equipe", "/carrieres", "/contact", "/mentions",
+  const chemins = ["/", ...S.POLES.map(p => p.chemin), "/approche", "/a-propos", "/outils", "/conseil", "/formations", "/actualites", "/realisations", "/equipe", "/carrieres", "/contact", "/soutenir", "/mentions",
     ...S.OUTILS.filter(o => o.fiche).map(o => "/outils/" + o.id),
     ...S.allNews().map(n => "/actualites/" + n.slug)];
   const pages = [];
