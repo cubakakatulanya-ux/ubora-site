@@ -2004,3 +2004,14 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
 .academie-txt h2, .dir-nom h2 { font-family: var(--f-display); font-weight: 400; }
 .hero h1.pill { display: block; }
 .hero h1.pill b::after { content: " ·"; margin-left: 0; }
+
+/* ==========================================================================
+   En-tête : menu au centre (logo à gauche, actions à droite), comme l'Académie.
+   Sur téléphone et tablette, le menu reste le panneau déroulant.
+   ========================================================================== */
+@media (min-width: 1101px) {
+  .nav { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); }
+  .nav > .brand { justify-self: start; }
+  .menu { margin: 0; justify-self: center; }
+  .nav-actions { justify-self: end; }
+}
