@@ -228,7 +228,7 @@ function expertise() {
   const preuves = [
     [String(OUTILS.filter(o => o.statut === "en-ligne").length), "outils en ligne", "AKIBA, le générateur de business plan, Ubora Hub et l'Académie Ubora. Essayez-les avant même de nous appeler.", "/outils", "Les essayer"],
     [String(pole("avec").boite.outils.length), "documents de terrain", "La boîte à outils AVEC, de l'étude de référence jusqu'au partage de fin de cycle.", "/avec#boite", "La demander"],
-    [String(METHODE.etapes.length), "temps de méthode", "Toujours dans le même ordre, et pour chacun la raison qui le justifie en RDC.", "/approche", "Lire la méthode"],
+    [String(METHODE.etapes.length), "temps de méthode", "Les mêmes pour un groupe d'épargne, un entrepreneur ou une coopérative, toujours dans le même ordre.", "/approche", "Lire la méthode"],
     [ICON.check, "entreprise immatriculée", [L.rccm && "RCCM " + L.rccm, L.idnat && "ID NAT " + L.idnat].filter(Boolean).join(" · "), "/mentions", "Nos mentions légales"]
   ];
   return `<div class="lecons">${lecons.map(([id, q, r]) => { const p = pole(id); return `<figure class="lecon reveal" style="--c:${p.couleur}"><span class="lecon-pole">${esc(p.nom)}</span><blockquote>${esc(q)}</blockquote><figcaption>${esc(r)}</figcaption><a class="link" href="${p.chemin}" aria-label="Voir comment : ${esc(p.nom)}">Voir comment ${ICON.arrow}</a></figure>`; }).join("")}</div>
@@ -487,8 +487,8 @@ function pageApproche() {
   return pageHead({ eyebrow: "Notre approche", title: `Former sans outiller ne suffit pas. Outiller sans accompagner non plus.`, crumbs: [["Notre approche"]],
     lead: METHODE.intro }) + `
   <section><div class="wrap">
-    ${secHead(METHODE.nom, "Six temps, toujours dans le même ordre")}
-    <ol class="steps">${METHODE.etapes.map((e, i) => `<li class="reveal"><span class="pn">${String(i + 1).padStart(2, "0")}</span><h3>${esc(e.titre)}</h3><p>${esc(e.texte)}</p><details class="why"><summary>Pourquoi en RDC</summary><p>${esc(e.pourquoi)}</p></details></li>`).join("")}</ol>
+    ${secHead(METHODE.nom, "Six temps, toujours dans le même ordre", "Les mêmes six temps pour un groupe d'épargne, un entrepreneur ou une coopérative. Seul le contenu change.")}
+    <ol class="steps">${METHODE.etapes.map((e, i) => `<li class="reveal"><span class="pn">${String(i + 1).padStart(2, "0")}</span><h3>${esc(e.titre)}</h3><p>${esc(e.texte)}</p><ul class="pour-qui">${e.exemples.map((x, k) => `<li><b>${esc(METHODE.publics[k])}</b><span>${esc(x)}</span></li>`).join("")}</ul><details class="why"><summary>Pourquoi en RDC</summary><p>${esc(e.pourquoi)}</p></details></li>`).join("")}</ol>
   </div></section>
 
   <section class="band"><div class="wrap">
@@ -917,7 +917,7 @@ const ANCIENNES = {
 const DESCR = {
   "": "Ubora RDC, entreprise sociale basée à Lubumbashi : groupes d'épargne (AVEC), incubation d'entrepreneurs et de PME, coopératives, accès au crédit et au marché, partout en RDC.",
   "a-propos": "Qui est Ubora : une entreprise sociale née à Lubumbashi, sa mission, son modèle, ses valeurs et son équipe de terrain.",
-  approche: "La méthode Ubora en six temps : écouter, structurer, former, outiller, connecter et suivre, pensée pour les réalités de la RDC.",
+  approche: "La méthode Ubora en six temps : écouter, structurer, former, outiller, connecter et suivre. La même pour les groupes d'épargne, les entrepreneurs et les coopératives, en RDC.",
   outils: "AKIBA, le générateur de business plan, Ubora Hub et les outils en préparation : des outils numériques conçus pour la RDC.",
   conseil: "Conseil, études, gestion de projets, digitalisation de l'accompagnement et formation d'équipes, pour les ONG, les bailleurs et les institutions en RDC.",
   formations: "Formations d'Ubora en RDC : Académie en ligne (plus de 100 cours avec certificat), prise en main des outils, AVEC, entrepreneuriat et gestion coopérative.",

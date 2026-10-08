@@ -2036,3 +2036,9 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
 @media (min-width: 1101px) and (max-width: 1239px) { .nav { grid-template-columns: auto minmax(0, 1fr) auto; } }
 .site-footer .foot-social .btn, .site-footer .foot-social .btn:hover { color: #0D3B28; }
 .menu > li.m-cta > a.btn { border-radius: var(--r-btn); }
+
+/* Méthode : sous chaque temps, ce qu'il donne pour un groupe d'épargne, un entrepreneur et une coopérative */
+.pour-qui { display: grid; gap: 8px; margin: 6px 0 4px; padding: 10px 0 0; border-top: 1px solid var(--line); list-style: none; }
+.pour-qui li { display: grid; gap: 1px; padding: 0; border: 0; background: none; box-shadow: none; }
+.pour-qui b { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--vert-texte); }
+.pour-qui span { font-size: 14.5px; line-height: 1.5; color: var(--ink); }

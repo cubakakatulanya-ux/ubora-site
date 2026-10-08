@@ -58,20 +58,28 @@ const DIRIGEANT = {
 /* ---------- La méthode Ubora (page « Notre approche ») ---------- */
 const METHODE = {
   nom: "La méthode Ubora",
-  intro: "Nous avons vu trop de projets former des gens, puis partir. Et trop de logiciels installés que personne n'utilise six mois plus tard. Notre façon de travailler tient en six temps, toujours dans le même ordre, et nous restons tant que le groupe ou l'entreprise n'est pas capable de continuer seul.",
+  intro: "Nous avons vu trop de projets former des gens, puis partir. Et trop de logiciels installés que personne n'utilise six mois plus tard. Que nous accompagnions un groupe d'épargne, un entrepreneur ou une coopérative, notre façon de travailler tient en six temps, toujours dans le même ordre, et nous restons tant qu'ils ne sont pas capables de continuer seuls.",
+  /* pour chaque temps : ce qu'il donne pour un groupe d'épargne, un entrepreneur et une coopérative, dans cet ordre */
+  publics: ["Groupe d'épargne", "Entrepreneur", "Coopérative"],
   etapes: [
     { titre: "Écouter", texte: "On commence sur place, avec les personnes concernées, dans leur langue. On regarde ce qui existe déjà avant de proposer quoi que ce soit.",
+      exemples: ["Comment le groupe épargne et prête déjà, et ce qui coince.", "Son idée, ses premiers clients, ce qu'il a déjà essayé.", "Qui produit quoi, qui vend à qui, et où l'argent se perd."],
       pourquoi: "Un dispositif pensé depuis un bureau ne résiste pas au premier cycle sur le terrain." },
-    { titre: "Structurer", texte: "On écrit les règles avec le groupe : statuts, règlement intérieur, rôles de chacun, séparation claire entre la caisse et le fonds social.",
+    { titre: "Structurer", texte: "On met par écrit ce qui était flou : qui décide, qui fait quoi, et où va l'argent.",
+      exemples: ["Statuts, règlement intérieur, caisse séparée du fonds social.", "Un modèle économique testé auprès de vrais clients, puis un plan d'affaires.", "Statuts conformes à l'OHADA, immatriculation, organes de gestion."],
       pourquoi: "La plupart des conflits naissent de règles jamais écrites, pas du manque d'argent." },
-    { titre: "Former", texte: "Éducation financière, gestion, crédit. Et surtout, on forme des relais issus de la communauté, qui prendront le relais après nous.",
+    { titre: "Former", texte: "Gestion, éducation financière, vente, crédit : chacun apprend ce qu'il lui faut pour décider seul. Et nous formons des relais locaux, qui restent après nous.",
+      exemples: ["Les membres, le comité et les animateurs.", "Coûts, prix, comptes et vente, en cohorte ou en ligne à l'Académie.", "Les dirigeants, les gérants et les producteurs."],
       pourquoi: "Quand le projet s'arrête, c'est le relais local qui reste." },
-    { titre: "Outiller", texte: "On remplace le cahier par un outil numérique simple, qui marche sans réseau, en francs congolais et en dollars.",
+    { titre: "Outiller", texte: "On remplace le cahier et les fichiers dispersés par un outil numérique simple, qui marche sans réseau, en francs congolais et en dollars.",
+      exemples: ["AKIBA, pour les réunions, la caisse et les reçus.", "Le générateur de business plan, et Ubora Hub pour l'incubateur qui le suit.", "Des registres clairs pour les membres, la collecte et les ventes ; le logiciel Ubora Coop est en préparation."],
       pourquoi: "Réseau instable, deux monnaies, niveaux d'instruction variés : l'outil doit s'adapter, pas l'inverse." },
     { titre: "Connecter", texte: "L'historique tenu dans nos outils devient un dossier que l'on présente aux institutions financières et aux acheteurs.",
-      pourquoi: "Un groupe sérieux reste invisible tant que personne ne sait prouver sa régularité." },
+      exemples: ["Un dossier pour une IMF, une COOPEC ou une banque.", "Un plan d'affaires chiffré et des rendez-vous avec des financeurs.", "Des acheteurs trouvés avant la récolte, et des contrats."],
+      pourquoi: "Un groupe, une entreprise ou une coopérative sérieuse reste invisible tant que personne ne sait prouver sa régularité." },
     { titre: "Suivre", texte: "Visites régulières, indicateurs partagés, réponse rapide sur WhatsApp. On ne part que lorsque ça tient.",
-      pourquoi: "L'abandon juste après la formation est la cause d'échec la plus fréquente des projets d'inclusion financière." }
+      exemples: ["Jusqu'au partage de fin de cycle, puis au cycle suivant.", "Après le lancement, quand viennent les premières difficultés.", "Campagne après campagne, jusqu'au paiement des producteurs."],
+      pourquoi: "L'abandon juste après la formation est la cause d'échec la plus fréquente des projets d'accompagnement." }
   ]
 };
 
