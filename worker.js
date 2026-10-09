@@ -19,6 +19,7 @@ const ANCIENNES = {
   "/rediger": "https://admin.uborardc.com/", "/admin": "https://admin.uborardc.com/", "/hub": "/outils/hub"
 };
 const FICHIER = /\.[a-z0-9]{2,5}$/i;
+const VIDEO = /\.(mp4|webm)$/i;
 
 const CSP_SITE = "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://uoshpvqdszygezkuhhco.supabase.co; connect-src 'self' https://uoshpvqdszygezkuhhco.supabase.co wss://uoshpvqdszygezkuhhco.supabase.co https://cloudflareinsights.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests";
 const CSP_GENERATEUR = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://hub.uborardc.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'";
@@ -118,7 +119,28 @@ export default {
     /* 5. Fichiers du site, avec les en-têtes de sécurité */
     const demande = cible ? new Request(new URL(cible, url), request) : request;
     const reponse = await env.ASSETS.fetch(demande);
-    const r = new Response(reponse.body, reponse);
+    let r = new Response(reponse.body, reponse);
+    /* Vidéos : les iPhone ne lisent une vidéo que si le serveur sait en envoyer un morceau (en-tête Range).
+       Les fichiers du site sont rendus entiers ; on découpe donc ici le morceau demandé. */
+    if (VIDEO.test(chemin) && reponse.status === 200) {
+      r.headers.set("Accept-Ranges", "bytes");
+      const m = /^bytes=(\d*)-(\d*)$/.exec((request.headers.get("Range") || "").trim());
+      if (m && (m[1] || m[2])) {
+        const tout = await r.arrayBuffer(), n = tout.byteLength;
+        const debut = m[1] ? parseInt(m[1], 10) : Math.max(0, n - parseInt(m[2], 10));
+        const fin = m[1] && m[2] ? Math.min(parseInt(m[2], 10), n - 1) : n - 1;
+        const entetes = new Headers(reponse.headers);
+        entetes.set("Accept-Ranges", "bytes");
+        if (debut >= n || debut > fin) {
+          entetes.set("Content-Range", `bytes */${n}`);
+          r = new Response(null, { status: 416, headers: entetes });
+        } else {
+          entetes.set("Content-Range", `bytes ${debut}-${fin}/${n}`);
+          entetes.set("Content-Length", String(fin - debut + 1));
+          r = new Response(tout.slice(debut, fin + 1), { status: 206, headers: entetes });
+        }
+      }
+    }
     for (const [cle, valeur] of Object.entries(ENTETES)) r.headers.set(cle, valeur);
     r.headers.set("Content-Security-Policy", sd === "bp" || chemin.startsWith("/generateur") ? CSP_GENERATEUR : CSP_SITE);
     if (sd === "admin") r.headers.set("X-Robots-Tag", "noindex, nofollow");
