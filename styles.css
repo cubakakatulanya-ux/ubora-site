@@ -2052,3 +2052,8 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
 .formules .fcard h3 { font-size: 18px; }
 /* le menu compte un libellé plus long (« Projets et conseil ») : espacements un peu resserrés */
 @media (min-width: 1101px) { .menu > li > a, .dd-btn { padding-inline: 11px; } .menu { gap: 0; } }
+
+/* Vidéo de présentation (page d'un pôle) */
+.video-cadre { max-width: 960px; margin: 0 auto; }
+.video-cadre video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border: 1px solid var(--line); border-radius: var(--r-lg); background: #0B1311; }
+.video-cadre figcaption { margin-top: 8px; font-size: 13px; color: var(--muted); text-align: center; }

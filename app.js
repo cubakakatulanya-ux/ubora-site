@@ -523,6 +523,14 @@ function pagePole(id) {
       <span class="sub-chip">${esc(P.sousDomaine)}</span>`
   }) + `
 
+  ${P.video ? `<section id="video"><div class="wrap">
+    ${secHead("En vidéo", esc(P.video.titre))}
+    <figure class="video-cadre">
+      <video controls preload="none" playsinline width="1280" height="720" poster="${P.video.affiche}"><source src="${P.video.src}" type="video/mp4">Votre navigateur ne lit pas cette vidéo. <a href="${P.video.src}">Ouvrir le fichier</a>.</video>
+      <figcaption>${esc(P.video.legende)}</figcaption>
+    </figure>
+  </div></section>` : ""}
+
   <section><div class="wrap two">
     <div>
       <span class="eyebrow">Le contexte en RDC</span>
