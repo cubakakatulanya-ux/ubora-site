@@ -1083,7 +1083,7 @@ function boot() {
     if (r.base === "admin" && sd !== "admin" && /(^|\.)uborardc\.com$/.test(location.hostname)) { location.replace("https://admin.uborardc.com/"); return; }
     /* article publié depuis le dernier pré-rendu : on attend la base avant de conclure « introuvable » */
     if (!r.found && r.base === "actualites" && r.sub && !baseConsultee) { premier = false; app.innerHTML = '<div class="wrap"><div class="empty" style="margin-block:80px">Chargement de l\'article…</div></div>'; return; }
-    stopNet();
+    stopNet(); stopDiapo();
     compter(r);
     const garder = premier && !keep && app.dataset.pre === CONFIG.site + r.canon && !location.search && !["formations", "carrieres"].includes(r.base);
     premier = false; delete app.dataset.pre;
@@ -1101,16 +1101,17 @@ function boot() {
       if (a.tagName === "A") on ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current");
     });
     if (!keep) { $("#menu").classList.remove("open"); $("#burger").setAttribute("aria-expanded", "false"); document.body.classList.remove("menu-open"); fermerDD(); }
-    if (r.base === "") startNet();
+    if (r.base === "") { startNet(); startDiapo(); }
     if (r.base === "contact") bindContact();
     if (r.base === "admin" && typeof bindAdmin === "function") bindAdmin();
     $$("[data-scroll]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); document.getElementById(a.dataset.scroll)?.scrollIntoView({ behavior: "smooth" }); }));
-    reveal(); if (!garder) typo(app);
+    const anchor = location.hash.slice(1), ancre = anchor && !anchor.startsWith("/");
+    /* la page va remonter en haut : les cartes se mesurent depuis le haut de la page, pas depuis l'ancienne position */
+    reveal(); mouvement(keep || garder || ancre ? 0 : scrollY); if (!garder) typo(app);
     if (keep) return;
     if (route.deja) app.focus({ preventScroll: true });
     route.deja = true;
-    const anchor = location.hash.slice(1);
-    if (anchor && !anchor.startsWith("/")) requestAnimationFrame(() => document.getElementById(anchor)?.scrollIntoView({ behavior: "smooth" }));
+    if (ancre) requestAnimationFrame(() => document.getElementById(anchor)?.scrollIntoView({ behavior: "smooth" }));
     else if (!garder) window.scrollTo(0, 0);
   }
   window.route = route;
@@ -1150,6 +1151,68 @@ function boot() {
     io?.disconnect();
     io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }), { rootMargin: "0px 0px -6% 0px" });
     els.forEach((e, k) => { e.style.transitionDelay = (k % 4) * 60 + "ms"; io.observe(e); });
+  }
+
+  /* Jeu des cartes : dans une grille, les cartes entrent tour à tour par la gauche et par la droite
+     (par le bas pour celles du milieu), et leur pictogramme se dessine. Les photos arrivent floues,
+     décalées et agrandies, puis se mettent en place. Seul ce qui est encore sous l'écran est animé :
+     ce que le visiteur voit déjà ne bouge pas. */
+  const GRILLES = ".poles, .grid-2, .grid-3, .grid-4, .steps, .lecons, .chaine, .tools-mini, .tools, .model, .relais-temps, .list-rows";
+  const calme = () => matchMedia("(prefers-reduced-motion: reduce)").matches;
+  let ioJeu;
+  function mouvement(depart = 0) {
+    ioJeu?.disconnect();
+    if (calme() || !("IntersectionObserver" in window)) return;
+    ioJeu = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target;
+      ioJeu.unobserve(el);
+      el.classList.add("vu");
+      /* une fois en place, la carte retrouve ses réglages habituels (survol, transitions) */
+      if (el.classList.contains("jeu")) setTimeout(() => { el.classList.remove("jeu", "vu"); el.style.removeProperty("--retard"); delete el.dataset.dir; }, 1900);
+    }), { rootMargin: "0px 0px -8% 0px" });
+    const sousEcran = el => el.getBoundingClientRect().top + depart > innerHeight * .92;
+    $$(GRILLES, app).forEach(g => {
+      const cartes = [...g.children];
+      const colonnes = Math.max(1, getComputedStyle(g).gridTemplateColumns.split(" ").filter(Boolean).length);
+      cartes.forEach((c, i) => {
+        if (!sousEcran(c)) return;
+        const col = i % colonnes;
+        c.dataset.dir = colonnes === 1 ? (i % 2 ? "d" : "g") : col === 0 ? "g" : col === colonnes - 1 ? "d" : "b";
+        c.style.setProperty("--retard", col * 90 + "ms");
+        c.querySelectorAll(".ic svg *, .pn + svg *").forEach(t => t.setAttribute("pathLength", "1"));
+        c.classList.add("jeu");
+        ioJeu.observe(c);
+      });
+    });
+    $$(".pole-img img, .member img, .real img, .lecon img", app).forEach(im => { if (sousEcran(im)) { im.classList.add("img-mouv"); ioJeu.observe(im); } });
+  }
+
+  /* Accueil : la photo de la bannière change toutes les six secondes et demie, avec le même mouvement.
+     Pas de défilement si le visiteur économise ses données ou a une connexion très lente. */
+  let diapoStop = null;
+  function stopDiapo() { if (diapoStop) diapoStop(); }
+  function startDiapo() {
+    stopDiapo();
+    const cadre = $(".hero-photo"), c = navigator.connection;
+    if (!cadre || calme() || (c && (c.saveData || /2g/.test(c.effectiveType || "")))) return;
+    const vues = ["avec", "pme", "cooperatives", "vert"].map(id => pole(id).photo);
+    let i = 0;
+    const minuteur = setInterval(() => {
+      if (document.hidden || !cadre.isConnected) return;
+      i = (i + 1) % vues.length;
+      const boite = document.createElement("div");
+      boite.innerHTML = photo(vues[i][0], "(max-width: 1080px) 100vw, 40vw", vues[i][1], ' class="diapo"');
+      const im = boite.firstElementChild;
+      const montrer = () => {
+        if (!cadre.isConnected) return;
+        cadre.appendChild(im);
+        requestAnimationFrame(() => requestAnimationFrame(() => im.classList.add("vu")));
+        setTimeout(() => [...cadre.querySelectorAll("img")].slice(0, -1).forEach(x => x.remove()), 3200);
+      };
+      im.decode ? im.decode().then(montrer, montrer) : montrer();
+    }, 6500);
+    diapoStop = () => { clearInterval(minuteur); diapoStop = null; };
   }
 
   /* réseau animé de l'accueil, discret */

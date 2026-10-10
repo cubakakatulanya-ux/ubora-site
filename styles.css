@@ -2057,3 +2057,30 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
 .video-cadre { max-width: 960px; margin: 0 auto; }
 .video-cadre video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; border: 1px solid var(--line); border-radius: var(--r-lg); background: #0B1311; }
 .video-cadre figcaption { margin-top: 8px; font-size: 13px; color: var(--muted); text-align: center; }
+
+/* ==========================================================================
+   Mouvement des images et jeu des cartes (modèle donné par Christian, 10 octobre 2026)
+   Rien ne bouge pour qui a demandé moins d'animations à son appareil.
+   ========================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  /* une photo arrive floue, décalée et agrandie, puis se met en place en trois secondes */
+  @keyframes photo-arrive { from { filter: blur(20px); transform: translateX(-25%) scale(1.5); } to { filter: blur(0); transform: none; } }
+  .hero-photo > img:not(.diapo), .head-photo > img { animation: photo-arrive 3s cubic-bezier(.2, .8, .2, 1) both; }
+  /* bannière d'accueil : la photo suivante se pose par-dessus avec le même mouvement */
+  .hero-photo > img.diapo { position: absolute; inset: 0; opacity: 0; filter: blur(20px); transform: translateX(-25%) scale(1.5); }
+  .hero-photo > img.diapo.vu { opacity: 1; filter: blur(0); transform: none; transition: opacity 1.1s ease, filter 3s cubic-bezier(.2, .8, .2, 1), transform 3s cubic-bezier(.2, .8, .2, 1); }
+  /* photos des cartes, quand elles entrent à l'écran */
+  .pole .pole-img img.img-mouv:not(.vu), img.img-mouv:not(.vu) { filter: blur(16px); transform: translateX(-20%) scale(1.4); }
+  .pole .pole-img img.img-mouv.vu, img.img-mouv.vu { transition: filter 2.4s cubic-bezier(.2, .8, .2, 1), transform 2.4s cubic-bezier(.2, .8, .2, 1); }
+  .member, .real, .lecon { overflow: hidden; }
+
+  /* jeu des cartes : entrée par la gauche, par la droite, ou par le bas pour celles du milieu */
+  .jeu, .jeu.reveal, .jeu.reveal.in { animation: none; opacity: 0; transform: translate3d(-80px, 0, 0); transition: none; }
+  .jeu[data-dir="d"] { transform: translate3d(80px, 0, 0); }
+  .jeu[data-dir="b"] { transform: translate3d(0, 56px, 0); }
+  .jeu.vu, .jeu.reveal.vu, .jeu.reveal.in.vu { opacity: 1; transform: none;
+    transition: opacity .8s ease var(--retard, 0ms), transform .9s cubic-bezier(.2, .8, .2, 1) var(--retard, 0ms), border-color .3s, box-shadow .3s; }
+  /* le pictogramme de la carte se dessine */
+  .jeu .ic svg *, .jeu .pn + svg * { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .jeu.vu .ic svg *, .jeu.vu .pn + svg * { stroke-dashoffset: 0; transition: stroke-dashoffset 1.4s cubic-bezier(.3, .7, .2, 1) calc(var(--retard, 0ms) + 250ms); }
+}
