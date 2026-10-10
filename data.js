@@ -425,7 +425,7 @@ const POLES = [
     photo: ["formation", "Un formateur s'adresse à un groupe dans une salle"],
     nom: "Ubora Académie", initiales: "Ac", couleur: "#9A5522",
     /* vidéo de présentation (montage du 9 octobre 2026) : captures réelles d'academie.uborardc.com */
-    video: { src: "/img/video/ubora-academie.mp4", affiche: "/img/video/ubora-academie.webp", duree: "1 min 21",
+    video: { src: "/img/video/ubora-academie.mp4", affiche: "/img/video/ubora-academie-couverture.webp", duree: "1 min 21",
       titre: "Ubora Académie en une minute vingt", legende: "Les images sont des captures réelles d'academie.uborardc.com. Photo : marché de Goma, MONUSCO / M. Asmani, CC BY-SA." },
     carte: "L'école d'Ubora, au service de tous nos pôles : cours en ligne utilisables sans réseau, sessions sur le terrain, formation de formateurs et certificats vérifiables.",
     titre: `Une académie pour tous nos pôles : apprendre, pratiquer, être <span class="serif">certifié</span>.`,
