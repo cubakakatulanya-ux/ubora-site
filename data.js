@@ -551,6 +551,9 @@ const OUTILS = [
       titre: `Le logiciel des incubateurs : sélectionner, accompagner, <span class="serif">rendre compte</span>.`,
       seo: ["Ubora Hub : logiciel de gestion d'incubateurs en RDC", "Ubora Hub aide les incubateurs, universités, ONG et programmes publics à sélectionner, former et suivre leurs entrepreneurs, jusqu'au business plan. Inscription validée par Ubora."],
       ouvrir: "Se connecter",
+      /* film de présentation (montage du 10 octobre 2026) : captures réelles du logiciel, données de démonstration */
+      video: { src: "/img/video/ubora-hub-leger.mp4", affiche: "/img/video/ubora-hub-couverture.webp", duree: "4 min 05",
+        sousTitres: "/img/video/ubora-hub.vtt", titre: "Ubora Hub en quatre minutes", legende: "Écrans réels du logiciel. Démonstration : les personnes et l'entreprise sont fictives. Sous-titres français disponibles dans le lecteur." },
       atouts: "De la candidature au rapport, dans un seul outil",
       fonctions: [
         ["Sélectionner", "Appels à candidatures en ligne, formulaire de candidature, jury et classement."],

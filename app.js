@@ -622,7 +622,7 @@ function blocVideo(v) {
   return `<section id="video"><div class="wrap">
     ${secHead("En vidéo", esc(v.titre))}
     <figure class="video-cadre">
-      <video controls preload="none" playsinline width="1280" height="720" poster="${v.affiche}"><source src="${v.src}" type="video/mp4">Votre navigateur ne lit pas cette vidéo. <a href="${v.src}">Ouvrir le fichier</a>.</video>
+      <video controls preload="none" playsinline width="1280" height="720" poster="${v.affiche}"><source src="${v.src}" type="video/mp4">${v.sousTitres ? `<track kind="subtitles" srclang="fr" label="Français" src="${v.sousTitres}">` : ""}Votre navigateur ne lit pas cette vidéo. <a href="${v.src}">Ouvrir le fichier</a>.</video>
       <figcaption>${esc(v.legende)}${v.leger ? ` <a href="${v.leger[0]}" target="_blank" rel="noopener">Connexion lente ? Version légère (${esc(v.leger[1])})</a>` : ""}</figcaption>
     </figure>
   </div></section>`;
