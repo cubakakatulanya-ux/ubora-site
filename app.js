@@ -523,13 +523,7 @@ function pagePole(id) {
       <span class="sub-chip">${esc(P.sousDomaine)}</span>`
   }) + `
 
-  ${P.video ? `<section id="video"><div class="wrap">
-    ${secHead("En vidéo", esc(P.video.titre))}
-    <figure class="video-cadre">
-      <video controls preload="none" playsinline width="1280" height="720" poster="${P.video.affiche}"><source src="${P.video.src}" type="video/mp4">Votre navigateur ne lit pas cette vidéo. <a href="${P.video.src}">Ouvrir le fichier</a>.</video>
-      <figcaption>${esc(P.video.legende)}</figcaption>
-    </figure>
-  </div></section>` : ""}
+  ${P.video ? blocVideo(P.video) : ""}
 
   <section><div class="wrap two">
     <div>
@@ -622,6 +616,18 @@ function pageOutils() {
 }
 
 /* ---------- Page de présentation d'un logiciel (/outils/<id>) ---------- */
+/* Vidéo de présentation (page d'un pôle ou d'un logiciel). Elle ne se charge qu'à la demande ;
+   « leger » est une version de plus petite taille, proposée pour les connexions lentes. */
+function blocVideo(v) {
+  return `<section id="video"><div class="wrap">
+    ${secHead("En vidéo", esc(v.titre))}
+    <figure class="video-cadre">
+      <video controls preload="none" playsinline width="1280" height="720" poster="${v.affiche}"><source src="${v.src}" type="video/mp4">Votre navigateur ne lit pas cette vidéo. <a href="${v.src}">Ouvrir le fichier</a>.</video>
+      <figcaption>${esc(v.legende)}${v.leger ? ` <a href="${v.leger[0]}" target="_blank" rel="noopener">Connexion lente ? Version légère (${esc(v.leger[1])})</a>` : ""}</figcaption>
+    </figure>
+  </div></section>`;
+}
+
 function pageOutil(o) {
   const F = o.fiche, p = pole(o.pole);
   const inscription = o.inscription ? (o.inscriptionOuverte
@@ -632,6 +638,8 @@ function pageOutil(o) {
     eyebrow: esc(o.nom), title: F.titre, lead: esc(o.resume), crumbs: [["Nos outils", "/outils"], [esc(o.nom)]], ecran: mockFor(o.mock),
     extra: `<div class="btn-row">${inscription}${ouvrir(inscription ? "btn-glass" : "btn-accent")}</div><span class="sub-chip">${esc(o.sousDomaine)}</span>`
   }) + `
+
+  ${F.video ? blocVideo(F.video) : ""}
 
   <section><div class="wrap">
     ${secHead("Ce que fait " + esc(o.nom), esc(F.atouts))}

@@ -508,6 +508,9 @@ const OUTILS = [
       titre: `Le cahier de l'AVEC dans le téléphone, même sans <span class="serif">réseau</span>.`,
       seo: ["AKIBA : l'application des groupes d'épargne (AVEC) en RDC", "AKIBA tient les comptes de l'AVEC sur téléphone, même sans réseau : réunion guidée, registre scellé, reçus imprimés et dossier pour la microfinance. Une application d'Ubora."],
       ouvrir: "Ouvrir AKIBA",
+      /* film de présentation (montage du 10 octobre 2026) : captures réelles de l'application, données de démonstration */
+      video: { src: "/img/video/akiba.mp4", affiche: "/img/video/akiba.webp", duree: "3 min 11", leger: ["/img/video/akiba-leger.mp4", "3,8 Mo"],
+        titre: "AKIBA en trois minutes", legende: "Écrans réels de l'application. Démonstration : le groupe et les personnes sont fictifs." },
       atouts: "Des comptes que tout le groupe peut vérifier",
       pour: ["Trésoriers et comités d'AVEC", "Animateurs et agents de terrain", "ONG et programmes qui suivent des groupes", "Institutions de microfinance"],
       acces: [
