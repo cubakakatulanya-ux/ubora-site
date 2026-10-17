@@ -45,7 +45,7 @@ const DIRIGEANT = {
   parcours: [
     ["Depuis 2026", "Entreprise sociale Ubora", "Fondateur et Directeur Gérant", "Conception d'Ubora Hub, incubateur numérique, et d'AKIBA, l'application hors ligne des AVEC."],
     ["Depuis 2026", "Programme de développement agricole, Sud-Ubangi", "Expert en entrepreneuriat agricole", "PME, coopératives, AVEC et incubateur provincial : structuration, plans d'affaires, accès au financement."],
-    ["2024 – 2025", "Projet d'appui aux PME, Kinshasa", "Expert junior en entrepreneuriat et mutualisation des investissements", "Centres de PME, chaînes de valeur, modèles économiques et investissements partagés."],
+    ["2024 – 2025", "Projet d'appui aux PME, Kinshasa", "Expert en entrepreneuriat et mutualisation des investissements", "Centres de PME, chaînes de valeur, modèles économiques et investissements partagés."],
     ["2021 – 2024", "Programme d'emploi et d'entrepreneuriat, Kinshasa", "Expert en incubation et entrepreneuriat urbain", "Deux incubateurs, programmes de formation et d'accélération, formation de formateurs."],
     ["2018 – 2021", "Programme de sécurité alimentaire, Sud-Kivu", "Coordinateur des activités génératrices de revenus", "Mise en place des AVEC, appui aux coopératives agricoles, aux jeunes et aux femmes entrepreneurs."],
     ["2015 – 2018", "Banque commerciale, Goma et Bukavu", "Chargé de clientèle agrobusiness", "Portefeuille de PME et de coopératives : analyse de viabilité, préparation au crédit."]
