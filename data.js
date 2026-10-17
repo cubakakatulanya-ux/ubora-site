@@ -26,11 +26,11 @@ const CONFIG = {
 /* Bande déroulante. Les dernières actualités publiées s'y ajoutent d'elles-mêmes. */
 const TICKER_MESSAGES = [
   ["Ubora est une entreprise à caractère social : ses excédents sont réinvestis", "/soutenir"],
-  ["Nouveau : l'Académie Ubora, plus de 100 cours en ligne avec certificat", "/academie"],
+  ["Ubora Académie : plus de 130 cours en ligne avec certificat", "/academie"],
   ["Nouveau dans AKIBA : un reçu imprimé pour chaque membre", "/outils/akiba"],
   ["Nouvelle version du générateur de business plan", "/outils/bp"],
   ["Nouveau : Ubora Vert, pour protéger l'environnement et en vivre", "/vert"],
-  ["Basés à Lubumbashi, nous intervenons partout en RDC", "/contact"]
+  ["Ni ONG, ni entreprise classique : nos revenus financent notre présence auprès des plus fragiles", "/a-propos#modele"]
 ];
 
 /* ---------- Le Directeur Gérant (page « Notre équipe ») ----------
@@ -149,7 +149,7 @@ const POLES = [
     nom: "Ubora PME", initiales: "Pm", couleur: "#B0622A",
     carte: "Tester l'idée auprès de vrais clients avant d'investir, lancer l'entreprise, puis la faire grandir et la financer.",
     titre: `Aider les entrepreneurs à passer de l'idée à une entreprise qui <span class="serif">vend</span>.`,
-    lead: "Ubora PME regroupe nos programmes d'accompagnement : idéation, incubation et accélération. Nous y appliquons la démarche lean startup, adaptée à ce que vivent réellement les entrepreneurs en RDC.",
+    lead: "Ubora PME regroupe nos programmes d'accompagnement des entrepreneurs, en quatre phases : idéation, incubation, lancement de l'entreprise et mise à niveau des PME, les mêmes que dans Ubora Hub, notre logiciel d'incubation. Nous y appliquons la démarche lean startup, adaptée à ce que vivent réellement les entrepreneurs en RDC.",
     contexte: {
       intro: "On demande encore trop souvent aux porteurs de projet un plan d'affaires de trente pages avant même qu'ils aient parlé à un client. Nous faisons l'inverse. On part d'une hypothèse, on la teste avec très peu de moyens auprès de vrais clients, puis on décide. Le plan d'affaires vient après, quand il y a quelque chose à financer.",
       constats: [
@@ -159,10 +159,12 @@ const POLES = [
         ["Un accompagnement qui s'arrête trop tôt", "Beaucoup de programmes s'arrêtent au concours de pitch, juste avant les vraies difficultés : vendre, produire, recruter."]
       ]
     },
+    programmesTitre: ["Nos programmes", "Quatre phases, selon le stade de l'entreprise"],
     programmes: [
-      ["Idéation", "Pour les porteurs d'idée", "Partir d'un problème réel, formuler une proposition claire, et la confronter au terrain avant d'investir."],
-      ["Incubation", "Pour les jeunes entreprises", "Trouver un modèle économique qui tient, se formaliser, faire ses premières ventes et tenir ses comptes."],
-      ["Accélération", "Pour les PME qui grandissent", "Organiser la croissance : équipe, canaux de vente, nouveaux marchés et financement."]
+      ["Idéation", "Pour les porteurs d'idée", "Trouver et vérifier un problème réel, et une idée de solution que des clients veulent."],
+      ["Incubation", "Pour les projets qui démarrent", "Construire l'offre, la tester, faire les premières ventes et bâtir le plan d'affaires."],
+      ["Lancement de l'entreprise", "Pour les jeunes entreprises", "Installer l'entreprise : vendre régulièrement, bien gérer, se formaliser et trouver son financement."],
+      ["Mise à niveau des PME", "Pour les entreprises établies", "Renforcer l'entreprise selon son diagnostic, pour la préparer à un financement."]
     ],
     parcours: [
       ["Partir d'un problème", "On observe un besoin réel, on formule une proposition de valeur et on liste ce qu'il faut vérifier en premier.", "Une idée claire et des hypothèses à tester."],
@@ -439,14 +441,15 @@ const POLES = [
         ["Des relais à former", "Sans formateurs relais bien préparés, la qualité baisse à chaque nouvelle génération de formés."]
       ]
     },
-    programmesTitre: ["Les parcours de l'Académie", "Six parcours, du membre d'AVEC au formateur"],
+    programmesTitre: ["Les domaines de l'Académie", "Plus de 130 cours en 25 parcours, dans sept domaines"],
     programmes: [
-      ["AVEC : bureau et membres", "4 cours", "Les principes, le bureau et le règlement, la réunion pas à pas, le partage et le nouveau cycle."],
-      ["AVEC : animateur", "6 cours", "Créer des AVEC, animer les 7 modules, les calculs sans erreur, le kit et Akiba, le suivi, l'éthique."],
-      ["AVEC : comprendre et piloter", "3 cours", "Le modèle AVEC, la conduite et l'évaluation d'un programme, la croissance du réseau."],
-      ["AGR individuelles et collectives", "4 cours", "L'idée et le marché, les coûts et le prix, les comptes et la vente, le crédit."],
-      ["Éducation financière (PNEF)", "5 cours", "Le budget, l'épargne, le crédit, la négociation, la finance numérique."],
-      ["Formateur AVEC et AGR", "4 cours", "Former des adultes, certifier des animateurs, préparer et évaluer une séance."]
+      ["Groupes d'épargne (AVEC)", "Du membre au cadre", "Créer, gérer, animer et piloter des AVEC, du premier jour à l'autonomie : membres et bureau, animateurs, formateurs, cadres."],
+      ["Activités génératrices de revenus", "Petites activités", "Choisir, lancer et faire grandir une petite activité : idée et marché, coûts et prix, comptes, crédit, transformation, formalisation."],
+      ["Éducation financière", "L'argent de la famille et de l'activité", "Budget, épargne, crédit, négociation, finance numérique."],
+      ["Entreprendre", "Créer et développer son entreprise", "Du problème du client au produit qui se vend : créer son entreprise de zéro, comprendre l'écosystème congolais."],
+      ["Agriculture et filières", "Entreprises agricoles", "Bâtir une entreprise agricole rentable et réussir sa filière : vivriers, café, cacao, palmier, élevage, pisciculture."],
+      ["Coopératives", "Organisations de producteurs", "Faire vivre une coopérative : organes, argent, vente groupée, plan d'affaires."],
+      ["Accompagner", "Coachs, incubateurs, programmes", "Coacher des entrepreneurs, diriger un incubateur, concevoir un programme d'appui, accompagner sur le terrain."]
     ],
     parcours: [
       ["Identifier les besoins", "Avec chaque pôle et chaque partenaire : qui former, à quoi, et à quel niveau.", "Un plan de formation adapté au programme."],
@@ -506,7 +509,7 @@ const OUTILS = [
     sousDomaine: "akiba.uborardc.com", url: "https://akiba.uborardc.com",
     fiche: {
       titre: `Le cahier de l'AVEC dans le téléphone, même sans <span class="serif">réseau</span>.`,
-      seo: ["AKIBA : l'application des groupes d'épargne (AVEC) en RDC", "AKIBA tient les comptes de l'AVEC sur téléphone, même sans réseau : réunion guidée, registre scellé, reçus imprimés et dossier pour la microfinance. Une application d'Ubora."],
+      seo: ["AKIBA : l'application des groupes d'épargne (AVEC) en RDC", "AKIBA tient les comptes de l'AVEC sur téléphone, même sans réseau : réunion guidée, registre scellé, reçus imprimés et dossier pour la microfinance. Une application de l'entreprise à caractère social Ubora."],
       ouvrir: "Ouvrir AKIBA",
       /* film de présentation (montage du 10 octobre 2026) : captures réelles de l'application, données de démonstration */
       video: { src: "/img/video/akiba.mp4", affiche: "/img/video/akiba-couverture.webp", duree: "3 min 11", leger: ["/img/video/akiba-leger.mp4", "3,8 Mo"],
@@ -527,7 +530,7 @@ const OUTILS = [
     sousDomaine: "bp.uborardc.com", url: "https://bp.uborardc.com",
     fiche: {
       titre: `Un business plan complet, construit <span class="serif">étape par étape</span>.`,
-      seo: ["Générateur de business plan en ligne pour la RDC · Ubora", "Construisez votre business plan étape par étape : prévisions financières, seuil de rentabilité, score de viabilité et conseils, en francs congolais ou en dollars. Un outil d'Ubora."],
+      seo: ["Générateur de business plan en ligne pour la RDC · Ubora", "Construisez votre business plan étape par étape : prévisions financières, seuil de rentabilité, score de viabilité et conseils, en francs congolais ou en dollars. Un outil de l'entreprise à caractère social Ubora."],
       ouvrir: "Ouvrir le générateur",
       atouts: "Des chiffres calculés, des conseils sur votre projet",
       pour: ["Porteurs de projet", "Entrepreneurs et PME", "Coopératives", "Incubateurs et coachs"],
@@ -541,15 +544,15 @@ const OUTILS = [
     points: ["Un parcours étape par étape, adapté au projet en huit réponses", "Ventes avec saisonnalité, investissements, crédits et besoin en fonds de roulement", "Compte de résultat, bilan et trésorerie calculés, mois par mois", "Seuil de rentabilité et trois scénarios, avec calculs inverses", "Score de viabilité : « Mon projet peut-il démarrer ? »", "Conseils ciblés : phasage des investissements, durée du crédit, module agricole", "En francs congolais ou en dollars ; imprimable en PDF ou exportable vers Word"]
   },
   {
-    id: "hub", nom: "Ubora Hub", court: "Le logiciel des incubateurs", pole: "pme", statut: "en-ligne", mock: "hub", couleur: "#0F3170", initiales: "Hb",
+    id: "hub", nom: "Ubora Hub", court: "Le logiciel d'incubation, de l'idée à l'entreprise", pole: "pme", statut: "en-ligne", mock: "hub", couleur: "#0F3170", initiales: "Hb",
     sousDomaine: "hub.uborardc.com", url: "https://hub.uborardc.com",
-    resume: "Le logiciel des incubateurs et des programmes d'entrepreneuriat : il les aide à sélectionner, former et suivre leurs entrepreneurs, du premier jour jusqu'au business plan.",
-    points: ["Appels à candidatures en ligne, jury et sélection", "Parcours en trois phases : idéation, incubation, post-incubation", "Modules de formation, exercices et séances de coaching", "Business plan de chaque entrepreneur, relié au générateur", "Tableau de bord, indicateurs et rapports pour les bailleurs", "Un espace séparé pour chaque incubateur, utilisable hors ligne"],
+    resume: "Le logiciel d'incubation d'Ubora : les incubateurs et les programmes d'entrepreneuriat y sélectionnent, forment et suivent leurs entrepreneurs ; un entrepreneur sans incubateur peut aussi y suivre seul le parcours, jusqu'au plan d'affaires.",
+    points: ["Appels à candidatures en ligne, jury et sélection", "Parcours en quatre phases, de l'idée à la mise à niveau des PME", "Modules courts, exercices appliqués au projet et suivi d'un coach", "Plan d'affaires construit au fil des exercices, relié au générateur", "Tableau de bord, indicateurs et rapports pour les bailleurs", "Parcours libre pour l'entrepreneur sans incubateur, même hors connexion"],
     /* inscriptionOuverte : la page hub.uborardc.com/inscription est en ligne (remettre false pour revenir au formulaire de contact) */
     inscription: "https://hub.uborardc.com/inscription", inscriptionOuverte: true,
     fiche: {
       titre: `Le logiciel des incubateurs : sélectionner, accompagner, <span class="serif">rendre compte</span>.`,
-      seo: ["Ubora Hub : logiciel de gestion d'incubateurs en RDC", "Ubora Hub aide les incubateurs, universités, ONG et programmes publics à sélectionner, former et suivre leurs entrepreneurs, jusqu'au business plan. Inscription validée par Ubora."],
+      seo: ["Ubora Hub : logiciel d'incubation d'entrepreneurs en RDC", "Le logiciel d'incubation d'Ubora, entreprise à caractère social : les incubateurs y sélectionnent, forment et suivent leurs entrepreneurs ; un entrepreneur seul peut y suivre le parcours libre, jusqu'au plan d'affaires."],
       ouvrir: "Se connecter",
       /* film de présentation (montage du 10 octobre 2026) : captures réelles du logiciel, données de démonstration */
       video: { src: "/img/video/ubora-hub-leger.mp4", affiche: "/img/video/ubora-hub-couverture.webp", duree: "4 min 05",
@@ -557,18 +560,18 @@ const OUTILS = [
       atouts: "De la candidature au rapport, dans un seul outil",
       fonctions: [
         ["Sélectionner", "Appels à candidatures en ligne, formulaire de candidature, jury et classement."],
-        ["Structurer le parcours", "Des programmes et des cohortes, en trois phases : idéation, incubation, post-incubation."],
+        ["Structurer le parcours", "Des programmes et des cohortes, en quatre phases : idéation, incubation, lancement de l'entreprise, puis mise à niveau des PME déjà établies."],
         ["Former", "Modules de formation, exercices et quiz, utilisables même hors ligne."],
         ["Accompagner", "Séances de coaching, plans d'action et calendrier partagé."],
         ["Bâtir le business plan", "Chaque entrepreneur construit son plan d'affaires dans le générateur, relié à son dossier."],
         ["Rendre compte", "Tableau de bord, indicateurs et rapports en PDF pour la direction et les bailleurs."]
       ],
-      phases: ["Candidature", "Idéation", "Incubation", "Post-incubation"],
-      pour: ["Incubateurs et hubs", "Universités", "ONG et programmes d'entrepreneuriat", "Structures publiques et bailleurs"],
+      phases: ["Idéation", "Incubation", "Lancement de l'entreprise", "Mise à niveau des PME"],
+      pour: ["Incubateurs et hubs", "Universités", "ONG et programmes d'entrepreneuriat", "Structures publiques et bailleurs", "Entrepreneurs sans incubateur (parcours libre)"],
       espaces: ["Trois espaces, un seul logiciel", [
         ["L'espace de direction", "Le directeur et son équipe pilotent les appels à candidatures, les cohortes, le calendrier et les rapports."],
         ["L'espace du coach", "Chaque coach suit ses entrepreneurs, leurs exercices et leurs séances."],
-        ["L'espace de l'entrepreneur", "Son parcours, ses modules et son business plan, sur son téléphone."]
+        ["L'espace de l'entrepreneur", "Son parcours, ses modules et son plan d'affaires, sur téléphone ou ordinateur, avec ou sans incubateur."]
       ]],
       accesTitre: "Un accès ouvert après validation",
       acces: [
@@ -579,10 +582,10 @@ const OUTILS = [
     }
   },
   {
-    id: "academie", nom: "Académie Ubora", court: "L'école en ligne, avec certificats", pole: "academie", statut: "en-ligne", mock: "academie", couleur: "#9A5522", initiales: "Ac",
+    id: "academie", nom: "Ubora Académie", court: "L'école en ligne, avec certificats", pole: "academie", statut: "en-ligne", mock: "academie", couleur: "#9A5522", initiales: "Ac",
     sousDomaine: "academie.uborardc.com", url: "https://academie.uborardc.com", page: "/academie",
-    resume: "L'école en ligne d'Ubora : plus de 100 cours, regroupés en parcours, sur les AVEC, les activités génératrices de revenus, les coopératives, l'entrepreneuriat, l'agriculture et l'éducation financière, utilisables même sans réseau, avec badges et certificats vérifiables.",
-    points: ["Six parcours, du membre d'AVEC au formateur", "Les 5 modules du PNEF de la Banque centrale du Congo", "Exercices corrigés et quiz chronométrés", "Cours téléchargés utilisables sans réseau", "Badges et certificats vérifiables en ligne"]
+    resume: "L'école en ligne d'Ubora : plus de 130 cours, répartis en 25 parcours, sur les AVEC, les activités génératrices de revenus, les coopératives, l'entrepreneuriat, l'agriculture et l'éducation financière, utilisables même sans réseau, avec badges et certificats vérifiables.",
+    points: ["25 parcours, du membre d'AVEC au formateur", "Les 5 modules du PNEF de la Banque centrale du Congo", "Exercices corrigés et quiz chronométrés", "Cours téléchargés utilisables sans réseau", "Badges et certificats vérifiables en ligne"]
   },
   {
     id: "logiciel-coop", nom: "Ubora Coop, le logiciel", pole: "cooperatives", statut: "en-cours", mock: "coop", couleur: "#3E7A1F", initiales: "Co",
@@ -642,9 +645,9 @@ const CATALOGUE = [
 /* ---------- Questions fréquentes ---------- */
 const FAQ = [
   ["Qui peut travailler avec Ubora ?", "Les groupes d'épargne, les entrepreneurs et les PME, les coopératives et les organisations paysannes, les petites institutions financières, ainsi que les ONG, les incubateurs et les bailleurs qui accompagnent ces publics."],
-  ["Travaillez-vous en dehors de Lubumbashi ?", "Oui. Notre siège est à Lubumbashi, mais nous intervenons dans toute la RDC, sur place ou à distance."],
+  ["Où intervenez-vous ?", "Dans toute la RDC, sur place ou à distance."],
   ["Vos outils fonctionnent-ils sans internet ?", "Oui. AKIBA fonctionne entièrement sans réseau ; dès que le réseau revient, le groupe envoie ses données à l'animateur et à l'organisation, et l'application se met à jour d'elle-même. Le générateur de business plan reste utilisable une fois ouvert."],
-  ["Proposez-vous des formations sur vos outils ?", "Oui. Chaque déploiement comprend une formation de prise en main, puis un suivi. Notre Académie en ligne, academie.uborardc.com, propose aussi plus de 100 cours avec certificat. Nous organisons aussi des sessions sur demande, dans votre province ou en ligne."],
+  ["Proposez-vous des formations sur vos outils ?", "Oui. Chaque déploiement comprend une formation de prise en main, puis un suivi. Notre Académie en ligne, academie.uborardc.com, propose aussi plus de 130 cours avec certificat. Nous organisons aussi des sessions sur demande, dans votre province ou en ligne."],
   ["Faut-il être une entreprise déclarée pour être accompagné ?", "Non. Nous accompagnons justement beaucoup d'entrepreneurs et de groupements vers la formalisation, étape par étape."],
   ["Que devient l'accompagnement quand le projet d'une ONG se termine ?", "Nous restons. Les groupes, les entrepreneurs et les coopératives continuent d'être suivis après la clôture du projet. Notre modèle économique finance une partie de ces activités de terrain, et les outils mis en place restent en service."],
   ["Ubora peut-elle financer notre groupe d'épargne ?", "Ubora ne prête pas elle-même. Par Ubora Fin, nous mobilisons le capital d'institutions financières, d'investisseurs et de bailleurs au profit des AVEC que nous accompagnons, et nous présentons le groupe à une IMF, une COOPEC ou une banque partenaire. Le groupe obtient ainsi un fonds de roulement, en plus de l'épargne de ses membres."],

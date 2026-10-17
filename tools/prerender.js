@@ -21,7 +21,7 @@ const write = (f, s) => { const p = path.join(ROOT, f); fs.mkdirSync(path.dirnam
 const ctx = { window: { UBORA_PRERENDER: true }, console, URLSearchParams, Date, Intl, Math, JSON };
 vm.createContext(ctx);
 const S = vm.runInContext(["data.js", "db.js", "admin.js", "app.js"].map(read).join("\n;\n") +
-  "\n;({ resolve, typoHTML, menuHTML, footerHTML, tickerHTML, allNews, esc, DATA, POLES, OUTILS, CONFIG, SUPABASE, UboraDB, TITRES })", ctx);
+  "\n;({ SEO_POLES, resolve, typoHTML, menuHTML, footerHTML, tickerHTML, allNews, esc, DATA, POLES, OUTILS, CONFIG, SUPABASE, UboraDB, TITRES })", ctx);
 
 async function chargerBase() {
   const h = { apikey: S.SUPABASE.anonKey, Authorization: "Bearer " + S.SUPABASE.anonKey };
@@ -53,7 +53,7 @@ const ORG = {
   "@type": ["Organization", "ProfessionalService"],
   "@id": "https://uborardc.com/#organisation",
   name: "Ubora",
-  alternateName: ["Ubora, entreprise sociale", "Ubora RDC", "Ubora Lubumbashi", "Entreprise sociale Ubora"],
+  alternateName: ["Ubora, entreprise sociale", "Ubora RDC", "Entreprise Sociale Ubora"],
   url: "https://uborardc.com",
   logo: { "@type": "ImageObject", url: "https://uborardc.com/icon-512.png", width: 512, height: 512 },
   image: "https://uborardc.com/partage.jpg",
@@ -61,15 +61,16 @@ const ORG = {
   founder: { "@type": "Person", name: "Christian Cubaka Katulanya", jobTitle: "Directeur Gérant", image: "https://uborardc.com/img/equipe/christian-cubaka-800.webp" },
   email: "contact@uborardc.com",
   telephone: "+243998275144",
-  description: "Entreprise sociale basée à Lubumbashi : appui aux groupes d'épargne (AVEC), accompagnement des entrepreneurs et des coopératives, accès au financement et au marché, dans toute la RDC.",
+  description: "Entreprise à caractère social : ses prestations financent l'accompagnement des groupes d'épargne (AVEC), des entrepreneurs et des coopératives, et ses excédents sont réinvestis sur le terrain, dans toute la RDC. Ubora ne prête pas : elle mobilise le capital des financeurs au profit de ceux qu'elle accompagne.",
   foundingDate: "2025-06",
   address: { "@type": "PostalAddress", streetAddress: "Avenue Mapendo, Quartier Kalubwe", addressLocality: "Lubumbashi", addressRegion: "Haut-Katanga", addressCountry: "CD" },
   openingHoursSpecification: [{ "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "08:00", closes: "16:00" }],
   areaServed: { "@type": "Country", name: "République démocratique du Congo" },
   contactPoint: [{ "@type": "ContactPoint", telephone: "+243998275144", contactType: "customer service", availableLanguage: ["fr", "sw"] }],
-  knowsAbout: ["Associations villageoises d'épargne et de crédit", "inclusion financière", "entrepreneuriat", "coopératives agricoles", "microfinance", "accès au marché", "protection de l'environnement", "recyclage"]
+  knowsAbout: ["Associations villageoises d'épargne et de crédit", "entrepreneuriat social", "inclusion financière", "entrepreneuriat", "incubation", "coopératives agricoles", "accès au marché", "protection de l'environnement", "recyclage"]
 };
 const legal = S.CONFIG.legal || {};
+ORG.hasOfferCatalog = { "@type": "OfferCatalog", name: "Les pôles d'Ubora", itemListElement: S.POLES.map(p => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: p.nom, url: S.CONFIG.site + p.chemin, description: (S.SEO_POLES[p.id] || [])[1] || texte(p.carte) } })) };
 ORG.identifier = [["RCCM", legal.rccm], ["Identification nationale", legal.idnat], ["Numéro d'impôt", legal.impot]]
   .filter(([, v]) => v).map(([k, v]) => ({ "@type": "PropertyValue", propertyID: k, value: v }));
 
@@ -92,7 +93,7 @@ function donneesStructurees(chemin, r) {
     const P = S.POLES.find(p => p.chemin === chemin);
     if (chemin === "/equipe") miettes.itemListElement.push({ "@type": "ListItem", position: 2, name: "Qui sommes-nous", item: "https://uborardc.com/a-propos" });
     miettes.itemListElement.push({ "@type": "ListItem", position: miettes.itemListElement.length + 1, name: texte(P ? P.nom : r.court), item: url });
-    if (P) graph.push({ "@type": "Service", name: P.nom, description: texte(P.lead), url, serviceType: texte(P.carte), areaServed: { "@type": "Country", name: "République démocratique du Congo" }, provider: { "@id": ORG["@id"] } });
+    if (P) graph.push({ "@type": "Service", name: P.nom, description: (S.SEO_POLES[P.id] || [])[1] || texte(P.lead), url, serviceType: texte(P.carte), areaServed: { "@type": "Country", name: "République démocratique du Congo" }, provider: { "@id": ORG["@id"] } });
   }
   return jsonld({ "@context": "https://schema.org", "@graph": graph });
 }
@@ -180,6 +181,7 @@ ${pages.map(c => `  <url><loc>${S.CONFIG.site}${c === "/" ? "/" : c}</loc>${modi
   <url><loc>https://bp.uborardc.com/</loc><priority>0.8</priority></url>
   <url><loc>https://akiba.uborardc.com/</loc><priority>0.8</priority></url>
   <url><loc>https://academie.uborardc.com/</loc><priority>0.8</priority></url>
+  <url><loc>https://hub.uborardc.com/</loc><priority>0.8</priority></url>
 </urlset>
 `);
 

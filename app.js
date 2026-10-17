@@ -226,7 +226,7 @@ function expertise() {
     ["marche", "Le maillon qui casse le plus souvent n'est ni la production ni le crédit. C'est la vente.", "Alors nous cherchons l'acheteur avant la récolte, et nous suivons la vente jusqu'au paiement du producteur."]
   ];
   const preuves = [
-    [String(OUTILS.filter(o => o.statut === "en-ligne").length), "outils en ligne", "AKIBA, le générateur de business plan, Ubora Hub et l'Académie Ubora. Essayez-les avant même de nous appeler.", "/outils", "Les essayer"],
+    [String(OUTILS.filter(o => o.statut === "en-ligne").length), "outils en ligne", "AKIBA, le générateur de business plan, Ubora Hub et l'Ubora Académie. Essayez-les avant même de nous appeler.", "/outils", "Les essayer"],
     [String(pole("avec").boite.outils.length), "documents de terrain", "La boîte à outils AVEC, de l'étude de référence jusqu'au partage de fin de cycle.", "/avec#boite", "La demander"],
     [String(METHODE.etapes.length), "temps de méthode", "Les mêmes pour un groupe d'épargne, un entrepreneur ou une coopérative, toujours dans le même ordre.", "/approche", "Lire la méthode"],
     [ICON.check, "entreprise immatriculée", [L.rccm && "RCCM " + L.rccm, L.idnat && "ID NAT " + L.idnat].filter(Boolean).join(" · "), "/mentions", "Nos mentions légales"]
@@ -326,7 +326,7 @@ function footerHTML() {
     <div class="foot-grid">
       <div class="foot-brand">
         <a class="brand" href="/"><img class="logo-img" src="/logo-ubora.png" alt="" width="56" height="56" loading="lazy"><span class="brand-txt"><span class="brand-name">Ub<b>o</b>ra</span><span class="brand-sub">Entreprise sociale</span></span></a>
-        <p class="foot-accroche">Entreprise à caractère social, basée à Lubumbashi, présente partout en RDC.</p>
+        <p class="foot-accroche">Entreprise à caractère social : nos excédents sont réinvestis auprès de ceux que nous accompagnons, partout en RDC.</p>
       </div>
       <nav aria-label="Nos pôles"><h4>Nos pôles</h4><ul class="deux">${POLES.map(p => `<li><a class="foot-pole" href="${p.chemin}" style="--c:${p.couleur}">${esc(p.nom)}</a></li>`).join("")}</ul></nav>
       <nav aria-label="Ubora"><h4>Ubora</h4><ul class="deux"><li><a href="/a-propos">Qui sommes-nous</a></li><li><a href="/equipe">Notre équipe</a></li><li><a href="/approche">Notre approche</a></li><li><a href="/conseil">Projets et conseil</a></li><li><a href="/outils">Outils numériques</a></li><li><a href="/formations">Formations</a></li>${DATA.realisations.length ? `<li><a href="/realisations">Nos réalisations</a></li>` : ""}${allNews().length ? `<li><a href="/actualites">Actualités</a></li>` : ""}<li><a href="/carrieres">Carrières</a></li><li><a href="/soutenir">Soutenir nos actions</a></li></ul></nav>
@@ -358,7 +358,7 @@ function pageHome() {
   <section class="deep hero">
     <div class="wrap hero-grid">
       <div>
-        <h1 class="pill"><b>Ubora</b> Entreprise sociale à Lubumbashi, partout en RDC</h1>
+        <h1 class="pill"><b>Ubora</b> Entreprise à caractère social, partout en RDC</h1>
         <p class="hero-titre">Des familles qui épargnent, des entrepreneurs qui vendent, des coopératives qui <span class="serif">durent</span>.</p>
         <p class="lead">Ubora est une entreprise à caractère social. Partout en RDC, nous formons, outillons et suivons les groupes d'épargne, les entrepreneurs et les coopératives. Nous les relions aux institutions financières et aux acheteurs, et nous agissons pour l'environnement. Sur le terrain, avec des outils qui marchent sans réseau. Et nous restons quand le projet qui nous a fait venir se termine.</p>
         <div class="btn-row"><a class="btn btn-accent" href="#poles" data-scroll="poles">Découvrir nos pôles ${ICON.arrow}</a><a class="btn btn-glass" href="/contact">Nous contacter</a></div>
@@ -374,7 +374,7 @@ function pageHome() {
       <li><b>${POLES.length}</b><span>pôles d'intervention</span></li>
       <li><b>${OUTILS.filter(o => o.statut === "en-ligne").length}</b><span>outils numériques en ligne</span></li>
       <li><b>${pole("avec").boite.outils.length}</b><span>documents dans la boîte à outils AVEC</span></li>
-      <li><b>RDC</b><span>siège à Lubumbashi, interventions dans tout le pays</span></li>
+      <li><b>RDC</b><span>interventions dans tout le pays</span></li>
     </ul></div>
   </section>
 
@@ -439,7 +439,7 @@ function teamBand(surPageEquipe) {
 
 function pageAbout() {
   return pageHead({ eyebrow: "Qui sommes-nous", title: `Une entreprise sociale, pour que l'effort des familles <span class="serif">porte ses fruits</span>.`, crumbs: [["Qui sommes-nous"]], photo: ["terrain", "Une communauté réunie en plein air"],
-    lead: "Ubora veut dire « excellence » en swahili. C'est une exigence que nous nous imposons, parce que les personnes que nous accompagnons n'ont pas droit à l'erreur : une mauvaise récolte, la chute du franc ou une maladie peuvent effacer des années d'efforts. Nés à Lubumbashi, nous travaillons dans toute la RDC pour rendre leurs activités assez solides pour tenir, puis grandir." }) + `
+    lead: "Ubora veut dire « excellence » en swahili. C'est une exigence que nous nous imposons, parce que les personnes que nous accompagnons n'ont pas droit à l'erreur : une mauvaise récolte, la chute du franc ou une maladie peuvent effacer des années d'efforts. Entreprise à caractère social, nous travaillons dans toute la RDC pour rendre leurs activités assez solides pour tenir, puis grandir." }) + `
   <section><div class="wrap two">
     <div><span class="eyebrow">Mission</span>
       <p class="quote">Aider les entreprises et les communautés congolaises à tenir face aux chocs, puis à grandir.</p></div>
@@ -537,7 +537,7 @@ function pagePole(id) {
 
   ${P.programmes ? `<section class="band"><div class="wrap">
     ${secHead(P.programmesTitre ? P.programmesTitre[0] : "Nos programmes", P.programmesTitre ? P.programmesTitre[1] : "Trois programmes, selon le stade de l'entreprise")}
-    <div class="grid-3">${P.programmes.map(([t, q, x]) => `<div class="fcard reveal"><h3>${esc(t)}</h3><p class="sub">${esc(q)}</p><p>${esc(x)}</p></div>`).join("")}</div>
+    <div class="${P.programmes.length > 3 && P.programmes.length !== 6 ? "grid-4" : "grid-3"}">${P.programmes.map(([t, q, x]) => `<div class="fcard reveal"><h3>${esc(t)}</h3><p class="sub">${esc(q)}</p><p>${esc(x)}</p></div>`).join("")}</div>
   </div></section>` : ""}
 
   ${P.entrees ? `<section class="band"><div class="wrap">
@@ -690,13 +690,13 @@ function pageFormations() {
   const t = todayISO();
   const sessions = [...DATA.formations].filter(f => f.date >= t).sort((a, b) => a.date.localeCompare(b.date));
   return pageHead({ eyebrow: "Formations", title: `Apprendre à utiliser les outils, puis à s'en servir seul.`, crumbs: [["Formations"]], photo: ["formation", "Un formateur s'adresse à un groupe dans une salle"],
-    lead: "Chaque déploiement comprend une formation de prise en main et un suivi. Nous organisons aussi des sessions à Lubumbashi, dans votre province ou en ligne, et notre Académie propose plus de 100 cours en ligne avec certificat." }) + `
+    lead: "Chaque déploiement comprend une formation de prise en main et un suivi. Nous organisons aussi des sessions dans votre province ou en ligne, et notre Académie propose plus de 130 cours en ligne avec certificat." }) + `
   <section id="academie"><div class="wrap">
     <div class="academie">
       <div class="academie-txt">
-        <span class="eyebrow">Académie Ubora</span>
+        <span class="eyebrow">Ubora Académie</span>
         <h2>Se former à son rythme, même sans réseau</h2>
-        <p class="lead">Plus de 100 cours regroupés en parcours, écrits à partir de nos documents de terrain : leçons illustrées, exercices corrigés automatiquement, quiz chronométrés, badges et certificats vérifiables. Un cours téléchargé fonctionne sans réseau ; les résultats partent dès que la connexion revient.</p>
+        <p class="lead">Plus de 130 cours répartis en 25 parcours, écrits à partir de nos documents de terrain : leçons illustrées, exercices corrigés automatiquement, quiz chronométrés, badges et certificats vérifiables. Un cours téléchargé fonctionne sans réseau ; les résultats partent dès que la connexion revient.</p>
         <div class="btn-row"><a class="btn btn-primary" href="/academie">Découvrir Ubora Académie ${ICON.arrow}</a><a class="btn btn-ghost" href="${ACADEMIE.url}" target="_blank" rel="noopener">Ouvrir l'Académie ${ICON.ext}</a></div>
       </div>
       <div class="screen">${mockFor("academie")}<span class="mock-note" aria-hidden="true">Écran illustratif</span></div>
@@ -941,34 +941,34 @@ const ANCIENNES = {
   "solutions": "/outils", "services": "/conseil", "diagnostic": "/contact", "rediger": "/admin", "hub": "/outils/hub"
 };
 const DESCR = {
-  "": "Ubora RDC, entreprise sociale basée à Lubumbashi : groupes d'épargne (AVEC), incubation d'entrepreneurs et de PME, coopératives, accès au crédit et au marché, partout en RDC.",
-  "a-propos": "Qui est Ubora : une entreprise sociale née à Lubumbashi, sa mission, son modèle, ses valeurs et son équipe de terrain.",
+  "": "Entreprise à caractère social, Ubora réinvestit ses excédents pour accompagner les groupes d'épargne (AVEC), les entrepreneurs et les coopératives, partout en RDC.",
+  "a-propos": "Qui est Ubora : ni ONG, ni entreprise classique. Une entreprise à caractère social dont les revenus financent la présence auprès des plus fragiles. Sa mission, son modèle, ses valeurs.",
   approche: "La méthode Ubora en six temps : écouter, structurer, former, outiller, connecter et suivre. La même pour les groupes d'épargne, les entrepreneurs et les coopératives, en RDC.",
   outils: "AKIBA, le générateur de business plan, Ubora Hub et les outils en préparation : des outils numériques conçus pour la RDC.",
   conseil: "Mise en œuvre de projets de développement économique, conseil et études, digitalisation de l'accompagnement et formation d'équipes, pour les ONG, les bailleurs et les institutions en RDC.",
-  formations: "Formations d'Ubora en RDC : Académie en ligne (plus de 100 cours avec certificat), prise en main des outils, AVEC, entrepreneuriat et gestion coopérative.",
+  formations: "Formations d'Ubora en RDC : Académie en ligne (plus de 130 cours avec certificat), prise en main des outils, AVEC, entrepreneuriat et gestion coopérative.",
   actualites: "Les actualités d'Ubora : programmes, déploiements, formations et nouvelles du terrain en RDC.",
-  carrieres: "Offres d'emploi, de stage et de consultance chez Ubora, entreprise sociale basée à Lubumbashi.",
-  contact: "Contacter Ubora par téléphone, WhatsApp ou e-mail. Siège à Lubumbashi, interventions dans toute la RDC.",
+  carrieres: "Offres d'emploi, de stage et de consultance chez Ubora, entreprise à caractère social qui intervient dans toute la RDC.",
+  contact: "Contacter Ubora, entreprise à caractère social, par téléphone, WhatsApp ou e-mail. Une personne de l'équipe vous répond sous deux jours ouvrés.",
   mentions: "Mentions légales et politique de données personnelles du site d'Ubora.",
-  equipe: "L'équipe d'Ubora : consultants, formateurs, agents de terrain et développeurs, basés à Lubumbashi et présents dans toute la RDC.",
+  equipe: "L'équipe d'Ubora, entreprise à caractère social : consultants, formateurs, agents de terrain et développeurs, présents dans toute la RDC.",
   soutenir: "Ubora n'est pas une entreprise classique : son objectif est social et ses excédents sont réinvestis. Confier une mission, apporter du capital, devenir partenaire : les façons de soutenir nos actions en RDC.",
   realisations: "Les réalisations d'Ubora en RDC : groupes d'épargne, entrepreneurs, coopératives, accès au financement et au marché. Contexte, actions et résultats."
 };
 /* Titre et description des pôles pour les moteurs de recherche */
 const SEO_POLES = {
-  avec: ["Ubora AVEC : accompagner les groupes d'épargne en RDC", "Création, formation et suivi des groupes d'épargne (AVEC), application AKIBA, capital mobilisé par Ubora Fin et lien avec les institutions financières, en RDC."],
-  pme: ["Ubora PME : incubation et accélération d'entrepreneurs en RDC", "Idéation, incubation et accélération d'entrepreneurs et de PME en RDC, avec une démarche lean startup adaptée et un générateur de business plan."],
-  cooperatives: ["Ubora Coop : créer et gérer une coopérative en RDC", "Structurer, gérer et renforcer la chaîne de valeur des coopératives en RDC : statuts OHADA, collecte, stockage, transformation, vente groupée, paiement."],
-  financement: ["Ubora Fin : accès au crédit et microfinance en RDC", "Ubora Fin prépare les emprunteurs, les présente aux institutions financières et mobilise le capital des financeurs au profit des groupes d'épargne, des coopératives et des PME, en RDC."],
-  academie: ["Ubora Académie : formations en ligne certifiantes en RDC", "Cours en ligne utilisables sans réseau sur les AVEC, les AGR et l'éducation financière, formation de formateurs et certificats vérifiables, pour tous les pôles d'Ubora."],
-  vert: ["Ubora Vert : environnement et recyclage en RDC", "Reboisement, recyclage des déchets, agroécologie, énergie propre : Ubora Vert fait de la protection de l'environnement une source de revenus en RDC."],
-  marche: ["Ubora Market : vendre plus, trouver des acheteurs en RDC", "Relier les PME, les coopératives et les entrepreneurs de la RDC à des acheteurs : ventes B2B et B2C, marchés institutionnels et export."]
+  avec: ["Ubora AVEC : accompagner les groupes d'épargne (AVEC) en RDC", "Le pôle d'Ubora, entreprise à caractère social, consacré aux groupes d'épargne : création, formation et suivi des AVEC, et leur cahier dans le téléphone avec l'application AKIBA."],
+  pme: ["Ubora PME : de l'idée à l'entreprise, pour les entrepreneurs en RDC", "Le pôle entrepreneuriat d'Ubora, entreprise à caractère social : idéation, incubation, lancement de l'entreprise et mise à niveau des PME, avec Ubora Hub et le générateur de business plan."],
+  cooperatives: ["Ubora Coop : créer et gérer une coopérative en RDC", "Le pôle coopératives d'Ubora, entreprise à caractère social : statuts OHADA, gestion, collecte, stockage, transformation et vente groupée, jusqu'au paiement des producteurs."],
+  financement: ["Ubora Fin : mobiliser le capital pour les petits emprunteurs en RDC", "Ubora Fin ne prête pas : ce pôle d'Ubora, entreprise à caractère social, prépare les groupes, les coopératives et les PME, les présente aux institutions financières et mobilise le capital à leur profit."],
+  academie: ["Ubora Académie : formations en ligne certifiantes en RDC", "L'école d'Ubora, entreprise à caractère social : plus de 130 cours en ligne, utilisables sans réseau, sur les AVEC, les AGR, l'entrepreneuriat, l'agriculture et les coopératives, avec certificats vérifiables."],
+  vert: ["Ubora Vert : protéger l'environnement et en vivre, en RDC", "Le pôle environnement d'Ubora, entreprise à caractère social : reboisement, recyclage, agroécologie et énergie propre, pour que protéger l'environnement fasse vivre ceux qui le portent."],
+  marche: ["Ubora Market : trouver des acheteurs pour les producteurs en RDC", "Le pôle marché d'Ubora, entreprise à caractère social : relier les coopératives, les PME et les entrepreneurs accompagnés à des acheteurs, et suivre chaque vente jusqu'au paiement."]
 };
 /* Titres complets pour la balise <title> ; TITRES reste court (fil d'Ariane, menus) */
-const SEO_TITRES = { soutenir: "Soutenir Ubora : une entreprise à objectif social en RDC", "a-propos": "Qui sommes-nous : Ubora, entreprise sociale en RDC", approche: "Notre approche : la méthode Ubora en six temps", outils: "Outils numériques pour les AVEC et les PME en RDC · Ubora", conseil: "Mise en œuvre de projets, conseil et études en RDC · Ubora", formations: "Formations AVEC, entrepreneuriat et coopératives · Ubora", actualites: "Actualités d'Ubora : nouvelles du terrain en RDC", realisations: "Nos réalisations en RDC · Ubora, entreprise sociale", equipe: "Notre équipe · Ubora, entreprise sociale à Lubumbashi", carrieres: "Carrières : rejoindre Ubora à Lubumbashi, RDC", contact: "Contacter Ubora à Lubumbashi, RDC", mentions: "Mentions légales · Ubora, entreprise sociale" };
+const SEO_TITRES = { soutenir: "Soutenir Ubora : une entreprise à objectif social en RDC", "a-propos": "Qui sommes-nous : Ubora, entreprise sociale en RDC", approche: "Notre approche : la méthode Ubora en six temps", outils: "Outils numériques pour les AVEC et les PME en RDC · Ubora", conseil: "Mise en œuvre de projets, conseil et études en RDC · Ubora", formations: "Formations AVEC, entrepreneuriat et coopératives · Ubora", actualites: "Actualités d'Ubora : nouvelles du terrain en RDC", realisations: "Nos réalisations en RDC · Ubora, entreprise sociale", equipe: "Notre équipe · Ubora, entreprise sociale en RDC", carrieres: "Carrières : rejoindre Ubora, entreprise sociale en RDC", contact: "Contacter Ubora, entreprise sociale en RDC", mentions: "Mentions légales · Ubora, entreprise sociale" };
 const ROBOTS = "index, follow, max-image-preview:large";
-const TITRES = { soutenir: "Soutenir nos actions", "": "Ubora RDC : entreprise sociale à Lubumbashi (AVEC, PME, coopératives)", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos outils numériques", conseil: "Projets et conseil", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
+const TITRES = { soutenir: "Soutenir nos actions", "": "Ubora : entreprise sociale en RDC (AVEC, PME, coopératives)", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos outils numériques", conseil: "Projets et conseil", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
 
 /* Construit une page à partir d'une adresse. */
 function resolve(pathname, search, host) {
