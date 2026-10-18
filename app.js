@@ -192,12 +192,12 @@ function boiteOutils(b, sujet) {
   const dispo = b.statut === "disponible";
   return `<section class="band" id="boite"><div class="wrap">
     ${secHead(dispo ? "Boîte à outils" : "Bientôt disponible", esc(b.titre), esc(b.intro))}
-    ${(() => {
+    ${dispo ? (() => {
       const item = ([t, x], i) => `<li><span class="bn">${String(i + 1).padStart(2, "0")}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`;
       const reste = b.outils.slice(6);
       return `<ol class="boite">${b.outils.slice(0, 6).map(item).join("")}</ol>`
         + (reste.length ? `<details class="boite-plus"><summary>Voir les ${reste.length} autres documents</summary><ol class="boite">${reste.map((o, i) => item(o, i + 6)).join("")}</ol></details>` : "");
-    })()}
+    })() : ""}
     <div class="notice"><span class="ic">${dispo ? ICON.doc : ICON.bell}</span>
       <div><b>${dispo ? "Recevoir la boîte à outils" : "Être prévenu de sa publication"}</b>
         <p>${dispo ? "Dites-nous qui vous êtes et comment vous l'utiliserez : nous vous envoyons les documents et nous vous les présentons." : "Laissez vos coordonnées : nous vous écrirons dès que les documents seront prêts."}</p></div>
@@ -493,10 +493,6 @@ function pageApproche() {
     </div>
   </div></section>
 
-  <section><div class="wrap">
-    ${secHead("Sur le terrain", "La méthode, appliquée à chacun de nos pôles")}
-    <div class="poles poles-sm">${POLES.map(p => poleCard(p, false, true)).join("")}</div>
-  </div></section>
 
   <section class="tight-top"><div class="wrap">${finalCta()}</div></section>`;
 }
@@ -663,13 +659,10 @@ function pageConseil() {
   </div></section>
   <section class="band"><div class="wrap">
     ${secHead("Nos prestations", "Quatre façons de travailler avec nous")}
+    <p class="suite"><a class="link" href="/#poles">Vous pouvez aussi mobiliser directement l'un de nos pôles ${ICON.arrow}</a></p>
     <div class="grid-2">${CONSEIL.map(s => `<article class="svc reveal" id="${s.id}"><span class="ic">${ICON[s.ico]}</span><div><h2>${esc(s.titre)}</h2><p>${esc(s.texte)}</p><details class="inclus"><summary>Ce que cela comprend</summary><ul class="checks">${s.points.map(x => `<li>${esc(x)}</li>`).join("")}</ul></details></div></article>`).join("")}</div>
   </div></section>
   <section id="relais"><div class="wrap">${relais(false)}</div></section>
-  <section class="band"><div class="wrap">
-    ${secHead("Nos pôles au service de votre projet", "Vous pouvez aussi mobiliser directement l'un de nos pôles")}
-    <div class="poles poles-sm">${POLES.map(p => poleCard(p, false, true)).join("")}</div>
-  </div></section>
   <section><div class="wrap">${finalCta()}</div></section>`;
 }
 
@@ -677,13 +670,13 @@ function pageFormations() {
   const t = todayISO();
   const sessions = [...DATA.formations].filter(f => f.date >= t).sort((a, b) => a.date.localeCompare(b.date));
   return pageHead({ eyebrow: "Formations", title: `Apprendre à utiliser les outils, puis à s'en servir seul.`, crumbs: [["Formations"]], photo: ["formation", "Un formateur s'adresse à un groupe dans une salle"],
-    lead: "Chaque déploiement comprend une formation de prise en main et un suivi. Nous organisons aussi des sessions dans votre province ou en ligne, et notre Académie propose plus de 130 cours en ligne avec certificat." }) + `
+    lead: "Chaque déploiement comprend une formation et un suivi. Des sessions dans votre province ou en ligne, et plus de 130 cours à l'Académie." }) + `
   <section id="academie"><div class="wrap">
     <div class="academie">
       <div class="academie-txt">
         <span class="eyebrow">Ubora Académie</span>
         <h2>Se former à son rythme, même sans réseau</h2>
-        <p class="lead">Plus de 130 cours répartis en 25 parcours, écrits à partir de nos documents de terrain : leçons illustrées, exercices corrigés automatiquement, quiz chronométrés, badges et certificats vérifiables. Un cours téléchargé fonctionne sans réseau ; les résultats partent dès que la connexion revient.</p>
+        <p class="lead">Plus de 130 cours en 25 parcours, écrits à partir de nos documents de terrain. Un cours téléchargé marche sans réseau, et chaque parcours mène à un certificat vérifiable.</p>
         <div class="btn-row"><a class="btn btn-primary" href="/academie">Découvrir Ubora Académie ${ICON.arrow}</a><a class="btn btn-ghost" href="${ACADEMIE.url}" target="_blank" rel="noopener">Ouvrir l'Académie ${ICON.ext}</a></div>
       </div>
       <div class="screen">${mockFor("academie")}<span class="mock-note" aria-hidden="true">Écran illustratif</span></div>
@@ -702,7 +695,7 @@ function pageFormations() {
           ${f.programme && f.programme.length ? `<details class="more-info"><summary>Programme</summary><p class="muted">Public : ${esc(f.public)}</p><ul>${f.programme.map(x => `<li>${esc(x)}</li>`).join("")}</ul></details>` : ""}</div>
         <a class="btn btn-primary" href="${waLink(msg)}" target="_blank" rel="noopener">S'inscrire</a>
       </article>`;
-    }).join("")}</div>` : `<div class="empty"><b>Le prochain calendrier est en préparation.</b><p>En attendant, nous organisons des sessions à la demande pour votre organisation, votre réseau ou votre coopérative.</p><a class="btn btn-primary" href="/contact?sujet=${encodeURIComponent("Formation")}">Demander une formation</a></div>`}
+    }).join("")}</div>` : `<div class="empty"><b>Le prochain calendrier est en préparation.</b><p>En attendant, nous organisons des sessions à la demande.</p><a class="btn btn-primary" href="/contact?sujet=${encodeURIComponent("Formation")}">Demander une formation</a></div>`}
   </div></section>
   <section class="band"><div class="wrap">
     ${secHead("Ce que nous enseignons", "Le catalogue")}
@@ -768,7 +761,7 @@ function profilDirigeant() {
 function pageEquipe() {
   const membres = DATA.equipe;
   return pageHead({ eyebrow: "Notre équipe", title: `Des gens de terrain, et des <span class="serif">spécialistes</span>.`, crumbs: [["Qui sommes-nous", "/a-propos"], ["Notre équipe"]],
-    lead: "Consultants, formateurs, agents de terrain et développeurs : l'équipe qui accompagne les groupes d'épargne, les entrepreneurs et les coopératives, partout en RDC." }) + `
+    lead: "Consultants, formateurs, agents de terrain et développeurs, partout en RDC." }) + `
   <section><div class="wrap">${profilDirigeant()}</div></section>
   ${membres.length ? `<section class="band"><div class="wrap">
     ${secHead("L'équipe", "Celles et ceux qui travaillent avec lui")}
@@ -830,19 +823,19 @@ function pageCareers(openId) {
 function pageSoutenir() {
   const sujet = "/contact?sujet=" + encodeURIComponent("Soutenir nos actions");
   const lignes = [
-    ["Le but", "Rémunérer ses propriétaires.", "Rendre plus solides les familles, les entrepreneurs et les coopératives que nous accompagnons."],
-    ["Qui est servi", "Ceux qui peuvent payer le prix du marché.", "Aussi ceux qui ne le peuvent pas : groupes d'épargne, femmes et jeunes entrepreneurs, producteurs ruraux, à tarif solidaire."],
-    ["Les excédents", "Distribués aux propriétaires.", "Réinvestis dans nos outils, dans la formation de relais locaux et dans notre présence sur le terrain."],
-    ["Quand le projet s'arrête", "La prestation s'arrête avec le contrat.", "Nous restons : les groupes, les entrepreneurs et les coopératives continuent d'être suivis."]
+    ["Le but", "Rémunérer ses propriétaires.", "Rendre plus solides ceux que nous accompagnons."],
+    ["Qui est servi", "Ceux qui peuvent payer le prix du marché.", "Aussi ceux qui ne le peuvent pas, à tarif solidaire."],
+    ["Les excédents", "Distribués aux propriétaires.", "Réinvestis dans nos outils, les relais locaux et le terrain."],
+    ["Quand le projet s'arrête", "La prestation s'arrête avec le contrat.", "Nous restons, et le suivi continue."]
   ];
   const voies = [
-    [ICON.briefcase, "Confier une mission", "ONG, bailleurs, institutions, programmes : chaque prestation que vous nous confiez finance aussi nos services à tarif solidaire.", "/conseil", "Voir nos prestations"],
-    [ICON.coins, "Apporter du capital", "Institutions financières, investisseurs d'impact, bailleurs : Ubora Fin mobilise votre capital au profit des groupes que nous accompagnons, et vous en rend compte.", "/financement#intermediation", "Voir comment"],
-    [ICON.handshake, "Devenir partenaire", "Entreprises, fondations, universités, diaspora : compétences, équipements, mises en relation. Dites-nous ce que vous pouvez apporter.", sujet, "Nous écrire"],
-    [ICON.heart, "Faire connaître", "Parlez d'AKIBA, de l'Académie ou de nos formations à un groupe, une coopérative ou un entrepreneur qui en a besoin.", "/outils", "Voir nos outils"]
+    [ICON.briefcase, "Confier une mission", "Chaque prestation que vous nous confiez finance aussi nos services à tarif solidaire.", "/conseil", "Voir nos prestations"],
+    [ICON.coins, "Apporter du capital", "Ubora Fin mobilise votre capital au profit des groupes que nous accompagnons, et vous en rend compte.", "/financement#intermediation", "Voir comment"],
+    [ICON.handshake, "Devenir partenaire", "Compétences, équipements, mises en relation : dites-nous ce que vous pouvez apporter.", sujet, "Nous écrire"],
+    [ICON.heart, "Faire connaître", "Parlez d'AKIBA, de l'Académie ou de nos formations à ceux qui en ont besoin.", "/outils", "Voir nos outils"]
   ];
   return pageHead({ eyebrow: "Soutenir nos actions", title: `Pas une entreprise classique : notre objectif est <span class="serif">social</span>.`, crumbs: [["Soutenir nos actions"]],
-    lead: "Ubora est une entreprise sociale. Nos prestations font vivre l'entreprise ; ce qu'elles dégagent sert d'abord ceux qui n'auraient pas accès à nos services autrement. Vous pouvez nous aider à aller plus loin.",
+    lead: "Nos prestations font vivre l'entreprise ; ce qu'elles dégagent sert d'abord ceux qui n'auraient pas accès à nos services autrement.",
     extra: `<div class="btn-row"><a class="btn btn-accent" href="${sujet}">Proposer un soutien ${ICON.arrow}</a><a class="btn btn-glass" href="/a-propos#modele">Comprendre notre modèle</a></div>` }) + `
   <section><div class="wrap">
     ${secHead("Notre objectif social", `Ce qui nous distingue d'une <span class="serif">entreprise classique</span>`, "Nous vendons des prestations, comme une entreprise. Mais ce que nous en faisons n'est pas le même.")}
@@ -856,7 +849,7 @@ function pageSoutenir() {
   <section class="tight-top"><div class="wrap"><div class="deep final">
     <span class="eyebrow">Soutenir nos actions</span>
     <h2>Dites-nous comment vous voulez agir.</h2>
-    <p>Une mission à confier, du capital à orienter vers des groupes d'épargne, un partenariat à construire : une personne de l'équipe vous répond sous deux jours ouvrés.</p>
+    <p>Une mission, du capital à orienter, un partenariat : réponse sous deux jours ouvrés.</p>
     <div class="btn-row"><a class="btn btn-accent" href="${sujet}">Proposer un soutien ${ICON.arrow}</a><a class="btn btn-ghost" href="/contact">Nous contacter</a></div>
   </div></div></section>`;
 }

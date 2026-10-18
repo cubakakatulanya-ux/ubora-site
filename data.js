@@ -41,7 +41,7 @@ const DIRIGEANT = {
   photo: "/img/equipe/christian-cubaka-800.webp",
   photoPetite: "/img/equipe/christian-cubaka-400.webp",
   accroche: "Plus de dix ans aux côtés des entrepreneurs, des coopératives et des groupes d'épargne en RDC.",
-  bio: "Agronome de formation, Christian accompagne depuis plus de dix ans des entrepreneurs, des PME, des coopératives agricoles et des groupes d'épargne, en ville comme en zone rurale. Il a travaillé pour une banque, pour des programmes de coopération internationale et pour un grand projet d'appui aux PME, à Kinshasa, au Kivu et dans le Sud-Ubangi. Il a fondé Ubora pour que cet accompagnement dure au-delà des projets, et il y conçoit Ubora Hub et l'application AKIBA.",
+  bio: "Agronome, passé par la banque et par des programmes de coopération à Kinshasa, au Kivu et dans le Sud-Ubangi, Christian a fondé Ubora pour que l'accompagnement dure au-delà des projets. Il y conçoit Ubora Hub et AKIBA.",
   parcours: [
     ["Depuis 2026", "Entreprise sociale Ubora", "Fondateur et Directeur Gérant", "Conception d'Ubora Hub, incubateur numérique, et d'AKIBA, l'application hors ligne des AVEC."],
     ["Depuis 2026", "Programme de développement agricole, Sud-Ubangi", "Expert en entrepreneuriat agricole", "PME, coopératives, AVEC et incubateur provincial : structuration, plans d'affaires, accès au financement."],
@@ -501,9 +501,9 @@ const OUTILS = [
       atouts: "Des comptes que tout le groupe peut vérifier",
       pour: ["Trésoriers et comités d'AVEC", "Animateurs et agents de terrain", "ONG et programmes qui suivent des groupes", "Institutions de microfinance"],
       acces: [
-        ["Essayez la démonstration", "Elle est libre : ouvrez akiba.uborardc.com sur un téléphone et parcourez une réunion complète, sans engagement."],
-        ["Demandez votre code de validation", "Pour une vraie AVEC, Ubora délivre un code de validation. Écrivez-nous : nous vous répondons rapidement."],
-        ["Formez le comité", "Chaque déploiement comprend une formation de prise en main, puis un suivi sur le terrain."]
+        ["Essayez la démonstration", "Libre et sans engagement : une réunion complète, sur akiba.uborardc.com."],
+        ["Demandez votre code de validation", "Pour une vraie AVEC, Ubora délivre un code. Écrivez-nous."],
+        ["Formez le comité", "Une formation de prise en main, puis un suivi sur le terrain."]
       ]
     },
     resume: "Le cahier de l'AVEC dans le téléphone, même sans réseau : chaque franc écrit au moment où il bouge, un reçu pour chaque membre, un historique qu'une IMF peut étudier.",
@@ -521,7 +521,7 @@ const OUTILS = [
       acces: [
         ["Ouvrez le générateur", "Il s'ouvre dans le navigateur, à l'adresse bp.uborardc.com."],
         ["Répondez à huit questions", "Elles décrivent votre projet ; le parcours s'adapte à vos réponses."],
-        ["Complétez vos chiffres", "Ventes, investissements, crédits : les tableaux se calculent, avec un diagnostic et des conseils sur vos propres chiffres."]
+        ["Complétez vos chiffres", "Les tableaux se calculent, avec un diagnostic et des conseils."]
       ]
     },
     resume: "Huit questions sur votre projet, et un business plan complet : prévisions financières, viabilité, conseils sur vos propres chiffres.",
