@@ -2084,3 +2084,89 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
   .jeu .ic svg *, .jeu .pn + svg * { stroke-dasharray: 1; stroke-dashoffset: 1; }
   .jeu.vu .ic svg *, .jeu.vu .pn + svg * { stroke-dashoffset: 0; transition: stroke-dashoffset 1.4s cubic-bezier(.3, .7, .2, 1) calc(var(--retard, 0ms) + 250ms); }
 }
+
+/* ==========================================================================
+   Mise en page inspirée de stevennbienoukouadjo.org (choix de Christian, 18 octobre 2026)
+   Grandes photos en moitié d'écran, cartes-photos, grande phrase de mission, menu et boutons
+   en pilule, appel final en grand. Les titres restent fins, comme sur l'Académie.
+   ========================================================================== */
+/* distance entre le bord du contenu et le bord de l'écran (conteneur de 1180 px, marges de 24 px) */
+:root { --bord-ecran: calc(max(0px, (100vw - 1180px) / 2) + 24px); }
+
+/* --- boutons et menu en pilule --- */
+.btn, .btn-sm, .plus-btn, .site-header .btn, .menu > li.m-cta > a.btn { border-radius: 999px; }
+@media (min-width: 1101px) {
+  .menu { padding: 4px; border: 1px solid var(--menthe-bord); border-radius: 999px; background: #fff; }
+  :root[data-theme="dark"] .menu { background: var(--surface); border-color: var(--line); }
+  .menu > li > a, .dd-btn { border-radius: 999px; }
+  .menu > li > a.current, .menu > li > .dd-btn.current { background: var(--green); color: #fff; }
+  .menu > li > .dd-btn.current svg { color: #fff; }
+}
+
+/* --- bannière d'accueil : texte à gauche, grande photo jusqu'au bord de l'écran --- */
+.hero { overflow: clip; }
+.hero .stage-photo { position: relative; padding: 0; }
+.hero .hero-photo { max-width: none; margin: 0; border-radius: 0; box-shadow: none; aspect-ratio: auto; height: clamp(320px, 52vw, 420px); }
+.hero .hero-photo > img { width: 100%; height: 100%; object-fit: cover; }
+.hero-tags { position: absolute; left: 16px; bottom: 16px; z-index: 3; display: flex; flex-wrap: wrap; gap: 8px; }
+.hero-tags a { padding: 7px 14px; border-radius: 999px; background: rgba(255, 255, 255, .92); color: #0D3B28; font-family: var(--f-display); font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; backdrop-filter: blur(6px); }
+.hero-tags a:hover { background: var(--green); color: #fff; }
+@media (min-width: 1081px) {
+  .hero { padding-top: 0; }
+  .hero .hero-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(40px, 5vw, 72px); align-items: stretch; }
+  .hero .hero-grid > div:first-child { align-self: center; padding-block: clamp(36px, 4vw, 56px); }
+  .hero .stage-photo { margin-right: calc(-1 * var(--bord-ecran)); }
+  .hero .hero-photo { height: 100%; min-height: clamp(460px, 62vh, 640px); }
+  .hero-tags { left: 22px; bottom: 22px; }
+}
+@media (max-width: 1080px) { .hero .stage-photo { margin-inline: calc(-1 * 24px); } }
+@media (max-width: 600px) { .hero .stage-photo { margin-inline: -18px; } .hero .hero-photo { height: 300px; } }
+
+/* --- têtes de page avec photo : même principe --- */
+@media (min-width: 1001px) {
+  .page-head.has-photo:not(.has-ecran) { overflow: clip; padding-block: 0; }
+  .page-head.has-photo:not(.has-ecran) .head-grid { align-items: stretch; }
+  .page-head.has-photo:not(.has-ecran) .head-grid > div:first-child { align-self: center; padding-block: clamp(32px, 3.6vw, 52px); }
+  .page-head.has-photo:not(.has-ecran) .head-photo { margin: 0 calc(-1 * var(--bord-ecran)) 0 0; height: 100%; min-height: 380px; border-radius: 0; aspect-ratio: auto; }
+  .page-head.has-photo:not(.has-ecran) .head-photo > img { width: 100%; height: 100%; object-fit: cover; }
+}
+
+/* --- pôles de l'accueil : des cartes-photos, le nom posé sur l'image --- */
+.poles .pole.has-img { position: relative; display: flex; flex-direction: column; justify-content: flex-end; min-height: 340px; padding: 0; border: 0; overflow: hidden; background: #0E2A1C; color: #fff; isolation: isolate; }
+.poles .pole.has-img .pole-img { position: absolute; inset: 0; z-index: -1; height: auto; margin: 0; aspect-ratio: auto; }
+.poles .pole.has-img .pole-img img { width: 100%; height: 100%; object-fit: cover; transition: transform .9s cubic-bezier(.2, .8, .2, 1); }
+.poles .pole.has-img:hover .pole-img img { transform: scale(1.05); }
+.poles .pole.has-img .pole-body { flex: 0 0 auto; gap: 6px; padding: 80px 20px 18px; background: linear-gradient(to top, rgba(5, 22, 14, .9) 0%, rgba(5, 22, 14, .6) 50%, rgba(5, 22, 14, 0) 100%); }
+.poles .pole.has-img .pole-top { position: static; top: auto; left: auto; }
+.poles .pole.has-img .mk { width: 34px; height: 34px; font-size: 14px; box-shadow: none; }
+.poles .pole.has-img .pole-top .pole-sub { color: rgba(255, 255, 255, .72); }
+.poles .pole.has-img h3, .poles .pole.has-img h3 a { color: #fff; font-size: 22px; font-weight: 400; }
+.poles .pole.has-img .accroche { color: #E3F1E8; }
+.poles .pole.has-img .pole-body > p:not(.accroche) { display: none; }
+.poles .pole.has-img .link { color: #fff; }
+.poles .pole.has-img:hover { border-color: transparent; box-shadow: var(--ombre-survol); }
+.poles .pole.has-img.transversal { min-height: 280px; }
+.poles .pole.has-img.transversal .pole-body { max-width: 640px; padding-top: 70px; background: linear-gradient(to right, rgba(5, 22, 14, .94) 0%, rgba(5, 22, 14, .7) 60%, rgba(5, 22, 14, 0) 100%); }
+.poles .pole.has-img .pole-tag { background: rgba(255, 255, 255, .9); color: #0D3B28; }
+
+/* --- grands titres de section, toujours fins --- */
+.sec-head h2 { font-size: clamp(30px, 3.4vw, 46px); font-weight: 300; line-height: 1.12; }
+
+/* --- la mission, en grand, sur un quadrillage léger --- */
+.manifeste { padding-block: clamp(56px, 8vw, 110px); background-image: linear-gradient(var(--line) 1px, transparent 1px), linear-gradient(90deg, var(--line) 1px, transparent 1px); background-size: 56px 56px; background-position: center;
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 45%, transparent 80%); mask-image: radial-gradient(ellipse at center, #000 45%, transparent 80%); }
+.manifeste blockquote { max-width: 940px; margin: 0 auto; text-align: center; }
+.manifeste blockquote::before { content: "«"; display: block; margin-bottom: 6px; color: var(--green); font-family: var(--f-display); font-size: 56px; line-height: 1; }
+.manifeste p { margin: 0; font-family: var(--f-display); font-size: clamp(28px, 3.6vw, 48px); font-weight: 300; line-height: 1.18; letter-spacing: -.015em; color: var(--ink); text-wrap: balance; }
+.manifeste footer { margin-top: 22px; color: var(--vert-texte); font-family: var(--f-display); font-size: 12.5px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+.manifeste footer::before, .manifeste footer::after { content: "~"; margin-inline: 10px; }
+
+/* --- appel final : en grand --- */
+.final h2 { font-size: clamp(30px, 3.6vw, 48px); font-weight: 300; line-height: 1.12; }
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes appel-pulse { 0% { box-shadow: 0 0 0 0 rgba(31, 138, 76, .45); } 70% { box-shadow: 0 0 0 14px rgba(31, 138, 76, 0); } 100% { box-shadow: 0 0 0 0 rgba(31, 138, 76, 0); } }
+  .final .btn-wa { animation: appel-pulse 2.4s ease-out infinite; }
+}
+
+/* --- valeurs (Qui sommes-nous) : réunies dans un cadre gris, comme un manifeste --- */
+.grid-4:has(> .value) { padding: clamp(20px, 3vw, 36px); border-radius: var(--r-lg); background: var(--surface-2); }

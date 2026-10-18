@@ -235,7 +235,7 @@ function faq(items) { return `<div class="faq">${items.map(([q, a]) => `<details
 function finalCta() {
   return `<div class="deep final">
     <span class="eyebrow">Travaillons ensemble</span>
-    <h2>Parlons de ce que vous voulez faire avancer.</h2>
+    <h2>Parlons de ce que vous voulez <span class="serif">faire avancer</span>.</h2>
     <p>Un groupe à structurer, un programme à lancer, un crédit, un acheteur : dites-nous où vous en êtes. Réponse sous deux jours ouvrés.</p>
     <div class="btn-row"><a class="btn btn-wa" href="${waLink("Bonjour Ubora, je souhaite échanger avec vous.")}" target="_blank" rel="noopener">Écrire sur WhatsApp</a><a class="btn btn-glass" href="/contact">Nous écrire</a></div></div>`;
 }
@@ -356,11 +356,8 @@ function pageHome() {
         <div class="btn-row"><a class="btn btn-accent" href="#poles" data-scroll="poles">Découvrir nos pôles ${ICON.arrow}</a><a class="btn btn-glass" href="/contact">Nous contacter</a></div>
       </div>
       <div class="stage stage-photo">
-        <span class="pierre" aria-hidden="true"></span>
-        <figure class="hero-photo">${photo("avec", "(max-width: 1080px) 100vw, 40vw", "Des femmes réunies en groupe, en pagnes colorés", ' fetchpriority="high"')}</figure>
-        ${mockAkiba()}
-        <div class="float-card" aria-hidden="true"><span class="ic">${ICON.check}</span><span><b>Reçu imprimé</b>Membre 07 · épargne 20 000 FC</span></div>
-        <span class="mock-note" aria-hidden="true">Application AKIBA, écran illustratif</span></div>
+        <figure class="hero-photo">${photo("avec", "(max-width: 1080px) 100vw, 50vw", "Des femmes réunies en groupe, en pagnes colorés", ' fetchpriority="high"')}</figure>
+        <nav class="hero-tags" aria-label="Nos publics">${[["avec", "Groupes d'épargne"], ["pme", "Entrepreneurs"], ["cooperatives", "Coopératives"]].map(([id, t]) => `<a href="${pole(id).chemin}">${t}</a>`).join("")}</nav></div>
     </div>
     <div class="wrap"><ul class="reperes">
       <li><b>${POLES.length}</b><span>pôles d'intervention</span></li>
@@ -373,6 +370,11 @@ function pageHome() {
   <section id="poles"><div class="wrap">
     ${secHead("Nos pôles", `De la première épargne au premier <span class="serif">contrat de vente</span>`, "Chaque pôle tient un maillon, tous se passent le relais, et notre Académie forme chacun en chemin.")}
     <div class="poles">${POLES.map(p => poleCard(p)).join("")}</div>
+  </div></section>
+
+  <section class="manifeste"><div class="wrap">
+    <blockquote><p>Aider les entreprises et les communautés congolaises à tenir face aux chocs, puis à <span class="serif">grandir</span>.</p>
+      <footer>La mission d'Ubora</footer></blockquote>
   </div></section>
 
   <section class="tight-top" id="expertise"><div class="wrap">
