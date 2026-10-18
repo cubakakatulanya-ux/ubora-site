@@ -21,15 +21,18 @@ const ANCIENNES = {
 const FICHIER = /\.[a-z0-9]{2,5}$/i;
 const VIDEO = /\.(mp4|webm)$/i;
 
-const CSP_SITE = "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://uoshpvqdszygezkuhhco.supabase.co; connect-src 'self' https://uoshpvqdszygezkuhhco.supabase.co wss://uoshpvqdszygezkuhhco.supabase.co https://cloudflareinsights.com; frame-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests";
+const CSP_SITE = "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://uoshpvqdszygezkuhhco.supabase.co; connect-src 'self' https://uoshpvqdszygezkuhhco.supabase.co wss://uoshpvqdszygezkuhhco.supabase.co https://cloudflareinsights.com; frame-src 'none'; object-src 'none'; worker-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests";
 const CSP_GENERATEUR = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://hub.uborardc.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'";
 const ENTETES = {
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
   "X-Content-Type-Options": "nosniff",
   "X-Frame-Options": "DENY",
   "Referrer-Policy": "strict-origin-when-cross-origin",
-  "Permissions-Policy": "accelerometer=(), camera=(), geolocation=(), gyroscope=(), magnetometer=(), microphone=(), payment=(), usb=()",
-  "Cross-Origin-Opener-Policy": "same-origin"
+  "Permissions-Policy": "accelerometer=(), browsing-topics=(), camera=(), display-capture=(), geolocation=(), gyroscope=(), hid=(), magnetometer=(), microphone=(), payment=(), serial=(), usb=()",
+  "Cross-Origin-Opener-Policy": "same-origin",
+  /* les fichiers du site ne peuvent être chargés que par uborardc.com et ses sous-domaines */
+  "Cross-Origin-Resource-Policy": "same-site",
+  "X-Permitted-Cross-Domain-Policies": "none"
 };
 
 const renvoi = (adresse, code = 301) => Response.redirect(adresse, code);
@@ -47,6 +50,7 @@ async function visite(request) {
   let origine = "";
   try { origine = new URL(request.headers.get("Origin") || "").hostname; } catch (e) {}
   if (!duSite(origine) || !agent || ROBOT.test(agent)) return null;
+  if (Number(request.headers.get("Content-Length") || 0) > 1000) return null;
   let b;
   try { b = JSON.parse((await request.text()).slice(0, 1000)); } catch (e) { return null; }
   if (!b || typeof b.c !== "string" || !b.c.startsWith("/")) return null;
@@ -88,6 +92,9 @@ export default {
         if (ligne) ctx.waitUntil(inscrire(ligne));
       }
       return new Response(null, { status: 204, headers: { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" } });
+    }
+    if (request.method !== "GET" && request.method !== "HEAD") {
+      return new Response("Méthode non autorisée", { status: 405, headers: { Allow: "GET, HEAD", "Cache-Control": "no-store", ...ENTETES } });
     }
     const versSite = () => renvoi(`https://${APEX}${chemin}${url.search}`);
 

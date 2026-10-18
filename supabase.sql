@@ -342,3 +342,37 @@ as $$
 $$;
 revoke execute on function public.site_stats(integer) from public, anon;
 grant execute on function public.site_stats(integer) to authenticated;
+
+-- ==========================================================================
+-- Frein contre les envois en rafale (18 octobre 2026)
+-- Au-delà d'un plafond d'envois sur dix minutes, la base refuse : le formulaire
+-- de contact propose alors d'écrire sur WhatsApp. Ne touche qu'aux tables site_*.
+-- ==========================================================================
+create or replace function public.site_limite_debit() returns trigger
+language plpgsql security definer set search_path = public as $$
+declare
+  n integer;
+  plafond integer := tg_argv[0]::integer;
+  fenetre interval := tg_argv[1]::interval;
+begin
+  execute format('select count(*) from %I.%I where created_at > now() - $1', tg_table_schema, tg_table_name) into n using fenetre;
+  if n >= plafond then
+    raise exception 'Trop d''envois en peu de temps. Réessayez dans quelques minutes.' using errcode = 'P0001';
+  end if;
+  return new;
+end $$;
+revoke all on function public.site_limite_debit() from public, anon, authenticated;
+
+create index if not exists site_messages_created_at_idx on public.site_messages (created_at);
+create index if not exists site_abonnes_created_at_idx on public.site_abonnes (created_at);
+create index if not exists site_questions_created_at_idx on public.site_questions (created_at);
+create index if not exists site_visites_created_at_idx on public.site_visites (created_at);
+
+drop trigger if exists site_messages_debit on public.site_messages;
+create trigger site_messages_debit before insert on public.site_messages for each row execute function public.site_limite_debit('20', '10 minutes');
+drop trigger if exists site_abonnes_debit on public.site_abonnes;
+create trigger site_abonnes_debit before insert on public.site_abonnes for each row execute function public.site_limite_debit('30', '10 minutes');
+drop trigger if exists site_questions_debit on public.site_questions;
+create trigger site_questions_debit before insert on public.site_questions for each row execute function public.site_limite_debit('60', '10 minutes');
+drop trigger if exists site_visites_debit on public.site_visites;
+create trigger site_visites_debit before insert on public.site_visites for each row execute function public.site_limite_debit('2000', '10 minutes');
