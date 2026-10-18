@@ -27,9 +27,9 @@ const CONFIG = {
 const TICKER_MESSAGES = [
   ["Ubora est une entreprise à caractère social : ses excédents sont réinvestis", "/soutenir"],
   ["Ubora Académie : plus de 130 cours en ligne avec certificat", "/academie"],
-  ["Nouveau dans AKIBA : un reçu imprimé pour chaque membre", "/outils/akiba"],
-  ["Nouvelle version du générateur de business plan", "/outils/bp"],
-  ["Nouveau : Ubora Vert, pour protéger l'environnement et en vivre", "/vert"],
+  ["En vidéo : AKIBA, le cahier de l'AVEC dans le téléphone, en trois minutes", "/outils/akiba#video"],
+  ["En vidéo : Ubora Hub, de l'idée à l'entreprise, en quatre minutes", "/outils/hub#video"],
+  ["Ubora Vert : protéger l'environnement, et en vivre", "/vert"],
   ["Ni ONG, ni entreprise classique : nos revenus financent notre présence auprès des plus fragiles", "/a-propos#modele"]
 ];
 
@@ -43,7 +43,7 @@ const DIRIGEANT = {
   accroche: "Plus de dix ans aux côtés des entrepreneurs, des coopératives et des groupes d'épargne en RDC.",
   bio: "Agronome, passé par la banque et par des programmes de coopération à Kinshasa, au Kivu et dans le Sud-Ubangi, Christian a fondé Ubora pour que l'accompagnement dure au-delà des projets. Il y conçoit Ubora Hub et AKIBA.",
   parcours: [
-    ["Depuis 2026", "Entreprise sociale Ubora", "Fondateur et Directeur Gérant", "Conception d'Ubora Hub, incubateur numérique, et d'AKIBA, l'application hors ligne des AVEC."],
+    ["Depuis 2026", "Entreprise Sociale Ubora", "Fondateur et Directeur Gérant", "Conception d'Ubora Hub, le logiciel d'incubation, et d'AKIBA, l'application hors ligne des AVEC."],
     ["Depuis 2026", "Programme de développement agricole, Sud-Ubangi", "Expert en entrepreneuriat agricole", "PME, coopératives, AVEC et incubateur provincial : structuration, plans d'affaires, accès au financement."],
     ["2024 – 2025", "Projet d'appui aux PME, Kinshasa", "Expert en entrepreneuriat et mutualisation des investissements", "Centres de PME, chaînes de valeur, modèles économiques et investissements partagés."],
     ["2021 – 2024", "Programme d'emploi et d'entrepreneuriat, Kinshasa", "Expert en incubation et entrepreneuriat urbain", "Deux incubateurs, programmes de formation et d'accélération, formation de formateurs."],
@@ -58,7 +58,7 @@ const DIRIGEANT = {
 /* ---------- La méthode Ubora (page « Notre approche ») ---------- */
 const METHODE = {
   nom: "La méthode Ubora",
-  intro: "Trop de projets forment, puis partent. Trop de logiciels sont oubliés six mois plus tard. Notre méthode tient en six temps, toujours dans le même ordre, et nous restons jusqu'à ce que ça tienne.",
+  intro: "Trop de projets forment, puis partent. Trop de logiciels sont oubliés six mois plus tard. Notre méthode tient en six temps, et nous restons jusqu'à ce que les résultats tiennent.",
   /* pour chaque temps : ce qu'il donne pour un groupe d'épargne, un entrepreneur et une coopérative, dans cet ordre */
   publics: ["Groupe d'épargne", "Entrepreneur", "Coopérative"],
   etapes: [
@@ -194,11 +194,11 @@ const POLES = [
     accroche: "Produire ensemble, vendre mieux, être payé à temps.",
     photo: ["coop", "Des cultivateurs au travail dans un champ"],
     nom: "Ubora Coop", initiales: "Co", couleur: "#3E7A1F",
-    carte: "Des statuts OHADA à la vente groupée, et des producteurs payés à temps.",
+    carte: "Des statuts OHADA à la vente groupée, toute la chaîne de valeur renforcée.",
     titre: `Des coopératives bien gérées, et des producteurs <span class="serif">payés à temps</span>.`,
     lead: "Un groupement sans statuts ou une coopérative en sommeil : nous partons de ce qui existe, et nous l'amenons à gérer, vendre et se financer. Des intrants jusqu'au paiement du producteur.",
     contexte: {
-      intro: "Une coopérative gagne à chaque maillon qu'elle maîtrise : acheter ensemble, stocker au lieu de brader, transformer pour vendre plus cher.",
+      intro: "Nous arrivons rarement devant une page blanche : il y a presque toujours un groupement qui travaille ensemble, ou une coopérative restée en sommeil.",
       constats: [
         ["Sans existence légale","Pas de statuts, donc ni compte, ni contrat, ni crédit."],
         ["Des volumes que personne ne connaît","Sans registre, impossible d'annoncer une quantité fiable à un acheteur."],
@@ -211,7 +211,7 @@ const POLES = [
     ],
     chaine: {
       titre: "Toute la chaîne de valeur, du champ jusqu'au paiement",
-      intro: "Une coopérative ne gagne pas seulement en produisant plus. Elle gagne à chaque maillon qu'elle maîtrise : acheter ensemble, stocker au lieu de brader, transformer pour vendre plus cher. Nous analysons la filière avec les membres, puis nous renforçons les maillons qui rapportent le plus.",
+      intro: "Une coopérative gagne à chaque maillon qu'elle maîtrise : acheter ensemble, stocker au lieu de brader, transformer pour vendre plus cher. Nous renforçons ceux qui rapportent le plus.",
       maillons: [
         ["Intrants", "Semences, engrais et outils achetés en groupe, à crédit si besoin.", "Des coûts en baisse, des intrants à temps."],
         ["Production", "Bonnes pratiques agricoles, calendrier de campagne, suivi des parcelles.", "Des rendements et une qualité réguliers."],
@@ -373,7 +373,7 @@ const POLES = [
     accroche: "Protéger la terre, et en vivre.",
     photo: ["vert", "Des mains tiennent un jeune plant dans un sachet de pépinière"],
     nom: "Ubora Vert", initiales: "Ve", couleur: "#557A17",
-    carte: "Reboisement, recyclage, agroécologie : protéger l'environnement, et en vivre.",
+    carte: "Reboisement, recyclage, agroécologie, énergie propre : des revenus pour les communautés.",
     titre: `Protéger l'environnement, et en faire une <span class="serif">source de revenus</span>.`,
     lead: "Reboisement, recyclage, agriculture durable, énergie propre. Notre conviction : une action pour l'environnement dure quand elle fait vivre ceux qui la portent.",
     contexte: {
@@ -471,7 +471,7 @@ const AVEC = {
     ["Suivi des prêts", "Les retards sont repérés tard", "Échéances et alertes pour l'animateur"],
     ["Fraude", "Une page arrachée, un chiffre corrigé, et personne ne le voit", "Un registre scellé : toute modification se voit"],
     ["Reçu du membre", "Rien, ou un chiffre noté à la main dans le carnet", "Un reçu imprimé ou envoyé par WhatsApp, vérifiable contre le journal"],
-    ["Langue", "Des comptes en français, que tous ne lisent pas", "L'application en lingala, kiswahili, kikongo, tshiluba, avec un guide audio"],
+    ["Langue", "Des comptes en français, que tous ne lisent pas", "L'application en lingala, swahili, kikongo et tshiluba, avec un guide audio"],
     ["Accès au crédit", "Aucune trace en dehors du groupe", "Un niveau « prête pour une IMF » et un dossier à lui présenter"],
     ["Suivi d'un programme", "Des données lentes à collecter, souvent incomplètes", "Tableau de bord, écran Impact et export Excel pour l'ONG ou le bailleur"]
   ],
@@ -493,6 +493,7 @@ const OUTILS = [
     sousDomaine: "akiba.uborardc.com", url: "https://akiba.uborardc.com",
     fiche: {
       titre: `Le cahier de l'AVEC dans le téléphone, même sans <span class="serif">réseau</span>.`,
+      lead: "Chaque franc est écrit au moment où il bouge, chaque membre repart avec son reçu, et l'historique du groupe devient un dossier qu'une IMF peut étudier.",
       seo: ["AKIBA : l'application des groupes d'épargne (AVEC) en RDC", "AKIBA tient les comptes de l'AVEC sur téléphone, même sans réseau : réunion guidée, registre scellé, reçus imprimés et dossier pour la microfinance. Une application de l'entreprise à caractère social Ubora."],
       ouvrir: "Ouvrir AKIBA",
       /* film de présentation (montage du 10 octobre 2026) : captures réelles de l'application, données de démonstration */
@@ -510,10 +511,11 @@ const OUTILS = [
     points: ["Réunion guidée en 8 étapes, de la présence à la clôture à trois clés", "Registre scellé : toute modification se voit", "Reçus des membres et journal imprimés sur imprimante Bluetooth (bientôt sur terminal POS), ou envoyés par WhatsApp et SMS", "Indice de qualité des données et niveau « prête pour une IMF »", "Dossier pour l'IMF et export Excel, sans données personnelles", "Crédit d'une IMF suivi de bout en bout, garantie comprise", "Espaces AVEC, animateur et organisation, avec un écran Impact", "Langues de la RDC, guide audio et 7 modules de formation AVEC", "Démonstration libre ; code de validation Ubora pour une vraie AVEC"]
   },
   {
-    id: "bp", nom: "Générateur de business plan", court: "Votre plan d'affaires, étape par étape", pole: "pme", statut: "en-ligne", mock: "pme", couleur: "#B0622A", initiales: "Bp",
+    id: "bp", nom: "Générateur de business plan", nomPhrase: "le générateur de business plan", court: "Votre plan d'affaires, étape par étape", pole: "pme", statut: "en-ligne", mock: "pme", couleur: "#B0622A", initiales: "Bp",
     sousDomaine: "bp.uborardc.com", url: "https://bp.uborardc.com",
     fiche: {
       titre: `Un business plan complet, construit <span class="serif">étape par étape</span>.`,
+      lead: "Huit questions sur votre projet, puis des prévisions financières, un score de viabilité et des conseils sur vos propres chiffres, en francs congolais ou en dollars.",
       seo: ["Générateur de business plan en ligne pour la RDC · Ubora", "Construisez votre business plan étape par étape : prévisions financières, seuil de rentabilité, score de viabilité et conseils, en francs congolais ou en dollars. Un outil de l'entreprise à caractère social Ubora."],
       ouvrir: "Ouvrir le générateur",
       atouts: "Des chiffres calculés, des conseils sur votre projet",
@@ -535,7 +537,9 @@ const OUTILS = [
     /* inscriptionOuverte : la page hub.uborardc.com/inscription est en ligne (remettre false pour revenir au formulaire de contact) */
     inscription: "https://hub.uborardc.com/inscription", inscriptionOuverte: true,
     fiche: {
-      titre: `Le logiciel des incubateurs : sélectionner, accompagner, <span class="serif">rendre compte</span>.`,
+      titre: `Le logiciel d'incubation : sélectionner, accompagner, <span class="serif">rendre compte</span>.`,
+      lead: "Les incubateurs y sélectionnent, forment et suivent leurs entrepreneurs. Un entrepreneur sans incubateur peut aussi y suivre seul le parcours libre, jusqu'au plan d'affaires.",
+      accesNote: "Entrepreneur sans incubateur ? Inscrivez-vous directement sur hub.uborardc.com et suivez le parcours libre.",
       seo: ["Ubora Hub : logiciel d'incubation d'entrepreneurs en RDC", "Le logiciel d'incubation d'Ubora, entreprise à caractère social : les incubateurs y sélectionnent, forment et suivent leurs entrepreneurs ; un entrepreneur seul peut y suivre le parcours libre, jusqu'au plan d'affaires."],
       ouvrir: "Se connecter",
       /* film de présentation (montage du 10 octobre 2026) : captures réelles du logiciel, données de démonstration */
@@ -630,8 +634,8 @@ const CATALOGUE = [
 const FAQ = [
   ["Qui peut travailler avec Ubora ?", "Les groupes d'épargne, les entrepreneurs et les PME, les coopératives et les organisations paysannes, les petites institutions financières, ainsi que les ONG, les incubateurs et les bailleurs qui accompagnent ces publics."],
   ["Où intervenez-vous ?", "Dans toute la RDC, sur place ou à distance."],
-  ["Vos outils fonctionnent-ils sans internet ?", "Oui. AKIBA fonctionne entièrement sans réseau ; dès que le réseau revient, le groupe envoie ses données à l'animateur et à l'organisation, et l'application se met à jour d'elle-même. Le générateur de business plan reste utilisable une fois ouvert."],
-  ["Proposez-vous des formations sur vos outils ?", "Oui. Chaque déploiement comprend une formation de prise en main, puis un suivi. Notre Académie en ligne, academie.uborardc.com, propose aussi plus de 130 cours avec certificat. Nous organisons aussi des sessions sur demande, dans votre province ou en ligne."],
+  ["Vos outils fonctionnent-ils sans internet ?", "Oui. AKIBA fonctionne entièrement sans réseau ; dès que le réseau revient, le groupe envoie ses données à l'animateur et à l'organisation, et l'application se met à jour d'elle-même. Ubora Hub fonctionne aussi hors connexion, les cours téléchargés de l'Académie se suivent sans réseau, et le générateur de business plan reste utilisable une fois ouvert."],
+  ["Proposez-vous des formations sur vos outils ?", "Oui. Chaque déploiement comprend une formation de prise en main, puis un suivi. Notre Académie en ligne, academie.uborardc.com, propose aussi plus de 130 cours avec certificat. Nous organisons également des sessions sur demande, dans votre province ou en ligne."],
   ["Faut-il être une entreprise déclarée pour être accompagné ?", "Non. Nous accompagnons justement beaucoup d'entrepreneurs et de groupements vers la formalisation, étape par étape."],
   ["Que devient l'accompagnement quand le projet d'une ONG se termine ?", "Nous restons. Les groupes, les entrepreneurs et les coopératives continuent d'être suivis après la clôture du projet. Notre modèle économique finance une partie de ces activités de terrain, et les outils mis en place restent en service."],
   ["Ubora peut-elle financer notre groupe d'épargne ?", "Ubora ne prête pas elle-même. Par Ubora Fin, nous mobilisons le capital d'institutions financières, d'investisseurs et de bailleurs au profit des AVEC que nous accompagnons, et nous présentons le groupe à une IMF, une COOPEC ou une banque partenaire. Le groupe obtient ainsi un fonds de roulement, en plus de l'épargne de ses membres."],

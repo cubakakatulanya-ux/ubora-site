@@ -507,7 +507,7 @@ function pagePole(id) {
     eyebrow: esc(P.nom), title: P.titre, lead: esc(P.lead), crumbs: [["Nos pôles", "/#poles"], [esc(P.nom)]], photo: P.photo,
     extra: `<div class="btn-row"><a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent(P.nom)}">Parler de votre projet ${ICON.arrow}</a>
       ${P.boite ? `<a class="btn btn-glass" href="#boite" data-scroll="boite">La boîte à outils</a>` : ""}
-      ${enLigne.filter(o => o.pole === P.id).map(o => lienOutil(o) === P.chemin ? `<a class="btn btn-glass" href="${o.url}" target="_blank" rel="noopener">Ouvrir ${esc(o.nom)} ${ICON.ext}</a>` : `<a class="btn btn-glass" href="${lienOutil(o)}">Découvrir ${esc(o.nom)} ${ICON.arrow}</a>`).join("")}</div>
+      ${enLigne.filter(o => o.pole === P.id).map(o => lienOutil(o) === P.chemin ? `<a class="btn btn-glass" href="${o.url}" target="_blank" rel="noopener">Ouvrir ${esc(o.nom)} ${ICON.ext}</a>` : `<a class="btn btn-glass" href="${lienOutil(o)}">Découvrir ${esc(o.nomPhrase || o.nom)} ${ICON.arrow}</a>`).join("")}</div>
       <span class="sub-chip">${esc(P.sousDomaine)}</span>`
   }) + `
 
@@ -618,14 +618,14 @@ function pageOutil(o) {
     : `<a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent(o.nom)}">Demander un accès ${ICON.arrow}</a>`) : "";
   const ouvrir = classe => `<a class="btn ${classe}" href="${o.url}" target="_blank" rel="noopener">${esc(F.ouvrir)} ${ICON.ext}</a>`;
   return pageHead({
-    eyebrow: esc(o.nom), title: F.titre, lead: esc(o.resume), crumbs: [["Nos outils", "/outils"], [esc(o.nom)]], ecran: mockFor(o.mock),
+    eyebrow: esc(o.nom), title: F.titre, lead: esc(F.lead || o.resume), crumbs: [["Nos outils", "/outils"], [esc(o.nom)]], ecran: mockFor(o.mock),
     extra: `<div class="btn-row">${inscription}${ouvrir(inscription ? "btn-glass" : "btn-accent")}</div><span class="sub-chip">${esc(o.sousDomaine)}</span>`
   }) + `
 
   ${F.video ? blocVideo(F.video) : ""}
 
   <section><div class="wrap">
-    ${secHead("Ce que fait " + esc(o.nom), esc(F.atouts))}
+    ${secHead("Ce que fait " + esc(o.nomPhrase || o.nom), esc(F.atouts))}
     ${F.fonctions
       ? `<div class="grid-3">${F.fonctions.map(([t, x], i) => `<div class="fcard fonction reveal"><span class="pn">${String(i + 1).padStart(2, "0")}</span><h3>${esc(t)}</h3><p>${esc(x)}</p></div>`).join("")}</div>`
       : `<div class="panel"><ul class="checks cols">${o.points.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>`}
@@ -643,6 +643,7 @@ function pageOutil(o) {
     ${secHead("Pour commencer", esc(F.accesTitre || "Trois étapes pour démarrer"))}
     <ol class="bridge">${F.acces.map(([t, x], i) => `<li><span class="bn">${i + 1}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`).join("")}</ol>
     <div class="btn-row centre">${inscription || ouvrir("btn-primary")}${inscription ? ouvrir("btn-ghost") : `<a class="btn btn-ghost" href="/contact?sujet=${encodeURIComponent(o.nom)}">Nous écrire</a>`}</div>
+    ${F.accesNote ? `<p class="suite">${esc(F.accesNote)}</p>` : ""}
     <p class="suite">Ce logiciel accompagne le pôle <a class="link" href="${p.chemin}">${esc(p.nom)}</a>.</p>
   </div></section>`;
 }
@@ -659,8 +660,8 @@ function pageConseil() {
   </div></section>
   <section class="band"><div class="wrap">
     ${secHead("Nos prestations", "Quatre façons de travailler avec nous")}
-    <p class="suite"><a class="link" href="/#poles">Vous pouvez aussi mobiliser directement l'un de nos pôles ${ICON.arrow}</a></p>
     <div class="grid-2">${CONSEIL.map(s => `<article class="svc reveal" id="${s.id}"><span class="ic">${ICON[s.ico]}</span><div><h2>${esc(s.titre)}</h2><p>${esc(s.texte)}</p><details class="inclus"><summary>Ce que cela comprend</summary><ul class="checks">${s.points.map(x => `<li>${esc(x)}</li>`).join("")}</ul></details></div></article>`).join("")}</div>
+    <p class="suite"><a class="link" href="/#poles">Vous pouvez aussi mobiliser directement l'un de nos pôles ${ICON.arrow}</a></p>
   </div></section>
   <section id="relais"><div class="wrap">${relais(false)}</div></section>
   <section><div class="wrap">${finalCta()}</div></section>`;
