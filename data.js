@@ -43,7 +43,7 @@ const DIRIGEANT = {
   accroche: "Plus de dix ans aux côtés des entrepreneurs, des coopératives et des groupes d'épargne en RDC.",
   bio: "Agronome, passé par la banque et par des programmes de coopération à Kinshasa, au Kivu et dans le Sud-Ubangi, Christian a fondé Ubora pour que l'accompagnement dure au-delà des projets. Il y conçoit Ubora Hub et AKIBA.",
   parcours: [
-    ["Depuis 2026", "Entreprise Sociale Ubora", "Fondateur et Directeur Gérant", "Conception d'Ubora Hub, le logiciel d'incubation, et d'AKIBA, l'application hors ligne des AVEC."],
+    ["Depuis 2024", "Entreprise Sociale Ubora", "Fondateur et Directeur Gérant", "Conception d'Ubora Hub, le logiciel d'incubation, et d'AKIBA, l'application hors ligne des AVEC."],
     ["Depuis 2026", "Programme de développement agricole, Sud-Ubangi", "Expert en entrepreneuriat agricole", "PME, coopératives, AVEC et incubateur provincial : structuration, plans d'affaires, accès au financement."],
     ["2024 – 2025", "Projet d'appui aux PME, Kinshasa", "Expert en entrepreneuriat et mutualisation des investissements", "Centres de PME, chaînes de valeur, modèles économiques et investissements partagés."],
     ["2021 – 2024", "Programme d'emploi et d'entrepreneuriat, Kinshasa", "Expert en incubation et entrepreneuriat urbain", "Deux incubateurs, programmes de formation et d'accélération, formation de formateurs."],

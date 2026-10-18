@@ -62,7 +62,7 @@ const ORG = {
   email: "contact@uborardc.com",
   telephone: "+243998275144",
   description: "Entreprise à caractère social : ses prestations financent l'accompagnement des groupes d'épargne (AVEC), des entrepreneurs et des coopératives, et ses excédents sont réinvestis sur le terrain, dans toute la RDC. Ubora ne prête pas : elle mobilise le capital des financeurs au profit de ceux qu'elle accompagne.",
-  foundingDate: "2025-06",
+  foundingDate: "2024",
   address: { "@type": "PostalAddress", streetAddress: "Avenue Mapendo, Quartier Kalubwe", addressLocality: "Lubumbashi", addressRegion: "Haut-Katanga", addressCountry: "CD" },
   openingHoursSpecification: [{ "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "08:00", closes: "16:00" }],
   areaServed: { "@type": "Country", name: "République démocratique du Congo" },
