@@ -200,39 +200,31 @@ function boiteOutils(b, sujet) {
     })()}
     <div class="notice"><span class="ic">${dispo ? ICON.doc : ICON.bell}</span>
       <div><b>${dispo ? "Recevoir la boîte à outils" : "Être prévenu de sa publication"}</b>
-        <p>${dispo ? "Dites-nous qui vous êtes et comment vous comptez l'utiliser. Nous vous envoyons les documents et nous prenons le temps de vous les présenter." : "Laissez-nous vos coordonnées. Nous vous écrirons dès que les documents seront prêts."}</p></div>
+        <p>${dispo ? "Dites-nous qui vous êtes et comment vous l'utiliserez : nous vous envoyons les documents et nous vous les présentons." : "Laissez vos coordonnées : nous vous écrirons dès que les documents seront prêts."}</p></div>
       <div class="notice-btns"><a class="btn btn-primary" href="/contact?sujet=${encodeURIComponent(sujet)}">${dispo ? "Faire la demande" : "Me prévenir"}</a>
         ${dispo ? `<a class="btn btn-wa btn-sm" href="${waLink("Bonjour Ubora, je souhaite recevoir la " + b.titre.charAt(0).toLowerCase() + b.titre.slice(1) + ".")}" target="_blank" rel="noopener">Par WhatsApp</a>` : ""}</div>
     </div>
   </div></section>`;
 }
 /* Pérenniser les actions des partenaires au-delà du projet */
-const RELAIS = [["Pendant le projet","Nous formons, outillons et suivons les bénéficiaires avec vos équipes. Les données sont tenues dans nos outils dès le premier jour."],["À la clôture","Les groupes, les relais locaux formés, les outils et l'historique restent en place. Rien ne repart de zéro."],["Après le projet","Nous poursuivons le suivi sur le terrain. Notre modèle économique en finance une partie, avec nos propres revenus."]];
+const RELAIS = [["Pendant le projet","Nous formons, outillons et suivons avec vos équipes. Les données sont dans nos outils dès le premier jour."],["À la clôture","Groupes, relais formés, outils et historique restent en place. Rien ne repart de zéro."],["Après le projet","Nous poursuivons le suivi, financé en partie par nos propres revenus."]];
 function relais(lien) {
   return `<div class="deep relais">
     <div class="relais-txt"><span class="eyebrow">Pour les ONG, les bailleurs et les programmes</span>
       <h2>Le projet se termine. <span class="serif">L'accompagnement continue.</span></h2>
-      <p class="lead">Nous mettons en œuvre des projets de développement économique sur le terrain, pour nos partenaires ou à leurs côtés. Un programme dure deux ou trois ans. Les groupes d'épargne, les entrepreneurs et les coopératives ont besoin d'un suivi plus long. Nous prenons le relais : notre modèle économique finance une partie des activités sur le terrain après la fin du projet.</p>
+      <p class="lead">Un programme dure deux ou trois ans ; les groupes, les entrepreneurs et les coopératives ont besoin de plus. Nous mettons en œuvre vos projets sur le terrain, puis nous prenons le relais.</p>
       ${lien ? `<div class="btn-row"><a class="btn btn-accent" href="/conseil#mise-en-oeuvre">Mise en œuvre de projets ${ICON.arrow}</a><a class="btn btn-ghost" href="/conseil#relais">Préparer la suite de votre projet</a></div>` : `<a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent("Partenariat")}">Parlons de votre programme ${ICON.arrow}</a>`}</div>
     <ol class="relais-temps">${RELAIS.map(([t, x], i) => `<li><span class="bn">${i + 1}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`).join("")}</ol>
   </div>`;
 }
 /* Expertise : ce que le terrain nous a appris, et ce que chacun peut vérifier */
 function expertise() {
-  const L = CONFIG.legal || {};
   const lecons = [
     ["avec", "Dans un groupe d'épargne, la plupart des conflits naissent de règles jamais écrites. Pas du manque d'argent.", "Alors nous écrivons les règles avec le groupe, et AKIBA rend chaque compte vérifiable par tous les membres."],
     ["financement", "Étudier un crédit de 500 dollars coûte presque autant qu'un crédit de 50 000. Voilà pourquoi les petits emprunteurs sont oubliés.", "Alors Ubora Fin mobilise le capital pour le groupe entier, pas dossier par dossier, en s'appuyant sur son historique d'épargne."],
     ["marche", "Le maillon qui casse le plus souvent n'est ni la production ni le crédit. C'est la vente.", "Alors nous cherchons l'acheteur avant la récolte, et nous suivons la vente jusqu'au paiement du producteur."]
   ];
-  const preuves = [
-    [String(OUTILS.filter(o => o.statut === "en-ligne").length), "outils en ligne", "AKIBA, le générateur de business plan, Ubora Hub et l'Ubora Académie. Essayez-les avant même de nous appeler.", "/outils", "Les essayer"],
-    [String(pole("avec").boite.outils.length), "documents de terrain", "La boîte à outils AVEC, de l'étude de référence jusqu'au partage de fin de cycle.", "/avec#boite", "La demander"],
-    [String(METHODE.etapes.length), "temps de méthode", "Les mêmes pour un groupe d'épargne, un entrepreneur ou une coopérative, toujours dans le même ordre.", "/approche", "Lire la méthode"],
-    [ICON.check, "entreprise immatriculée", [L.rccm && "RCCM " + L.rccm, L.idnat && "ID NAT " + L.idnat].filter(Boolean).join(" · "), "/mentions", "Nos mentions légales"]
-  ];
-  return `<div class="lecons">${lecons.map(([id, q, r]) => { const p = pole(id); return `<figure class="lecon reveal" style="--c:${p.couleur}"><span class="lecon-pole">${esc(p.nom)}</span><blockquote>${esc(q)}</blockquote><figcaption>${esc(r)}</figcaption><a class="link" href="${p.chemin}" aria-label="Voir comment : ${esc(p.nom)}">Voir comment ${ICON.arrow}</a></figure>`; }).join("")}</div>
-    <ul class="preuves" aria-label="À vérifier par vous-même">${preuves.map(([n, t, x, h, l]) => `<li><b>${n}</b><span class="preuve-t">${esc(t)}</span><p>${esc(x)}</p><a class="link" href="${h}">${esc(l)} ${ICON.arrow}</a></li>`).join("")}</ul>`;
+  return `<div class="lecons">${lecons.map(([id, q, r]) => { const p = pole(id); return `<figure class="lecon reveal" style="--c:${p.couleur}"><span class="lecon-pole">${esc(p.nom)}</span><blockquote>${esc(q)}</blockquote><figcaption>${esc(r)}</figcaption><a class="link" href="${p.chemin}" aria-label="Voir comment : ${esc(p.nom)}">Voir comment ${ICON.arrow}</a></figure>`; }).join("")}</div>`;
 }
 /* Pastilles de filtre : elles filtrent les enfants du bloc qui suit (attribut data-f) */
 function filtres(label, options) {
@@ -244,7 +236,7 @@ function finalCta() {
   return `<div class="deep final">
     <span class="eyebrow">Travaillons ensemble</span>
     <h2>Parlons de ce que vous voulez faire avancer.</h2>
-    <p>Un groupe à structurer, un programme à lancer, un crédit à obtenir, un acheteur à trouver : dites-nous où vous en êtes. Une personne de l'équipe vous répond sous deux jours ouvrés.</p>
+    <p>Un groupe à structurer, un programme à lancer, un crédit, un acheteur : dites-nous où vous en êtes. Réponse sous deux jours ouvrés.</p>
     <div class="btn-row"><a class="btn btn-wa" href="${waLink("Bonjour Ubora, je souhaite échanger avec vous.")}" target="_blank" rel="noopener">Écrire sur WhatsApp</a><a class="btn btn-glass" href="/contact">Nous écrire</a></div></div>`;
 }
 function cover(n) {
@@ -326,7 +318,7 @@ function footerHTML() {
     <div class="foot-grid">
       <div class="foot-brand">
         <a class="brand" href="/"><img class="logo-img" src="/logo-ubora.png" alt="" width="56" height="56" loading="lazy"><span class="brand-txt"><span class="brand-name">Ub<b>o</b>ra</span><span class="brand-sub">Entreprise sociale</span></span></a>
-        <p class="foot-accroche">Entreprise à caractère social : nos excédents sont réinvestis auprès de ceux que nous accompagnons, partout en RDC.</p>
+        <p class="foot-accroche">Entreprise à caractère social, partout en RDC.</p>
       </div>
       <nav aria-label="Nos pôles"><h4>Nos pôles</h4><ul class="deux">${POLES.map(p => `<li><a class="foot-pole" href="${p.chemin}" style="--c:${p.couleur}">${esc(p.nom)}</a></li>`).join("")}</ul></nav>
       <nav aria-label="Ubora"><h4>Ubora</h4><ul class="deux"><li><a href="/a-propos">Qui sommes-nous</a></li><li><a href="/equipe">Notre équipe</a></li><li><a href="/approche">Notre approche</a></li><li><a href="/conseil">Projets et conseil</a></li><li><a href="/outils">Outils numériques</a></li><li><a href="/formations">Formations</a></li>${DATA.realisations.length ? `<li><a href="/realisations">Nos réalisations</a></li>` : ""}${allNews().length ? `<li><a href="/actualites">Actualités</a></li>` : ""}<li><a href="/carrieres">Carrières</a></li><li><a href="/soutenir">Soutenir nos actions</a></li></ul></nav>
@@ -360,7 +352,7 @@ function pageHome() {
       <div>
         <h1 class="pill"><b>Ubora</b> Entreprise à caractère social, partout en RDC</h1>
         <p class="hero-titre">Des familles qui épargnent, des entrepreneurs qui vendent, des coopératives qui <span class="serif">durent</span>.</p>
-        <p class="lead">Ubora est une entreprise à caractère social. Partout en RDC, nous formons, outillons et suivons les groupes d'épargne, les entrepreneurs et les coopératives. Nous les relions aux institutions financières et aux acheteurs, et nous agissons pour l'environnement. Sur le terrain, avec des outils qui marchent sans réseau. Et nous restons quand le projet qui nous a fait venir se termine.</p>
+        <p class="lead">Partout en RDC, nous formons, outillons et suivons les groupes d'épargne, les entrepreneurs et les coopératives, jusqu'au crédit et jusqu'à l'acheteur. Avec des outils qui marchent sans réseau. Et nous restons quand le projet se termine.</p>
         <div class="btn-row"><a class="btn btn-accent" href="#poles" data-scroll="poles">Découvrir nos pôles ${ICON.arrow}</a><a class="btn btn-glass" href="/contact">Nous contacter</a></div>
       </div>
       <div class="stage stage-photo">
@@ -384,7 +376,7 @@ function pageHome() {
   </div></section>
 
   <section class="tight-top" id="expertise"><div class="wrap">
-    ${secHead("Notre expertise", `Ce que le terrain nous a <span class="serif">appris</span>`, "Des années auprès des groupes d'épargne, des entrepreneurs et des coopératives nous ont laissé quelques leçons simples.")}
+    ${secHead("Notre expertise", `Ce que le terrain nous a <span class="serif">appris</span>`, "Trois leçons du terrain, et ce que nous en avons fait.")}
     ${expertise()}
   </div></section>
 
@@ -392,13 +384,13 @@ function pageHome() {
     <div>
       <span class="eyebrow">Une entreprise sociale</span>
       <h2>Notre modèle fait payer ceux qui peuvent, pour servir ceux qui ne peuvent pas.</h2>
-      <p class="lead">Nous ne sommes ni une ONG qui dépend d'un financement, ni une entreprise qui ne sert que les clients solvables. Nos revenus viennent de nos prestations. Ils financent notre présence auprès de ceux qui en ont le plus besoin.</p>
+      <p class="lead">Ni une ONG qui dépend d'un financement, ni une entreprise qui ne sert que les clients solvables : nos prestations financent notre présence auprès de ceux qui en ont le plus besoin.</p>
       <div class="btn-row"><a class="btn btn-accent" href="/soutenir">Soutenir nos actions ${ICON.arrow}</a><a class="btn btn-ghost" href="/a-propos#modele">Comprendre notre modèle</a></div>
     </div>
     <ol class="model">
-      <li><span class="bn">1</span><div><b>Les organisations paient</b><span>ONG, bailleurs, institutions financières, programmes publics et privés financent nos prestations.</span></div></li>
-      <li><span class="bn">2</span><div><b>Les plus fragiles accèdent à tarif solidaire</b><span>Groupes d'épargne, femmes et jeunes entrepreneurs, producteurs ruraux.</span></div></li>
-      <li><span class="bn">3</span><div><b>Le capital arrive jusqu'aux groupes</b><span>Par Ubora Fin, nous mobilisons le capital des financeurs au profit des AVEC, des coopératives et des entrepreneurs que nous accompagnons. Nous ne prêtons pas nous-mêmes.</span></div></li>
+      <li><span class="bn">1</span><div><b>Les organisations paient</b><span>ONG, bailleurs, institutions et programmes financent nos prestations.</span></div></li>
+      <li><span class="bn">2</span><div><b>Les plus fragiles accèdent à tarif solidaire</b><span>Groupes d'épargne, jeunes et femmes entrepreneurs, producteurs ruraux.</span></div></li>
+      <li><span class="bn">3</span><div><b>Le capital arrive jusqu'aux groupes</b><span>Ubora Fin mobilise pour eux le capital des financeurs. Nous ne prêtons pas nous-mêmes.</span></div></li>
       <li><span class="bn">4</span><div><b>Les excédents sont réinvestis</b><span>Dans nos outils, dans la formation de relais locaux et dans notre présence sur le terrain.</span></div></li>
     </ol>
   </div></section>
@@ -427,7 +419,7 @@ function teamBand(surPageEquipe) {
   return `<div class="deep team-band">
     <div><span class="eyebrow">${surPageEquipe ? "Ce qui nous rassemble" : "Notre équipe"}</span>
       <h2>Une équipe qui a de l'expérience et qui connaît le terrain.</h2>
-      <p class="lead">Consultants, formateurs et développeurs, nous avons accompagné des entrepreneurs, des groupes d'épargne, des coopératives et des institutions financières. Nous connaissons les réalités de nos bénéficiaires parce que nous les vivons aussi.</p>
+      <p class="lead">Consultants, formateurs et développeurs : nous connaissons les réalités de nos bénéficiaires parce que nous les vivons aussi.</p>
       <div class="btn-row">${surPageEquipe ? "" : `<a class="btn btn-accent" href="/equipe">Rencontrer l'équipe ${ICON.arrow}</a>`}<a class="btn btn-glass" href="/carrieres">Nous rejoindre</a></div></div>
     <ul class="team-list">
       <li><span class="ic">${ICON.map}</span><div><b>L'expérience du terrain</b><span>Des années d'accompagnement en RDC, dans plusieurs provinces.</span></div></li>
@@ -439,22 +431,22 @@ function teamBand(surPageEquipe) {
 
 function pageAbout() {
   return pageHead({ eyebrow: "Qui sommes-nous", title: `Une entreprise sociale, pour que l'effort des familles <span class="serif">porte ses fruits</span>.`, crumbs: [["Qui sommes-nous"]], photo: ["terrain", "Une communauté réunie en plein air"],
-    lead: "Ubora veut dire « excellence » en swahili. C'est une exigence que nous nous imposons, parce que les personnes que nous accompagnons n'ont pas droit à l'erreur : une mauvaise récolte, la chute du franc ou une maladie peuvent effacer des années d'efforts. Entreprise à caractère social, nous travaillons dans toute la RDC pour rendre leurs activités assez solides pour tenir, puis grandir." }) + `
+    lead: "Ubora veut dire « excellence » en swahili. Une exigence, parce que ceux que nous accompagnons n'ont pas droit à l'erreur : une mauvaise récolte ou la chute du franc peuvent effacer des années d'efforts." }) + `
   <section><div class="wrap two">
     <div><span class="eyebrow">Mission</span>
       <p class="quote">Aider les entreprises et les communautés congolaises à tenir face aux chocs, puis à grandir.</p></div>
     <div class="prose-sm">
-      <p>La plupart des entreprises du pays restent informelles, sans outils de gestion et loin du crédit. Au moindre choc, une hausse des prix, la chute du franc, une mauvaise récolte ou une maladie, elles perdent ce qu'elles ont construit.</p>
-      <p>Nous agissons sur ce qui rend une activité plus solide : une organisation claire, l'accès à l'épargne et au crédit, des outils de gestion adaptés et des compétences. Nos outils sont conçus pour les contraintes réelles du pays : un réseau instable, deux monnaies, le mobile money et une faible bancarisation.</p>
+      <p>La plupart des entreprises du pays restent informelles, sans outils de gestion et loin du crédit : au moindre choc, elles perdent ce qu'elles ont construit.</p>
+      <p>Nous renforçons ce qui les rend solides : une organisation claire, l'épargne et le crédit, des compétences, et des outils faits pour le réseau instable et les deux monnaies.</p>
     </div>
   </div></section>
 
   <section class="band" id="modele"><div class="wrap">
-    ${secHead("Notre modèle", `Pourquoi nous avons choisi d'être une <span class="serif">entreprise sociale</span>`, "Les projets financés pour deux ou trois ans s'arrêtent souvent au moment où les bénéficiaires commencent à progresser. Nous voulions pouvoir rester.")}
+    ${secHead("Notre modèle", `Pourquoi nous avons choisi d'être une <span class="serif">entreprise sociale</span>`, "Les projets de deux ou trois ans s'arrêtent quand les bénéficiaires commencent à progresser. Nous voulions pouvoir rester.")}
     <div class="grid-4">
-      <div class="fcard"><span class="ic">${ICON.briefcase}</span><h3>Qui paie</h3><p>Les ONG, les bailleurs, les institutions financières, les incubateurs et les programmes publics ou privés qui nous confient des missions.</p></div>
-      <div class="fcard"><span class="ic">${ICON.heart}</span><h3>Qui en bénéficie</h3><p>Les groupes d'épargne, les femmes et les jeunes entrepreneurs, les producteurs ruraux, qui accèdent à nos services à tarif solidaire.</p></div>
-      <div class="fcard"><span class="ic">${ICON.coins}</span><h3>Ce que nous mobilisons</h3><p>Par Ubora Fin, le capital d'institutions financières, d'investisseurs et de bailleurs, au profit des groupes que nous accompagnons. Ubora Fin ne prête pas elle-même.</p></div>
+      <div class="fcard"><span class="ic">${ICON.briefcase}</span><h3>Qui paie</h3><p>ONG, bailleurs, institutions financières, incubateurs et programmes qui nous confient des missions.</p></div>
+      <div class="fcard"><span class="ic">${ICON.heart}</span><h3>Qui en bénéficie</h3><p>Groupes d'épargne, jeunes et femmes entrepreneurs, producteurs ruraux, à tarif solidaire.</p></div>
+      <div class="fcard"><span class="ic">${ICON.coins}</span><h3>Ce que nous mobilisons</h3><p>Par Ubora Fin, le capital des financeurs au profit des groupes que nous accompagnons. Ubora Fin ne prête pas.</p></div>
       <div class="fcard"><span class="ic">${ICON.spark}</span><h3>Ce que nous réinvestissons</h3><p>Nos outils, la formation de relais locaux, et le suivi sur le terrain quand le projet d'un partenaire s'achève.</p></div>
     </div>
     <p class="note">Être rentables n'est pas une fin en soi. C'est ce qui nous permet d'être encore là au cycle suivant.</p>
@@ -487,7 +479,7 @@ function pageApproche() {
   return pageHead({ eyebrow: "Notre approche", title: `Former sans outiller ne suffit pas. Outiller sans accompagner non plus.`, crumbs: [["Notre approche"]],
     lead: METHODE.intro }) + `
   <section><div class="wrap">
-    ${secHead(METHODE.nom, "Six temps, toujours dans le même ordre", "Les mêmes six temps pour un groupe d'épargne, un entrepreneur ou une coopérative. Seul le contenu change.")}
+    ${secHead(METHODE.nom, "Six temps, toujours dans le même ordre", "Pour un groupe d'épargne, un entrepreneur ou une coopérative : seul le contenu change.")}
     <ol class="steps">${METHODE.etapes.map((e, i) => `<li class="reveal"><span class="pn">${String(i + 1).padStart(2, "0")}</span><h3>${esc(e.titre)}</h3><p>${esc(e.texte)}</p><ul class="pour-qui">${e.exemples.map((x, k) => `<li><b>${esc(METHODE.publics[k])}</b><span>${esc(x)}</span></li>`).join("")}</ul><details class="why"><summary>Pourquoi en RDC</summary><p>${esc(e.pourquoi)}</p></details></li>`).join("")}</ol>
   </div></section>
 
@@ -551,17 +543,12 @@ function pagePole(id) {
   </div></section>` : ""}
 
   <section${(P.programmes || P.entrees) && !P.chaine ? "" : ' class="band"'}><div class="wrap">
-    ${secHead("Notre démarche", "Étape par étape", "Chaque étape doit produire un résultat concret avant que l'on passe à la suivante.")}
+    ${secHead("Notre démarche", "Étape par étape", "Chaque étape produit un résultat concret avant la suivante.")}
     ${parcoursList(P.parcours)}
   </div></section>
 
   ${P.avec ? `<section class="band"><div class="wrap">
-    ${secHead("Digitalisation", `Ce qui change avec <span class="serif">AKIBA</span>`, "Le groupe garde ses règles et ses réunions. Seule la tenue des comptes change, et tout le monde peut désormais la vérifier.")}
-    <ul class="checks cols">${outil("akiba").points.slice(0, 4).map(x => `<li>${esc(x)}</li>`).join("")}</ul>
-    <p class="suite"><a class="btn btn-primary" href="/outils/akiba">Découvrir AKIBA ${ICON.arrow}</a></p>
-  </div></section>
-  <section><div class="wrap">
-    ${secHead("Vers le crédit", `Transformer la discipline d'un groupe en <span class="serif">accès au crédit</span>`, "Un groupe qui épargne depuis trois ans reste invisible pour une banque s'il ne peut rien prouver. Notre rôle est de rendre cette régularité lisible.")}
+    ${secHead("Vers le crédit", `Transformer la discipline d'un groupe en <span class="serif">accès au crédit</span>`, "Trois ans d'épargne restent invisibles pour une banque tant que rien ne les prouve. Nous rendons cette régularité lisible.")}
     <ol class="bridge">${AVEC.passerelle.map(([t, x], i) => `<li><span class="bn">${i + 1}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`).join("")}</ol>
     <p class="suite"><a class="link" href="/financement#intermediation">Comment Ubora Fin mobilise le capital pour les groupes ${ICON.arrow}</a></p>
   </div></section>` : ""}
@@ -607,7 +594,7 @@ function pagePole(id) {
 
 function pageOutils() {
   return pageHead({ eyebrow: "Nos outils", title: `Des outils qui tiennent là où le réseau <span class="serif">lâche</span>.`, crumbs: [["Nos outils"]],
-    lead: "Pas de réseau au village ? Des utilisateurs qui n'ont jamais ouvert un tableur ? Nos logiciels sont conçus pour cela, et chacun est livré avec une formation. Choisissez-en un pour le découvrir." }) + `
+    lead: "Pensés pour le village sans réseau et pour qui n'a jamais ouvert un tableur. Chacun est livré avec une formation." }) + `
   <section><div class="wrap">
     ${filtres("Filtrer les outils", [["en-ligne", "En ligne"], ["en-cours", "En préparation"], ...[...new Set(OUTILS.map(o => o.pole))].map(id => [id, pole(id).nom])])}
     <div class="tools">${OUTILS.map(outilCard).join("")}</div>
@@ -666,7 +653,7 @@ function pageOutil(o) {
 
 function pageConseil() {
   return pageHead({ eyebrow: "Projets et conseil", title: `Vos programmes méritent de durer plus longtemps que leur <span class="serif">financement</span>.`, crumbs: [["Projets et conseil"]],
-    lead: "Vous accompagnez des groupes, des entrepreneurs ou des coopératives en RDC ? Nous concevons votre projet, le mettons en œuvre sur le terrain, équipons vos équipes, mesurons les résultats, et nous restons quand le financement s'arrête.",
+    lead: "Nous concevons votre projet, le mettons en œuvre sur le terrain, équipons vos équipes, mesurons les résultats. Et nous restons quand le financement s'arrête.",
     extra: `<div class="btn-row"><a class="btn btn-accent" href="#mise-en-oeuvre" data-scroll="mise-en-oeuvre">Mise en œuvre de projets ${ICON.arrow}</a><a class="btn btn-glass" href="/contact?sujet=${encodeURIComponent("Conseil et programmes")}">Parlons de votre projet</a></div>` }) + `
   <section id="mise-en-oeuvre"><div class="wrap">
     ${secHead("Mise en œuvre de projets", `Nous ne faisons pas que conseiller : nous <span class="serif">mettons en œuvre</span>`, MISE_EN_OEUVRE.intro)}

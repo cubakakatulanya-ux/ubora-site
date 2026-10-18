@@ -58,27 +58,27 @@ const DIRIGEANT = {
 /* ---------- La méthode Ubora (page « Notre approche ») ---------- */
 const METHODE = {
   nom: "La méthode Ubora",
-  intro: "Nous avons vu trop de projets former des gens, puis partir. Et trop de logiciels installés que personne n'utilise six mois plus tard. Que nous accompagnions un groupe d'épargne, un entrepreneur ou une coopérative, notre façon de travailler tient en six temps, toujours dans le même ordre, et nous restons tant qu'ils ne sont pas capables de continuer seuls.",
+  intro: "Trop de projets forment, puis partent. Trop de logiciels sont oubliés six mois plus tard. Notre méthode tient en six temps, toujours dans le même ordre, et nous restons jusqu'à ce que ça tienne.",
   /* pour chaque temps : ce qu'il donne pour un groupe d'épargne, un entrepreneur et une coopérative, dans cet ordre */
   publics: ["Groupe d'épargne", "Entrepreneur", "Coopérative"],
   etapes: [
-    { titre: "Écouter", texte: "On commence sur place, avec les personnes concernées, dans leur langue. On regarde ce qui existe déjà avant de proposer quoi que ce soit.",
-      exemples: ["Comment le groupe épargne et prête déjà, et ce qui coince.", "Son idée, ses premiers clients, ce qu'il a déjà essayé.", "Qui produit quoi, qui vend à qui, et où l'argent se perd."],
+    { titre: "Écouter", texte: "Sur place, avec les personnes concernées, dans leur langue. On regarde ce qui existe avant de proposer.",
+      exemples: ["Comment il épargne et prête déjà.","Son idée, ses premiers clients.","Qui produit, qui vend, où l'argent se perd."],
       pourquoi: "Un dispositif pensé depuis un bureau ne résiste pas au premier cycle sur le terrain." },
-    { titre: "Structurer", texte: "On met par écrit ce qui était flou : qui décide, qui fait quoi, et où va l'argent.",
-      exemples: ["Statuts, règlement intérieur, caisse séparée du fonds social.", "Un modèle économique testé auprès de vrais clients, puis un plan d'affaires.", "Statuts conformes à l'OHADA, immatriculation, organes de gestion."],
+    { titre: "Structurer", texte: "Écrire ce qui était flou : qui décide, qui fait quoi, où va l'argent.",
+      exemples: ["Statuts, règlement, caisse et fonds social.","Un modèle testé, puis un plan d'affaires.","Statuts OHADA et organes de gestion."],
       pourquoi: "La plupart des conflits naissent de règles jamais écrites, pas du manque d'argent." },
-    { titre: "Former", texte: "Gestion, éducation financière, vente, crédit : chacun apprend ce qu'il lui faut pour décider seul. Et nous formons des relais locaux, qui restent après nous.",
-      exemples: ["Les membres, le comité et les animateurs.", "Coûts, prix, comptes et vente, en cohorte ou en ligne à l'Académie.", "Les dirigeants, les gérants et les producteurs."],
+    { titre: "Former", texte: "Chacun apprend ce qu'il faut pour décider seul. Et des relais locaux restent après nous.",
+      exemples: ["Membres, comité, animateurs.","Coûts, prix, comptes, vente.","Dirigeants, gérants, producteurs."],
       pourquoi: "Quand le projet s'arrête, c'est le relais local qui reste." },
-    { titre: "Outiller", texte: "On remplace le cahier et les fichiers dispersés par un outil numérique simple, qui marche sans réseau, en francs congolais et en dollars.",
-      exemples: ["AKIBA, pour les réunions, la caisse et les reçus.", "Le générateur de business plan, et Ubora Hub pour l'incubateur qui le suit.", "Des registres clairs pour les membres, la collecte et les ventes ; le logiciel Ubora Coop est en préparation."],
+    { titre: "Outiller", texte: "Un outil simple remplace le cahier : sans réseau, en francs et en dollars.",
+      exemples: ["AKIBA, pour la réunion et les reçus.","Le générateur de business plan et Ubora Hub.","Des registres clairs ; le logiciel Ubora Coop est en préparation."],
       pourquoi: "Réseau instable, deux monnaies, niveaux d'instruction variés : l'outil doit s'adapter, pas l'inverse." },
-    { titre: "Connecter", texte: "L'historique tenu dans nos outils devient un dossier que l'on présente aux institutions financières et aux acheteurs.",
-      exemples: ["Un dossier pour une IMF, une COOPEC ou une banque.", "Un plan d'affaires chiffré et des rendez-vous avec des financeurs.", "Des acheteurs trouvés avant la récolte, et des contrats."],
+    { titre: "Connecter", texte: "L'historique tenu dans nos outils devient un dossier pour les financeurs et les acheteurs.",
+      exemples: ["Un dossier pour une IMF ou une COOPEC.","Des rendez-vous avec des financeurs.","Des acheteurs trouvés avant la récolte."],
       pourquoi: "Un groupe, une entreprise ou une coopérative sérieuse reste invisible tant que personne ne sait prouver sa régularité." },
-    { titre: "Suivre", texte: "Visites régulières, indicateurs partagés, réponse rapide sur WhatsApp. On ne part que lorsque ça tient.",
-      exemples: ["Jusqu'au partage de fin de cycle, puis au cycle suivant.", "Après le lancement, quand viennent les premières difficultés.", "Campagne après campagne, jusqu'au paiement des producteurs."],
+    { titre: "Suivre", texte: "Visites, indicateurs partagés, réponses sur WhatsApp. On ne part que lorsque ça tient.",
+      exemples: ["Jusqu'au cycle suivant.","Au-delà des premières difficultés.","Jusqu'au paiement des producteurs."],
       pourquoi: "L'abandon juste après la formation est la cause d'échec la plus fréquente des projets d'accompagnement." }
   ]
 };
@@ -94,25 +94,24 @@ const POLES = [
     photo: ["avec", "Des femmes réunies en groupe, en pagnes colorés"],
     nom: "Ubora AVEC", initiales: "Av", couleur: "#23843A",
     accroche: "Épargner ensemble, emprunter sans crainte.",
-    carte: "Quinze à trente personnes qui épargnent chaque semaine. Nous structurons le groupe, remplaçons le cahier par AKIBA et l'accompagnons jusqu'au crédit.",
+    carte: "Des groupes structurés, un cahier remplacé par AKIBA, un accompagnement jusqu'au crédit.",
     titre: `Des groupes d'épargne solides, et un vrai accès au <span class="serif">crédit</span>.`,
-    lead: "Les Associations Villageoises d'Épargne et de Crédit sont souvent le premier service financier auquel une famille congolaise a accès. Nous les accompagnons de la création du groupe jusqu'à son premier financement : un prêt ou un fonds de roulement d'une institution financière, qu'Ubora Fin aide à mobiliser.",
+    lead: "Pour beaucoup de familles congolaises, l'AVEC est le premier service financier. Nous accompagnons le groupe de sa création jusqu'à son premier financement.",
     contexte: {
-      intro: "En ville comme en zone rurale, beaucoup de ménages n'ont ni compte bancaire ni accès au crédit. L'AVEC comble ce vide avec des moyens très simples. Mais la plupart des groupes restent fragiles.",
+      intro: "L'AVEC comble l'absence de banque avec des moyens très simples. Mais la plupart des groupes restent fragiles.",
       constats: [
-        ["Peu de ménages sont bancarisés", "Pour une grande partie de la population, l'AVEC est le seul moyen d'épargner régulièrement et d'emprunter en cas de besoin."],
-        ["Le cahier se perd ou s'abîme", "Les comptes sont recopiés à la main à chaque réunion. Une erreur, et la confiance s'effrite au moment du partage."],
-        ["Des années d'épargne sans trace", "Un groupe peut épargner avec sérieux pendant des années et n'avoir rien à montrer à une banque."],
-        ["Le suivi s'arrête avec le projet", "Quand le financement se termine, l'encadrement disparaît et beaucoup de groupes se dispersent."]
+        ["Le cahier se perd ou s'abîme","Une erreur de recopie, et la confiance s'effrite au moment du partage."],
+        ["Des années d'épargne sans trace","Un groupe sérieux n'a souvent rien à montrer à une banque."],
+        ["Le suivi s'arrête avec le projet","Sans encadrement, beaucoup de groupes se dispersent."]
       ]
     },
     parcours: [
-      ["Diagnostiquer", "Étude de référence, repérage des communautés, diagnostic des groupes qui existent déjà.", "On sait avec qui travailler, et par où commencer."],
-      ["Mettre en place", "Sensibilisation, constitution du groupe, statuts, règlement intérieur, élection du comité.", "Un groupe organisé, avec des règles connues de tous."],
-      ["Former", "Modules de formation des membres, éducation financière, formation des animateurs et des relais.", "Des membres qui comprennent ce qu'ils font, et des relais sur place."],
-      ["Digitaliser", "Passage du cahier à AKIBA : réunion guidée en huit étapes, registre scellé, partage de fin de cycle calculé par le téléphone.", "Des comptes justes, que chaque membre peut vérifier."],
-      ["Relier au financement", "Nous présentons l'historique du groupe aux IMF, aux COOPEC et aux banques, et Ubora Fin mobilise auprès des financeurs le capital dont le groupe a besoin.", "Un groupe qui peut prêter davantage à ses membres, à des conditions raisonnables."],
-      ["Suivre et faire grandir", "Supervision, graduation, activités génératrices de revenus, puis regroupement en fédération.", "Des groupes qui durent, et qui se renforcent ensemble."]
+      ["Diagnostiquer","Étude de référence et repérage des groupes existants.","On sait par où commencer."],
+      ["Mettre en place","Constitution du groupe, statuts, règlement, élection du comité.","Des règles connues de tous."],
+      ["Former","Membres, animateurs et relais locaux, éducation financière comprise.","Des membres qui décident seuls."],
+      ["Digitaliser","Du cahier à AKIBA : réunion guidée, registre scellé, partage calculé.","Des comptes que chacun vérifie."],
+      ["Relier au financement","L'historique présenté aux IMF, COOPEC et banques ; le capital mobilisé par Ubora Fin.","Plus d'argent à prêter aux membres."],
+      ["Suivre et faire grandir","Supervision, graduation, activités génératrices de revenus, fédération.","Des groupes qui durent."]
     ],
     avec: true,
     outils: ["akiba", "academie"],
@@ -120,7 +119,7 @@ const POLES = [
     boite: {
       statut: "disponible",
       titre: "La boîte à outils AVEC",
-      intro: "Seize documents issus de nos propres déploiements. Nous les remettons aux organisations et aux réseaux qui accompagnent des groupes d'épargne, avec un temps d'explication.",
+      intro: "Seize documents tirés de nos déploiements, remis avec un temps d'explication aux organisations qui accompagnent des groupes d'épargne.",
       outils: [
         ["Guide général", "Comment utiliser l'ensemble des documents, et dans quel ordre."],
         ["Étude de référence", "Le questionnaire d'enquête avant de démarrer : besoins, habitudes d'épargne, acteurs présents."],
@@ -147,16 +146,15 @@ const POLES = [
     accroche: "De l'idée à l'entreprise qui vend.",
     photo: ["pme", "Un tailleur au travail sur sa machine à coudre"],
     nom: "Ubora PME", initiales: "Pm", couleur: "#B0622A",
-    carte: "Tester l'idée auprès de vrais clients avant d'investir, lancer l'entreprise, puis la faire grandir et la financer.",
+    carte: "Tester l'idée auprès de vrais clients, lancer l'entreprise, la faire grandir.",
     titre: `Aider les entrepreneurs à passer de l'idée à une entreprise qui <span class="serif">vend</span>.`,
-    lead: "Ubora PME regroupe nos programmes d'accompagnement des entrepreneurs, en quatre phases : idéation, incubation, lancement de l'entreprise et mise à niveau des PME, les mêmes que dans Ubora Hub, notre logiciel d'incubation. Nous y appliquons la démarche lean startup, adaptée à ce que vivent réellement les entrepreneurs en RDC.",
+    lead: "Quatre phases, les mêmes que dans Ubora Hub, notre logiciel d'incubation : idéation, incubation, lancement, mise à niveau. Et une règle : tester auprès de vrais clients avant d'investir.",
     contexte: {
-      intro: "On demande encore trop souvent aux porteurs de projet un plan d'affaires de trente pages avant même qu'ils aient parlé à un client. Nous faisons l'inverse. On part d'une hypothèse, on la teste avec très peu de moyens auprès de vrais clients, puis on décide. Le plan d'affaires vient après, quand il y a quelque chose à financer.",
+      intro: "On demande encore un plan d'affaires de trente pages avant le premier client. Nous faisons l'inverse : tester d'abord, avec presque rien, puis décider.",
       constats: [
-        ["Des idées jamais testées", "On passe des mois à fabriquer un produit que personne n'a demandé, puis on cherche des clients."],
-        ["Peu de données sur les marchés", "Les études fiables sont rares. Il faut aller chercher l'information soi-même, au marché, chez les clients."],
-        ["Des moyens très limités", "Impossible de dépenser beaucoup pour tester une idée. Chaque essai doit coûter presque rien."],
-        ["Un accompagnement qui s'arrête trop tôt", "Beaucoup de programmes s'arrêtent au concours de pitch, juste avant les vraies difficultés : vendre, produire, recruter."]
+        ["Des idées jamais testées","On fabrique pendant des mois un produit que personne n'a demandé."],
+        ["Des moyens très limités","Chaque essai doit coûter presque rien."],
+        ["Un accompagnement qui s'arrête trop tôt","Souvent au concours de pitch, juste avant les vraies difficultés."]
       ]
     },
     programmesTitre: ["Nos programmes", "Quatre phases, selon le stade de l'entreprise"],
@@ -167,12 +165,12 @@ const POLES = [
       ["Mise à niveau des PME", "Pour les entreprises établies", "Renforcer l'entreprise selon son diagnostic, pour la préparer à un financement."]
     ],
     parcours: [
-      ["Partir d'un problème", "On observe un besoin réel, on formule une proposition de valeur et on liste ce qu'il faut vérifier en premier.", "Une idée claire et des hypothèses à tester."],
-      ["Tester sur le terrain", "Un produit minimum, présenté à de vrais clients. On regarde ce qu'ils font, pas seulement ce qu'ils disent.", "La preuve qu'il y a une demande, ou la décision de changer de cap."],
-      ["Lancer l'entreprise", "Modèle économique, prix, formalisation, premières ventes, tenue de la caisse.", "Une entreprise qui vend et qui sait ce qu'elle gagne."],
-      ["Faire grandir", "Canaux de vente, équipe, capacité de production, nouveaux marchés.", "Une croissance préparée plutôt que subie."],
-      ["Financer", "Plan d'affaires construit avec notre générateur en ligne, dossier de crédit, rencontre des financeurs.", "Un dossier recevable et des rendez-vous obtenus."],
-      ["Suivre", "Un point par mois après le programme, les indicateurs suivis, un appui à distance.", "Une entreprise qui tient une fois seule."]
+      ["Partir d'un problème","Un besoin réel, une proposition de valeur, les hypothèses à vérifier.","Une idée claire."],
+      ["Tester sur le terrain","Un produit minimum, face à de vrais clients.","La preuve d'une demande, ou un changement de cap."],
+      ["Lancer l'entreprise","Prix, formalisation, premières ventes, tenue de caisse.","Une entreprise qui vend et sait ce qu'elle gagne."],
+      ["Faire grandir","Canaux de vente, équipe, production, nouveaux marchés.","Une croissance préparée, pas subie."],
+      ["Financer","Plan d'affaires avec notre générateur, dossier de crédit, rencontre des financeurs.","Des rendez-vous obtenus."],
+      ["Suivre","Un point par mois après le programme, un appui à distance.","Une entreprise qui tient seule."]
     ],
     outils: ["bp", "hub"],
     publics: ["Porteurs de projet", "Jeunes entreprises", "PME en croissance", "Incubateurs et programmes partenaires"],
@@ -196,21 +194,20 @@ const POLES = [
     accroche: "Produire ensemble, vendre mieux, être payé à temps.",
     photo: ["coop", "Des cultivateurs au travail dans un champ"],
     nom: "Ubora Coop", initiales: "Co", couleur: "#3E7A1F",
-    carte: "Des statuts OHADA à la vente groupée : nous renforçons chaque maillon de la chaîne de valeur, et les producteurs sont payés à temps.",
+    carte: "Des statuts OHADA à la vente groupée, et des producteurs payés à temps.",
     titre: `Des coopératives bien gérées, et des producteurs <span class="serif">payés à temps</span>.`,
-    lead: "Nous partons de ce qui existe : une organisation paysanne, un groupement de producteurs ou une coopérative qui ne fonctionne plus. Nous l'aidons à se constituer ou à se remettre en ordre, puis à gérer, vendre et se financer. Nous travaillons sur toute la chaîne de valeur, des intrants jusqu'au paiement du producteur.",
+    lead: "Un groupement sans statuts ou une coopérative en sommeil : nous partons de ce qui existe, et nous l'amenons à gérer, vendre et se financer. Des intrants jusqu'au paiement du producteur.",
     contexte: {
-      intro: "Nous arrivons rarement devant une page blanche. Il y a presque toujours déjà un groupe de producteurs qui travaille ensemble, ou une coopérative créée il y a des années et restée en sommeil. Notre travail commence là.",
+      intro: "Une coopérative gagne à chaque maillon qu'elle maîtrise : acheter ensemble, stocker au lieu de brader, transformer pour vendre plus cher.",
       constats: [
-        ["Des groupements sans existence légale", "Les producteurs travaillent ensemble, mais sans statuts ni immatriculation. Pas de compte bancaire, pas de contrat, pas de crédit possible."],
-        ["Des coopératives en sommeil", "Immatriculées un jour, puis plus d'assemblée, plus de comptes tenus, plus d'activité commune."],
-        ["Des volumes que personne ne connaît", "Sans registre des membres et des parcelles, impossible d'annoncer une quantité fiable à un acheteur."],
-        ["Des paiements en retard", "Quand les producteurs sont payés tard, ils vendent ailleurs à la campagne suivante."]
+        ["Sans existence légale","Pas de statuts, donc ni compte, ni contrat, ni crédit."],
+        ["Des volumes que personne ne connaît","Sans registre, impossible d'annoncer une quantité fiable à un acheteur."],
+        ["Des paiements en retard","Payé tard, le producteur vend ailleurs à la campagne suivante."]
       ]
     },
     entrees: [
-      ["Vous êtes une organisation paysanne ou un groupement", "Nous vous aidons à constituer la coopérative : assemblée constitutive, statuts conformes à l'OHADA, immatriculation, ouverture du compte."],
-      ["Vous êtes une coopérative qui ne fonctionne plus", "Nous faisons le diagnostic, puis nous remettons les choses en ordre : révision des statuts, renouvellement des organes, reconstitution des comptes."]
+      ["Un groupement sans statuts","Assemblée constitutive, statuts OHADA, immatriculation, ouverture du compte."],
+      ["Une coopérative en sommeil","Diagnostic, révision des statuts, renouvellement des organes, comptes reconstitués."]
     ],
     chaine: {
       titre: "Toute la chaîne de valeur, du champ jusqu'au paiement",
@@ -226,14 +223,11 @@ const POLES = [
       ]
     },
     parcours: [
-      ["Faire le diagnostic", "Statuts, gouvernance, comptes, activité : on regarde où en est l'organisation.", "Un point de départ clair, et le choix entre créer ou redresser."],
-      ["Constituer ou remettre en ordre", "Assemblée constitutive et parts sociales, ou révision des statuts et renouvellement des organes.", "Une coopérative qui existe vraiment, avec des membres engagés."],
-      ["Formaliser", "Statuts conformes à l'Acte uniforme OHADA, immatriculation au registre des sociétés coopératives, identification nationale.", "Une personnalité juridique : contrats, compte bancaire et crédit deviennent possibles."],
-      ["Organiser", "Règlement intérieur, rôles séparés entre l'assemblée, le conseil et la gérance, procédures de caisse et de stock.", "Des règles écrites qui évitent les conflits."],
-      ["Gérer au quotidien", "Registre des membres et des parcelles, collecte, stocks, caisse et banque, tableau de bord du gérant.", "Des comptes à jour, que les membres peuvent vérifier."],
-      ["Vendre ensemble", "Recherche d'acheteurs, contrats de vente groupée, planification des livraisons.", "Un meilleur prix que chacun de son côté."],
-      ["Payer et financer", "Décomptes par producteur, paiements par mobile money, crédit de campagne et intrants.", "Des producteurs payés à temps, qui restent fidèles."],
-      ["Suivre", "Appui aux assemblées, aux rapports et à la vie de la coopérative.", "Une coopérative autonome au bout d'une campagne."]
+      ["Diagnostiquer","Statuts, gouvernance, comptes, activité.","Créer ou redresser : le choix est clair."],
+      ["Formaliser","Statuts OHADA, immatriculation, identification nationale.","Contrats, compte et crédit deviennent possibles."],
+      ["Organiser","Règlement intérieur, rôles séparés, procédures de caisse et de stock.","Des règles écrites qui évitent les conflits."],
+      ["Gérer et vendre","Registres, collecte, stocks, comptes, ventes groupées.","Des comptes vérifiables, un meilleur prix."],
+      ["Payer et suivre","Décomptes par producteur, mobile money, appui aux assemblées.","Une coopérative autonome au bout d'une campagne."]
     ],
     outils: ["logiciel-coop"],
     publics: ["Organisations paysannes", "Groupements de producteurs", "Coopératives agricoles", "Unions de coopératives", "ONG et programmes agricoles"],
@@ -266,45 +260,43 @@ const POLES = [
     accroche: "Le crédit, jusqu'où il n'allait pas.",
     photo: ["fin", "Trois femmes échangent autour d'une table de réunion"],
     nom: "Ubora Fin", initiales: "Fi", couleur: "#1D5FB8",
-    carte: "Nous préparons les emprunteurs, les présentons aux institutions financières et mobilisons le capital des financeurs au profit des groupes que nous accompagnons.",
+    carte: "Nous préparons les emprunteurs et mobilisons pour eux le capital des financeurs.",
     titre: `Rapprocher ceux qui ont besoin de crédit de ceux qui <span class="serif">prêtent</span>.`,
-    lead: "Le crédit existe en RDC, mais il atteint mal les petits emprunteurs. Nous travaillons des deux côtés, et entre les deux : nous préparons les groupes, les coopératives et les PME, nous les présentons aux institutions financières, et nous mobilisons le capital des financeurs à leur profit. Ubora Fin ne prête pas elle-même : elle fait venir le capital là où il manque.",
+    lead: "Le crédit existe en RDC, mais il atteint mal les petits emprunteurs. Ubora Fin ne prête pas : elle les prépare, les présente aux institutions financières et mobilise le capital à leur profit.",
     contexte: {
-      intro: "D'un côté, des emprunteurs qui n'ont rien à présenter. De l'autre, des institutions qui n'ont pas les moyens d'étudier de petits dossiers sans y perdre de l'argent. Tant que l'on ne travaille qu'un seul côté, rien ne bouge.",
+      intro: "D'un côté, des emprunteurs qui n'ont rien à présenter. De l'autre, des institutions qui perdent de l'argent sur les petits dossiers. Il faut travailler les deux côtés.",
       constats: [
-        ["Pas d'historique, pas de crédit", "Un groupe qui épargne depuis trois ans reste invisible pour une banque s'il ne peut rien prouver."],
-        ["Des dossiers refusés d'emblée", "Sans comptes ni prévisions, la demande est écartée avant même d'être étudiée."],
-        ["Un coût d'étude trop élevé", "Étudier un crédit de 500 dollars coûte presque autant qu'un crédit de 50 000. Beaucoup d'institutions renoncent."],
-        ["Des impayés repérés trop tard", "Sans outil de suivi, les retards se découvrent quand il est déjà difficile d'agir."]
+        ["Pas d'historique, pas de crédit","Trois ans d'épargne restent invisibles tant que rien ne les prouve."],
+        ["Un coût d'étude trop élevé","Étudier un crédit de 500 dollars coûte presque autant qu'un crédit de 50 000."],
+        ["Des impayés repérés trop tard","Sans suivi, les retards se découvrent quand il est difficile d'agir."]
       ]
     },
     parcours: [
-      ["Former et coacher", "Éducation financière, gestion du crédit, tenue des comptes. On apprend à bien gérer avant d'emprunter.", "Des emprunteurs préparés, pas seulement demandeurs."],
-      ["Monter le dossier", "Comptes tenus, plan d'affaires chiffré, garanties réalistes.", "Un dossier qu'une institution peut réellement étudier."],
-      ["Constituer un historique", "Les cotisations, les prêts et les remboursements enregistrés dans nos outils servent de preuves.", "Des indicateurs qu'un financier sait lire."],
-      ["Mettre en relation", "Nous présentons les dossiers aux IMF, aux COOPEC et aux banques, et nous suivons la discussion.", "Un premier crédit, à des conditions supportables."],
-      ["Mobiliser le capital", "Pour les groupes que nous suivons, Ubora Fin mobilise le capital auprès d'institutions financières, d'investisseurs d'impact et de bailleurs. Ce sont eux qui financent ; nous préparons, présentons et suivons.", "Un fonds de roulement pour le groupe, en plus de l'épargne des membres."],
-      ["Suivre le remboursement", "Échéances, relances, appui en cas de difficulté, des deux côtés.", "Un bon historique, qui ouvre la porte au crédit suivant."]
+      ["Former","Éducation financière, gestion du crédit, tenue des comptes.","Des emprunteurs préparés, pas seulement demandeurs."],
+      ["Monter le dossier","Comptes, plan d'affaires chiffré, garanties réalistes, historique tiré de nos outils.","Un dossier qu'une institution peut étudier."],
+      ["Mettre en relation","Présentation aux IMF, COOPEC et banques, et suivi de la discussion.","Un premier crédit, à des conditions supportables."],
+      ["Mobiliser le capital","Auprès d'institutions financières, d'investisseurs d'impact et de bailleurs. Eux financent ; nous préparons et suivons.","Un fonds de roulement, en plus de l'épargne."],
+      ["Suivre le remboursement","Échéances, relances, appui en cas de difficulté.","Un bon historique pour le crédit suivant."]
     ],
     intermediation: {
       titre: "Le lien entre ceux qui financent et les groupes d'épargne",
-      intro: "Une banque ne peut pas étudier des centaines de petits dossiers dans des villages éloignés. Un groupe d'épargne ne sait pas à quelle porte frapper. Ubora Fin se place entre les deux : nous ne prêtons pas nous-mêmes, nous mobilisons le capital de ceux qui veulent financer au profit des AVEC que nous connaissons, sous forme de fonds de roulement.",
+      intro: "Une banque ne peut pas étudier des centaines de petits dossiers éloignés ; un groupe ne sait pas à quelle porte frapper. Ubora Fin fait le lien, sans prêter elle-même.",
       etapes: [
-        ["Mobiliser le capital", "Lignes de crédit d'institutions de microfinance et de banques, capitaux d'investisseurs d'impact, fonds de garantie apportés par des bailleurs."],
-        ["L'orienter vers les groupes", "Le capital va au groupe, et non à chaque membre, par paliers, selon l'historique enregistré dans AKIBA et son niveau « prête pour une IMF »."],
-        ["Suivre et rendre compte", "Les remboursements sont suivis semaine après semaine. Chaque financeur reçoit des rapports clairs sur l'usage de son argent."],
-        ["Faire grandir", "Les groupes les plus solides passent en relation directe avec l'institution partenaire. Le capital remboursé peut servir d'autres groupes."]
+        ["Mobiliser","Lignes de crédit d'IMF et de banques, capitaux d'impact, fonds de garantie de bailleurs."],
+        ["Orienter vers les groupes","Au groupe, pas à chaque membre, par paliers, selon l'historique tenu dans AKIBA."],
+        ["Suivre et rendre compte","Remboursements suivis chaque semaine, rapports clairs pour chaque financeur."],
+        ["Faire grandir","Les groupes solides passent en relation directe ; le capital remboursé sert d'autres groupes."]
       ],
       gains: [
-        ["Pour les institutions financières", "Une clientèle nouvelle, déjà formée et suivie, sans coût d'étude dossier par dossier. Le risque est réparti sur de nombreux groupes et porté par la caution solidaire des membres."],
-        ["Pour les AVEC", "Plus d'argent à prêter aux membres, au bon moment de l'année, sans garantie matérielle, à un coût raisonnable et avec un accompagnement."],
-        ["Pour les bailleurs et les investisseurs", "Un fonds qui tourne au lieu d'une subvention consommée une seule fois, et un impact mesuré à partir de données réelles."]
+        ["Pour les institutions financières","Une clientèle formée et suivie, sans coût d'étude dossier par dossier, avec la caution solidaire des membres."],
+        ["Pour les AVEC","Plus d'argent à prêter, au bon moment, sans garantie matérielle, à un coût raisonnable."],
+        ["Pour les bailleurs et les investisseurs","Un fonds qui tourne au lieu d'une subvention consommée une fois, et un impact mesuré."]
       ]
     },
     projet: {
       titre: "Une société de crédit pour les AVEC",
-      texte: "Pour porter ce rôle d'intermédiaire à plus grande échelle, dans un cadre agréé, nous préparons la création d'une société de crédit dédiée aux AVEC. Elle s'appuiera sur l'historique d'épargne des groupes et sur leur discipline collective.",
-      etat: "Projet en préparation. L'étude de faisabilité, le cadre réglementaire et la recherche de partenaires financiers sont en cours.",
+      texte: "Pour porter ce rôle à plus grande échelle, dans un cadre agréé, nous préparons une société de crédit dédiée aux AVEC, appuyée sur leur historique d'épargne et leur discipline collective.",
+      etat: "Étude de faisabilité, cadre réglementaire et recherche de partenaires financiers en cours.",
       appel: "Institution, bailleur ou investisseur intéressé ? Parlons-en."
     },
     outils: ["akiba", "academie"],
@@ -327,41 +319,38 @@ const POLES = [
     accroche: "Un bon produit mérite un acheteur.",
     photo: ["market", "Un étal de tomates et de légumes sur un marché"],
     nom: "Ubora Market", initiales: "Mk", couleur: "#1F7A6B",
-    carte: "Nous trouvons l'acheteur avant la récolte, et nous suivons chaque vente jusqu'au paiement du producteur.",
+    carte: "L'acheteur trouvé avant la récolte, la vente suivie jusqu'au paiement.",
     titre: `Produire, c'est bien. Trouver des <span class="serif">acheteurs</span>, c'est mieux.`,
-    lead: "Ubora Market met en relation les vendeurs que nous accompagnons, PME, coopératives et entrepreneurs, avec des acheteurs : entreprises, institutions et particuliers. Une plateforme dédiée est en préparation.",
+    lead: "Nous relions les coopératives, les PME et les entrepreneurs que nous accompagnons à des acheteurs : entreprises, institutions, particuliers.",
     contexte: {
-      intro: "Le maillon qui casse le plus souvent n'est ni la production ni le financement. C'est la vente. Un producteur qui écoule mal sa récolte perd sa campagne, rembourse mal son crédit et finit par se décourager.",
+      intro: "Le maillon qui casse le plus souvent n'est ni la production ni le crédit. C'est la vente.",
       constats: [
-        ["Vendre au premier venu", "Sans acheteur trouvé à l'avance, on brade sa récolte au premier intermédiaire qui passe."],
-        ["Des volumes trop petits", "Seul, un producteur n'atteint jamais la quantité qu'exige un acheteur important."],
-        ["Une qualité irrégulière", "Emballage, séchage, calibrage : les exigences des acheteurs sont rarement connues."],
-        ["La confiance qui manque", "Acheteurs et vendeurs se méfient les uns des autres, faute de quelqu'un qui garantisse l'échange."]
+        ["Vendre au premier venu","Sans acheteur trouvé à l'avance, on brade sa récolte."],
+        ["Des volumes trop petits","Seul, un producteur n'atteint jamais la quantité demandée."],
+        ["La confiance qui manque","Personne ne garantit l'échange entre l'acheteur et le vendeur."]
       ]
     },
     canaux: {
       titre: "Quatre débouchés, quatre façons de vendre",
-      intro: "Le bon débouché dépend du produit, de la quantité et de la capacité à livrer. Nous le choisissons avec le vendeur, puis nous le préparons à ce que ce débouché exige.",
+      intro: "Le bon débouché dépend du produit, du volume et de la capacité à livrer. Nous le choisissons avec le vendeur.",
       liste: [
-        ["Entreprises (B2B)", "Agro-industries, grossistes, hôtels, restaurants.", "De gros volumes et des contrats réguliers, mais des exigences strictes sur la qualité, la régularité et la facturation."],
-        ["Particuliers (B2C)", "Vente directe, boutiques, réseaux sociaux, livraison.", "Une meilleure marge et un paiement immédiat, en échange d'un effort commercial de tous les jours."],
-        ["Institutions et programmes", "Écoles, hôpitaux, ONG, projets, marchés publics.", "Des commandes prévisibles, à condition d'être formalisé et de savoir répondre à un appel d'offres."],
-        ["Export régional", "Zambie, Tanzanie et pays voisins.", "De meilleurs prix pour les filières qui atteignent la quantité et les normes demandées."]
+        ["Entreprises (B2B)","Agro-industries, grossistes, hôtels, restaurants.","Gros volumes et contrats réguliers, exigences strictes."],
+        ["Particuliers (B2C)","Vente directe, boutiques, réseaux sociaux.","Meilleure marge et paiement immédiat."],
+        ["Institutions et programmes","Écoles, hôpitaux, ONG, marchés publics.","Des commandes prévisibles, pour qui est formalisé."],
+        ["Export régional","Zambie, Tanzanie et pays voisins.","De meilleurs prix pour les filières aux normes."]
       ]
     },
     parcours: [
-      ["Recenser l'offre", "Ce que produisent nos bénéficiaires, en quelle quantité, à quelle période et où.", "Une offre que l'on peut annoncer et vérifier."],
-      ["Connaître la demande", "Rencontrer les acheteurs pour comprendre leurs volumes, leurs prix et leurs exigences.", "Des débouchés précis, avec leurs conditions."],
-      ["Choisir le débouché", "Entreprises, particuliers, institutions ou export, selon le produit et la capacité à livrer.", "Une stratégie commerciale réaliste."],
-      ["Se mettre à niveau", "Qualité, emballage, régularité des livraisons, documents demandés.", "Une offre conforme à ce que l'acheteur attend."],
-      ["Regrouper et présenter", "Rassembler l'offre de plusieurs vendeurs et organiser la rencontre avec l'acheteur.", "Une quantité suffisante et une négociation équilibrée."],
-      ["Signer", "Contrat, prix, calendrier de livraison, conditions de paiement.", "Un engagement écrit, des deux côtés."],
-      ["Suivre jusqu'au paiement", "Livraisons, contrôle de la qualité, paiement jusqu'au producteur.", "Des vendeurs payés, et un acheteur qui revient."]
+      ["Recenser l'offre","Quoi, combien, quand et où.","Une offre que l'on peut annoncer."],
+      ["Connaître la demande","Volumes, prix et exigences des acheteurs.","Des débouchés précis."],
+      ["Se mettre à niveau","Qualité, emballage, régularité, documents.","Une offre conforme."],
+      ["Regrouper et signer","L'offre de plusieurs vendeurs, puis contrat, prix et calendrier.","Une négociation équilibrée, un engagement écrit."],
+      ["Suivre jusqu'au paiement","Livraison, contrôle de la qualité, paiement du producteur.","Un acheteur qui revient."]
     ],
     projet: {
       titre: "Une plateforme de mise en relation",
-      texte: "Nous préparons une plateforme en ligne où les vendeurs que nous accompagnons publieront leur offre : produit, quantité, période, lieu. Les acheteurs y trouveront directement des fournisseurs vérifiés, chacun avec l'historique de ses livraisons. C'est ce qui rassure vraiment un acheteur.",
-      etat: "Projet en cours de développement. Les premiers essais se font avec des acheteurs et des coopératives pilotes.",
+      texte: "Les vendeurs accompagnés y publieront leur offre ; les acheteurs y trouveront des fournisseurs vérifiés, avec l'historique de leurs livraisons. C'est ce qui rassure vraiment un acheteur.",
+      etat: "En développement, avec des acheteurs et des coopératives pilotes.",
       appel: "Acheteur ou vendeur, vous voulez participer à la phase pilote ? Écrivez-nous."
     },
     outils: ["plateforme-market"],
@@ -384,26 +373,23 @@ const POLES = [
     accroche: "Protéger la terre, et en vivre.",
     photo: ["vert", "Des mains tiennent un jeune plant dans un sachet de pépinière"],
     nom: "Ubora Vert", initiales: "Ve", couleur: "#557A17",
-    carte: "Reboisement, recyclage, agroécologie, énergie propre : nous faisons de la protection de l'environnement une source de revenus pour les communautés.",
+    carte: "Reboisement, recyclage, agroécologie : protéger l'environnement, et en vivre.",
     titre: `Protéger l'environnement, et en faire une <span class="serif">source de revenus</span>.`,
-    lead: "Ubora Vert réunit tout ce que nous faisons pour l'environnement : reboisement, recyclage et valorisation des déchets, agriculture durable, énergie propre, sensibilisation. Notre conviction : une action pour l'environnement dure quand elle fait vivre ceux qui la portent.",
+    lead: "Reboisement, recyclage, agriculture durable, énergie propre. Notre conviction : une action pour l'environnement dure quand elle fait vivre ceux qui la portent.",
     contexte: {
-      intro: "Dans les villes minières comme dans les villages, la pression sur l'environnement se voit chaque jour : collines déboisées pour le charbon de bois, déchets plastiques dans les caniveaux, sols épuisés, saisons des pluies de moins en moins prévisibles. Ce sont d'abord les familles modestes qui en paient le prix.",
+      intro: "Collines déboisées pour le charbon, plastique dans les caniveaux, sols épuisés : ce sont d'abord les familles modestes qui en paient le prix.",
       constats: [
-        ["Des forêts qui reculent", "Le charbon de bois reste la première énergie pour cuisiner. Chaque année, on coupe les arbres un peu plus loin des villes."],
-        ["Des déchets sans filière", "Plastique, ferraille, déchets organiques : peu de collecte et peu de tri, alors que beaucoup de ces déchets ont une valeur."],
-        ["Des sols fatigués", "Sans rotation ni fumure organique, les rendements baissent, et les engrais coûtent de plus en plus cher."],
-        ["Un climat moins prévisible", "Pluies décalées, sécheresses : une récolte perdue emporte souvent l'épargne de toute une famille."]
+        ["Des forêts qui reculent","Le charbon de bois reste la première énergie pour cuisiner."],
+        ["Des déchets sans filière","Peu de tri, alors que beaucoup de déchets ont une valeur."],
+        ["Un climat moins prévisible","Une récolte perdue emporte l'épargne de toute une famille."]
       ]
     },
     parcours: [
-      ["Diagnostiquer", "Les pressions sur l'environnement du territoire, les pratiques actuelles, les acteurs présents et les activités vertes possibles.", "Des priorités claires, décidées avec la communauté."],
-      ["Sensibiliser", "Causeries, écoles, groupes d'épargne, radios communautaires : expliquer simplement ce qui se joue, et ce que chacun peut faire.", "Une communauté qui comprend l'enjeu et s'engage."],
-      ["Reboiser", "Pépinières communautaires, plantations, agroforesterie, suivi de la survie des plants.", "Des arbres qui poussent, et des pépiniéristes qui en vivent."],
-      ["Recycler et valoriser", "Tri à la source, collecte, recyclage du plastique et de la ferraille, compostage des déchets organiques.", "Des déchets qui deviennent des revenus."],
-      ["Produire autrement", "Agroécologie, compost, gestion de l'eau, foyers améliorés, énergie solaire.", "Moins de dépenses, des sols et des récoltes qui tiennent."],
-      ["Financer", "Capital vert mobilisé par Ubora Fin, montage de projets pour les fonds climat et les programmes environnementaux.", "Des activités vertes qui trouvent leur financement."],
-      ["Mesurer et suivre", "Arbres plantés et vivants, déchets valorisés, énergie économisée, revenus créés.", "Des résultats que l'on peut montrer aux partenaires."]
+      ["Diagnostiquer et sensibiliser","Pressions locales et activités possibles ; écoles, groupes d'épargne, radios communautaires.","Des priorités choisies avec la communauté."],
+      ["Reboiser","Pépinières communautaires, plantations, agroforesterie.","Des arbres qui poussent, des pépiniéristes qui en vivent."],
+      ["Recycler et valoriser","Tri, collecte, plastique, ferraille, compost.","Des déchets qui deviennent des revenus."],
+      ["Produire autrement","Agroécologie, gestion de l'eau, foyers améliorés, solaire.","Moins de dépenses, des récoltes qui tiennent."],
+      ["Financer et mesurer","Fonds climat, capital vert mobilisé par Ubora Fin ; arbres vivants, déchets valorisés, revenus créés.","Des résultats à montrer."]
     ],
     outils: [],
     publics: ["Communautés et groupes AVEC", "Coopératives agricoles", "Recycleurs, PME et artisans", "Écoles et jeunes", "ONG et programmes environnementaux", "Entreprises et collectivités locales"],
@@ -429,16 +415,15 @@ const POLES = [
     /* vidéo de présentation (montage du 9 octobre 2026) : captures réelles d'academie.uborardc.com */
     video: { src: "/img/video/ubora-academie.mp4", affiche: "/img/video/ubora-academie-couverture.webp", duree: "1 min 21",
       titre: "Ubora Académie en une minute vingt", legende: "Les images sont des captures réelles d'academie.uborardc.com. Photo : marché de Goma, MONUSCO / M. Asmani, CC BY-SA." },
-    carte: "L'école d'Ubora, au service de tous nos pôles : cours en ligne utilisables sans réseau, sessions sur le terrain, formation de formateurs et certificats vérifiables.",
+    carte: "L'école de tous nos pôles : cours en ligne sans réseau, sessions sur le terrain, certificats vérifiables.",
     titre: `Une académie pour tous nos pôles : apprendre, pratiquer, être <span class="serif">certifié</span>.`,
-    lead: "Ubora Académie forme celles et ceux que nos pôles accompagnent, et les équipes qui les accompagnent : membres d'AVEC, animateurs, entrepreneurs, coopératives, agents de terrain. Ses cours en ligne fonctionnent même sans réseau, et chaque parcours mène à un certificat vérifiable.",
+    lead: "L'école d'Ubora forme ceux que nos pôles accompagnent, et leurs équipes. Des cours en ligne qui marchent sans réseau, et des certificats vérifiables.",
     contexte: {
-      intro: "La formation est au cœur de chacun de nos pôles. Mais une formation donnée une seule fois, en salle, pendant la durée d'un projet, s'oublie vite. L'Académie la rend durable : accessible partout, à son rythme, et reconnue.",
+      intro: "Une formation donnée une fois, en salle, le temps d'un projet, s'oublie vite. L'Académie la rend durable : accessible partout, à son rythme, et reconnue.",
       constats: [
-        ["Des formations qui s'arrêtent avec le projet", "Les supports restent dans les bureaux, et les nouveaux membres ne sont jamais formés."],
-        ["Former loin coûte cher", "Déplacer un formateur prend du temps et de l'argent, et le réseau manque souvent en zone rurale."],
-        ["Des compétences difficiles à prouver", "Un animateur ou un trésorier formé n'a rien à montrer à un employeur ou à une institution financière."],
-        ["Des relais à former", "Sans formateurs relais bien préparés, la qualité baisse à chaque nouvelle génération de formés."]
+        ["Des formations qui s'arrêtent avec le projet","Les nouveaux membres ne sont jamais formés."],
+        ["Former loin coûte cher","Et le réseau manque souvent en zone rurale."],
+        ["Des compétences difficiles à prouver","Un trésorier formé n'a rien à montrer."]
       ]
     },
     programmesTitre: ["Les domaines de l'Académie", "Plus de 130 cours en 25 parcours, dans sept domaines"],
@@ -452,12 +437,11 @@ const POLES = [
       ["Accompagner", "Coachs, incubateurs, programmes", "Coacher des entrepreneurs, diriger un incubateur, concevoir un programme d'appui, accompagner sur le terrain."]
     ],
     parcours: [
-      ["Identifier les besoins", "Avec chaque pôle et chaque partenaire : qui former, à quoi, et à quel niveau.", "Un plan de formation adapté au programme."],
-      ["Concevoir les cours", "À partir de nos documents de terrain : leçons courtes, exemples congolais, exercices avec de vrais chiffres.", "Des cours d'environ 50 minutes, éprouvés sur le terrain."],
-      ["Former en ligne et en salle", "L'Académie en ligne, utilisable sans réseau, et des sessions en présentiel pour la pratique.", "Chacun avance à son rythme, accompagné."],
-      ["Évaluer et certifier", "Quiz chronométrés, test final, certificat numéroté avec code QR, vérifiable en ligne.", "Des compétences prouvées."],
-      ["Former les formateurs", "Parcours formateur, micro-enseignement, plan de progrès.", "Des relais locaux qui forment à leur tour."],
-      ["Suivre et améliorer", "Taux de réussite, questionnaires de satisfaction, mise à jour des cours.", "Des formations qui progressent avec le terrain."]
+      ["Identifier les besoins","Qui former, à quoi, à quel niveau.","Un plan de formation sur mesure."],
+      ["Concevoir les cours","Leçons courtes, exemples congolais, exercices chiffrés.","Des cours éprouvés sur le terrain."],
+      ["Former en ligne et en salle","En ligne sans réseau, en présentiel pour la pratique.","Chacun à son rythme, accompagné."],
+      ["Certifier","Quiz chronométrés, test final, certificat à code QR.","Des compétences prouvées."],
+      ["Former les formateurs","Parcours formateur, micro-enseignement, plan de progrès.","Des relais qui forment à leur tour."]
     ],
     outils: ["academie"],
     publics: ["Membres et bureaux d'AVEC", "Animateurs et agents de terrain", "Entrepreneurs et coopératives", "Formateurs relais", "ONG, programmes et institutions"]
@@ -479,7 +463,7 @@ const PHOTOS = [
 
 /* Page AVEC : éléments propres à ce pôle */
 const AVEC = {
-  definition: "Une AVEC réunit en général quinze à trente personnes. Chaque semaine, les membres épargnent ensemble et s'accordent de petits prêts. À la fin du cycle, souvent au bout de neuf à douze mois, la caisse est partagée entre tous. Un fonds social aide les membres en cas de coup dur : maladie, deuil, frais scolaires.",
+  definition: "Quinze à trente personnes qui épargnent chaque semaine et s'accordent de petits prêts. En fin de cycle, souvent après neuf à douze mois, la caisse est partagée. Un fonds social aide en cas de coup dur.",
   avantApres: [
     ["Tenue des comptes", "Un cahier recopié à chaque réunion", "Une saisie sur téléphone, même sans réseau"],
     ["Calcul du partage", "Plusieurs heures, et souvent des contestations", "Immédiat, selon l'épargne de chacun"],
@@ -492,10 +476,10 @@ const AVEC = {
     ["Suivi d'un programme", "Des données lentes à collecter, souvent incomplètes", "Tableau de bord, écran Impact et export Excel pour l'ONG ou le bailleur"]
   ],
   passerelle: [
-    ["Le groupe", "Quinze à trente membres qui épargnent chaque semaine et se prêtent entre eux."],
-    ["AKIBA", "Les comptes sont tenus sur téléphone, sans réseau, dans un registre scellé que chacun peut vérifier."],
-    ["L'historique", "Un indice de qualité des données et un niveau « prête pour une IMF » rendent la régularité du groupe lisible."],
-    ["Le financement", "Une IMF, une COOPEC ou une banque apporte un fonds de roulement au groupe, avec l'appui d'Ubora Fin, qui mobilise le capital. Nous suivons le remboursement."]
+    ["Le groupe","Quinze à trente membres qui épargnent et se prêtent entre eux."],
+    ["AKIBA","Des comptes tenus sur téléphone, sans réseau, dans un registre scellé."],
+    ["L'historique","Un niveau « prête pour une IMF » rend la régularité du groupe lisible."],
+    ["Le financement","Une IMF, une COOPEC ou une banque apporte un fonds de roulement ; Ubora Fin mobilise le capital et suit le remboursement."]
   ]
 };
 
@@ -522,7 +506,7 @@ const OUTILS = [
         ["Formez le comité", "Chaque déploiement comprend une formation de prise en main, puis un suivi sur le terrain."]
       ]
     },
-    resume: "Le cahier de l'AVEC dans le téléphone, même sans réseau. Chaque franc est écrit au moment où il bouge, chaque membre repart avec son reçu, et l'historique du groupe devient un dossier qu'une IMF peut étudier.",
+    resume: "Le cahier de l'AVEC dans le téléphone, même sans réseau : chaque franc écrit au moment où il bouge, un reçu pour chaque membre, un historique qu'une IMF peut étudier.",
     points: ["Réunion guidée en 8 étapes, de la présence à la clôture à trois clés", "Registre scellé : toute modification se voit", "Reçus des membres et journal imprimés sur imprimante Bluetooth (bientôt sur terminal POS), ou envoyés par WhatsApp et SMS", "Indice de qualité des données et niveau « prête pour une IMF »", "Dossier pour l'IMF et export Excel, sans données personnelles", "Crédit d'une IMF suivi de bout en bout, garantie comprise", "Espaces AVEC, animateur et organisation, avec un écran Impact", "Langues de la RDC, guide audio et 7 modules de formation AVEC", "Démonstration libre ; code de validation Ubora pour une vraie AVEC"]
   },
   {
@@ -540,13 +524,13 @@ const OUTILS = [
         ["Complétez vos chiffres", "Ventes, investissements, crédits : les tableaux se calculent, avec un diagnostic et des conseils sur vos propres chiffres."]
       ]
     },
-    resume: "Il guide l'entrepreneur étape par étape, à partir de huit questions sur son projet, et produit un business plan complet : prévisions financières, diagnostic de viabilité et conseils sur ses propres chiffres.",
+    resume: "Huit questions sur votre projet, et un business plan complet : prévisions financières, viabilité, conseils sur vos propres chiffres.",
     points: ["Un parcours étape par étape, adapté au projet en huit réponses", "Ventes avec saisonnalité, investissements, crédits et besoin en fonds de roulement", "Compte de résultat, bilan et trésorerie calculés, mois par mois", "Seuil de rentabilité et trois scénarios, avec calculs inverses", "Score de viabilité : « Mon projet peut-il démarrer ? »", "Conseils ciblés : phasage des investissements, durée du crédit, module agricole", "En francs congolais ou en dollars ; imprimable en PDF ou exportable vers Word"]
   },
   {
     id: "hub", nom: "Ubora Hub", court: "Le logiciel d'incubation, de l'idée à l'entreprise", pole: "pme", statut: "en-ligne", mock: "hub", couleur: "#0F3170", initiales: "Hb",
     sousDomaine: "hub.uborardc.com", url: "https://hub.uborardc.com",
-    resume: "Le logiciel d'incubation d'Ubora : les incubateurs et les programmes d'entrepreneuriat y sélectionnent, forment et suivent leurs entrepreneurs ; un entrepreneur sans incubateur peut aussi y suivre seul le parcours, jusqu'au plan d'affaires.",
+    resume: "Le logiciel d'incubation d'Ubora : les incubateurs y sélectionnent, forment et suivent leurs entrepreneurs ; un entrepreneur seul peut y suivre le parcours libre.",
     points: ["Appels à candidatures en ligne, jury et sélection", "Parcours en quatre phases, de l'idée à la mise à niveau des PME", "Modules courts, exercices appliqués au projet et suivi d'un coach", "Plan d'affaires construit au fil des exercices, relié au générateur", "Tableau de bord, indicateurs et rapports pour les bailleurs", "Parcours libre pour l'entrepreneur sans incubateur, même hors connexion"],
     /* inscriptionOuverte : la page hub.uborardc.com/inscription est en ligne (remettre false pour revenir au formulaire de contact) */
     inscription: "https://hub.uborardc.com/inscription", inscriptionOuverte: true,
@@ -584,7 +568,7 @@ const OUTILS = [
   {
     id: "academie", nom: "Ubora Académie", court: "L'école en ligne, avec certificats", pole: "academie", statut: "en-ligne", mock: "academie", couleur: "#9A5522", initiales: "Ac",
     sousDomaine: "academie.uborardc.com", url: "https://academie.uborardc.com", page: "/academie",
-    resume: "L'école en ligne d'Ubora : plus de 130 cours, répartis en 25 parcours, sur les AVEC, les activités génératrices de revenus, les coopératives, l'entrepreneuriat, l'agriculture et l'éducation financière, utilisables même sans réseau, avec badges et certificats vérifiables.",
+    resume: "L'école en ligne d'Ubora : plus de 130 cours en 25 parcours, utilisables sans réseau, avec certificats vérifiables.",
     points: ["25 parcours, du membre d'AVEC au formateur", "Les 5 modules du PNEF de la Banque centrale du Congo", "Exercices corrigés et quiz chronométrés", "Cours téléchargés utilisables sans réseau", "Badges et certificats vérifiables en ligne"]
   },
   {
@@ -602,32 +586,32 @@ const OUTILS = [
 /* ---------- Projets et conseil (pour les organisations) ---------- */
 const CONSEIL = [
   { id: "projets", ico: "target", titre: "Mise en œuvre de projets",
-    texte: "Nous mettons en œuvre des projets de développement économique sur le terrain, pour le compte de nos partenaires ou à leurs côtés, du montage jusqu'au rapport final.",
+    texte: "Sur le terrain, pour nos partenaires ou à leurs côtés, du montage jusqu'au rapport final.",
     points: ["Conception et montage du projet", "Propositions de financement", "Mise en œuvre et coordination sur le terrain", "Suivi, évaluation et rapports"] },
   { id: "etudes", ico: "compass", titre: "Conseil et études",
-    texte: "Études de marché et de faisabilité, diagnostics de filières, évaluations de projets. Nous allons chercher l'information sur le terrain et nous rendons des recommandations que l'on peut appliquer.",
+    texte: "Marché, faisabilité, filières, évaluations : l'information prise sur le terrain, et des recommandations applicables.",
     points: ["Études de marché et de faisabilité", "Analyse de filières", "Enquêtes de terrain", "Évaluations de projets et d'impact"] },
   { id: "digitalisation", ico: "flow", titre: "Digitalisation de l'accompagnement",
-    texte: "Beaucoup d'organisations suivent encore leurs bénéficiaires dans des fichiers dispersés. Nous les aidons à organiser et à outiller ce suivi, notamment avec Ubora Hub.",
+    texte: "Du suivi dans des fichiers dispersés à un suivi outillé, notamment avec Ubora Hub.",
     points: ["Analyse des pratiques existantes", "Mise en place d'Ubora Hub", "Indicateurs et tableaux de bord", "Formation des équipes"] },
   { id: "capacites", ico: "school", titre: "Formation et renforcement des équipes",
-    texte: "Nous formons les équipes des ONG, des institutions et des programmes à nos méthodes et à nos outils, et nous formons des formateurs relais.",
+    texte: "Vos équipes formées à nos méthodes et à nos outils, et des formateurs relais.",
     points: ["Formation de formateurs", "Méthodologie AVEC", "Accompagnement d'entrepreneurs", "Gestion des coopératives"] }
 ];
 
 /* La mise en œuvre d'un projet, temps par temps (page « Projets et conseil »). */
 const MISE_EN_OEUVRE = {
-  intro: "ONG, bailleurs, institutions et programmes nous confient tout ou partie d'un projet de développement économique. Nous le conduisons sur le terrain, avec nos équipes, notre méthode et nos outils.",
+  intro: "ONG, bailleurs et institutions nous confient tout ou partie d'un projet. Nous le conduisons sur le terrain, avec notre méthode et nos outils.",
   formules: [
     ["Nous mettons en œuvre pour vous", "Vous fixez les objectifs et le budget. Nous conduisons le projet de bout en bout et nous vous rendons compte."],
     ["Nous mettons en œuvre avec vous", "Vos équipes restent en première ligne. Nous apportons la méthode, les outils, la formation et le suivi."]
   ],
   temps: [
-    ["Concevoir", "Diagnostic sur place, objectifs, budget et calendrier, construits avec vous.", "Un projet réaliste, que le terrain peut porter."],
-    ["Mettre en œuvre", "Nos équipes structurent, forment et outillent les groupes, les entrepreneurs et les coopératives ciblés.", "Des activités menées jusqu'au bout, pas seulement lancées."],
-    ["Suivre et mesurer", "Les données sont tenues dans nos outils dès le premier jour.", "Des indicateurs à jour, sans attendre la fin du projet."],
-    ["Rendre compte", "Rapports techniques et financiers, au rythme convenu avec vous.", "Un partenaire qui sait où va chaque activité."],
-    ["Rester", "À la clôture, les relais locaux, les outils et le suivi restent en place.", "Des résultats qui tiennent après le financement."]
+    ["Concevoir","Diagnostic, objectifs, budget et calendrier, avec vous.","Un projet que le terrain peut porter."],
+    ["Mettre en œuvre","Nos équipes structurent, forment et outillent les publics ciblés.","Des activités menées jusqu'au bout."],
+    ["Suivre et mesurer","Les données sont dans nos outils dès le premier jour.","Des indicateurs toujours à jour."],
+    ["Rendre compte","Rapports techniques et financiers, au rythme convenu.","Vous savez où va chaque activité."],
+    ["Rester","Relais locaux, outils et suivi restent après la clôture.","Des résultats qui tiennent."]
   ]
 };
 
