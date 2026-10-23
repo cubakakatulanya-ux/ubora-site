@@ -2170,3 +2170,6 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
 
 /* --- valeurs (Qui sommes-nous) : réunies dans un cadre gris, comme un manifeste --- */
 .grid-4:has(> .value) { padding: clamp(20px, 3vw, 36px); border-radius: var(--r-lg); background: var(--surface-2); }
+
+/* cinq outils en ligne : une seule rangée sur ordinateur */
+@media (min-width: 1101px) { .tools-mini { grid-template-columns: repeat(5, minmax(0, 1fr)); } }

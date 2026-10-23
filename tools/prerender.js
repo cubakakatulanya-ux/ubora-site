@@ -67,6 +67,7 @@ const ORG = {
   openingHoursSpecification: [{ "@type": "OpeningHoursSpecification", dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], opens: "08:00", closes: "16:00" }],
   areaServed: { "@type": "Country", name: "République démocratique du Congo" },
   contactPoint: [{ "@type": "ContactPoint", telephone: "+243998275144", contactType: "customer service", availableLanguage: ["fr", "sw"] }],
+  sameAs: [S.CONFIG.youtube].filter(Boolean),
   knowsAbout: ["Associations villageoises d'épargne et de crédit", "entrepreneuriat social", "inclusion financière", "entrepreneuriat", "incubation", "coopératives agricoles", "accès au marché", "protection de l'environnement", "recyclage"]
 };
 const legal = S.CONFIG.legal || {};

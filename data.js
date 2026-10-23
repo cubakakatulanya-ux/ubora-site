@@ -19,6 +19,7 @@ const CONFIG = {
   adresse: "Avenue Mapendo, Q. Kalubwe, Lubumbashi, RDC",
   zone: "Partout en RDC, sur le terrain et à distance",
   horaires: "Du lundi au vendredi, de 8 h à 16 h",
+  youtube: "https://www.youtube.com/@uborardc",
   /* Mentions légales. Un champ laissé vide n'est pas affiché sur le site. */
   legal: { rccm: "CD/KNM/RCCM/24-A-04755", idnat: "01-G4701-N86995I", impot: "", directeur: "Christian Cubaka Katulanya, Directeur Gérant" }
 };
@@ -27,6 +28,7 @@ const CONFIG = {
 const TICKER_MESSAGES = [
   ["Ubora est une entreprise à caractère social : ses excédents sont réinvestis", "/soutenir"],
   ["Ubora Académie : plus de 130 cours en ligne avec certificat", "/academie"],
+  ["Nouveau : Akiba Suivi, l'application des animateurs et des organisations qui suivent des AVEC", "/outils/akiba#acces"],
   ["En vidéo : AKIBA, le cahier de l'AVEC dans le téléphone, en trois minutes", "/outils/akiba#video"],
   ["En vidéo : Ubora Hub, de l'idée à l'entreprise, en quatre minutes", "/outils/hub#video"],
   ["Ubora Vert : protéger l'environnement, et en vivre", "/vert"],
@@ -114,7 +116,7 @@ const POLES = [
       ["Suivre et faire grandir","Supervision, graduation, activités génératrices de revenus, fédération.","Des groupes qui durent."]
     ],
     avec: true,
-    outils: ["akiba", "academie"],
+    outils: ["akiba", "akiba-suivi", "academie"],
     publics: ["Groupes AVEC et mutuelles de solidarité", "Réseaux et fédérations d'AVEC", "ONG et programmes d'inclusion financière", "IMF, COOPEC et banques"],
     boite: {
       statut: "disponible",
@@ -414,7 +416,7 @@ const POLES = [
     nom: "Ubora Académie", initiales: "Ac", couleur: "#9A5522",
     /* vidéo de présentation (montage du 9 octobre 2026) : captures réelles d'academie.uborardc.com */
     video: { src: "/img/video/ubora-academie.mp4", affiche: "/img/video/ubora-academie-couverture.webp", duree: "1 min 21",
-      titre: "Ubora Académie en une minute vingt", legende: "Les images sont des captures réelles d'academie.uborardc.com. Photo : marché de Goma, MONUSCO / M. Asmani, CC BY-SA." },
+      titre: "Ubora Académie en une minute vingt", youtube: "X7eC9dx4l_k", legende: "Les images sont des captures réelles d'academie.uborardc.com. Photo : marché de Goma, MONUSCO / M. Asmani, CC BY-SA." },
     carte: "L'école de tous nos pôles : cours en ligne sans réseau, sessions sur le terrain, certificats vérifiables.",
     titre: `Une académie pour tous nos pôles : apprendre, pratiquer, être <span class="serif">certifié</span>.`,
     lead: "L'école d'Ubora forme ceux que nos pôles accompagnent, et leurs équipes. Des cours en ligne qui marchent sans réseau, et des certificats vérifiables.",
@@ -473,7 +475,7 @@ const AVEC = {
     ["Reçu du membre", "Rien, ou un chiffre noté à la main dans le carnet", "Un reçu imprimé ou envoyé par WhatsApp, vérifiable contre le journal"],
     ["Langue", "Des comptes en français, que tous ne lisent pas", "L'application en lingala, swahili, kikongo et tshiluba, avec un guide audio"],
     ["Accès au crédit", "Aucune trace en dehors du groupe", "Un niveau « prête pour une IMF » et un dossier à lui présenter"],
-    ["Suivi d'un programme", "Des données lentes à collecter, souvent incomplètes", "Tableau de bord, écran Impact et export Excel pour l'ONG ou le bailleur"]
+    ["Suivi d'un programme", "Des données lentes à collecter, souvent incomplètes", "Dans Akiba Suivi : tableau de bord, écran Impact et export Excel pour l'ONG ou le bailleur"]
   ],
   passerelle: [
     ["Le groupe","Quinze à trente membres qui épargnent et se prêtent entre eux."],
@@ -496,9 +498,10 @@ const OUTILS = [
       lead: "Chaque franc est écrit au moment où il bouge, chaque membre repart avec son reçu, et l'historique du groupe devient un dossier qu'une IMF peut étudier.",
       seo: ["AKIBA : l'application des groupes d'épargne (AVEC) en RDC", "AKIBA tient les comptes de l'AVEC sur téléphone, même sans réseau : réunion guidée, registre scellé, reçus imprimés et dossier pour la microfinance. Une application de l'entreprise à caractère social Ubora."],
       ouvrir: "Ouvrir AKIBA",
+      accesNote: "Animateur, organisation ou programme ? Le suivi des groupes se fait dans Akiba Suivi, sur akibas.uborardc.com.",
       /* film de présentation (montage du 10 octobre 2026) : captures réelles de l'application, données de démonstration */
       video: { src: "/img/video/akiba.mp4", affiche: "/img/video/akiba-couverture.webp", duree: "3 min 11", leger: ["/img/video/akiba-leger.mp4", "3,8 Mo"],
-        titre: "AKIBA en trois minutes", legende: "Écrans réels de l'application. Démonstration : le groupe et les personnes sont fictifs." },
+        titre: "AKIBA en trois minutes", youtube: "T1I5V5P-myg", legende: "Écrans réels de l'application. Démonstration : le groupe et les personnes sont fictifs." },
       atouts: "Des comptes que tout le groupe peut vérifier",
       pour: ["Trésoriers et comités d'AVEC", "Animateurs et agents de terrain", "ONG et programmes qui suivent des groupes", "Institutions de microfinance"],
       acces: [
@@ -508,7 +511,13 @@ const OUTILS = [
       ]
     },
     resume: "Le cahier de l'AVEC dans le téléphone, même sans réseau : chaque franc écrit au moment où il bouge, un reçu pour chaque membre, un historique qu'une IMF peut étudier.",
-    points: ["Réunion guidée en 8 étapes, de la présence à la clôture à trois clés", "Registre scellé : toute modification se voit", "Reçus des membres et journal imprimés sur imprimante Bluetooth (bientôt sur terminal POS), ou envoyés par WhatsApp et SMS", "Indice de qualité des données et niveau « prête pour une IMF »", "Dossier pour l'IMF et export Excel, sans données personnelles", "Crédit d'une IMF suivi de bout en bout, garantie comprise", "Espaces AVEC, animateur et organisation, avec un écran Impact", "Langues de la RDC, guide audio et 7 modules de formation AVEC", "Démonstration libre ; code de validation Ubora pour une vraie AVEC"]
+    points: ["Réunion guidée en 8 étapes, de la présence à la clôture à trois clés", "Registre scellé : toute modification se voit", "Reçus des membres et journal imprimés sur imprimante Bluetooth (bientôt sur terminal POS), ou envoyés par WhatsApp et SMS", "Indice de qualité des données et niveau « prête pour une IMF »", "Dossier pour l'IMF et export Excel, sans données personnelles", "Crédit d'une IMF suivi de bout en bout, garantie comprise", "Akiba Suivi pour les animateurs et les organisations, avec un écran Impact", "Point GPS du groupe, pris sans réseau", "Langues de la RDC, guide audio et 7 modules de formation AVEC", "Démonstration libre ; code de validation Ubora pour une vraie AVEC"]
+  },
+  {
+    id: "akiba-suivi", nom: "Akiba Suivi", court: "Le suivi des AVEC, pour les animateurs et les organisations", pole: "avec", statut: "en-ligne", mock: "akiba", couleur: "#2463A6", initiales: "As",
+    sousDomaine: "akibas.uborardc.com", url: "https://akibas.uborardc.com", page: "https://akibas.uborardc.com",
+    resume: "L'application des animateurs, des organisations et de l'équipe d'Ubora : elle réunit les journaux scellés des AVEC, avec tableau de bord, qualité des données, dossier pour une institution de microfinance et export Excel.",
+    points: ["Tableau de bord des animateurs et des organisations", "Journaux scellés reçus des groupes", "Qualité des données et dossier pour une IMF", "Export Excel"]
   },
   {
     id: "bp", nom: "Générateur de business plan", nomPhrase: "le générateur de business plan", court: "Votre plan d'affaires, étape par étape", pole: "pme", statut: "en-ligne", mock: "pme", couleur: "#B0622A", initiales: "Bp",
@@ -544,18 +553,18 @@ const OUTILS = [
       ouvrir: "Se connecter",
       /* film de présentation (montage du 10 octobre 2026) : captures réelles du logiciel, données de démonstration */
       video: { src: "/img/video/ubora-hub-leger.mp4", affiche: "/img/video/ubora-hub-couverture.webp", duree: "4 min 05",
-        sousTitres: "/img/video/ubora-hub.vtt", titre: "Ubora Hub en quatre minutes", legende: "Écrans réels du logiciel. Démonstration : les personnes et l'entreprise sont fictives. Sous-titres français disponibles dans le lecteur." },
+        sousTitres: "/img/video/ubora-hub.vtt", titre: "Ubora Hub en quatre minutes", youtube: "gthnqU1pQfk", legende: "Écrans réels du logiciel. Démonstration : les personnes et l'entreprise sont fictives. Sous-titres français disponibles dans le lecteur." },
       atouts: "De la candidature au rapport, dans un seul outil",
       fonctions: [
         ["Sélectionner", "Appels à candidatures en ligne, formulaire de candidature, jury et classement."],
         ["Structurer le parcours", "Des programmes et des cohortes, en quatre phases : idéation, incubation, lancement de l'entreprise, puis mise à niveau des PME déjà établies."],
-        ["Former", "Modules de formation, exercices et quiz, utilisables même hors ligne."],
+        ["Former", "Modules, exercices et quiz utilisables hors ligne, et une formation intégrée pour les coachs et les directeurs."],
         ["Accompagner", "Séances de coaching, plans d'action et calendrier partagé."],
         ["Bâtir le business plan", "Chaque entrepreneur construit son plan d'affaires dans le générateur, relié à son dossier."],
         ["Rendre compte", "Tableau de bord, indicateurs et rapports en PDF pour la direction et les bailleurs."]
       ],
       phases: ["Idéation", "Incubation", "Lancement de l'entreprise", "Mise à niveau des PME"],
-      pour: ["Incubateurs et hubs", "Universités", "ONG et programmes d'entrepreneuriat", "Structures publiques et bailleurs", "Entrepreneurs sans incubateur (parcours libre)"],
+      pour: ["Incubateurs et hubs", "Universités", "ONG et programmes d'entrepreneuriat", "Structures publiques et bailleurs", "Entrepreneurs sans incubateur (parcours libre)", "Entreprises et institutions (programmes sur demande)"],
       espaces: ["Trois espaces, un seul logiciel", [
         ["L'espace de direction", "Le directeur et son équipe pilotent les appels à candidatures, les cohortes, le calendrier et les rapports."],
         ["L'espace du coach", "Chaque coach suit ses entrepreneurs, leurs exercices et leurs séances."],
@@ -572,7 +581,7 @@ const OUTILS = [
   {
     id: "academie", nom: "Ubora Académie", court: "L'école en ligne, avec certificats", pole: "academie", statut: "en-ligne", mock: "academie", couleur: "#9A5522", initiales: "Ac",
     sousDomaine: "academie.uborardc.com", url: "https://academie.uborardc.com", page: "/academie",
-    resume: "L'école en ligne d'Ubora : plus de 130 cours en 25 parcours, utilisables sans réseau, avec certificats vérifiables.",
+    resume: "L'école en ligne d'Ubora : plus de 130 cours en 25 parcours, près de 200 heures de formation, utilisables sans réseau, avec certificats vérifiables.",
     points: ["25 parcours, du membre d'AVEC au formateur", "Les 5 modules du PNEF de la Banque centrale du Congo", "Exercices corrigés et quiz chronométrés", "Cours téléchargés utilisables sans réseau", "Badges et certificats vérifiables en ligne"]
   },
   {

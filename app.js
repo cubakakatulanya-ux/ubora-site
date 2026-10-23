@@ -289,7 +289,7 @@ function menuHTML() {
     <li class="has-dd"><button class="dd-btn" type="button" data-r="poles" aria-expanded="false">Pôles et outils ${ICON.chev}</button>
       <div class="dd dd-mega">
         <div class="dd-col dd-poles"><h5>Nos pôles</h5><div class="dd-grille">${POLES.map(p => `<a href="${p.chemin}" class="dd-item${p.transversal ? " large" : ""}"><span class="mk" style="background:${p.couleur}">${p.initiales}</span><span><b>${esc(p.nom)}</b><small>${esc(p.accroche)}</small></span></a>`).join("")}</div></div>
-        <div class="dd-col dd-outils"><h5>Nos logiciels</h5>${OUTILS.filter(o => o.statut === "en-ligne").map(o => `<a href="${lienOutil(o)}" class="dd-item"><span class="mk" style="background:${o.couleur}">${o.initiales}</span><span><b>${esc(o.nom)}</b><small>${esc(o.court || o.sousDomaine)}</small></span></a>`).join("")}</div>
+        <div class="dd-col dd-outils"><h5>Nos logiciels</h5>${OUTILS.filter(o => o.statut === "en-ligne").map(o => `<a href="${lienOutil(o)}"${ext(lienOutil(o))} class="dd-item"><span class="mk" style="background:${o.couleur}">${o.initiales}</span><span><b>${esc(o.nom)}</b><small>${esc(o.court || o.sousDomaine)}</small></span></a>`).join("")}</div>
         <div class="dd-pied"><a href="/outils" class="dd-more">Tous les outils ${ICON.arrow}</a></div>
       </div></li>
     <li><a href="/conseil" data-r="conseil">Projets et conseil</a></li>
@@ -325,7 +325,8 @@ function footerHTML() {
       <div class="foot-contact"><h4>Nous joindre</h4><ul>
         <li><span class="ic">${ICON.phone}</span><a href="tel:${tel}">${esc(CONFIG.telephone)}</a></li>
         <li><span class="ic">${ICON.mail}</span><a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a></li>
-        <li><span class="ic">${ICON.pin}</span><span>${esc(CONFIG.adresse)}</span></li></ul>
+        <li><span class="ic">${ICON.pin}</span><span>${esc(CONFIG.adresse)}</span></li>
+        ${CONFIG.youtube ? `<li><span class="ic">${sv('<rect x="2.5" y="5.5" width="19" height="13" rx="3.5"/><path d="M10 9.5v5l4.5-2.5z"/>')}</span><a href="${CONFIG.youtube}" target="_blank" rel="noopener">Nos films sur YouTube</a></li>` : ""}</ul>
         <a class="btn btn-wa btn-sm foot-wa" href="${waLink("Bonjour Ubora, je souhaite échanger avec vous.")}" target="_blank" rel="noopener">Écrire sur WhatsApp</a>
       </div>
     </div>
@@ -401,7 +402,7 @@ function pageHome() {
 
   <section class="tight-top"><div class="wrap">
     ${secHead("Nos outils numériques", `Des outils faits pour le <span class="serif">terrain</span> congolais`, "", `<a class="btn btn-ghost" href="/outils">Voir tous les outils ${ICON.arrow}</a>`)}
-    <div class="tools-mini">${OUTILS.filter(o => o.statut === "en-ligne").map(o => `<a class="tool-mini" href="${lienOutil(o)}" style="--c:${o.couleur}"><span class="mk">${esc(o.initiales)}</span><span><b>${esc(o.nom)}</b><small>${esc(o.court || "")}</small></span>${ICON.arrow}</a>`).join("")}</div>
+    <div class="tools-mini">${OUTILS.filter(o => o.statut === "en-ligne").map(o => `<a class="tool-mini" href="${lienOutil(o)}"${ext(lienOutil(o))} style="--c:${o.couleur}"><span class="mk">${esc(o.initiales)}</span><span><b>${esc(o.nom)}</b><small>${esc(o.court || "")}</small></span>${ICON.arrow}</a>`).join("")}</div>
   </div></section>
 
   ${DATA.realisations.length ? `<section><div class="wrap">
@@ -509,7 +510,7 @@ function pagePole(id) {
     eyebrow: esc(P.nom), title: P.titre, lead: esc(P.lead), crumbs: [["Nos pôles", "/#poles"], [esc(P.nom)]], photo: P.photo,
     extra: `<div class="btn-row"><a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent(P.nom)}">Parler de votre projet ${ICON.arrow}</a>
       ${P.boite ? `<a class="btn btn-glass" href="#boite" data-scroll="boite">La boîte à outils</a>` : ""}
-      ${enLigne.filter(o => o.pole === P.id).map(o => lienOutil(o) === P.chemin ? `<a class="btn btn-glass" href="${o.url}" target="_blank" rel="noopener">Ouvrir ${esc(o.nom)} ${ICON.ext}</a>` : `<a class="btn btn-glass" href="${lienOutil(o)}">Découvrir ${esc(o.nomPhrase || o.nom)} ${ICON.arrow}</a>`).join("")}</div>
+      ${enLigne.filter(o => o.pole === P.id && (o.fiche || lienOutil(o) === P.chemin)).map(o => lienOutil(o) === P.chemin ? `<a class="btn btn-glass" href="${o.url}" target="_blank" rel="noopener">Ouvrir ${esc(o.nom)} ${ICON.ext}</a>` : `<a class="btn btn-glass" href="${lienOutil(o)}">Découvrir ${esc(o.nomPhrase || o.nom)} ${ICON.arrow}</a>`).join("")}</div>
       <span class="sub-chip">${esc(P.sousDomaine)}</span>`
   }) + `
 
@@ -608,7 +609,7 @@ function blocVideo(v) {
     ${secHead("En vidéo", esc(v.titre))}
     <figure class="video-cadre">
       <video controls preload="none" playsinline width="1280" height="720" poster="${v.affiche}"><source src="${v.src}" type="video/mp4">${v.sousTitres ? `<track kind="subtitles" srclang="fr" label="Français" src="${v.sousTitres}">` : ""}Votre navigateur ne lit pas cette vidéo. <a href="${v.src}">Ouvrir le fichier</a>.</video>
-      <figcaption>${esc(v.legende)}${v.leger ? ` <a href="${v.leger[0]}" target="_blank" rel="noopener">Connexion lente ? Version légère (${esc(v.leger[1])})</a>` : ""}</figcaption>
+      <figcaption>${esc(v.legende)}${v.youtube ? ` <a href="https://www.youtube.com/watch?v=${v.youtube}" target="_blank" rel="noopener">Voir sur YouTube</a>` : ""}${v.leger ? ` <a href="${v.leger[0]}" target="_blank" rel="noopener">Connexion lente ? Version légère (${esc(v.leger[1])})</a>` : ""}</figcaption>
     </figure>
   </div></section>`;
 }
@@ -927,7 +928,7 @@ const DESCR = {
   "": "Entreprise à caractère social, Ubora réinvestit ses excédents pour accompagner les groupes d'épargne (AVEC), les entrepreneurs et les coopératives, partout en RDC.",
   "a-propos": "Qui est Ubora : ni ONG, ni entreprise classique. Une entreprise à caractère social dont les revenus financent la présence auprès des plus fragiles. Sa mission, son modèle, ses valeurs.",
   approche: "La méthode Ubora en six temps : écouter, structurer, former, outiller, connecter et suivre. La même pour les groupes d'épargne, les entrepreneurs et les coopératives, en RDC.",
-  outils: "AKIBA, le générateur de business plan, Ubora Hub et les outils en préparation : des outils numériques conçus pour la RDC.",
+  outils: "AKIBA et Akiba Suivi, le générateur de business plan, Ubora Hub, Ubora Académie et les outils en préparation : des outils numériques conçus pour la RDC.",
   conseil: "Mise en œuvre de projets de développement économique, conseil et études, digitalisation de l'accompagnement et formation d'équipes, pour les ONG, les bailleurs et les institutions en RDC.",
   formations: "Formations d'Ubora en RDC : Académie en ligne (plus de 130 cours avec certificat), prise en main des outils, AVEC, entrepreneuriat et gestion coopérative.",
   actualites: "Les actualités d'Ubora : programmes, déploiements, formations et nouvelles du terrain en RDC.",

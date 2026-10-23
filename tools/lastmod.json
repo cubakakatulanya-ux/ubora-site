@@ -1,11 +1,11 @@
 {
  "/": {
-  "empreinte": "4cea810caf2b",
-  "date": "2026-10-18"
+  "empreinte": "d9688b0c5ffc",
+  "date": "2026-10-23"
  },
  "/avec": {
-  "empreinte": "4a0a855f6557",
-  "date": "2026-10-18"
+  "empreinte": "637f7919f812",
+  "date": "2026-10-23"
  },
  "/pme": {
   "empreinte": "add0938555fb",
@@ -16,8 +16,8 @@
   "date": "2026-10-18"
  },
  "/financement": {
-  "empreinte": "286822853e97",
-  "date": "2026-10-18"
+  "empreinte": "55a15fef4783",
+  "date": "2026-10-23"
  },
  "/marche": {
   "empreinte": "38f59f0da789",
@@ -28,8 +28,8 @@
   "date": "2026-10-18"
  },
  "/academie": {
-  "empreinte": "cf402f0ccb19",
-  "date": "2026-10-18"
+  "empreinte": "00e057353b5f",
+  "date": "2026-10-23"
  },
  "/approche": {
   "empreinte": "554846afbeef",
@@ -40,8 +40,8 @@
   "date": "2026-10-18"
  },
  "/outils": {
-  "empreinte": "9ffae7a75e62",
-  "date": "2026-10-18"
+  "empreinte": "f572e63a49be",
+  "date": "2026-10-23"
  },
  "/conseil": {
   "empreinte": "a5953378116e",
@@ -68,16 +68,16 @@
   "date": "2026-10-06"
  },
  "/outils/akiba": {
-  "empreinte": "fa164b5984b5",
-  "date": "2026-10-18"
+  "empreinte": "979ed179a04e",
+  "date": "2026-10-23"
  },
  "/outils/bp": {
   "empreinte": "1123ccd936dd",
   "date": "2026-10-18"
  },
  "/outils/hub": {
-  "empreinte": "98a080ea9f2c",
-  "date": "2026-10-18"
+  "empreinte": "8a7c01a5d4a2",
+  "date": "2026-10-23"
  },
  "/soutenir": {
   "empreinte": "d135cd301f7c",
