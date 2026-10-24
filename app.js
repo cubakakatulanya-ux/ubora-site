@@ -103,6 +103,8 @@ function mockTable(url, kpis, head, rows, chart) {
 }
 const MOCKS = {
   akiba: mockAkiba,
+  asbl: () => mockTable("asbl.uborardc.com · dépenses", [["Budget engagé", "62 %"], ["À valider", "4"], ["Devises", "USD · CDF"]], ["Demande", "Activité", "Montant", "État"],
+    [["Dépense 014", "Atelier de formation", "850 $", "Payée", 1], ["Dépense 015", "Mission de terrain", "420 $", "Approuvée", 1], ["Dépense 016", "Fournitures", "135 $", "À valider", 0]]),
   hub: mockHub,
   academie: () => browser("academie.uborardc.com", `<div class="mock-pad">
     <div class="mock-title"><b>Mon carnet</b><span>2 badges</span></div>
@@ -166,13 +168,13 @@ function poleCard(p, feature, compact) {
   </article>`;
 }
 function outilCard(o) {
-  const p = pole(o.pole);
+  const p = poleReal(o.pole);
   const href = lienOutil(o);
   return `<article class="tool" style="--c:${o.couleur}" data-f="${o.statut} ${o.pole}">
     <div class="pole-top"><span class="mk">${esc(o.initiales)}</span>${statut(o)}</div>
     <h3><a class="stretch" href="${href}"${ext(href)}>${esc(o.nom)}</a></h3>
     <p>${esc(o.resume)}</p>
-    <div class="tool-foot"><span>Pôle ${esc(p.nom)}</span>${o.sousDomaine ? `<span class="mono">${esc(o.sousDomaine)}</span>` : ""}</div>
+    <div class="tool-foot"><span>${pole(o.pole) ? "Pôle " : ""}${esc(p.nom)}</span>${o.sousDomaine ? `<span class="mono">${esc(o.sousDomaine)}</span>` : ""}</div>
   </article>`;
 }
 function constats(list) {
@@ -595,7 +597,7 @@ function pageOutils() {
   return pageHead({ eyebrow: "Nos outils", title: `Des outils qui tiennent là où le réseau <span class="serif">lâche</span>.`, crumbs: [["Nos outils"]],
     lead: "Pensés pour le village sans réseau et pour qui n'a jamais ouvert un tableur. Chacun est livré avec une formation." }) + `
   <section><div class="wrap">
-    ${filtres("Filtrer les outils", [["en-ligne", "En ligne"], ["en-cours", "En préparation"], ...[...new Set(OUTILS.map(o => o.pole))].map(id => [id, pole(id).nom])])}
+    ${filtres("Filtrer les outils", [["en-ligne", "En ligne"], ["en-cours", "En préparation"], ...[...new Set(OUTILS.map(o => o.pole))].map(id => [id, poleReal(id).nom])])}
     <div class="tools">${OUTILS.map(outilCard).join("")}</div>
   </div></section>
   <section class="tight-top"><div class="wrap">${finalCta()}</div></section>`;
@@ -615,7 +617,7 @@ function blocVideo(v) {
 }
 
 function pageOutil(o) {
-  const F = o.fiche, p = pole(o.pole);
+  const F = o.fiche, p = poleReal(o.pole);
   const inscription = o.inscription ? (o.inscriptionOuverte
     ? `<a class="btn btn-accent" href="${o.inscription}" target="_blank" rel="noopener">Inscrire mon incubateur ${ICON.ext}</a>`
     : `<a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent(o.nom)}">Demander un accès ${ICON.arrow}</a>`) : "";
@@ -632,7 +634,7 @@ function pageOutil(o) {
     ${F.fonctions
       ? `<div class="grid-3">${F.fonctions.map(([t, x], i) => `<div class="fcard fonction reveal"><span class="pn">${String(i + 1).padStart(2, "0")}</span><h3>${esc(t)}</h3><p>${esc(x)}</p></div>`).join("")}</div>`
       : `<div class="panel"><ul class="checks cols">${o.points.map(x => `<li>${esc(x)}</li>`).join("")}</ul></div>`}
-    ${F.phases ? `<div class="flux phases" role="group" aria-label="Le parcours de l'entrepreneur"><b>Le parcours de l'entrepreneur</b>${F.phases.map(x => `<span>${esc(x)}</span>`).join(`<i aria-hidden="true">${ICON.arrow}</i>`)}</div>` : ""}
+    ${F.phases ? `<div class="flux phases" role="group" aria-label="${esc(F.phasesTitre || "Le parcours de l'entrepreneur")}"><b>${esc(F.phasesTitre || "Le parcours de l'entrepreneur")}</b>${F.phases.map(x => `<span>${esc(x)}</span>`).join(`<i aria-hidden="true">${ICON.arrow}</i>`)}</div>` : ""}
     <div class="publics"><b>Pour qui</b>${F.pour.map(x => `<span>${esc(x)}</span>`).join("")}</div>
   </div></section>
 
@@ -647,7 +649,7 @@ function pageOutil(o) {
     <ol class="bridge">${F.acces.map(([t, x], i) => `<li><span class="bn">${i + 1}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`).join("")}</ol>
     <div class="btn-row centre">${inscription || ouvrir("btn-primary")}${inscription ? ouvrir("btn-ghost") : `<a class="btn btn-ghost" href="/contact?sujet=${encodeURIComponent(o.nom)}">Nous écrire</a>`}</div>
     ${F.accesNote ? `<p class="suite">${esc(F.accesNote)}</p>` : ""}
-    <p class="suite">Ce logiciel accompagne le pôle <a class="link" href="${p.chemin}">${esc(p.nom)}</a>.</p>
+    <p class="suite">${pole(o.pole) ? `Ce logiciel accompagne le pôle <a class="link" href="${p.chemin}">${esc(p.nom)}</a>.` : `Ce logiciel accompagne nos <a class="link" href="/conseil">projets et conseil</a> aux organisations.`}</p>
   </div></section>`;
 }
 
@@ -928,7 +930,7 @@ const DESCR = {
   "": "Entreprise à caractère social, Ubora réinvestit ses excédents pour accompagner les groupes d'épargne (AVEC), les entrepreneurs et les coopératives, partout en RDC.",
   "a-propos": "Qui est Ubora : ni ONG, ni entreprise classique. Une entreprise à caractère social dont les revenus financent la présence auprès des plus fragiles. Sa mission, son modèle, ses valeurs.",
   approche: "La méthode Ubora en six temps : écouter, structurer, former, outiller, connecter et suivre. La même pour les groupes d'épargne, les entrepreneurs et les coopératives, en RDC.",
-  outils: "AKIBA et Akiba Suivi, le générateur de business plan, Ubora Hub, Ubora Académie et les outils en préparation : des outils numériques conçus pour la RDC.",
+  outils: "AKIBA et Akiba Suivi, le générateur de business plan, Ubora Hub, Ubora Académie, ASBL Manager et les outils en préparation : des outils numériques conçus pour la RDC.",
   conseil: "Mise en œuvre de projets de développement économique, conseil et études, digitalisation de l'accompagnement et formation d'équipes, pour les ONG, les bailleurs et les institutions en RDC.",
   formations: "Formations d'Ubora en RDC : Académie en ligne (plus de 130 cours avec certificat), prise en main des outils, AVEC, entrepreneuriat et gestion coopérative.",
   actualites: "Les actualités d'Ubora : programmes, déploiements, formations et nouvelles du terrain en RDC.",
@@ -950,7 +952,7 @@ const SEO_POLES = {
   marche: ["Ubora Market : trouver des acheteurs pour les producteurs en RDC", "Le pôle marché d'Ubora, entreprise à caractère social : relier les coopératives, les PME et les entrepreneurs accompagnés à des acheteurs, et suivre chaque vente jusqu'au paiement."]
 };
 /* Titres complets pour la balise <title> ; TITRES reste court (fil d'Ariane, menus) */
-const SEO_TITRES = { soutenir: "Soutenir Ubora : une entreprise à objectif social en RDC", "a-propos": "Qui sommes-nous : Ubora, entreprise sociale en RDC", approche: "Notre approche : la méthode Ubora en six temps", outils: "Outils numériques pour les AVEC et les PME en RDC · Ubora", conseil: "Mise en œuvre de projets, conseil et études en RDC · Ubora", formations: "Formations AVEC, entrepreneuriat et coopératives · Ubora", actualites: "Actualités d'Ubora : nouvelles du terrain en RDC", realisations: "Nos réalisations en RDC · Ubora, entreprise sociale", equipe: "Notre équipe · Ubora, entreprise sociale en RDC", carrieres: "Carrières : rejoindre Ubora, entreprise sociale en RDC", contact: "Contacter Ubora, entreprise sociale en RDC", mentions: "Mentions légales · Ubora, entreprise sociale" };
+const SEO_TITRES = { soutenir: "Soutenir Ubora : une entreprise à objectif social en RDC", "a-propos": "Qui sommes-nous : Ubora, entreprise sociale en RDC", approche: "Notre approche : la méthode Ubora en six temps", outils: "Outils numériques pour les AVEC, les PME et les organisations · Ubora", conseil: "Mise en œuvre de projets, conseil et études en RDC · Ubora", formations: "Formations AVEC, entrepreneuriat et coopératives · Ubora", actualites: "Actualités d'Ubora : nouvelles du terrain en RDC", realisations: "Nos réalisations en RDC · Ubora, entreprise sociale", equipe: "Notre équipe · Ubora, entreprise sociale en RDC", carrieres: "Carrières : rejoindre Ubora, entreprise sociale en RDC", contact: "Contacter Ubora, entreprise sociale en RDC", mentions: "Mentions légales · Ubora, entreprise sociale" };
 const ROBOTS = "index, follow, max-image-preview:large";
 const TITRES = { soutenir: "Soutenir nos actions", "": "Ubora : entreprise sociale en RDC (AVEC, PME, coopératives)", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos outils numériques", conseil: "Projets et conseil", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
 

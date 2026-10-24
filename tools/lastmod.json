@@ -1,7 +1,7 @@
 {
  "/": {
-  "empreinte": "d9688b0c5ffc",
-  "date": "2026-10-23"
+  "empreinte": "46c9f611837a",
+  "date": "2026-10-24"
  },
  "/avec": {
   "empreinte": "637f7919f812",
@@ -40,12 +40,12 @@
   "date": "2026-10-18"
  },
  "/outils": {
-  "empreinte": "f572e63a49be",
-  "date": "2026-10-23"
+  "empreinte": "550997bb6e7e",
+  "date": "2026-10-24"
  },
  "/conseil": {
-  "empreinte": "a5953378116e",
-  "date": "2026-10-18"
+  "empreinte": "cc21f6c3a18a",
+  "date": "2026-10-24"
  },
  "/formations": {
   "empreinte": "52cd756872e7",
@@ -76,11 +76,15 @@
   "date": "2026-10-18"
  },
  "/outils/hub": {
-  "empreinte": "8a7c01a5d4a2",
-  "date": "2026-10-23"
+  "empreinte": "2a5589e6a47b",
+  "date": "2026-10-24"
  },
  "/soutenir": {
   "empreinte": "d135cd301f7c",
   "date": "2026-10-18"
+ },
+ "/outils/asbl": {
+  "empreinte": "f5a3635a8438",
+  "date": "2026-10-24"
  }
 }

@@ -28,6 +28,7 @@ const CONFIG = {
 const TICKER_MESSAGES = [
   ["Ubora est une entreprise à caractère social : ses excédents sont réinvestis", "/soutenir"],
   ["Ubora Académie : plus de 130 cours en ligne avec certificat", "/academie"],
+  ["Nouveau : ASBL Manager, la gestion des associations, des ONG et des entreprises sociales", "/outils/asbl"],
   ["Nouveau : Akiba Suivi, l'application des animateurs et des organisations qui suivent des AVEC", "/outils/akiba#acces"],
   ["En vidéo : AKIBA, le cahier de l'AVEC dans le téléphone, en trois minutes", "/outils/akiba#video"],
   ["En vidéo : Ubora Hub, de l'idée à l'entreprise, en quatre minutes", "/outils/hub#video"],
@@ -579,6 +580,37 @@ const OUTILS = [
     }
   },
   {
+    id: "asbl", nom: "ASBL Manager", court: "La gestion des associations, des ONG et des entreprises sociales", pole: "conseil", statut: "en-ligne", mock: "asbl", couleur: "#0B3A32", initiales: "Am",
+    sousDomaine: "asbl.uborardc.com", url: "https://asbl.uborardc.com",
+    resume: "Le logiciel de gestion des associations, des ONG et des entreprises sociales : gouvernance, plan de travail, finances, projets, logistique, personnel et suivi-évaluation, avec des circuits de validation clairs.",
+    points: ["Gouvernance, membres et cotisations", "Plan de travail (PTBA), termes de référence et fiches d'activité", "Dépenses, trésorerie en francs et en dollars, comptabilité", "Projets, bailleurs et rapports", "Achats, stocks, personnel et missions", "Un espace par rôle, même hors connexion"],
+    fiche: {
+      titre: `Gérer son organisation avec la rigueur qu'attendent ses membres et ses <span class="serif">bailleurs</span>.`,
+      lead: "Gouvernance, programmes, finances, logistique, personnel et suivi-évaluation réunis dans une seule application, avec un espace de travail pour chaque rôle.",
+      seo: ["ASBL Manager : logiciel de gestion des ASBL et des ONG en RDC", "Gouvernance, PTBA, finances, projets, logistique, personnel et suivi-évaluation dans une seule application, avec circuits de validation et séparation des fonctions. Conçu par l'entreprise à caractère social Ubora."],
+      ouvrir: "Ouvrir ASBL Manager",
+      atouts: "Tout le fonctionnement d'une organisation, sans double saisie",
+      fonctions: [
+        ["Gouvernance et membres", "Adhésions, cotisations et arriérés, assemblées générales, conseil d'administration, procès-verbaux et registre des décisions."],
+        ["Plan de travail (PTBA)", "Activités rattachées au cadre de résultats, termes de référence, fiches d'activité et avancement."],
+        ["Finances et comptabilité", "Dépenses, fonds à justifier, trésorerie en francs et en dollars, rapprochement bancaire, comptabilité et états financiers."],
+        ["Projets et bailleurs", "Conventions, budgets par projet, bénéficiaires et rapports au bailleur."],
+        ["Logistique et personnel", "Achats et marchés, stocks et équipements ; contrats, congés, missions, paie et évaluations."],
+        ["Suivi-évaluation et rapports", "Indicateurs, collecte et vérification des données, plaintes, rapports mensuels à annuels."]
+      ],
+      phasesTitre: "Le circuit d'une dépense",
+      phases: ["Demande", "Contrôle budgétaire", "Approbation", "Paiement", "Justification"],
+      pour: ["ASBL et associations", "ONG", "Entreprises sociales (SARL)", "Projets financés par des bailleurs"],
+      accesTitre: "Démarrer en trois étapes",
+      acces: [
+        ["Créez votre compte", "Avec votre adresse e-mail et un mot de passe personnel."],
+        ["Enregistrez votre organisation", "Nom, forme juridique, exercice et devise. Ou ouvrez d'abord l'organisation de démonstration."],
+        ["Invitez votre équipe", "Chaque collaborateur reçoit un rôle et retrouve aussitôt son espace de travail."]
+      ],
+      accesNote: "Une organisation de démonstration permet d'essayer toutes les fonctions sans saisir vos données."
+    }
+  },
+  {
     id: "academie", nom: "Ubora Académie", court: "L'école en ligne, avec certificats", pole: "academie", statut: "en-ligne", mock: "academie", couleur: "#9A5522", initiales: "Ac",
     sousDomaine: "academie.uborardc.com", url: "https://academie.uborardc.com", page: "/academie",
     resume: "L'école en ligne d'Ubora : plus de 130 cours en 25 parcours, près de 200 heures de formation, utilisables sans réseau, avec certificats vérifiables.",
@@ -605,8 +637,8 @@ const CONSEIL = [
     texte: "Marché, faisabilité, filières, évaluations : l'information prise sur le terrain, et des recommandations applicables.",
     points: ["Études de marché et de faisabilité", "Analyse de filières", "Enquêtes de terrain", "Évaluations de projets et d'impact"] },
   { id: "digitalisation", ico: "flow", titre: "Digitalisation de l'accompagnement",
-    texte: "Du suivi dans des fichiers dispersés à un suivi outillé, notamment avec Ubora Hub.",
-    points: ["Analyse des pratiques existantes", "Mise en place d'Ubora Hub", "Indicateurs et tableaux de bord", "Formation des équipes"] },
+    texte: "Du suivi dans des fichiers dispersés à un suivi outillé, avec Ubora Hub pour l'accompagnement et ASBL Manager pour la gestion de l'organisation.",
+    points: ["Analyse des pratiques existantes", "Mise en place d'Ubora Hub ou d'ASBL Manager", "Indicateurs et tableaux de bord", "Formation des équipes"] },
   { id: "capacites", ico: "school", titre: "Formation et renforcement des équipes",
     texte: "Vos équipes formées à nos méthodes et à nos outils, et des formateurs relais.",
     points: ["Formation de formateurs", "Méthodologie AVEC", "Accompagnement d'entrepreneurs", "Gestion des coopératives"] }

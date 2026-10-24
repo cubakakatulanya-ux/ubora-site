@@ -2173,3 +2173,6 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
 
 /* cinq outils en ligne : une seule rangée sur ordinateur */
 @media (min-width: 1101px) { .tools-mini { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+
+/* six outils en ligne : deux rangées de trois */
+@media (min-width: 1101px) { .tools-mini { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
