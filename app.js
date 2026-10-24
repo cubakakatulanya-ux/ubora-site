@@ -219,6 +219,23 @@ function relais(lien) {
     <ol class="relais-temps">${RELAIS.map(([t, x], i) => `<li><span class="bn">${i + 1}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`).join("")}</ol>
   </div>`;
 }
+/* Pour les bailleurs et les ONG : commencer par un projet pilote, et ce qui permet de nous faire confiance */
+function blocPilote() {
+  const n = OUTILS.filter(o => o.statut === "en-ligne").length;
+  const points = [
+    ["Des outils déjà en ligne", `${n} logiciels à essayer avant même de nous appeler.`],
+    ["Une équipe qui connaît les programmes", "Plus de dix ans d'AVEC, d'incubation et d'appui aux PME dans des programmes de coopération en RDC."],
+    ["Des résultats suivis en direct", "Tableaux de bord et exports pour votre équipe, pas seulement un rapport final."],
+    ["Nous restons après le projet", "Entreprise à caractère social, nous réinvestissons nos excédents pour continuer le suivi quand le financement s'arrête."]
+  ];
+  return `<div class="deep relais pilote">
+    <div class="relais-txt"><span class="eyebrow">Bailleurs, ONG et programmes</span>
+      <h2>Commencez par un <span class="serif">projet pilote</span>.</h2>
+      <p class="lead">Un périmètre réduit, des indicateurs fixés ensemble au départ, des données que vous suivez en direct. À la fin, vous décidez d'étendre sur des preuves, pas sur des promesses.</p>
+      <div class="btn-row"><a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent("Projet pilote")}">Proposer un projet pilote ${ICON.arrow}</a><a class="btn btn-ghost" href="/conseil#pilote">Voir comment ça se passe</a></div></div>
+    <ol class="relais-temps">${points.map(([t, x], i) => `<li><span class="bn">${i + 1}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`).join("")}</ol>
+  </div>`;
+}
 /* Expertise : ce que le terrain nous a appris, et ce que chacun peut vérifier */
 function expertise() {
   const lecons = [
@@ -356,7 +373,7 @@ function pageHome() {
         <h1 class="pill"><b>Ubora</b> Entreprise à caractère social, partout en RDC</h1>
         <p class="hero-titre">Des familles qui épargnent, des entrepreneurs qui vendent, des coopératives qui <span class="serif">durent</span>.</p>
         <p class="lead">Partout en RDC, nous formons, outillons et suivons les groupes d'épargne, les entrepreneurs et les coopératives, jusqu'au crédit et jusqu'à l'acheteur. Avec des outils qui marchent sans réseau. Et nous restons quand le projet se termine.</p>
-        <div class="btn-row"><a class="btn btn-accent" href="#poles" data-scroll="poles">Découvrir nos pôles ${ICON.arrow}</a><a class="btn btn-glass" href="/contact">Nous contacter</a></div>
+        <div class="btn-row"><a class="btn btn-accent" href="#poles" data-scroll="poles">Découvrir nos pôles ${ICON.arrow}</a><a class="btn btn-glass" href="/conseil#pilote">Lancer un projet pilote</a></div>
       </div>
       <div class="stage stage-photo">
         <figure class="hero-photo">${photo("avec", "(max-width: 1080px) 100vw, 50vw", "Des femmes réunies en groupe, en pagnes colorés", ' fetchpriority="high"')}</figure>
@@ -400,7 +417,7 @@ function pageHome() {
     </ol>
   </div></section>
 
-  <section><div class="wrap">${relais(true)}</div></section>
+  <section id="bailleurs"><div class="wrap">${blocPilote()}</div></section>
 
   <section class="tight-top"><div class="wrap">
     ${secHead("Nos outils numériques", `Des outils faits pour le <span class="serif">terrain</span> congolais`, "", `<a class="btn btn-ghost" href="/outils">Voir tous les outils ${ICON.arrow}</a>`)}
@@ -655,8 +672,24 @@ function pageOutil(o) {
 
 function pageConseil() {
   return pageHead({ eyebrow: "Projets et conseil", title: `Vos programmes méritent de durer plus longtemps que leur <span class="serif">financement</span>.`, crumbs: [["Projets et conseil"]],
-    lead: "Nous concevons votre projet, le mettons en œuvre sur le terrain, équipons vos équipes, mesurons les résultats. Et nous restons quand le financement s'arrête.",
-    extra: `<div class="btn-row"><a class="btn btn-accent" href="#mise-en-oeuvre" data-scroll="mise-en-oeuvre">Mise en œuvre de projets ${ICON.arrow}</a><a class="btn btn-glass" href="/contact?sujet=${encodeURIComponent("Conseil et programmes")}">Parlons de votre projet</a></div>` }) + `
+    lead: "Commencez par un projet pilote : nous le cadrons avec vous, le mettons en œuvre sur le terrain, et vous suivez les résultats en direct. Puis nous restons quand le financement s'arrête.",
+    extra: `<div class="btn-row"><a class="btn btn-accent" href="#pilote" data-scroll="pilote">Comment se passe un pilote ${ICON.arrow}</a><a class="btn btn-glass" href="/contact?sujet=${encodeURIComponent("Conseil et programmes")}">Parlons de votre projet</a></div>` }) + `
+  <section id="pilote"><div class="wrap">
+    ${secHead("Projet pilote", `Commencer petit, mesurer, puis <span class="serif">décider</span>`, "Pour un bailleur ou une ONG qui ne nous connaît pas encore, c'est la façon la plus sûre de commencer. Et après le pilote, nous restons : nos excédents, réinvestis dans le social, financent une partie du suivi.")}
+    <ol class="chaine quatre">${PILOTE.temps.map(([t, x, r], i) => `<li class="reveal"><span class="pn">${String(i + 1).padStart(2, "0")}</span><h3>${esc(t)}</h3><p>${esc(x)}</p><p class="resultat">${esc(r)}</p></li>`).join("")}</ol>
+    <h3 class="sous-titre">Exemples de pilotes</h3>
+    <div class="grid-3 pilotes">${PILOTE.exemples.map(([id, t, x, m]) => { const p = poleReal(id); return `<div class="fcard" style="--c:${p.couleur}"><span class="tag" style="background:${p.couleur};color:#fff">${esc(p.nom)}</span><h3>${esc(t)}</h3><p>${esc(x)}</p><p class="mesure"><b>À mesurer</b> ${esc(m)}</p></div>`; }).join("")}</div>
+  </div></section>
+  <section class="band" id="verifier"><div class="wrap">
+    ${secHead("Avant de signer", `Vérifiez par <span class="serif">vous-même</span>`, "Une jeune entreprise doit montrer ce qu'elle sait faire. Voici ce que vous pouvez contrôler sans nous croire sur parole.")}
+    <div class="grid-4">${[
+      [ICON.check, "Essayez nos outils", "AKIBA et ASBL Manager ont une démonstration libre ; l'Académie compte plus de 130 cours.", "/outils", "Voir les outils"],
+      [ICON.doc, "Lisez notre méthode", "Six temps, toujours dans le même ordre, pour chaque public.", "/approche", "Lire la méthode"],
+      [ICON.users, "Rencontrez l'équipe", "Le parcours du directeur ; CV complet et références sur demande.", "/equipe", "Voir l'équipe"],
+      [ICON.briefcase, "Une entreprise immatriculée", [CONFIG.legal.rccm && "RCCM " + CONFIG.legal.rccm, CONFIG.legal.idnat && "ID NAT " + CONFIG.legal.idnat].filter(Boolean).join(" · "), "/mentions", "Mentions légales"]
+    ].map(([ic, t, x, h, l]) => `<div class="fcard"><span class="ic">${ic}</span><h3>${t}</h3><p>${esc(x)}</p><a class="link" href="${h}">${l} ${ICON.arrow}</a></div>`).join("")}</div>
+    <div class="btn-row centre"><a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent("Projet pilote")}">Proposer un projet pilote ${ICON.arrow}</a><a class="btn btn-ghost" href="/contact?sujet=${encodeURIComponent("Présentation d'Ubora")}">Demander notre présentation</a></div>
+  </div></section>
   <section id="mise-en-oeuvre"><div class="wrap">
     ${secHead("Mise en œuvre de projets", `Nous ne faisons pas que conseiller : nous <span class="serif">mettons en œuvre</span>`, MISE_EN_OEUVRE.intro)}
     <ol class="chaine cinq">${MISE_EN_OEUVRE.temps.map(([t, x, r], i) => `<li class="reveal"><span class="pn">${String(i + 1).padStart(2, "0")}</span><h3>${esc(t)}</h3><p>${esc(x)}</p><p class="resultat">${esc(r)}</p></li>`).join("")}</ol>
@@ -835,7 +868,7 @@ function pageSoutenir() {
     ["Quand le projet s'arrête", "La prestation s'arrête avec le contrat.", "Nous restons, et le suivi continue."]
   ];
   const voies = [
-    [ICON.briefcase, "Confier une mission", "Chaque prestation que vous nous confiez finance aussi nos services à tarif solidaire.", "/conseil", "Voir nos prestations"],
+    [ICON.briefcase, "Confier une mission", "Commencez par un projet pilote. Chaque prestation finance aussi nos services à tarif solidaire.", "/conseil#pilote", "Voir comment"],
     [ICON.coins, "Apporter du capital", "Ubora Fin mobilise votre capital au profit des groupes que nous accompagnons, et vous en rend compte.", "/financement#intermediation", "Voir comment"],
     [ICON.handshake, "Devenir partenaire", "Compétences, équipements, mises en relation : dites-nous ce que vous pouvez apporter.", sujet, "Nous écrire"],
     [ICON.heart, "Faire connaître", "Parlez d'AKIBA, de l'Académie ou de nos formations à ceux qui en ont besoin.", "/outils", "Voir nos outils"]
@@ -862,7 +895,7 @@ function pageSoutenir() {
 
 function pageContact(params) {
   const sujet = params.get("sujet") || "";
-  const besoins = ["Ubora AVEC (groupes d'épargne)", "Ubora PME (entrepreneuriat)", "Ubora Coop (coopératives)", "Ubora Fin (accès au financement)", "Ubora Market (accès au marché)", "Ubora Vert (environnement)", "Ubora Académie (formations)", "Boîte à outils", "Conseil et programmes", "Formation", "Soutenir nos actions", "Partenariat", "Recrutement", "Autre"];
+  const besoins = ["Ubora AVEC (groupes d'épargne)", "Ubora PME (entrepreneuriat)", "Ubora Coop (coopératives)", "Ubora Fin (accès au financement)", "Ubora Market (accès au marché)", "Ubora Vert (environnement)", "Ubora Académie (formations)", "Boîte à outils", "Projet pilote", "Présentation d'Ubora", "Conseil et programmes", "Formation", "Soutenir nos actions", "Partenariat", "Recrutement", "Autre"];
   const low = sujet.toLowerCase();
   const sel = !low ? "" : low.includes("boîte") || low.startsWith("les outils de") ? "Boîte à outils"
     : besoins.find(b => low.includes(b.split(" (")[0].toLowerCase()) || b.toLowerCase().includes(low)) || "Autre";
@@ -931,7 +964,7 @@ const DESCR = {
   "a-propos": "Qui est Ubora : ni ONG, ni entreprise classique. Une entreprise à caractère social dont les revenus financent la présence auprès des plus fragiles. Sa mission, son modèle, ses valeurs.",
   approche: "La méthode Ubora en six temps : écouter, structurer, former, outiller, connecter et suivre. La même pour les groupes d'épargne, les entrepreneurs et les coopératives, en RDC.",
   outils: "AKIBA et Akiba Suivi, le générateur de business plan, Ubora Hub, Ubora Académie, ASBL Manager et les outils en préparation : des outils numériques conçus pour la RDC.",
-  conseil: "Mise en œuvre de projets de développement économique, conseil et études, digitalisation de l'accompagnement et formation d'équipes, pour les ONG, les bailleurs et les institutions en RDC.",
+  conseil: "Projets pilotes et mise en œuvre de projets de développement économique pour les bailleurs, les ONG et les institutions en RDC : indicateurs fixés ensemble, résultats suivis en direct.",
   formations: "Formations d'Ubora en RDC : Académie en ligne (plus de 130 cours avec certificat), prise en main des outils, AVEC, entrepreneuriat et gestion coopérative.",
   actualites: "Les actualités d'Ubora : programmes, déploiements, formations et nouvelles du terrain en RDC.",
   carrieres: "Offres d'emploi, de stage et de consultance chez Ubora, entreprise à caractère social qui intervient dans toute la RDC.",
@@ -952,7 +985,7 @@ const SEO_POLES = {
   marche: ["Ubora Market : trouver des acheteurs pour les producteurs en RDC", "Le pôle marché d'Ubora, entreprise à caractère social : relier les coopératives, les PME et les entrepreneurs accompagnés à des acheteurs, et suivre chaque vente jusqu'au paiement."]
 };
 /* Titres complets pour la balise <title> ; TITRES reste court (fil d'Ariane, menus) */
-const SEO_TITRES = { soutenir: "Soutenir Ubora : une entreprise à objectif social en RDC", "a-propos": "Qui sommes-nous : Ubora, entreprise sociale en RDC", approche: "Notre approche : la méthode Ubora en six temps", outils: "Outils numériques pour les AVEC, les PME et les organisations · Ubora", conseil: "Mise en œuvre de projets, conseil et études en RDC · Ubora", formations: "Formations AVEC, entrepreneuriat et coopératives · Ubora", actualites: "Actualités d'Ubora : nouvelles du terrain en RDC", realisations: "Nos réalisations en RDC · Ubora, entreprise sociale", equipe: "Notre équipe · Ubora, entreprise sociale en RDC", carrieres: "Carrières : rejoindre Ubora, entreprise sociale en RDC", contact: "Contacter Ubora, entreprise sociale en RDC", mentions: "Mentions légales · Ubora, entreprise sociale" };
+const SEO_TITRES = { soutenir: "Soutenir Ubora : une entreprise à objectif social en RDC", "a-propos": "Qui sommes-nous : Ubora, entreprise sociale en RDC", approche: "Notre approche : la méthode Ubora en six temps", outils: "Outils numériques pour les AVEC, les PME et les organisations · Ubora", conseil: "Projets pilotes, mise en œuvre et conseil en RDC · Ubora", formations: "Formations AVEC, entrepreneuriat et coopératives · Ubora", actualites: "Actualités d'Ubora : nouvelles du terrain en RDC", realisations: "Nos réalisations en RDC · Ubora, entreprise sociale", equipe: "Notre équipe · Ubora, entreprise sociale en RDC", carrieres: "Carrières : rejoindre Ubora, entreprise sociale en RDC", contact: "Contacter Ubora, entreprise sociale en RDC", mentions: "Mentions légales · Ubora, entreprise sociale" };
 const ROBOTS = "index, follow, max-image-preview:large";
 const TITRES = { soutenir: "Soutenir nos actions", "": "Ubora : entreprise sociale en RDC (AVEC, PME, coopératives)", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos outils numériques", conseil: "Projets et conseil", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
 

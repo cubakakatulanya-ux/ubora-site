@@ -2176,3 +2176,14 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
 
 /* six outils en ligne : deux rangées de trois */
 @media (min-width: 1101px) { .tools-mini { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+
+/* Projet pilote (page « Projets et conseil ») : quatre temps sur une ligne, exemples avec ce qui sera mesuré */
+.chaine.quatre { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 900px) { .chaine.quatre { grid-template-columns: repeat(2, minmax(0, 1fr)); } .chaine.quatre li::after { display: none; } }
+@media (max-width: 480px) { .chaine.quatre { grid-template-columns: minmax(0, 1fr); } }
+.sous-titre { margin: clamp(28px, 4vw, 44px) 0 14px; font-size: 20px; font-weight: 500; text-align: center; }
+.pilotes .fcard { gap: 8px; }
+.pilotes .tag { align-self: flex-start; }
+.mesure { margin-top: auto; padding-top: 8px; border-top: 1px dashed var(--line); font-size: 14px; color: var(--ink); }
+.mesure b { display: block; margin-bottom: 2px; color: var(--vert-texte); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+.btn-row.centre { justify-content: center; margin-top: 22px; }

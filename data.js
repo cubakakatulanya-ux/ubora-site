@@ -644,6 +644,24 @@ const CONSEIL = [
     points: ["Formation de formateurs", "Méthodologie AVEC", "Accompagnement d'entrepreneurs", "Gestion des coopératives"] }
 ];
 
+/* Le projet pilote : la façon la plus sûre, pour un bailleur ou une ONG, de commencer avec Ubora. */
+const PILOTE = {
+  temps: [
+    ["Cadrer ensemble", "Le public, la zone, la durée et le budget, à votre mesure. Les indicateurs sont fixés avant de commencer.", "Un pilote clair, signé des deux côtés."],
+    ["Lancer sur le terrain", "Nos équipes structurent, forment et outillent ; les données sont saisies dès le premier jour.", "Des activités qui démarrent vite."],
+    ["Suivre en direct", "Vous accédez aux tableaux de bord et aux exports, avec un point d'étape à mi-parcours.", "Pas de surprise en fin de projet."],
+    ["Décider sur preuves", "Un rapport final : indicateurs atteints, leçons, et ce qu'il faudrait pour étendre.", "Étendre, ajuster ou arrêter : vous décidez."]
+  ],
+  exemples: [
+    ["avec", "Digitaliser des groupes d'épargne", "Structurer ou reprendre des AVEC, passer du cahier à AKIBA, suivre les groupes dans Akiba Suivi.", "épargne mobilisée, remboursements, qualité des données"],
+    ["pme", "Accompagner une cohorte d'entrepreneurs", "Idéation ou incubation dans Ubora Hub, avec un coach et le générateur de business plan.", "plans d'affaires validés, premières ventes"],
+    ["cooperatives", "Remettre une coopérative en ordre", "Diagnostic, statuts, registres, puis une première vente groupée.", "membres enregistrés, volumes collectés, paiements à temps"],
+    ["financement", "Préparer des groupes au crédit", "Former, constituer l'historique, présenter les groupes à une institution financière.", "dossiers déposés, crédits obtenus, remboursements"],
+    ["academie", "Former des animateurs et des relais", "Sessions sur le terrain et cours de l'Académie, avec certificats vérifiables.", "personnes certifiées, relais actifs"],
+    ["conseil", "Équiper une organisation partenaire", "ASBL Manager pour la gestion, Ubora Hub ou Akiba Suivi pour le suivi des bénéficiaires.", "circuits tenus, rapports remis à temps"]
+  ]
+};
+
 /* La mise en œuvre d'un projet, temps par temps (page « Projets et conseil »). */
 const MISE_EN_OEUVRE = {
   intro: "ONG, bailleurs et institutions nous confient tout ou partie d'un projet. Nous le conduisons sur le terrain, avec notre méthode et nos outils.",
