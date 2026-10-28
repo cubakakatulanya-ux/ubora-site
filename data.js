@@ -27,7 +27,8 @@ const CONFIG = {
 /* Bande déroulante. Les dernières actualités publiées s'y ajoutent d'elles-mêmes. */
 const TICKER_MESSAGES = [
   ["Ubora est une entreprise à caractère social : ses excédents sont réinvestis", "/soutenir"],
-  ["Ubora Académie : plus de 130 cours en ligne avec certificat", "/academie"],
+  ["Nouveau à l'Académie : cinq cas pratiques pour entreprendre dans l'agroalimentaire", "/academie"],
+  ["Ubora Académie : plus de 140 cours en ligne avec certificat", "/academie"],
   ["Nouveau : ASBL Manager, la gestion des associations, des ONG et des entreprises sociales", "/outils/asbl"],
   ["Nouveau : Akiba Suivi, l'application des animateurs et des organisations qui suivent des AVEC", "/outils/akiba#acces"],
   ["En vidéo : AKIBA, le cahier de l'AVEC dans le téléphone, en trois minutes", "/outils/akiba#video"],
@@ -429,13 +430,13 @@ const POLES = [
         ["Des compétences difficiles à prouver","Un trésorier formé n'a rien à montrer."]
       ]
     },
-    programmesTitre: ["Les domaines de l'Académie", "Plus de 130 cours en 25 parcours, dans sept domaines"],
+    programmesTitre: ["Les domaines de l'Académie", "Plus de 140 cours en 26 parcours, dans sept domaines"],
     programmes: [
       ["Groupes d'épargne (AVEC)", "Du membre au cadre", "Créer, gérer, animer et piloter des AVEC, du premier jour à l'autonomie : membres et bureau, animateurs, formateurs, cadres."],
       ["Activités génératrices de revenus", "Petites activités", "Choisir, lancer et faire grandir une petite activité : idée et marché, coûts et prix, comptes, crédit, transformation, formalisation."],
       ["Éducation financière", "L'argent de la famille et de l'activité", "Budget, épargne, crédit, négociation, finance numérique."],
       ["Entreprendre", "Créer et développer son entreprise", "Du problème du client au produit qui se vend : créer son entreprise de zéro, comprendre l'écosystème congolais."],
-      ["Agriculture et filières", "Entreprises agricoles", "Bâtir une entreprise agricole rentable et réussir sa filière : vivriers, café, cacao, palmier, élevage, pisciculture."],
+      ["Agriculture et filières", "Entreprises agricoles", "Bâtir une entreprise agricole rentable et réussir sa filière : vivriers, café, cacao, palmier, élevage, pisciculture, et des cas pratiques en agroalimentaire."],
       ["Coopératives", "Organisations de producteurs", "Faire vivre une coopérative : organes, argent, vente groupée, plan d'affaires."],
       ["Accompagner", "Coachs, incubateurs, programmes", "Coacher des entrepreneurs, diriger un incubateur, concevoir un programme d'appui, accompagner sur le terrain."]
     ],
@@ -591,12 +592,12 @@ const OUTILS = [
       ouvrir: "Ouvrir ASBL Manager",
       atouts: "Tout le fonctionnement d'une organisation, sans double saisie",
       fonctions: [
-        ["Gouvernance et membres", "Adhésions, cotisations et arriérés, assemblées générales, conseil d'administration, procès-verbaux et registre des décisions."],
+        ["Gouvernance et membres", "Adhésions, cotisations, assemblées générales, conseil d'administration, commission de contrôle, procès-verbaux et registre des décisions."],
         ["Plan de travail (PTBA)", "Activités rattachées au cadre de résultats, termes de référence, fiches d'activité et avancement."],
         ["Finances et comptabilité", "Dépenses, fonds à justifier, trésorerie en francs et en dollars, rapprochement bancaire, comptabilité et états financiers."],
-        ["Projets et bailleurs", "Conventions, budgets par projet, bénéficiaires et rapports au bailleur."],
-        ["Logistique et personnel", "Achats et marchés, stocks et équipements ; contrats, congés, missions, paie et évaluations."],
-        ["Suivi-évaluation et rapports", "Indicateurs, collecte et vérification des données, plaintes, rapports mensuels à annuels."]
+        ["Projets et bailleurs", "Conventions et profils de bailleurs, budgets par projet, réallocations avec l'accord du bailleur, clôture de projet et rapports."],
+        ["Logistique et personnel", "Achats et marchés, stocks et équipements ; contrats, feuilles de temps, congés, missions, paie et évaluations."],
+        ["Suivi-évaluation et rapports", "Indicateurs, vérification des données, plaintes et signalements confidentiels, rapports ; un assistant IA pour rédiger et repérer les appels à financement."]
       ],
       phasesTitre: "Le circuit d'une dépense",
       phases: ["Demande", "Contrôle budgétaire", "Approbation", "Paiement", "Justification"],
@@ -613,13 +614,13 @@ const OUTILS = [
   {
     id: "academie", nom: "Ubora Académie", court: "L'école en ligne, avec certificats", pole: "academie", statut: "en-ligne", mock: "academie", couleur: "#9A5522", initiales: "Ac",
     sousDomaine: "academie.uborardc.com", url: "https://academie.uborardc.com", page: "/academie",
-    resume: "L'école en ligne d'Ubora : plus de 130 cours en 25 parcours, près de 200 heures de formation, utilisables sans réseau, avec certificats vérifiables.",
-    points: ["25 parcours, du membre d'AVEC au formateur", "Les 5 modules du PNEF de la Banque centrale du Congo", "Exercices corrigés et quiz chronométrés", "Cours téléchargés utilisables sans réseau", "Badges et certificats vérifiables en ligne"]
+    resume: "L'école en ligne d'Ubora : plus de 140 cours en 26 parcours, plus de 200 heures de formation, utilisables sans réseau, avec certificats vérifiables.",
+    points: ["26 parcours, du membre d'AVEC au formateur", "Les 5 modules du PNEF de la Banque centrale du Congo", "Exercices corrigés et quiz chronométrés", "Cours téléchargés utilisables sans réseau", "Badges et certificats vérifiables en ligne"]
   },
   {
     id: "logiciel-coop", nom: "Ubora Coop, le logiciel", pole: "cooperatives", statut: "en-cours", mock: "coop", couleur: "#3E7A1F", initiales: "Co",
-    resume: "Le registre numérique de la coopérative : membres, parcelles, collectes, stocks, ventes et paiements.",
-    points: ["Membres, parcelles et parts sociales", "Collecte et pesées", "Stocks et intrants à crédit", "Ventes groupées", "Paiements par mobile money"]
+    resume: "La gestion des organisations paysannes, du groupement à la coopérative et à l'union : membres et parcelles, collecte, stocks, ventes, finances, crédits et gouvernance, même hors connexion.",
+    points: ["Groupement, association, SCOOPS, COOP-CA ou union", "Membres, parcelles géolocalisées et capital social", "Collecte, reçus et paiement des livraisons", "Stocks, ventes groupées, finances en francs et en dollars", "Assemblées, organes et registre des décisions", "Contrôle interne et repérage des anomalies"]
   },
   {
     id: "plateforme-market", nom: "Ubora Market, la plateforme", pole: "marche", statut: "en-cours", mock: "market", couleur: "#1F7A6B", initiales: "Mk",
@@ -694,7 +695,7 @@ const FAQ = [
   ["Qui peut travailler avec Ubora ?", "Les groupes d'épargne, les entrepreneurs et les PME, les coopératives et les organisations paysannes, les petites institutions financières, ainsi que les ONG, les incubateurs et les bailleurs qui accompagnent ces publics."],
   ["Où intervenez-vous ?", "Dans toute la RDC, sur place ou à distance."],
   ["Vos outils fonctionnent-ils sans internet ?", "Oui. AKIBA fonctionne entièrement sans réseau ; dès que le réseau revient, le groupe envoie ses données à l'animateur et à l'organisation, et l'application se met à jour d'elle-même. Ubora Hub fonctionne aussi hors connexion, les cours téléchargés de l'Académie se suivent sans réseau, et le générateur de business plan reste utilisable une fois ouvert."],
-  ["Proposez-vous des formations sur vos outils ?", "Oui. Chaque déploiement comprend une formation de prise en main, puis un suivi. Notre Académie en ligne, academie.uborardc.com, propose aussi plus de 130 cours avec certificat. Nous organisons également des sessions sur demande, dans votre province ou en ligne."],
+  ["Proposez-vous des formations sur vos outils ?", "Oui. Chaque déploiement comprend une formation de prise en main, puis un suivi. Notre Académie en ligne, academie.uborardc.com, propose aussi plus de 140 cours avec certificat. Nous organisons également des sessions sur demande, dans votre province ou en ligne."],
   ["Faut-il être une entreprise déclarée pour être accompagné ?", "Non. Nous accompagnons justement beaucoup d'entrepreneurs et de groupements vers la formalisation, étape par étape."],
   ["Que devient l'accompagnement quand le projet d'une ONG se termine ?", "Nous restons. Les groupes, les entrepreneurs et les coopératives continuent d'être suivis après la clôture du projet. Notre modèle économique finance une partie de ces activités de terrain, et les outils mis en place restent en service."],
   ["Ubora peut-elle financer notre groupe d'épargne ?", "Ubora ne prête pas elle-même. Par Ubora Fin, nous mobilisons le capital d'institutions financières, d'investisseurs et de bailleurs au profit des AVEC que nous accompagnons, et nous présentons le groupe à une IMF, une COOPEC ou une banque partenaire. Le groupe obtient ainsi un fonds de roulement, en plus de l'épargne de ses membres."],

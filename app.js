@@ -683,7 +683,7 @@ function pageConseil() {
   <section class="band" id="verifier"><div class="wrap">
     ${secHead("Avant de signer", `Vérifiez par <span class="serif">vous-même</span>`, "Une jeune entreprise doit montrer ce qu'elle sait faire. Voici ce que vous pouvez contrôler sans nous croire sur parole.")}
     <div class="grid-4">${[
-      [ICON.check, "Essayez nos outils", "AKIBA et ASBL Manager ont une démonstration libre ; l'Académie compte plus de 130 cours.", "/outils", "Voir les outils"],
+      [ICON.check, "Essayez nos outils", "AKIBA et ASBL Manager ont une démonstration libre ; l'Académie compte plus de 140 cours.", "/outils", "Voir les outils"],
       [ICON.doc, "Lisez notre méthode", "Six temps, toujours dans le même ordre, pour chaque public.", "/approche", "Lire la méthode"],
       [ICON.users, "Rencontrez l'équipe", "Le parcours du directeur ; CV complet et références sur demande.", "/equipe", "Voir l'équipe"],
       [ICON.briefcase, "Une entreprise immatriculée", [CONFIG.legal.rccm && "RCCM " + CONFIG.legal.rccm, CONFIG.legal.idnat && "ID NAT " + CONFIG.legal.idnat].filter(Boolean).join(" · "), "/mentions", "Mentions légales"]
@@ -709,13 +709,13 @@ function pageFormations() {
   const t = todayISO();
   const sessions = [...DATA.formations].filter(f => f.date >= t).sort((a, b) => a.date.localeCompare(b.date));
   return pageHead({ eyebrow: "Formations", title: `Apprendre à utiliser les outils, puis à s'en servir seul.`, crumbs: [["Formations"]], photo: ["formation", "Un formateur s'adresse à un groupe dans une salle"],
-    lead: "Chaque déploiement comprend une formation et un suivi. Des sessions dans votre province ou en ligne, et plus de 130 cours à l'Académie." }) + `
+    lead: "Chaque déploiement comprend une formation et un suivi. Des sessions dans votre province ou en ligne, et plus de 140 cours à l'Académie." }) + `
   <section id="academie"><div class="wrap">
     <div class="academie">
       <div class="academie-txt">
         <span class="eyebrow">Ubora Académie</span>
         <h2>Se former à son rythme, même sans réseau</h2>
-        <p class="lead">Plus de 130 cours en 25 parcours, écrits à partir de nos documents de terrain. Un cours téléchargé marche sans réseau, et chaque parcours mène à un certificat vérifiable.</p>
+        <p class="lead">Plus de 140 cours en 26 parcours, écrits à partir de nos documents de terrain. Un cours téléchargé marche sans réseau, et chaque parcours mène à un certificat vérifiable.</p>
         <div class="btn-row"><a class="btn btn-primary" href="/academie">Découvrir Ubora Académie ${ICON.arrow}</a><a class="btn btn-ghost" href="${ACADEMIE.url}" target="_blank" rel="noopener">Ouvrir l'Académie ${ICON.ext}</a></div>
       </div>
       <div class="screen">${mockFor("academie")}<span class="mock-note" aria-hidden="true">Écran illustratif</span></div>
@@ -965,7 +965,7 @@ const DESCR = {
   approche: "La méthode Ubora en six temps : écouter, structurer, former, outiller, connecter et suivre. La même pour les groupes d'épargne, les entrepreneurs et les coopératives, en RDC.",
   outils: "AKIBA et Akiba Suivi, le générateur de business plan, Ubora Hub, Ubora Académie, ASBL Manager et les outils en préparation : des outils numériques conçus pour la RDC.",
   conseil: "Projets pilotes et mise en œuvre de projets de développement économique pour les bailleurs, les ONG et les institutions en RDC : indicateurs fixés ensemble, résultats suivis en direct.",
-  formations: "Formations d'Ubora en RDC : Académie en ligne (plus de 130 cours avec certificat), prise en main des outils, AVEC, entrepreneuriat et gestion coopérative.",
+  formations: "Formations d'Ubora en RDC : Académie en ligne (plus de 140 cours avec certificat), prise en main des outils, AVEC, entrepreneuriat et gestion coopérative.",
   actualites: "Les actualités d'Ubora : programmes, déploiements, formations et nouvelles du terrain en RDC.",
   carrieres: "Offres d'emploi, de stage et de consultance chez Ubora, entreprise à caractère social qui intervient dans toute la RDC.",
   contact: "Contacter Ubora, entreprise à caractère social, par téléphone, WhatsApp ou e-mail. Une personne de l'équipe vous répond sous deux jours ouvrés.",
@@ -980,7 +980,7 @@ const SEO_POLES = {
   pme: ["Ubora PME : de l'idée à l'entreprise, pour les entrepreneurs en RDC", "Le pôle entrepreneuriat d'Ubora, entreprise à caractère social : idéation, incubation, lancement de l'entreprise et mise à niveau des PME, avec Ubora Hub et le générateur de business plan."],
   cooperatives: ["Ubora Coop : créer et gérer une coopérative en RDC", "Le pôle coopératives d'Ubora, entreprise à caractère social : statuts OHADA, gestion, collecte, stockage, transformation et vente groupée, jusqu'au paiement des producteurs."],
   financement: ["Ubora Fin : mobiliser le capital pour les petits emprunteurs en RDC", "Ubora Fin ne prête pas : ce pôle d'Ubora, entreprise à caractère social, prépare les groupes, les coopératives et les PME, les présente aux institutions financières et mobilise le capital à leur profit."],
-  academie: ["Ubora Académie : formations en ligne certifiantes en RDC", "L'école d'Ubora, entreprise à caractère social : plus de 130 cours en ligne, utilisables sans réseau, sur les AVEC, les AGR, l'entrepreneuriat, l'agriculture et les coopératives, avec certificats vérifiables."],
+  academie: ["Ubora Académie : formations en ligne certifiantes en RDC", "L'école d'Ubora, entreprise à caractère social : plus de 140 cours en ligne, utilisables sans réseau, sur les AVEC, les AGR, l'entrepreneuriat, l'agriculture et les coopératives, avec certificats vérifiables."],
   vert: ["Ubora Vert : protéger l'environnement et en vivre, en RDC", "Le pôle environnement d'Ubora, entreprise à caractère social : reboisement, recyclage, agroécologie et énergie propre, pour que protéger l'environnement fasse vivre ceux qui le portent."],
   marche: ["Ubora Market : trouver des acheteurs pour les producteurs en RDC", "Le pôle marché d'Ubora, entreprise à caractère social : relier les coopératives, les PME et les entrepreneurs accompagnés à des acheteurs, et suivre chaque vente jusqu'au paiement."]
 };
