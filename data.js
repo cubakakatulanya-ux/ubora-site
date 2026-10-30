@@ -29,6 +29,7 @@ const TICKER_MESSAGES = [
   ["Ubora est une entreprise à caractère social : ses excédents sont réinvestis", "/soutenir"],
   ["Nouveau à l'Académie : cinq cas pratiques pour entreprendre dans l'agroalimentaire", "/academie"],
   ["Ubora Académie : plus de 140 cours en ligne avec certificat", "/academie"],
+  ["Nouveau : AKIBA s'installe comme une application Android", "/outils/akiba#acces"],
   ["Nouveau : ASBL Manager, la gestion des associations, des ONG et des entreprises sociales", "/outils/asbl"],
   ["Nouveau : Akiba Suivi, l'application des animateurs et des organisations qui suivent des AVEC", "/outils/akiba#acces"],
   ["En vidéo : AKIBA, le cahier de l'AVEC dans le téléphone, en trois minutes", "/outils/akiba#video"],
@@ -500,6 +501,7 @@ const OUTILS = [
       lead: "Chaque franc est écrit au moment où il bouge, chaque membre repart avec son reçu, et l'historique du groupe devient un dossier qu'une IMF peut étudier.",
       seo: ["AKIBA : l'application des groupes d'épargne (AVEC) en RDC", "AKIBA tient les comptes de l'AVEC sur téléphone, même sans réseau : réunion guidée, registre scellé, reçus imprimés et dossier pour la microfinance. Une application de l'entreprise à caractère social Ubora."],
       ouvrir: "Ouvrir AKIBA",
+      android: "https://akiba.uborardc.com/android.html",
       accesNote: "Animateur, organisation ou programme ? Le suivi des groupes se fait dans Akiba Suivi, sur akibas.uborardc.com.",
       /* film de présentation (montage du 10 octobre 2026) : captures réelles de l'application, données de démonstration */
       video: { src: "/img/video/akiba.mp4", affiche: "/img/video/akiba-couverture.webp", duree: "3 min 11", leger: ["/img/video/akiba-leger.mp4", "3,8 Mo"],
@@ -507,13 +509,13 @@ const OUTILS = [
       atouts: "Des comptes que tout le groupe peut vérifier",
       pour: ["Trésoriers et comités d'AVEC", "Animateurs et agents de terrain", "ONG et programmes qui suivent des groupes", "Institutions de microfinance"],
       acces: [
-        ["Essayez la démonstration", "Libre et sans engagement : une réunion complète, sur akiba.uborardc.com."],
+        ["Essayez la démonstration", "Libre et sans engagement : une réunion complète, dans le navigateur ou dans l'application Android."],
         ["Demandez votre code de validation", "Pour une vraie AVEC, Ubora délivre un code. Écrivez-nous."],
         ["Formez le comité", "Une formation de prise en main, puis un suivi sur le terrain."]
       ]
     },
     resume: "Le cahier de l'AVEC dans le téléphone, même sans réseau : chaque franc écrit au moment où il bouge, un reçu pour chaque membre, un historique qu'une IMF peut étudier.",
-    points: ["Réunion guidée en 8 étapes, de la présence à la clôture à trois clés", "Registre scellé : toute modification se voit", "Reçus des membres et journal imprimés sur imprimante Bluetooth (bientôt sur terminal POS), ou envoyés par WhatsApp et SMS", "Indice de qualité des données et niveau « prête pour une IMF »", "Dossier pour l'IMF et export Excel, sans données personnelles", "Crédit d'une IMF suivi de bout en bout, garantie comprise", "Akiba Suivi pour les animateurs et les organisations, avec un écran Impact", "Point GPS du groupe, pris sans réseau", "Langues de la RDC, guide audio et 7 modules de formation AVEC", "Démonstration libre ; code de validation Ubora pour une vraie AVEC"]
+    points: ["Réunion guidée en 8 étapes, de la présence à la clôture à trois clés", "Registre scellé : toute modification se voit", "Reçus des membres et journal imprimés sur imprimante Bluetooth (bientôt sur terminal POS), ou envoyés par WhatsApp et SMS", "Indice de qualité des données et niveau « prête pour une IMF »", "Dossier pour l'IMF et export Excel, sans données personnelles", "Crédit d'une IMF suivi de bout en bout, garantie comprise", "Akiba Suivi pour les animateurs et les organisations, avec un écran Impact", "Point GPS du groupe, pris sans réseau", "Application Android de 3 Mo, sans autorisation demandée, qui ouvre l'imprimante des terminaux de caisse", "Langues de la RDC, guide audio et 7 modules de formation AVEC", "Démonstration libre ; code de validation Ubora pour une vraie AVEC"]
   },
   {
     id: "akiba-suivi", nom: "Akiba Suivi", court: "Le suivi des AVEC, pour les animateurs et les organisations", pole: "avec", statut: "en-ligne", mock: "akiba", couleur: "#2463A6", initiales: "As",
@@ -561,7 +563,7 @@ const OUTILS = [
         ["Sélectionner", "Appels à candidatures en ligne, formulaire de candidature, jury et classement."],
         ["Structurer le parcours", "Des programmes et des cohortes, en quatre phases : idéation, incubation, lancement de l'entreprise, puis mise à niveau des PME déjà établies."],
         ["Former", "Modules, exercices et quiz utilisables hors ligne, et une formation intégrée pour les coachs et les directeurs."],
-        ["Accompagner", "Séances de coaching, plans d'action et calendrier partagé."],
+        ["Accompagner", "Séances de coaching guidées module par module, plans d'action et calendrier partagé."],
         ["Bâtir le business plan", "Chaque entrepreneur construit son plan d'affaires dans le générateur, relié à son dossier."],
         ["Rendre compte", "Tableau de bord, indicateurs et rapports en PDF pour la direction et les bailleurs."]
       ],
@@ -594,9 +596,9 @@ const OUTILS = [
       fonctions: [
         ["Gouvernance et membres", "Adhésions, cotisations, assemblées générales, conseil d'administration, commission de contrôle, procès-verbaux et registre des décisions."],
         ["Plan de travail (PTBA)", "Activités rattachées au cadre de résultats, termes de référence, fiches d'activité et avancement."],
-        ["Finances et comptabilité", "Dépenses, fonds à justifier, trésorerie en francs et en dollars, rapprochement bancaire, comptabilité et états financiers."],
-        ["Projets et bailleurs", "Conventions et profils de bailleurs, budgets par projet, réallocations avec l'accord du bailleur, clôture de projet et rapports."],
-        ["Logistique et personnel", "Achats et marchés, stocks et équipements ; contrats, feuilles de temps, congés, missions, paie et évaluations."],
+        ["Finances et comptabilité", "Dépenses signées selon le montant, fonds à justifier, trésorerie en francs et en dollars, comptabilité et états financiers."],
+        ["Projets et bailleurs", "Conventions et profils de bailleurs, chronogramme, demandes de tranche, réallocations avec l'accord du bailleur, clôture de projet."],
+        ["Logistique et personnel", "Achats, marchés et stocks ; recrutement, contrats, présences, feuilles de temps, paie et évaluations."],
         ["Suivi-évaluation et rapports", "Indicateurs, vérification des données, plaintes et signalements confidentiels, rapports ; un assistant IA pour rédiger et repérer les appels à financement."]
       ],
       phasesTitre: "Le circuit d'une dépense",
@@ -608,7 +610,7 @@ const OUTILS = [
         ["Enregistrez votre organisation", "Nom, forme juridique, exercice et devise. Ou ouvrez d'abord l'organisation de démonstration."],
         ["Invitez votre équipe", "Chaque collaborateur reçoit un rôle et retrouve aussitôt son espace de travail."]
       ],
-      accesNote: "Une organisation de démonstration permet d'essayer toutes les fonctions sans saisir vos données."
+      accesNote: "Une organisation de démonstration permet d'essayer toutes les fonctions sans saisir vos données ; vos fichiers Excel existants peuvent ensuite être repris."
     }
   },
   {

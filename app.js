@@ -664,7 +664,7 @@ function pageOutil(o) {
   <section id="acces"><div class="wrap">
     ${secHead("Pour commencer", esc(F.accesTitre || "Trois étapes pour démarrer"))}
     <ol class="bridge">${F.acces.map(([t, x], i) => `<li><span class="bn">${i + 1}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`).join("")}</ol>
-    <div class="btn-row centre">${inscription || ouvrir("btn-primary")}${inscription ? ouvrir("btn-ghost") : `<a class="btn btn-ghost" href="/contact?sujet=${encodeURIComponent(o.nom)}">Nous écrire</a>`}</div>
+    <div class="btn-row centre">${inscription || ouvrir("btn-primary")}${F.android ? `<a class="btn btn-ghost" href="${F.android}" target="_blank" rel="noopener">Installer sur Android ${ICON.ext}</a>` : ""}${inscription ? ouvrir("btn-ghost") : `<a class="btn btn-ghost" href="/contact?sujet=${encodeURIComponent(o.nom)}">Nous écrire</a>`}</div>
     ${F.accesNote ? `<p class="suite">${esc(F.accesNote)}</p>` : ""}
     <p class="suite">${pole(o.pole) ? `Ce logiciel accompagne le pôle <a class="link" href="${p.chemin}">${esc(p.nom)}</a>.` : `Ce logiciel accompagne nos <a class="link" href="/conseil">projets et conseil</a> aux organisations.`}</p>
   </div></section>`;
