@@ -863,7 +863,7 @@ function pageOng() {
   const sujet = "/contact?sujet=" + encodeURIComponent("UBORA, l'association");
   return pageHead({ eyebrow: "UBORA · association à vocation d'ONG", title: `L'association UBORA, au service des <span class="serif">communautés</span>.`, crumbs: [["Qui sommes-nous", "/a-propos"], ["L'association UBORA"]], photo: ["terrain", "Une communauté réunie en plein air"],
     lead: "UBORA est l'association sans but lucratif de l'écosystème Ubora. Elle conduit des projets communautaires financés par des dons et des subventions, au service des femmes, des jeunes et des populations vulnérables.",
-    extra: `<div class="btn-row"><a class="btn btn-accent" href="${sujet}">Financer un projet de l'association ${ICON.arrow}</a><a class="btn btn-glass" href="#lien" data-scroll="lien">L'association et l'entreprise sociale</a></div>` }) + `
+    extra: `<div class="btn-row"><a class="btn btn-accent" href="${sujet}">Financer un projet de l'association ${ICON.arrow}</a><a class="btn btn-glass" href="#lien" data-scroll="lien">L'association et l'entreprise sociale</a></div><span class="sub-chip">ong.uborardc.com</span>` }) + `
   <section><div class="wrap two">
     <div><span class="eyebrow">Vision</span><p class="quote">${esc(ONG.vision)}</p></div>
     <div class="prose-sm"><p><b>Mission.</b> ${esc(ONG.mission)}</p><p class="muted">${esc(ONG.statut)} ${esc(ONG.creation)}</p>
