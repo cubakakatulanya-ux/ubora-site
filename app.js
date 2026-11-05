@@ -226,7 +226,7 @@ function blocPilote() {
     ["Des outils déjà en ligne", `${n} logiciels à essayer avant même de nous appeler.`],
     ["Une équipe qui connaît les programmes", "Plus de dix ans d'AVEC, d'incubation et d'appui aux PME dans des programmes de coopération en RDC."],
     ["Des résultats suivis en direct", "Tableaux de bord et exports pour votre équipe, pas seulement un rapport final."],
-    ["Nous restons après le projet", "Entreprise à caractère social, nous réinvestissons nos excédents pour continuer le suivi quand le financement s'arrête."]
+    ["Deux façons de financer", "Un contrat de prestation avec l'Entreprise Sociale Ubora, ou une subvention à l'association UBORA."]
   ];
   return `<div class="deep relais pilote">
     <div class="relais-txt"><span class="eyebrow">Bailleurs, ONG et programmes</span>
@@ -338,7 +338,7 @@ function footerHTML() {
     <div class="foot-grid">
       <div class="foot-brand">
         <a class="brand" href="/"><img class="logo-img" src="/logo-ubora.png" alt="" width="56" height="56" loading="lazy"><span class="brand-txt"><span class="brand-name">Ub<b>o</b>ra</span><span class="brand-sub">Entreprise sociale</span></span></a>
-        <p class="foot-accroche">Entreprise à caractère social, partout en RDC.</p>
+        <p class="foot-accroche">Partout en RDC, sur le terrain et à distance. Pour les projets financés par des dons : <a href="/ong">l'association UBORA</a>.</p>
       </div>
       <nav aria-label="Nos pôles"><h4>Nos pôles</h4><ul class="deux">${POLES.map(p => `<li><a class="foot-pole" href="${p.chemin}" style="--c:${p.couleur}">${esc(p.nom)}</a></li>`).join("")}</ul></nav>
       <nav aria-label="Ubora"><h4>Ubora</h4><ul class="deux"><li><a href="/a-propos">Qui sommes-nous</a></li><li><a href="/ong">L'association UBORA</a></li><li><a href="/equipe">Notre équipe</a></li><li><a href="/approche">Notre approche</a></li><li><a href="/conseil">Projets et conseil</a></li><li><a href="/outils">Outils numériques</a></li><li><a href="/formations">Formations</a></li>${DATA.realisations.length ? `<li><a href="/realisations">Nos réalisations</a></li>` : ""}${allNews().length ? `<li><a href="/actualites">Actualités</a></li>` : ""}<li><a href="/carrieres">Carrières</a></li><li><a href="/soutenir">Soutenir nos actions</a></li></ul></nav>
@@ -407,7 +407,7 @@ function pageHome() {
     <div>
       <span class="eyebrow">Une entreprise sociale</span>
       <h2>Notre modèle fait payer ceux qui peuvent, pour servir ceux qui ne peuvent pas.</h2>
-      <p class="lead">Ni une ONG qui dépend d'un financement, ni une entreprise qui ne sert que les clients solvables : nos prestations financent notre présence auprès de ceux qui en ont le plus besoin.</p>
+      <p class="lead">Une entreprise, pas une ONG : ce sont nos prestations, et non des dons, qui financent notre présence auprès de ceux qui en ont le plus besoin. Les projets financés par des dons passent par notre association, <a class="link" href="/ong">UBORA</a>.</p>
       <div class="btn-row"><a class="btn btn-accent" href="/soutenir">Soutenir nos actions ${ICON.arrow}</a><a class="btn btn-ghost" href="/a-propos#modele">Comprendre notre modèle</a></div>
     </div>
     <ol class="model">
@@ -472,7 +472,7 @@ function pageAbout() {
       <div class="fcard"><span class="ic">${ICON.coins}</span><h3>Ce que nous mobilisons</h3><p>Par Ubora Fin, le capital des financeurs au profit des groupes que nous accompagnons. Ubora Fin ne prête pas.</p></div>
       <div class="fcard"><span class="ic">${ICON.spark}</span><h3>Ce que nous réinvestissons</h3><p>Nos outils, la formation de relais locaux, et le suivi sur le terrain quand le projet d'un partenaire s'achève.</p></div>
     </div>
-    <p class="note">Être rentables n'est pas une fin en soi. C'est ce qui nous permet d'être encore là au cycle suivant.</p>
+    <p class="note">Être rentables n'est pas une fin en soi. C'est ce qui nous permet d'être encore là au cycle suivant. Pour les projets financés par des dons et des subventions, une association distincte, <a class="link" href="/ong">UBORA</a>, porte les actions.</p>
   </div></section>
 
   <section><div class="wrap">
@@ -676,7 +676,7 @@ function pageConseil() {
     lead: "Commencez par un projet pilote : nous le cadrons avec vous, le mettons en œuvre sur le terrain, et vous suivez les résultats en direct. Puis nous restons quand le financement s'arrête.",
     extra: `<div class="btn-row"><a class="btn btn-accent" href="#pilote" data-scroll="pilote">Comment se passe un pilote ${ICON.arrow}</a><a class="btn btn-glass" href="/contact?sujet=${encodeURIComponent("Conseil et programmes")}">Parlons de votre projet</a></div>` }) + `
   <section id="pilote"><div class="wrap">
-    ${secHead("Projet pilote", `Commencer petit, mesurer, puis <span class="serif">décider</span>`, "Pour un bailleur ou une ONG qui ne nous connaît pas encore, c'est la façon la plus sûre de commencer. Et après le pilote, nous restons : nos excédents, réinvestis dans le social, financent une partie du suivi.")}
+    ${secHead("Projet pilote", `Commencer petit, mesurer, puis <span class="serif">décider</span>`, "Pour un bailleur ou une ONG qui ne nous connaît pas encore, c'est la façon la plus sûre de commencer. Selon votre mode de financement, le pilote est confié à l'Entreprise Sociale Ubora (contrat de prestation) ou à l'association UBORA (subvention).")}
     <ol class="chaine quatre">${PILOTE.temps.map(([t, x, r], i) => `<li class="reveal"><span class="pn">${String(i + 1).padStart(2, "0")}</span><h3>${esc(t)}</h3><p>${esc(x)}</p><p class="resultat">${esc(r)}</p></li>`).join("")}</ol>
     <h3 class="sous-titre">Exemples de pilotes</h3>
     <div class="grid-3 pilotes">${PILOTE.exemples.map(([id, t, x, m]) => { const p = poleReal(id); return `<div class="fcard" style="--c:${p.couleur}"><span class="tag" style="background:${p.couleur};color:#fff">${esc(p.nom)}</span><h3>${esc(t)}</h3><p>${esc(x)}</p><p class="mesure"><b>À mesurer</b> ${esc(m)}</p></div>`; }).join("")}</div>
@@ -693,7 +693,7 @@ function pageConseil() {
   </div></section>
   <section id="mise-en-oeuvre"><div class="wrap">
     ${secHead("Mise en œuvre de projets", `Nous ne faisons pas que conseiller : nous <span class="serif">mettons en œuvre</span>`, MISE_EN_OEUVRE.intro)}
-    <ol class="chaine cinq">${MISE_EN_OEUVRE.temps.map(([t, x, r], i) => `<li class="reveal"><span class="pn">${String(i + 1).padStart(2, "0")}</span><h3>${esc(t)}</h3><p>${esc(x)}</p><p class="resultat">${esc(r)}</p></li>`).join("")}</ol>
+    <ol class="chaine quatre">${MISE_EN_OEUVRE.temps.map(([t, x, r], i) => `<li class="reveal"><span class="pn">${String(i + 1).padStart(2, "0")}</span><h3>${esc(t)}</h3><p>${esc(x)}</p><p class="resultat">${esc(r)}</p></li>`).join("")}</ol>
     <div class="grid-2 formules">${MISE_EN_OEUVRE.formules.map(([t, x]) => `<div class="fcard"><h3>${esc(t)}</h3><p>${esc(x)}</p></div>`).join("")}</div>
     <p class="suite"><a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent("Conseil et programmes")}">Nous confier un projet ${ICON.arrow}</a></p>
   </div></section>
@@ -807,7 +807,6 @@ function pageEquipe() {
     ${secHead("L'équipe", "Celles et ceux qui travaillent avec lui")}
     <div class="team-grid">${membres.map(memberCard).join("")}</div>
   </div></section>` : ""}
-  <section class="tight-top"><div class="wrap">${teamBand(true)}</div></section>
   <section><div class="wrap">${finalCta()}</div></section>`;
 }
 
@@ -890,7 +889,7 @@ function pageOng() {
     <span class="eyebrow">Agir avec l'association</span>
     <h2>Financer un projet, devenir membre, <span class="serif">s'engager</span>.</h2>
     <p>Dons, subventions, partenariats ou adhésion : écrivez-nous, une personne de l'association vous répond.</p>
-    <div class="btn-row"><a class="btn btn-accent" href="${sujet}">Nous écrire ${ICON.arrow}</a><a class="btn btn-glass" href="/soutenir">Soutenir l'écosystème Ubora</a></div>
+    <div class="btn-row"><a class="btn btn-accent" href="${sujet}">Nous écrire ${ICON.arrow}</a><a class="btn btn-glass" href="/conseil">Confier une mission à l'entreprise sociale</a></div>
   </div></div></section>`;
 }
 
@@ -907,7 +906,7 @@ function pageSoutenir() {
     [ICON.briefcase, "Confier une mission", "Commencez par un projet pilote. Chaque prestation finance aussi nos services à tarif solidaire.", "/conseil#pilote", "Voir comment"],
     [ICON.coins, "Apporter du capital", "Ubora Fin mobilise votre capital au profit des groupes que nous accompagnons, et vous en rend compte.", "/financement#intermediation", "Voir comment"],
     [ICON.handshake, "Devenir partenaire", "Compétences, équipements, mises en relation : dites-nous ce que vous pouvez apporter.", sujet, "Nous écrire"],
-    [ICON.heart, "Faire connaître", "Parlez d'AKIBA, de l'Académie ou de nos formations à ceux qui en ont besoin.", "/outils", "Voir nos outils"]
+    [ICON.heart, "Faire un don ou une subvention", "Ils vont à l'association UBORA, qui conduit les projets communautaires sans but lucratif.", "/ong", "L'association UBORA"]
   ];
   return pageHead({ eyebrow: "Soutenir nos actions", title: `Pas une entreprise classique : notre objectif est <span class="serif">social</span>.`, crumbs: [["Soutenir nos actions"]],
     lead: "Nos prestations font vivre l'entreprise ; ce qu'elles dégagent sert d'abord ceux qui n'auraient pas accès à nos services autrement.",
@@ -918,7 +917,7 @@ function pageSoutenir() {
       <tbody>${lignes.map(([a, b, c]) => `<tr><th scope="row">${a}</th><td>${b}</td><td class="ok">${c}</td></tr>`).join("")}</tbody></table></div>
   </div></section>
   <section class="band" id="comment"><div class="wrap">
-    ${secHead("Comment nous soutenir", `Quatre façons d'<span class="serif">agir</span> avec nous`, "Nous ne collectons pas de dons en ligne. Écrivez-nous : nous voyons ensemble la forme de soutien la plus utile.")}
+    ${secHead("Comment nous soutenir", `Quatre façons d'<span class="serif">agir</span> avec nous`, "L'entreprise sociale ne reçoit pas de dons : ils vont à l'association UBORA. Écrivez-nous, nous voyons ensemble la forme de soutien la plus utile.")}
     <div class="grid-4">${voies.map(([ic, t, x, lien, lib]) => `<div class="fcard"><span class="ic">${ic}</span><h3>${t}</h3><p>${x}</p><a class="link" href="${lien}">${lib} ${ICON.arrow}</a></div>`).join("")}</div>
   </div></section>
   <section class="tight-top"><div class="wrap"><div class="deep final">
@@ -997,7 +996,7 @@ const ANCIENNES = {
 };
 const DESCR = {
   "": "Entreprise à caractère social, Ubora réinvestit ses excédents pour accompagner les groupes d'épargne (AVEC), les entrepreneurs et les coopératives, partout en RDC.",
-  "a-propos": "Qui est Ubora : ni ONG, ni entreprise classique. Une entreprise à caractère social dont les revenus financent la présence auprès des plus fragiles. Sa mission, son modèle, ses valeurs.",
+  "a-propos": "Qui est Ubora : une entreprise à caractère social dont les prestations financent la présence auprès des plus fragiles, et son association, UBORA, pour les projets financés par des dons. Mission, modèle, valeurs.",
   approche: "La méthode Ubora en six temps : écouter, structurer, former, outiller, connecter et suivre. La même pour les groupes d'épargne, les entrepreneurs et les coopératives, en RDC.",
   outils: "AKIBA et Akiba Suivi, le générateur de business plan, Ubora Hub, Ubora Académie, ASBL Manager et les outils en préparation : des outils numériques conçus pour la RDC.",
   conseil: "Projets pilotes et mise en œuvre de projets de développement économique pour les bailleurs, les ONG et les institutions en RDC : indicateurs fixés ensemble, résultats suivis en direct.",

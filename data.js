@@ -28,14 +28,12 @@ const CONFIG = {
 const TICKER_MESSAGES = [
   ["Ubora est une entreprise à caractère social : ses excédents sont réinvestis", "/soutenir"],
   ["Nouveau à l'Académie : cinq cas pratiques pour entreprendre dans l'agroalimentaire", "/academie"],
-  ["Ubora Académie : plus de 140 cours en ligne avec certificat", "/academie"],
   ["Nouveau : AKIBA s'installe comme une application Android", "/outils/akiba#acces"],
   ["Nouveau : ASBL Manager, la gestion des associations, des ONG et des entreprises sociales", "/outils/asbl"],
   ["Nouveau : Akiba Suivi, l'application des animateurs et des organisations qui suivent des AVEC", "/outils/akiba#acces"],
   ["En vidéo : AKIBA, le cahier de l'AVEC dans le téléphone, en trois minutes", "/outils/akiba#video"],
   ["En vidéo : Ubora Hub, de l'idée à l'entreprise, en quatre minutes", "/outils/hub#video"],
-  ["Ubora Vert : protéger l'environnement, et en vivre", "/vert"],
-  ["Ni ONG, ni entreprise classique : nos revenus financent notre présence auprès des plus fragiles", "/a-propos#modele"]
+  ["L'association UBORA porte les projets financés par des dons et des subventions", "/ong"]
 ];
 
 /* ---------- Le Directeur Gérant (page « Notre équipe ») ----------
@@ -714,8 +712,7 @@ const MISE_EN_OEUVRE = {
     ["Concevoir","Diagnostic, objectifs, budget et calendrier, avec vous.","Un projet que le terrain peut porter."],
     ["Mettre en œuvre","Nos équipes structurent, forment et outillent les publics ciblés.","Des activités menées jusqu'au bout."],
     ["Suivre et mesurer","Les données sont dans nos outils dès le premier jour.","Des indicateurs toujours à jour."],
-    ["Rendre compte","Rapports techniques et financiers, au rythme convenu.","Vous savez où va chaque activité."],
-    ["Rester","Relais locaux, outils et suivi restent après la clôture.","Des résultats qui tiennent."]
+    ["Rendre compte","Rapports techniques et financiers, au rythme convenu.","Vous savez où va chaque activité."]
   ]
 };
 
