@@ -303,6 +303,7 @@ function menuHTML() {
         <a href="/a-propos"><b>Qui sommes-nous</b><small>Mission, modèle social, valeurs</small></a>
         <a href="/equipe"><b>Notre équipe</b><small>Les personnes derrière Ubora</small></a>
         <a href="/approche"><b>Notre approche</b><small>La méthode Ubora</small></a>
+        <a href="/ong"><b>L'association UBORA</b><small>À vocation d'ONG de développement</small></a>
         <a href="/carrieres"><b>Carrières</b><small>Rejoindre l'équipe</small></a>
       </div></li>
     <li class="has-dd"><button class="dd-btn" type="button" data-r="poles" aria-expanded="false">Pôles et outils ${ICON.chev}</button>
@@ -340,7 +341,7 @@ function footerHTML() {
         <p class="foot-accroche">Entreprise à caractère social, partout en RDC.</p>
       </div>
       <nav aria-label="Nos pôles"><h4>Nos pôles</h4><ul class="deux">${POLES.map(p => `<li><a class="foot-pole" href="${p.chemin}" style="--c:${p.couleur}">${esc(p.nom)}</a></li>`).join("")}</ul></nav>
-      <nav aria-label="Ubora"><h4>Ubora</h4><ul class="deux"><li><a href="/a-propos">Qui sommes-nous</a></li><li><a href="/equipe">Notre équipe</a></li><li><a href="/approche">Notre approche</a></li><li><a href="/conseil">Projets et conseil</a></li><li><a href="/outils">Outils numériques</a></li><li><a href="/formations">Formations</a></li>${DATA.realisations.length ? `<li><a href="/realisations">Nos réalisations</a></li>` : ""}${allNews().length ? `<li><a href="/actualites">Actualités</a></li>` : ""}<li><a href="/carrieres">Carrières</a></li><li><a href="/soutenir">Soutenir nos actions</a></li></ul></nav>
+      <nav aria-label="Ubora"><h4>Ubora</h4><ul class="deux"><li><a href="/a-propos">Qui sommes-nous</a></li><li><a href="/ong">L'association UBORA</a></li><li><a href="/equipe">Notre équipe</a></li><li><a href="/approche">Notre approche</a></li><li><a href="/conseil">Projets et conseil</a></li><li><a href="/outils">Outils numériques</a></li><li><a href="/formations">Formations</a></li>${DATA.realisations.length ? `<li><a href="/realisations">Nos réalisations</a></li>` : ""}${allNews().length ? `<li><a href="/actualites">Actualités</a></li>` : ""}<li><a href="/carrieres">Carrières</a></li><li><a href="/soutenir">Soutenir nos actions</a></li></ul></nav>
       <div class="foot-contact"><h4>Nous joindre</h4><ul>
         <li><span class="ic">${ICON.phone}</span><a href="tel:${tel}">${esc(CONFIG.telephone)}</a></li>
         <li><span class="ic">${ICON.mail}</span><a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a></li>
@@ -858,6 +859,41 @@ function pageCareers(openId) {
   </div></section>`;
 }
 
+/* L'association UBORA : d'après ses statuts du 1er novembre 2025 */
+function pageOng() {
+  const sujet = "/contact?sujet=" + encodeURIComponent("UBORA, l'association");
+  return pageHead({ eyebrow: "UBORA · association à vocation d'ONG", title: `L'association UBORA, au service des <span class="serif">communautés</span>.`, crumbs: [["Qui sommes-nous", "/a-propos"], ["L'association UBORA"]], photo: ["terrain", "Une communauté réunie en plein air"],
+    lead: "UBORA est l'association sans but lucratif de l'écosystème Ubora. Elle conduit des projets communautaires financés par des dons et des subventions, au service des femmes, des jeunes et des populations vulnérables.",
+    extra: `<div class="btn-row"><a class="btn btn-accent" href="${sujet}">Financer un projet de l'association ${ICON.arrow}</a><a class="btn btn-glass" href="#lien" data-scroll="lien">L'association et l'entreprise sociale</a></div>` }) + `
+  <section><div class="wrap two">
+    <div><span class="eyebrow">Vision</span><p class="quote">${esc(ONG.vision)}</p></div>
+    <div class="prose-sm"><p><b>Mission.</b> ${esc(ONG.mission)}</p><p class="muted">${esc(ONG.statut)} ${esc(ONG.creation)}</p>
+      <div class="publics"><b>Valeurs</b>${ONG.valeurs.map(v => `<span>${esc(v)}</span>`).join("")}</div></div>
+  </div></section>
+  <section class="band"><div class="wrap">
+    ${secHead("Secteurs d'intervention", `Ce que fait <span class="serif">l'association</span>`, "Partout en RDC, en priorité dans le Haut-Katanga : études, formation, sensibilisation, accompagnement et mise en œuvre de projets, seule ou en partenariat.")}
+    <div class="grid-4">${ONG.secteurs.map(([id, t, x]) => { const p = id && pole(id); return `<div class="fcard"${p ? ` style="--c:${p.couleur}"` : ""}><h3>${esc(t)}</h3><p>${esc(x)}</p>${p ? `<a class="link" href="${p.chemin}">${esc(p.nom)} ${ICON.arrow}</a>` : ""}</div>`; }).join("")}</div>
+    <div class="publics"><b>Pour qui</b>${ONG.beneficiaires.map(x => `<span>${esc(x)}</span>`).join("")}</div>
+  </div></section>
+  <section><div class="wrap">
+    ${secHead("Gouvernance", `Des organes qui se <span class="serif">contrôlent</span>`, "Une gouvernance démocratique, une gestion transparente, et des comptes rendus aux membres, aux bénéficiaires et aux partenaires.")}
+    <div class="grid-4">${ONG.organes.map(([t, x]) => `<div class="fcard"><h3>${esc(t)}</h3><p>${esc(x)}</p></div>`).join("")}</div>
+    <ul class="checks cols engagements">${ONG.engagements.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
+    <p class="suite muted">Président du conseil d'administration : ${esc(DIRIGEANT.nom)}.</p>
+  </div></section>
+  <section class="band" id="lien"><div class="wrap">
+    ${secHead("L'écosystème Ubora", `L'association et l'entreprise <span class="serif">sociale</span>`)}
+    <div class="grid-2">${ONG.lien.map(([t, x]) => `<div class="fcard"><h3>${esc(t)}</h3><p>${esc(x)}</p></div>`).join("")}</div>
+    <p class="note">${esc(ONG.lienNote)}</p>
+  </div></section>
+  <section class="tight-top"><div class="wrap"><div class="deep final">
+    <span class="eyebrow">Agir avec l'association</span>
+    <h2>Financer un projet, devenir membre, <span class="serif">s'engager</span>.</h2>
+    <p>Dons, subventions, partenariats ou adhésion : écrivez-nous, une personne de l'association vous répond.</p>
+    <div class="btn-row"><a class="btn btn-accent" href="${sujet}">Nous écrire ${ICON.arrow}</a><a class="btn btn-glass" href="/soutenir">Soutenir l'écosystème Ubora</a></div>
+  </div></div></section>`;
+}
+
 /* Soutenir nos actions : ce qui distingue Ubora d'une entreprise classique, et les façons d'agir avec elle. */
 function pageSoutenir() {
   const sujet = "/contact?sujet=" + encodeURIComponent("Soutenir nos actions");
@@ -895,7 +931,7 @@ function pageSoutenir() {
 
 function pageContact(params) {
   const sujet = params.get("sujet") || "";
-  const besoins = ["Ubora AVEC (groupes d'épargne)", "Ubora PME (entrepreneuriat)", "Ubora Coop (coopératives)", "Ubora Fin (accès au financement)", "Ubora Market (accès au marché)", "Ubora Vert (environnement)", "Ubora Académie (formations)", "Boîte à outils", "Projet pilote", "Présentation d'Ubora", "Conseil et programmes", "Formation", "Soutenir nos actions", "Partenariat", "Recrutement", "Autre"];
+  const besoins = ["Ubora AVEC (groupes d'épargne)", "Ubora PME (entrepreneuriat)", "Ubora Coop (coopératives)", "Ubora Fin (accès au financement)", "Ubora Market (accès au marché)", "Ubora Vert (environnement)", "Ubora Académie (formations)", "Boîte à outils", "Projet pilote", "Présentation d'Ubora", "Conseil et programmes", "Formation", "Soutenir nos actions", "UBORA, l'association", "Partenariat", "Recrutement", "Autre"];
   const low = sujet.toLowerCase();
   const sel = !low ? "" : low.includes("boîte") || low.startsWith("les outils de") ? "Boîte à outils"
     : besoins.find(b => low.includes(b.split(" (")[0].toLowerCase()) || b.toLowerCase().includes(low)) || "Autre";
@@ -951,7 +987,7 @@ function notFound() {
 /* ==========================================================================
    ROUTAGE
    ========================================================================== */
-const SOUS_DOMAINES = { avec: "avec", pme: "pme", coop: "cooperatives", fin: "financement", market: "marche", vert: "vert", admin: "admin" };
+const SOUS_DOMAINES = { ong: "ong", avec: "avec", pme: "pme", coop: "cooperatives", fin: "financement", market: "marche", vert: "vert", admin: "admin" };
 /* bp. et hub. mènent directement à l'outil ; akiba. est servi à part (GitHub Pages). */
 const EXTERNES = { bp: "/generateur/" };
 const ANCIENNES = {
@@ -971,6 +1007,7 @@ const DESCR = {
   contact: "Contacter Ubora, entreprise à caractère social, par téléphone, WhatsApp ou e-mail. Une personne de l'équipe vous répond sous deux jours ouvrés.",
   mentions: "Mentions légales et politique de données personnelles du site d'Ubora.",
   equipe: "L'équipe d'Ubora, entreprise à caractère social : consultants, formateurs, agents de terrain et développeurs, présents dans toute la RDC.",
+  ong: "UBORA, association sans but lucratif à vocation d'ONG de développement en RDC : épargne communautaire, entrepreneuriat inclusif, agriculture durable, formation et environnement, au service des femmes, des jeunes et des plus vulnérables.",
   soutenir: "Ubora n'est pas une entreprise classique : son objectif est social et ses excédents sont réinvestis. Confier une mission, apporter du capital, devenir partenaire : les façons de soutenir nos actions en RDC.",
   realisations: "Les réalisations d'Ubora en RDC : groupes d'épargne, entrepreneurs, coopératives, accès au financement et au marché. Contexte, actions et résultats."
 };
@@ -985,9 +1022,9 @@ const SEO_POLES = {
   marche: ["Ubora Market : trouver des acheteurs pour les producteurs en RDC", "Le pôle marché d'Ubora, entreprise à caractère social : relier les coopératives, les PME et les entrepreneurs accompagnés à des acheteurs, et suivre chaque vente jusqu'au paiement."]
 };
 /* Titres complets pour la balise <title> ; TITRES reste court (fil d'Ariane, menus) */
-const SEO_TITRES = { soutenir: "Soutenir Ubora : une entreprise à objectif social en RDC", "a-propos": "Qui sommes-nous : Ubora, entreprise sociale en RDC", approche: "Notre approche : la méthode Ubora en six temps", outils: "Outils numériques pour les AVEC, les PME et les organisations · Ubora", conseil: "Projets pilotes, mise en œuvre et conseil en RDC · Ubora", formations: "Formations AVEC, entrepreneuriat et coopératives · Ubora", actualites: "Actualités d'Ubora : nouvelles du terrain en RDC", realisations: "Nos réalisations en RDC · Ubora, entreprise sociale", equipe: "Notre équipe · Ubora, entreprise sociale en RDC", carrieres: "Carrières : rejoindre Ubora, entreprise sociale en RDC", contact: "Contacter Ubora, entreprise sociale en RDC", mentions: "Mentions légales · Ubora, entreprise sociale" };
+const SEO_TITRES = { ong: "UBORA, association à vocation d'ONG de développement en RDC", soutenir: "Soutenir Ubora : une entreprise à objectif social en RDC", "a-propos": "Qui sommes-nous : Ubora, entreprise sociale en RDC", approche: "Notre approche : la méthode Ubora en six temps", outils: "Outils numériques pour les AVEC, les PME et les organisations · Ubora", conseil: "Projets pilotes, mise en œuvre et conseil en RDC · Ubora", formations: "Formations AVEC, entrepreneuriat et coopératives · Ubora", actualites: "Actualités d'Ubora : nouvelles du terrain en RDC", realisations: "Nos réalisations en RDC · Ubora, entreprise sociale", equipe: "Notre équipe · Ubora, entreprise sociale en RDC", carrieres: "Carrières : rejoindre Ubora, entreprise sociale en RDC", contact: "Contacter Ubora, entreprise sociale en RDC", mentions: "Mentions légales · Ubora, entreprise sociale" };
 const ROBOTS = "index, follow, max-image-preview:large";
-const TITRES = { soutenir: "Soutenir nos actions", "": "Ubora : entreprise sociale en RDC (AVEC, PME, coopératives)", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos outils numériques", conseil: "Projets et conseil", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
+const TITRES = { ong: "L'association UBORA", soutenir: "Soutenir nos actions", "": "Ubora : entreprise sociale en RDC (AVEC, PME, coopératives)", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos outils numériques", conseil: "Projets et conseil", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
 
 /* Construit une page à partir d'une adresse. */
 function resolve(pathname, search, host) {
@@ -1028,6 +1065,7 @@ function resolve(pathname, search, host) {
     case "carrieres": html = pageCareers(sub); canon = "/carrieres"; break;
     case "contact": html = pageContact(params); break;
     case "soutenir": html = pageSoutenir(); break;
+    case "ong": html = pageOng(); break;
     case "mentions": html = pageMentions(); break;
     /* adresse propre à l'espace équipe : sans elle, admin.uborardc.com garderait le contenu de l'accueil déjà dans la page */
     case "admin": html = typeof pageAdmin === "function" ? pageAdmin() : notFound(); canon = "/admin"; break;

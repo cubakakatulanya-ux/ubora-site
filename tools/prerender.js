@@ -21,7 +21,7 @@ const write = (f, s) => { const p = path.join(ROOT, f); fs.mkdirSync(path.dirnam
 const ctx = { window: { UBORA_PRERENDER: true }, console, URLSearchParams, Date, Intl, Math, JSON };
 vm.createContext(ctx);
 const S = vm.runInContext(["data.js", "db.js", "admin.js", "app.js"].map(read).join("\n;\n") +
-  "\n;({ SEO_POLES, resolve, typoHTML, menuHTML, footerHTML, tickerHTML, allNews, esc, DATA, POLES, OUTILS, CONFIG, SUPABASE, UboraDB, TITRES })", ctx);
+  "\n;({ DATA_ONG: ONG, SEO_POLES, resolve, typoHTML, menuHTML, footerHTML, tickerHTML, allNews, esc, DATA, POLES, OUTILS, CONFIG, SUPABASE, UboraDB, TITRES })", ctx);
 
 async function chargerBase() {
   const h = { apikey: S.SUPABASE.anonKey, Authorization: "Bearer " + S.SUPABASE.anonKey };
@@ -92,7 +92,8 @@ function donneesStructurees(chemin, r) {
     graph.push({ "@type": "SoftwareApplication", name: o.nom, description: texte(o.resume), url, applicationCategory: "BusinessApplication", operatingSystem: "Web", inLanguage: "fr", publisher: { "@id": ORG["@id"] } });
   } else {
     const P = S.POLES.find(p => p.chemin === chemin);
-    if (chemin === "/equipe") miettes.itemListElement.push({ "@type": "ListItem", position: 2, name: "Qui sommes-nous", item: "https://uborardc.com/a-propos" });
+    if (chemin === "/ong") graph.push({ "@type": "NGO", name: "UBORA", url, foundingDate: "2025-11-01", description: texte(S.DATA_ONG.mission), areaServed: { "@type": "Country", name: "République démocratique du Congo" }, address: { "@type": "PostalAddress", streetAddress: "Avenue Mapendo n° 11, Quartier Kalubwe 2", addressLocality: "Lubumbashi", addressRegion: "Haut-Katanga", addressCountry: "CD" } });
+    if (chemin === "/equipe" || chemin === "/ong") miettes.itemListElement.push({ "@type": "ListItem", position: 2, name: "Qui sommes-nous", item: "https://uborardc.com/a-propos" });
     miettes.itemListElement.push({ "@type": "ListItem", position: miettes.itemListElement.length + 1, name: texte(P ? P.nom : r.court), item: url });
     if (P) graph.push({ "@type": "Service", name: P.nom, description: (S.SEO_POLES[P.id] || [])[1] || texte(P.lead), url, serviceType: texte(P.carte), areaServed: { "@type": "Country", name: "République démocratique du Congo" }, provider: { "@id": ORG["@id"] } });
   }
@@ -106,7 +107,7 @@ async function main() {
   const shell = read("tools/shell.html");
   const menu = S.menuHTML(), footer = S.footerHTML(), ticker = S.tickerHTML();
 
-  const chemins = ["/", ...S.POLES.map(p => p.chemin), "/approche", "/a-propos", "/outils", "/conseil", "/formations", "/actualites", "/realisations", "/equipe", "/carrieres", "/contact", "/soutenir", "/mentions",
+  const chemins = ["/", ...S.POLES.map(p => p.chemin), "/approche", "/a-propos", "/outils", "/conseil", "/formations", "/actualites", "/realisations", "/equipe", "/carrieres", "/contact", "/soutenir", "/ong", "/mentions",
     ...S.OUTILS.filter(o => o.fiche).map(o => "/outils/" + o.id),
     ...S.allNews().map(n => "/actualites/" + n.slug)];
   const pages = [];

@@ -2187,3 +2187,6 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
 .mesure { margin-top: auto; padding-top: 8px; border-top: 1px dashed var(--line); font-size: 14px; color: var(--ink); }
 .mesure b { display: block; margin-bottom: 2px; color: var(--vert-texte); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
 .btn-row.centre { justify-content: center; margin-top: 22px; }
+
+/* L'association UBORA : engagements de gouvernance */
+.engagements { margin-top: 18px; }

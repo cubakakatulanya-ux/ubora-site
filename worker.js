@@ -11,7 +11,7 @@
    Les en-têtes de sécurité sont posés ici, sur toutes les réponses.
    ========================================================================== */
 const APEX = "uborardc.com";
-const POLES = { avec: "/avec", pme: "/pme", coop: "/cooperatives", fin: "/financement", market: "/marche", vert: "/vert" };
+const POLES = { ong: "/ong", avec: "/avec", pme: "/pme", coop: "/cooperatives", fin: "/financement", market: "/marche", vert: "/vert" };
 const ANCIENNES = {
   "/solutions/ubora-avec": "/avec", "/solutions/akiba": "/outils/akiba", "/solutions/ubora-pme": "/pme", "/solutions/ubora-coop": "/cooperatives",
   "/solutions/ubora-fin": "/financement", "/solutions/ubora-market": "/marche", "/solutions/ubora-hub": "/outils/hub", "/solutions/uborahub": "/outils/hub",

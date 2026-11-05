@@ -647,6 +647,44 @@ const CONSEIL = [
     points: ["Formation de formateurs", "Méthodologie AVEC", "Accompagnement d'entrepreneurs", "Gestion des coopératives"] }
 ];
 
+/* ---------- L'association UBORA (page /ong et ong.uborardc.com), d'après ses statuts du 1er novembre 2025 ---------- */
+const ONG = {
+  statut: "Association sans but lucratif à vocation d'ONG de développement, régie par la loi n° 004/2001 du 20 juillet 2001.",
+  creation: "Statuts adoptés le 1er novembre 2025 à Lubumbashi, en assemblée générale constitutive, par sept membres fondateurs. Démarches de reconnaissance engagées (personnalité juridique, qualité d'ONG).",
+  vision: "Des communautés congolaises autonomes, résilientes et capables de participer durablement au développement économique et social.",
+  mission: "Contribuer au développement des communautés, notamment des femmes, des jeunes et des populations vulnérables, par l'entrepreneuriat inclusif, l'épargne communautaire, la formation, l'innovation adaptée, l'accès aux marchés, l'agriculture durable et la gestion responsable des ressources.",
+  valeurs: ["Excellence", "Intégrité", "Inclusion et équité", "Redevabilité", "Participation", "Durabilité"],
+  secteurs: [
+    ["avec", "Épargne et inclusion financière", "Structurer des AVEC ; éducation et inclusion financières."],
+    ["pme", "Entrepreneuriat et emploi", "Incubation, emploi et accompagnement des micro, petites et moyennes entreprises."],
+    ["cooperatives", "Agriculture durable", "Coopératives et organisations paysannes."],
+    ["marche", "Accès aux marchés", "Vente groupée et chaînes de valeur."],
+    ["academie", "Formation", "Formation professionnelle et numérique."],
+    ["vert", "Environnement", "Agroécologie, reboisement et économie circulaire."],
+    [null, "Innovation sociale", "Transformation numérique et développement communautaire."]
+  ],
+  beneficiaires: ["Femmes", "Jeunes", "Personnes vivant avec un handicap", "Ménages ruraux et périurbains à faibles revenus", "Personnes déplacées ou affectées par des crises", "MPME, coopératives et organisations communautaires"],
+  organes: [
+    ["Assemblée générale", "Tous les membres effectifs. Elle fixe les orientations, approuve le budget et les comptes, élit les organes."],
+    ["Conseil d'administration", "Un président, un secrétaire et un trésorier élus par l'assemblée. Il administre et rend compte."],
+    ["Commission de contrôle interne", "Deux membres indépendants du conseil. Un contrôle par an au moins, avec un rapport écrit à l'assemblée."],
+    ["Direction exécutive", "Facultative, nommée par le conseil. Aucun pouvoir bancaire sans résolution expresse."]
+  ],
+  engagements: [
+    "Comptes annuels approuvés par l'assemblée générale ; audit externe quand la loi ou un partenaire l'exige.",
+    "Rapprochements bancaires chaque mois ; fonds affectés suivis à part ; aucun fonds sur un compte personnel.",
+    "Conflits d'intérêts déclarés ; conventions avec les entités liées approuvées par les membres non intéressés.",
+    "Tolérance zéro envers l'exploitation, les abus et le harcèlement sexuels ; mécanisme de plainte sûr et confidentiel.",
+    "Au moins un tiers de femmes visé dans chaque organe.",
+    "Principe « ne pas nuire » : effets environnementaux et sociaux évalués pour chaque projet."
+  ],
+  lien: [
+    ["L'association UBORA", "Sans but lucratif. Elle reçoit des dons et des subventions et conduit des projets communautaires. Aucun bénéfice n'est partagé : tout excédent retourne aux activités."],
+    ["L'Entreprise Sociale Ubora", "Elle vend des prestations, conçoit les outils (AKIBA, Ubora Hub, Ubora Académie, ASBL Manager) et réinvestit ses excédents dans le social."]
+  ],
+  lienNote: "Deux personnes morales distinctes, une même mission. Quand l'association utilise un outil ou un service de l'entreprise sociale, un accord écrit en fixe les conditions, approuvé par les membres non intéressés ; aucun transfert de fonds n'est automatique."
+};
+
 /* Le projet pilote : la façon la plus sûre, pour un bailleur ou une ONG, de commencer avec Ubora. */
 const PILOTE = {
   temps: [
