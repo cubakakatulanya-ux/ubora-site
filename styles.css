@@ -2190,3 +2190,7 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
 
 /* L'association UBORA : engagements de gouvernance */
 .engagements { margin-top: 18px; }
+
+/* Association et entreprise sociale : ce qu'elles font ensemble, sur trois colonnes */
+.relais-temps.complements { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 0; padding: 0; list-style: none; }
+@media (max-width: 900px) { .relais-temps.complements { grid-template-columns: minmax(0, 1fr); } }

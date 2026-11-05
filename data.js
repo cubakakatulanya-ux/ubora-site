@@ -680,6 +680,11 @@ const ONG = {
     ["L'association UBORA", "Sans but lucratif. Elle reçoit des dons et des subventions et conduit des projets communautaires. Aucun bénéfice n'est partagé : tout excédent retourne aux activités."],
     ["L'Entreprise Sociale Ubora", "Elle vend des prestations, conçoit les outils (AKIBA, Ubora Hub, Ubora Académie, ASBL Manager) et réinvestit ses excédents dans le social."]
   ],
+  complementarite: [
+    ["Atteindre ceux qui ne peuvent pas payer", "Grâce aux dons et aux subventions, l'association finance ce qu'aucune prestation ne couvrirait : les groupes les plus vulnérables, la sensibilisation, les premiers pas d'une communauté."],
+    ["S'appuyer sur une méthode et des outils éprouvés", "L'entreprise sociale apporte ses équipes de terrain, sa méthode et ses outils : AKIBA, Ubora Hub, Ubora Académie, ASBL Manager."],
+    ["Durer après le financement", "Quand un projet de l'association s'achève, les groupes gardent les outils, et l'entreprise sociale peut poursuivre leur suivi."]
+  ],
   lienNote: "Deux personnes morales distinctes, une même mission. Quand l'association utilise un outil ou un service de l'entreprise sociale, un accord écrit en fixe les conditions, approuvé par les membres non intéressés ; aucun transfert de fonds n'est automatique."
 };
 

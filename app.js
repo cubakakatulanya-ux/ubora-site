@@ -881,8 +881,10 @@ function pageOng() {
     <p class="suite muted">Président du conseil d'administration : ${esc(DIRIGEANT.nom)}.</p>
   </div></section>
   <section class="band" id="lien"><div class="wrap">
-    ${secHead("L'écosystème Ubora", `L'association et l'entreprise <span class="serif">sociale</span>`)}
+    ${secHead("L'écosystème Ubora", `Deux structures, une même mission : elles se <span class="serif">complètent</span>`)}
     <div class="grid-2">${ONG.lien.map(([t, x]) => `<div class="fcard"><h3>${esc(t)}</h3><p>${esc(x)}</p></div>`).join("")}</div>
+    <h3 class="sous-titre">Ensemble</h3>
+    <ol class="relais-temps complements">${ONG.complementarite.map(([t, x], i) => `<li><span class="bn">${i + 1}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`).join("")}</ol>
     <p class="note">${esc(ONG.lienNote)}</p>
   </div></section>
   <section class="tight-top"><div class="wrap"><div class="deep final">
