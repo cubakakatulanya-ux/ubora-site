@@ -513,7 +513,7 @@ const OUTILS = [
       ]
     },
     resume: "Le cahier de l'AVEC dans le téléphone, même sans réseau : chaque franc écrit au moment où il bouge, un reçu pour chaque membre, un historique qu'une IMF peut étudier.",
-    points: ["Réunion guidée en 8 étapes, de la présence à la clôture à trois clés", "Registre scellé : toute modification se voit", "Reçus des membres et journal imprimés sur imprimante Bluetooth (bientôt sur terminal POS), ou envoyés par WhatsApp et SMS", "Indice de qualité des données et niveau « prête pour une IMF »", "Dossier pour l'IMF et export Excel, sans données personnelles", "Crédit d'une IMF suivi de bout en bout, garantie comprise", "Akiba Suivi pour les animateurs et les organisations, avec un écran Impact", "Point GPS du groupe, pris sans réseau", "Application Android de 3 Mo, sans autorisation demandée, qui ouvre l'imprimante des terminaux de caisse", "Langues de la RDC, guide audio et 7 modules de formation AVEC", "Démonstration libre ; code de validation Ubora pour une vraie AVEC"]
+    points: ["Réunion guidée en 8 étapes, de la présence à la clôture à trois clés", "Registre scellé : toute modification se voit", "Reçus des membres et journal imprimés sur imprimante Bluetooth (bientôt sur terminal POS), ou envoyés par WhatsApp et SMS", "Indice de qualité des données et niveau « prête pour une IMF »", "Dossier pour l'IMF et export Excel, sans données personnelles", "Crédit d'une IMF suivi de bout en bout, garantie comprise", "Akiba Suivi pour les animateurs et les organisations, avec un écran Impact", "Point GPS du groupe, pris sans réseau", "Sans réseau, un groupe s'ouvre et une réunion remonte à l'animateur par une simple image de l'écran", "Application Android de 3 Mo, sans autorisation demandée, qui ouvre l'imprimante des terminaux de caisse", "Langues de la RDC, guide audio et 7 modules de formation AVEC", "Démonstration libre ; code de validation Ubora pour une vraie AVEC"]
   },
   {
     id: "akiba-suivi", nom: "Akiba Suivi", court: "Le suivi des AVEC, pour les animateurs et les organisations", pole: "avec", statut: "en-ligne", mock: "akiba", couleur: "#2463A6", initiales: "As",
@@ -592,12 +592,12 @@ const OUTILS = [
       ouvrir: "Ouvrir ASBL Manager",
       atouts: "Tout le fonctionnement d'une organisation, sans double saisie",
       fonctions: [
-        ["Gouvernance et membres", "Adhésions, cotisations, assemblées générales, conseil d'administration, commission de contrôle, procès-verbaux et registre des décisions."],
+        ["Gouvernance et membres", "Adhésions, cotisations, assemblées et conseil, vote à distance par lien WhatsApp, procès-verbaux, auto-évaluation des organes."],
         ["Plan de travail (PTBA)", "Activités rattachées au cadre de résultats, termes de référence, fiches d'activité et avancement."],
-        ["Finances et comptabilité", "Dépenses signées selon le montant, fonds à justifier, trésorerie en francs et en dollars, comptabilité et états financiers."],
-        ["Projets et bailleurs", "Conventions et profils de bailleurs, chronogramme, demandes de tranche, réallocations avec l'accord du bailleur, clôture de projet."],
+        ["Finances et comptabilité", "Dépenses signées selon le montant, fonds à justifier, trésorerie en francs et en dollars, états financiers complets."],
+        ["Projets et bailleurs", "Règles de chaque bailleur contrôlées à chaque dépense, demandes de tranche, réallocations, dossier d'audit prêt, clôture de projet."],
         ["Logistique et personnel", "Achats, marchés et stocks ; recrutement, contrats, présences, feuilles de temps, paie et évaluations."],
-        ["Suivi-évaluation et rapports", "Indicateurs, vérification des données, plaintes et signalements confidentiels, rapports ; un assistant IA pour rédiger et repérer les appels à financement."]
+        ["Suivi-évaluation et rapports", "Cadre logique, indicateurs ventilés par sexe, import Kobo, rapports narratifs mis en page, plaintes ; un assistant IA pour rédiger et repérer les appels à financement."]
       ],
       phasesTitre: "Le circuit d'une dépense",
       phases: ["Demande", "Contrôle budgétaire", "Approbation", "Paiement", "Justification"],
