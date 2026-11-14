@@ -15,14 +15,19 @@ permissions:
 jobs:
   verifier:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 15
     steps:
       - name: Pages principales et sous-domaines
         run: |
           set -u
           echec=0
           verifier() { # adresse, code attendu, texte attendu (facultatif)
-            code=$(curl -s -o page.html -w "%{http_code}" --max-time 30 "$1?surveillance=$(date +%s)")
+            # deux essais de 90 s : une application en veille (hébergement gratuit) met parfois une minute à se réveiller
+            for essai in 1 2; do
+              code=$(curl -s -o page.html -w "%{http_code}" --max-time 90 "$1?surveillance=$(date +%s)" || true)
+              [ "$code" = "$2" ] && break
+              sleep 20
+            done
             if [ "$code" != "$2" ]; then echo "::error::$1 répond $code (attendu $2)"; echec=1; return; fi
             if [ -n "${3:-}" ] && ! grep -q "$3" page.html; then echo "::error::$1 ne contient plus « $3 »"; echec=1; return; fi
             echo "OK  $1 ($code)"
@@ -59,7 +64,8 @@ jobs:
       - name: Certificats (alerte 14 jours avant l'expiration)
         run: |
           for d in uborardc.com avec.uborardc.com akiba.uborardc.com hub.uborardc.com academie.uborardc.com asbl.uborardc.com; do
-            fin=$(echo | openssl s_client -servername "$d" -connect "$d:443" 2>/dev/null | openssl x509 -noout -enddate | cut -d= -f2)
+            fin=$(echo | timeout 30 openssl s_client -servername "$d" -connect "$d:443" 2>/dev/null | openssl x509 -noout -enddate | cut -d= -f2 || true)
+            [ -n "$fin" ] || { echo "::error::certificat de $d illisible"; exit 1; }
             reste=$(( ( $(date -d "$fin" +%s) - $(date +%s) ) / 86400 ))
             [ "$reste" -ge 14 ] || { echo "::error::certificat de $d : $reste jours restants"; exit 1; }
             echo "OK  $d : certificat valable encore $reste jours"

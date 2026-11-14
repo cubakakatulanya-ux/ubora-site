@@ -2254,3 +2254,12 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
 .form-note a, .news-note a { color: inherit; text-decoration: underline; }
 .news-note { margin-top: 8px; opacity: .85; }
 .form label small { font-weight: 400; color: var(--muted); }
+
+/* Double authentification de l'espace équipe */
+.mfa-alerte { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; padding: 16px 18px; border-left: 3px solid var(--green, #1E7A46); }
+.mfa-alerte p { margin: 4px 0 0; }
+.mfa-etapes { display: grid; gap: 12px; margin: 8px 0 16px; padding-left: 20px; }
+.mfa-qr { margin: 10px 0; }
+.mfa-qr img { display: block; width: 180px; height: 180px; padding: 8px; background: #fff; border: 1px solid var(--line); border-radius: 8px; }
+.mfa-cle { font-family: var(--f-mono); font-size: 13.5px; letter-spacing: .08em; word-break: break-all; padding: 2px 6px; background: var(--surface-2); border-radius: 4px; }
+.btn-lien { padding: 0; border: 0; background: none; color: inherit; font: inherit; text-decoration: underline; cursor: pointer; }

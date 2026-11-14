@@ -174,5 +174,34 @@ const UboraDB = (() => {
 
   const mappers = { actualites: fromNews, formations: fromTrain, offres: fromJob, equipe: fromMember, realisations: fromReal };
 
-  return { configured, mappers, load, sendMessage, subscribe, logQuestion, signIn, signOut, currentUser, isAdmin, listAll, save, remove, list, uploadImage, removeRow, setTraite, counts, stats };
+  /* --- Double authentification de l'espace équipe (code d'une application d'authentification) ---
+     La base n'accorde les droits de l'équipe qu'à une session validée par le code
+     dès qu'un code est activé sur le compte (fonction est_admin_site). */
+  async function mfaEtat() {
+    const c = sb(); if (!c) return null;
+    const [n, f] = await Promise.all([c.auth.mfa.getAuthenticatorAssuranceLevel(), c.auth.mfa.listFactors()]);
+    if (n.error || f.error) return null;
+    const actifs = (f.data && f.data.totp) || [];
+    return { niveau: n.data.currentLevel, requis: n.data.nextLevel, actif: actifs.length > 0, facteur: actifs[0] || null, tous: (f.data && f.data.all) || [] };
+  }
+  async function mfaValider(code) {
+    const c = sb(), e = await mfaEtat(); if (!c || !e || !e.facteur) return { ok: false, message: "Aucun code n'est activé sur ce compte." };
+    const { error } = await c.auth.mfa.challengeAndVerify({ factorId: e.facteur.id, code });
+    return error ? { ok: false, message: "Code incorrect ou expiré. Saisissez le code affiché maintenant dans l'application." } : { ok: true };
+  }
+  async function mfaPreparer() {
+    const c = sb(), e = await mfaEtat(); if (!c || !e) return { ok: false, message: "Base injoignable." };
+    /* une activation commencée puis abandonnée laisse un facteur non vérifié : on le retire avant d'en créer un autre */
+    for (const f of e.tous.filter(x => x.status !== "verified")) await c.auth.mfa.unenroll({ factorId: f.id });
+    const { data, error } = await c.auth.mfa.enroll({ factorType: "totp", friendlyName: "Espace équipe Ubora " + new Date().toISOString().slice(0, 16) });
+    if (error) return { ok: false, message: error.message };
+    return { ok: true, id: data.id, qr: data.totp.qr_code, secret: data.totp.secret };
+  }
+  async function mfaConfirmer(factorId, code) {
+    const c = sb(); if (!c) return { ok: false, message: "Base injoignable." };
+    const { error } = await c.auth.mfa.challengeAndVerify({ factorId, code });
+    return error ? { ok: false, message: "Code incorrect. Vérifiez l'heure du téléphone, puis saisissez le code affiché maintenant." } : { ok: true };
+  }
+
+  return { configured, mappers, load, sendMessage, subscribe, logQuestion, signIn, signOut, currentUser, isAdmin, listAll, save, remove, list, uploadImage, removeRow, setTraite, counts, stats, mfaEtat, mfaValider, mfaPreparer, mfaConfirmer };
 })();

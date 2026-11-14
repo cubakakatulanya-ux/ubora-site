@@ -1,0 +1,3 @@
+# Fichiers vérifiés par empreinte (SRI) ou binaires : Git ne doit jamais changer leurs fins de ligne.
+lib/** -text
+polices/*.woff2 binary

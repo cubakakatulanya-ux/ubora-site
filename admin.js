@@ -30,6 +30,9 @@ async function bindAdmin() {
   if (!UboraDB.configured() || !window.supabase) { pane.innerHTML = `<div class="empty"><b>La base de données est injoignable.</b><p>Vérifiez votre connexion, puis rechargez la page.</p></div>`; return; }
   const user = await UboraDB.currentUser();
   if (!user) return renderLogin(pane);
+  /* compte protégé par un code : la session doit d'abord être validée par ce code (la base l'exige aussi) */
+  adminState.mfa = await UboraDB.mfaEtat();
+  if (adminState.mfa && adminState.mfa.requis === "aal2" && adminState.mfa.niveau !== "aal2") return renderCode(pane, user);
   if (!(await UboraDB.isAdmin())) {
     pane.innerHTML = `<div class="empty"><b>Ce compte n'a pas accès à l'espace équipe.</b><p>Demandez à un administrateur d'ajouter votre adresse ${esc(user.email)}.</p><button class="btn btn-ghost" id="logout">Se déconnecter</button></div>`;
     $("#logout").onclick = async () => { await UboraDB.signOut(); bindAdmin(); };
@@ -60,6 +63,69 @@ function renderLogin(pane) {
     if (r.ok) { toast("Bienvenue."); bindAdmin(); return; }
     essais++; if (essais >= 5) setTimeout(() => { essais = 0; }, 60000);
     err.hidden = false; err.textContent = r.message; btn.disabled = false; btn.textContent = "Se connecter";
+  });
+}
+
+/* Deuxième étape de connexion : le code à six chiffres de l'application d'authentification */
+function renderCode(pane, user) {
+  pane.innerHTML = `<div class="panel login">
+    <h2 class="h2-sm">Code de vérification</h2>
+    <p class="muted">Ouvrez votre application d'authentification et saisissez le code à six chiffres qu'elle affiche pour ce compte.</p>
+    <form class="form one" id="codeForm">
+      <label>Code<input id="l-code" required inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" placeholder="123456"></label>
+      <p class="form-err" id="codeErr" hidden></p>
+      <button class="btn btn-primary" type="submit">Valider</button>
+    </form>
+    <p class="muted small">Connecté en tant que ${esc(user.email)}. <button class="btn-lien" type="button" id="logout">Se déconnecter</button></p>
+    <p class="muted small">Téléphone perdu ? Un administrateur du projet Supabase retire le code du compte (Authentication, Users), puis vous l'activez de nouveau.</p>
+  </div>`;
+  $("#logout").onclick = async () => { await UboraDB.signOut(); bindAdmin(); };
+  $("#l-code").focus();
+  let essais = 0;
+  $("#codeForm").addEventListener("submit", async e => {
+    e.preventDefault();
+    const btn = e.target.querySelector("button[type=submit]"), err = $("#codeErr"), code = $("#l-code").value.replace(/\s/g, "");
+    if (essais >= 5) { err.hidden = false; err.textContent = "Trop de tentatives. Patientez une minute avant de réessayer."; return; }
+    if (!/^\d{6}$/.test(code)) { err.hidden = false; err.textContent = "Le code compte six chiffres."; return; }
+    btn.disabled = true; btn.textContent = "Vérification…";
+    const r = await UboraDB.mfaValider(code);
+    if (r.ok) { toast("Bienvenue."); bindAdmin(); return; }
+    essais++; if (essais >= 5) setTimeout(() => { essais = 0; }, 60000);
+    err.hidden = false; err.textContent = r.message; btn.disabled = false; btn.textContent = "Valider";
+  });
+}
+
+/* Activation de la double authentification, depuis le tableau de bord */
+async function renderActivation(el) {
+  el.innerHTML = `<div class="empty">Préparation…</div>`;
+  const p = await UboraDB.mfaPreparer();
+  if (!p.ok) { el.innerHTML = `<div class="empty"><b>L'activation n'a pas pu commencer.</b><p>${esc(p.message || "")}</p></div>`; return; }
+  el.innerHTML = `<div class="panel admin-form mfa">
+    <h2 class="h2-sm">Activer la double authentification</h2>
+    <ol class="mfa-etapes">
+      <li>Installez sur votre téléphone une application d'authentification : Google Authenticator, Microsoft Authenticator ou Aegis.</li>
+      <li>Dans l'application, ajoutez un compte en scannant ce code.<div class="mfa-qr"><img src="${esc(p.qr)}" alt="Code QR à scanner avec l'application d'authentification" width="180" height="180"></div>
+        Impossible de scanner ? Saisissez cette clé : <code class="mfa-cle">${esc(p.secret)}</code></li>
+      <li>Saisissez le code à six chiffres que l'application affiche.</li>
+    </ol>
+    <form class="form one" id="mfaForm">
+      <label>Code<input id="m-code" required inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" placeholder="123456"></label>
+      <p class="form-err" id="mfaErr" hidden></p>
+      <div class="btn-row"><button class="btn btn-primary" type="submit">Activer</button><button class="btn btn-ghost" type="button" id="mfaAnnuler">Annuler</button></div>
+    </form>
+    <p class="muted small">Ensuite, chaque connexion demandera ce code. Gardez la clé ci-dessus en lieu sûr (sur papier, pas dans le téléphone) : elle permet de réinstaller le code sur un nouveau téléphone.</p>
+  </div>`;
+  $("#mfaAnnuler").onclick = () => { el.innerHTML = ""; const a = $("#mfaActiver"); if (a) a.disabled = false; };
+  $("#mfaForm").addEventListener("submit", async e => {
+    e.preventDefault();
+    const btn = e.target.querySelector("button[type=submit]"), err = $("#mfaErr"), code = $("#m-code").value.replace(/\s/g, "");
+    if (!/^\d{6}$/.test(code)) { err.hidden = false; err.textContent = "Le code compte six chiffres."; return; }
+    btn.disabled = true; btn.textContent = "Vérification…";
+    const r = await UboraDB.mfaConfirmer(p.id, code);
+    if (!r.ok) { err.hidden = false; err.textContent = r.message; btn.disabled = false; btn.textContent = "Activer"; return; }
+    adminState.mfa = await UboraDB.mfaEtat();
+    toast("Double authentification activée.");
+    bindAdmin();
   });
 }
 
@@ -95,7 +161,8 @@ async function renderTableau(pane, user) {
     ["abonnes", "Abonnés", c.abonnes, "à la lettre d'information"],
     ["questions", "Questions sans réponse", c.questionsSansReponse, "posées à l'assistant"]
   ];
-  $("#adminBody").innerHTML = `<div class="admin-kpis trois">${cartes.map(([k, t, n, s]) => `<button class="kpi-card" data-k="${k}"><span>${t}</span><b>${n ?? 0}</b><small>${s}</small></button>`).join("")}</div>
+  const protege = adminState.mfa && adminState.mfa.actif;
+  $("#adminBody").innerHTML = `${protege ? "" : `<div class="panel mfa-alerte"><div><b>Protégez l'espace équipe</b><p class="muted small">Avec la double authentification, un mot de passe volé ne suffit plus : chaque connexion demande aussi un code affiché sur votre téléphone.</p></div><button class="btn btn-primary btn-sm" id="mfaActiver">Activer</button></div><div id="mfaZone"></div>`}<div class="admin-kpis trois">${cartes.map(([k, t, n, s]) => `<button class="kpi-card" data-k="${k}"><span>${t}</span><b>${n ?? 0}</b><small>${s}</small></button>`).join("")}</div>
     <div class="panel admin-help"><b>Bon à savoir</b>
       <ul class="checks"><li>Une actualité, une formation ou une offre décochée « Visible sur le site » reste enregistrée comme brouillon.</li>
       <li>Une formation dont la date est passée disparaît du calendrier public.</li>
@@ -104,6 +171,8 @@ async function renderTableau(pane, user) {
       <li>Les photos sont réduites automatiquement avant l'envoi : inutile de les retoucher.</li>
       <li>Équipe et réalisations s'affichent du plus petit au plus grand « ordre d'affichage ».</li></ul></div>`;
   $$(".kpi-card").forEach(b => b.onclick = () => { adminState.onglet = b.dataset.k; renderDash(pane, user); });
+  const activer = $("#mfaActiver");
+  if (activer) activer.onclick = () => { activer.disabled = true; renderActivation($("#mfaZone")); };
 }
 
 /* ---------- Visites du site ---------- */

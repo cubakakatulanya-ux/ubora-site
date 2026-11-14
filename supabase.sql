@@ -95,6 +95,12 @@ as $$
   select exists (
     select 1 from public.site_admins
     where lower(email) = lower(coalesce(auth.jwt() ->> 'email', ''))
+  )
+  -- double authentification (14 novembre 2026) : dès qu'un code d'application est activé
+  -- sur le compte, les droits exigent une session validée par ce code (niveau aal2)
+  and (
+    coalesce(auth.jwt() ->> 'aal', 'aal1') = 'aal2'
+    or not exists (select 1 from auth.mfa_factors f where f.user_id = auth.uid() and f.status = 'verified')
   );
 $$;
 
