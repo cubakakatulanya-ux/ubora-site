@@ -479,10 +479,10 @@ const AVEC = {
     ["Suivi d'un programme", "Des données lentes à collecter, souvent incomplètes", "Dans Akiba Suivi : tableau de bord, écran Impact et export Excel pour l'ONG ou le bailleur"]
   ],
   passerelle: [
-    ["Le groupe","Quinze à trente membres qui épargnent et se prêtent entre eux."],
-    ["AKIBA","Des comptes tenus sur téléphone, sans réseau, dans un registre scellé."],
-    ["L'historique","Un niveau « prête pour une IMF » rend la régularité du groupe lisible."],
-    ["Le financement","Une IMF, une COOPEC ou une banque apporte un fonds de roulement ; Ubora Fin mobilise le capital et suit le remboursement."]
+    ["Le groupe","Il épargne et prête chaque semaine."],
+    ["AKIBA","Des comptes scellés, sans réseau."],
+    ["L'historique","La régularité devient lisible."],
+    ["Le financement","Un fonds de roulement, avec Ubora Fin."]
   ]
 };
 
@@ -513,7 +513,7 @@ const OUTILS = [
       ]
     },
     resume: "Le cahier de l'AVEC dans le téléphone, même sans réseau : chaque franc écrit au moment où il bouge, un reçu pour chaque membre, un historique qu'une IMF peut étudier.",
-    points: ["Réunion guidée en 8 étapes, de la présence à la clôture à trois clés", "Registre scellé : toute modification se voit", "Reçus des membres et journal imprimés sur imprimante Bluetooth (bientôt sur terminal POS), ou envoyés par WhatsApp et SMS", "Indice de qualité des données et niveau « prête pour une IMF »", "Dossier pour l'IMF et export Excel, sans données personnelles", "Crédit d'une IMF suivi de bout en bout, garantie comprise", "Akiba Suivi pour les animateurs et les organisations, avec un écran Impact", "Point GPS du groupe, pris sans réseau", "Sans réseau, un groupe s'ouvre et une réunion remonte à l'animateur par une simple image de l'écran", "Application Android de 3 Mo, sans autorisation demandée, qui ouvre l'imprimante des terminaux de caisse", "Langues de la RDC, guide audio et 7 modules de formation AVEC", "Démonstration libre ; code de validation Ubora pour une vraie AVEC"]
+    points: ["Réunion guidée en 8 étapes, clôture à trois clés", "Registre scellé : toute modification se voit", "Reçus imprimés ou envoyés par WhatsApp", "Niveau « prête pour une IMF » et dossier à présenter", "Crédit d'une IMF suivi de bout en bout", "Akiba Suivi pour les animateurs et les organisations", "Sans réseau : point GPS, et réunion transmise par une image", "Application Android de 3 Mo, imprimante des terminaux de caisse", "Langues de la RDC et guide audio", "Démonstration libre ; code Ubora pour une vraie AVEC"]
   },
   {
     id: "akiba-suivi", nom: "Akiba Suivi", court: "Le suivi des AVEC, pour les animateurs et les organisations", pole: "avec", statut: "en-ligne", mock: "akiba", couleur: "#2463A6", initiales: "As",

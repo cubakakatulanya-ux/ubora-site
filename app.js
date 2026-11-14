@@ -167,13 +167,13 @@ function poleCard(p, feature, compact) {
     </div>
   </article>`;
 }
-function outilCard(o) {
+function outilCard(o, court) {
   const p = poleReal(o.pole);
   const href = lienOutil(o);
   return `<article class="tool" style="--c:${o.couleur}" data-f="${o.statut} ${o.pole}">
     <div class="pole-top"><span class="mk">${esc(o.initiales)}</span>${statut(o)}</div>
     <h3><a class="stretch" href="${href}"${ext(href)}>${esc(o.nom)}</a></h3>
-    <p>${esc(o.resume)}</p>
+    <p>${esc(court && o.court ? o.court : o.resume)}</p>
     <div class="tool-foot"><span>${pole(o.pole) ? "Pôle " : ""}${esc(p.nom)}</span>${o.sousDomaine ? `<span class="mono">${esc(o.sousDomaine)}</span>` : ""}</div>
   </article>`;
 }
@@ -216,7 +216,7 @@ function relais(lien) {
       <h2>Le projet se termine. <span class="serif">L'accompagnement continue.</span></h2>
       <p class="lead">Un programme dure deux ou trois ans ; les groupes, les entrepreneurs et les coopératives ont besoin de plus. Nous mettons en œuvre vos projets sur le terrain, puis nous prenons le relais.</p>
       ${lien ? `<div class="btn-row"><a class="btn btn-accent" href="/conseil#mise-en-oeuvre">Mise en œuvre de projets ${ICON.arrow}</a><a class="btn btn-ghost" href="/conseil#relais">Préparer la suite de votre projet</a></div>` : `<a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent("Partenariat")}">Parlons de votre programme ${ICON.arrow}</a>`}</div>
-    <ol class="relais-temps">${RELAIS.map(([t, x], i) => `<li><span class="bn">${i + 1}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`).join("")}</ol>
+    <ol class="relais-temps">${RELAIS.map(([t, x], i) => `<li><span class="bn">${i + 1}</span><div><b>${esc(t)}</b></div></li>`).join("")}</ol>
   </div>`;
 }
 /* Pour les bailleurs et les ONG : commencer par un projet pilote, et ce qui permet de nous faire confiance */
@@ -579,7 +579,6 @@ function pagePole(id) {
       <span class="on">Ubora Fin</span><i aria-hidden="true">${ICON.arrow}</i>
       <span>AVEC</span><i aria-hidden="true">${ICON.arrow}</i><span>Membres</span>
     </div>
-    <ol class="bridge">${P.intermediation.etapes.map(([t, x], i) => `<li><span class="bn">${i + 1}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`).join("")}</ol>
     <div class="grid-3 gains">${P.intermediation.gains.map(([t, x]) => `<div class="fcard reveal"><h3>${esc(t)}</h3><p>${esc(x)}</p></div>`).join("")}</div>
   </div></section>` : ""}
 
@@ -602,7 +601,7 @@ function pagePole(id) {
 
   <section><div class="wrap">
     ${outilsLies.length ? `${secHead("Outils et publics", `Les outils du pôle ${esc(P.nom)}`)}
-    <div class="tools">${outilsLies.map(outilCard).join("")}</div>` : secHead("Nos publics", "Avec qui nous travaillons")}
+    <div class="tools">${outilsLies.map(o => outilCard(o, true)).join("")}</div>` : secHead("Nos publics", "Avec qui nous travaillons")}
     <div class="publics"><b>Pour qui</b>${P.publics.map(x => `<span>${esc(x)}</span>`).join("")}</div>
   </div></section>
 
@@ -679,7 +678,7 @@ function pageConseil() {
     ${secHead("Projet pilote", `Commencer petit, mesurer, puis <span class="serif">décider</span>`, "Pour un bailleur ou une ONG qui ne nous connaît pas encore, c'est la façon la plus sûre de commencer. Selon votre mode de financement, le pilote est confié à l'Entreprise Sociale Ubora (contrat de prestation) ou à l'association UBORA (subvention).")}
     <ol class="chaine quatre">${PILOTE.temps.map(([t, x, r], i) => `<li class="reveal"><span class="pn">${String(i + 1).padStart(2, "0")}</span><h3>${esc(t)}</h3><p>${esc(x)}</p><p class="resultat">${esc(r)}</p></li>`).join("")}</ol>
     <h3 class="sous-titre">Exemples de pilotes</h3>
-    <div class="grid-3 pilotes">${PILOTE.exemples.map(([id, t, x, m]) => { const p = poleReal(id); return `<div class="fcard" style="--c:${p.couleur}"><span class="tag" style="background:${p.couleur};color:#fff">${esc(p.nom)}</span><h3>${esc(t)}</h3><p>${esc(x)}</p><p class="mesure"><b>À mesurer</b> ${esc(m)}</p></div>`; }).join("")}</div>
+    <div class="grid-3 pilotes">${PILOTE.exemples.map(([id, t, x, m]) => { const p = poleReal(id); return `<div class="fcard" style="--c:${p.couleur}"><span class="tag" style="background:${p.couleur};color:#fff">${esc(p.nom)}</span><h3>${esc(t)}</h3><p class="mesure"><b>À mesurer</b> ${esc(m)}</p></div>`; }).join("")}</div>
   </div></section>
   <section class="band" id="verifier"><div class="wrap">
     ${secHead("Avant de signer", `Vérifiez par <span class="serif">vous-même</span>`, "Une jeune entreprise doit montrer ce qu'elle sait faire. Voici ce que vous pouvez contrôler sans nous croire sur parole.")}
@@ -870,7 +869,7 @@ function pageOng() {
   </div></section>
   <section class="band"><div class="wrap">
     ${secHead("Secteurs d'intervention", `Ce que fait <span class="serif">l'association</span>`, "Partout en RDC, en priorité dans le Haut-Katanga : études, formation, sensibilisation, accompagnement et mise en œuvre de projets, seule ou en partenariat.")}
-    <div class="grid-4">${ONG.secteurs.map(([id, t, x]) => { const p = id && pole(id); return `<div class="fcard"${p ? ` style="--c:${p.couleur}"` : ""}><h3>${esc(t)}</h3><p>${esc(x)}</p>${p ? `<a class="link" href="${p.chemin}">${esc(p.nom)} ${ICON.arrow}</a>` : ""}</div>`; }).join("")}</div>
+    <div class="grid-4">${ONG.secteurs.map(([id, t, x]) => { const p = id && pole(id); return `<div class="fcard"${p ? ` style="--c:${p.couleur}"` : ""}><h3>${esc(t)}</h3>${p ? `<a class="link" href="${p.chemin}">${esc(p.nom)} ${ICON.arrow}</a>` : ""}</div>`; }).join("")}</div>
     <div class="publics"><b>Pour qui</b>${ONG.beneficiaires.map(x => `<span>${esc(x)}</span>`).join("")}</div>
   </div></section>
   <section><div class="wrap">

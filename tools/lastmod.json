@@ -4,11 +4,11 @@
   "date": "2026-11-14"
  },
  "/avec": {
-  "empreinte": "6019eaf1a7ca",
+  "empreinte": "daed63896e70",
   "date": "2026-11-14"
  },
  "/pme": {
-  "empreinte": "24c13bf0f0e3",
+  "empreinte": "0052999b69c7",
   "date": "2026-11-14"
  },
  "/cooperatives": {
@@ -16,7 +16,7 @@
   "date": "2026-11-14"
  },
  "/financement": {
-  "empreinte": "6aad1c1095ed",
+  "empreinte": "e79315aeefe9",
   "date": "2026-11-14"
  },
  "/marche": {
@@ -28,7 +28,7 @@
   "date": "2026-11-14"
  },
  "/academie": {
-  "empreinte": "4e1916cab44b",
+  "empreinte": "f2de57d1fca4",
   "date": "2026-11-14"
  },
  "/approche": {
@@ -40,11 +40,11 @@
   "date": "2026-11-05"
  },
  "/outils": {
-  "empreinte": "a3b6561f75e8",
+  "empreinte": "54ca15f8bd8d",
   "date": "2026-11-14"
  },
  "/conseil": {
-  "empreinte": "abb9f6ed4dd4",
+  "empreinte": "13f99ac8fae3",
   "date": "2026-11-14"
  },
  "/formations": {
@@ -68,8 +68,8 @@
   "date": "2026-10-06"
  },
  "/outils/akiba": {
-  "empreinte": "d2cb72ea9eac",
-  "date": "2026-11-06"
+  "empreinte": "29c98154a687",
+  "date": "2026-11-14"
  },
  "/outils/bp": {
   "empreinte": "1123ccd936dd",
@@ -88,7 +88,7 @@
   "date": "2026-11-06"
  },
  "/ong": {
-  "empreinte": "393ed332c9fc",
-  "date": "2026-11-05"
+  "empreinte": "d81444af97e3",
+  "date": "2026-11-14"
  }
 }
