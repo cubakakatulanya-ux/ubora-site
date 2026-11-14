@@ -31,10 +31,9 @@
 <link rel="manifest" href="/site.webmanifest">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://uborardc.com/"},{"@type":"ListItem","position":2,"name":"Actualités","item":"https://uborardc.com/actualites"}]}]}</script>
 <script src="/theme.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="/styles.css?v=be2040cc53">
+<link rel="preload" href="/polices/ubuntu-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/polices/ubuntu-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/styles.css?v=97fd65a936">
 </head>
 <body>
 <a class="skip" href="#app">Aller au contenu</a>
@@ -106,6 +105,7 @@
       <form class="news-form" id="newsForm" aria-label="Lettre d'information">
         <label class="news-label" for="nlEmail">Votre adresse e-mail</label>
         <div class="news-row"><input id="nlEmail" type="email" required maxlength="160" autocomplete="email" placeholder="Votre adresse e-mail"><input class="hp" id="nlSite" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn btn-accent btn-sm" type="submit">S'inscrire</button></div>
+        <p class="news-note">Des nouvelles de temps en temps, sans publicité. Désinscription à tout moment. <a href="/confidentialite">Confidentialité</a></p>
       </form>
     </div>
     <div class="foot-grid">
@@ -125,7 +125,7 @@
     </div>
     <div class="foot-bottom">
       <span>© 2026 Ubora, entreprise sociale · <span class="foot-legal">RCCM CD/KNM/RCCM/24-A-04755 · ID NAT 01-G4701-N86995I</span></span>
-      <span class="foot-links"><a href="/mentions">Mentions légales</a><a href="https://admin.uborardc.com" rel="nofollow">Espace équipe</a></span>
+      <span class="foot-links"><a href="/mentions">Mentions légales</a><a href="/confidentialite">Confidentialité et cookies</a><a href="/conditions">Conditions d'utilisation</a><a href="https://admin.uborardc.com" rel="nofollow">Espace équipe</a></span>
     </div>
   </div></footer>
 
@@ -138,11 +138,11 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script type="application/json" id="ubora-donnees">{"actualites":[],"formations":[],"offres":[],"equipe":[],"realisations":[]}</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" integrity="sha384-GFr3yTh5lJznCbZfpTtXnwboFsxqtTQoeTZCRHhE0579KrRmlCzen5AA8ohaB5ug" crossorigin="anonymous"></script>
-<script src="/data.js?v=be2040cc53"></script>
-<script src="/db.js?v=be2040cc53"></script>
-<script src="/admin.js?v=be2040cc53"></script>
-<script src="/app.js?v=be2040cc53"></script>
-<script src="/chat.js?v=be2040cc53"></script>
+<script src="/lib/supabase-2.45.4.min.js" integrity="sha384-GFr3yTh5lJznCbZfpTtXnwboFsxqtTQoeTZCRHhE0579KrRmlCzen5AA8ohaB5ug"></script>
+<script src="/data.js?v=97fd65a936"></script>
+<script src="/db.js?v=97fd65a936"></script>
+<script src="/admin.js?v=97fd65a936"></script>
+<script src="/app.js?v=97fd65a936"></script>
+<script src="/chat.js?v=97fd65a936"></script>
 </body>
 </html>

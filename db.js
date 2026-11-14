@@ -72,20 +72,24 @@ const UboraDB = (() => {
   }
 
   /* --- Formulaires publics --- */
+  /* une connexion lente ne doit pas laisser le visiteur devant un bouton bloqué : 15 secondes au plus */
+  const delai = (p, ms = 15000) => Promise.race([p, new Promise(r => setTimeout(() => r({ error: { message: "délai dépassé" } }), ms))]).catch(e => ({ error: e }));
+  /* la base refuse les envois trop nombreux en peu de temps, tous visiteurs confondus (fonction site_limite_debit) */
+  const limite = error => !!error && /trop|limite|rate/i.test(String(error.message || ""));
   async function sendMessage(m) {
     const c = sb(); if (!c) return { ok: false };
-    const { error } = await c.from("site_messages").insert([m]);
-    return { ok: !error, error };
+    const { error } = await delai(c.from("site_messages").insert([m]));
+    return { ok: !error, error, limite: limite(error) };
   }
   async function logQuestion(q) {
     const c = sb(); if (!c) return { ok: false };
-    const { error } = await c.from("site_questions").insert([q]);
+    const { error } = await delai(c.from("site_questions").insert([q]));
     return { ok: !error, error };
   }
   async function subscribe(email) {
     const c = sb(); if (!c) return { ok: false };
-    const { error } = await c.from("site_abonnes").insert([{ email: email.toLowerCase() }]);
-    return { ok: !error || error.code === "23505", error };
+    const { error } = await delai(c.from("site_abonnes").insert([{ email: email.toLowerCase() }]));
+    return { ok: !error || error.code === "23505", error, limite: limite(error) };
   }
 
   /* --- Espace équipe --- */

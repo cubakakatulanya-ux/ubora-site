@@ -31,10 +31,9 @@
 <link rel="manifest" href="/site.webmanifest">
 <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Accueil","item":"https://uborardc.com/"},{"@type":"ListItem","position":2,"name":"Contact","item":"https://uborardc.com/contact"}]}]}</script>
 <script src="/theme.js"></script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
-<link rel="stylesheet" href="/styles.css?v=be2040cc53">
+<link rel="preload" href="/polices/ubuntu-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/polices/ubuntu-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/styles.css?v=97fd65a936">
 </head>
 <body>
 <a class="skip" href="#app">Aller au contenu</a>
@@ -103,13 +102,14 @@
       <h2 class="h2-sm">Écrivez-nous</h2>
       <form class="form" id="contactForm" novalidate>
         <label>Nom complet<input id="c-nom" required maxlength="120" autocomplete="name"></label>
-        <label>Organisation<input id="c-org" maxlength="160" autocomplete="organization"></label>
-        <label>Téléphone<input id="c-tel" type="tel" maxlength="30" autocomplete="tel" placeholder="+243"></label>
-        <label>E-mail<input id="c-mail" type="email" maxlength="160" autocomplete="email"></label>
+        <label><span>Organisation <small>(facultatif)</small></span><input id="c-org" maxlength="160" autocomplete="organization"></label>
+        <label><span>Téléphone <small>(ou e-mail)</small></span><input id="c-tel" type="tel" maxlength="30" autocomplete="tel" placeholder="+243"></label>
+        <label><span>E-mail <small>(ou téléphone)</small></span><input id="c-mail" type="email" maxlength="160" autocomplete="email"></label>
         <label class="full">Objet<select id="c-besoin"><option value="" disabled selected>Choisissez un objet</option><option>Ubora AVEC (groupes d&#39;épargne)</option><option>Ubora PME (entrepreneuriat)</option><option>Ubora Coop (coopératives)</option><option>Ubora Fin (accès au financement)</option><option>Ubora Market (accès au marché)</option><option>Ubora Vert (environnement)</option><option>Ubora Académie (formations)</option><option>Boîte à outils</option><option>Projet pilote</option><option>Présentation d&#39;Ubora</option><option>Conseil et programmes</option><option>Formation</option><option>Soutenir nos actions</option><option>UBORA, l&#39;association</option><option>Partenariat</option><option>Recrutement</option><option>Autre</option></select></label>
         <label class="full">Message<textarea id="c-msg" required maxlength="3000" placeholder="Présentez-vous en quelques lignes et dites-nous ce dont vous avez besoin."></textarea></label>
         <input class="hp" id="c-site" tabindex="-1" autocomplete="off" aria-hidden="true">
         <p class="form-err full" id="c-err" role="alert"></p>
+        <p class="form-note full">Ces informations servent uniquement à vous répondre et sont conservées 3 ans après notre dernier échange. <a href="/confidentialite">Confidentialité</a></p>
         <div class="full"><button class="btn btn-primary" type="submit">Envoyer <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
       </form>
       <div id="sent" tabindex="-1" hidden></div>
@@ -126,6 +126,7 @@
       <form class="news-form" id="newsForm" aria-label="Lettre d'information">
         <label class="news-label" for="nlEmail">Votre adresse e-mail</label>
         <div class="news-row"><input id="nlEmail" type="email" required maxlength="160" autocomplete="email" placeholder="Votre adresse e-mail"><input class="hp" id="nlSite" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn btn-accent btn-sm" type="submit">S'inscrire</button></div>
+        <p class="news-note">Des nouvelles de temps en temps, sans publicité. Désinscription à tout moment. <a href="/confidentialite">Confidentialité</a></p>
       </form>
     </div>
     <div class="foot-grid">
@@ -145,7 +146,7 @@
     </div>
     <div class="foot-bottom">
       <span>© 2026 Ubora, entreprise sociale · <span class="foot-legal">RCCM CD/KNM/RCCM/24-A-04755 · ID NAT 01-G4701-N86995I</span></span>
-      <span class="foot-links"><a href="/mentions">Mentions légales</a><a href="https://admin.uborardc.com" rel="nofollow">Espace équipe</a></span>
+      <span class="foot-links"><a href="/mentions">Mentions légales</a><a href="/confidentialite">Confidentialité et cookies</a><a href="/conditions">Conditions d'utilisation</a><a href="https://admin.uborardc.com" rel="nofollow">Espace équipe</a></span>
     </div>
   </div></footer>
 
@@ -158,11 +159,11 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script type="application/json" id="ubora-donnees">{"actualites":[],"formations":[],"offres":[],"equipe":[],"realisations":[]}</script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js" integrity="sha384-GFr3yTh5lJznCbZfpTtXnwboFsxqtTQoeTZCRHhE0579KrRmlCzen5AA8ohaB5ug" crossorigin="anonymous"></script>
-<script src="/data.js?v=be2040cc53"></script>
-<script src="/db.js?v=be2040cc53"></script>
-<script src="/admin.js?v=be2040cc53"></script>
-<script src="/app.js?v=be2040cc53"></script>
-<script src="/chat.js?v=be2040cc53"></script>
+<script src="/lib/supabase-2.45.4.min.js" integrity="sha384-GFr3yTh5lJznCbZfpTtXnwboFsxqtTQoeTZCRHhE0579KrRmlCzen5AA8ohaB5ug"></script>
+<script src="/data.js?v=97fd65a936"></script>
+<script src="/db.js?v=97fd65a936"></script>
+<script src="/admin.js?v=97fd65a936"></script>
+<script src="/app.js?v=97fd65a936"></script>
+<script src="/chat.js?v=97fd65a936"></script>
 </body>
 </html>

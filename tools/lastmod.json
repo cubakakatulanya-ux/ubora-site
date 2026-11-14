@@ -60,12 +60,12 @@
   "date": "2026-10-04"
  },
  "/contact": {
-  "empreinte": "03a16fdf6fa5",
-  "date": "2026-11-05"
+  "empreinte": "a584f0e8d68e",
+  "date": "2026-11-14"
  },
  "/mentions": {
-  "empreinte": "cad410f5bc38",
-  "date": "2026-10-06"
+  "empreinte": "72c6de8a6f80",
+  "date": "2026-11-14"
  },
  "/outils/akiba": {
   "empreinte": "6e2f7408c43b",
@@ -89,6 +89,14 @@
  },
  "/ong": {
   "empreinte": "d81444af97e3",
+  "date": "2026-11-14"
+ },
+ "/confidentialite": {
+  "empreinte": "a7905839dcf6",
+  "date": "2026-11-14"
+ },
+ "/conditions": {
+  "empreinte": "c515f398e529",
   "date": "2026-11-14"
  }
 }

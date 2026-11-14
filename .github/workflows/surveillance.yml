@@ -1,0 +1,66 @@
+# Surveillance du site, toutes les heures (gratuit : le dépôt est public).
+# Si une vérification échoue, l'exécution échoue et GitHub envoie un e-mail
+# à la personne qui a modifié ce fichier en dernier (réglage des
+# notifications : github.com/settings/notifications, rubrique Actions).
+name: Surveillance du site
+
+on:
+  schedule:
+    - cron: "7 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verifier:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Pages principales et sous-domaines
+        run: |
+          set -u
+          echec=0
+          verifier() { # adresse, code attendu, texte attendu (facultatif)
+            code=$(curl -s -o page.html -w "%{http_code}" --max-time 30 "$1?surveillance=$(date +%s)")
+            if [ "$code" != "$2" ]; then echo "::error::$1 répond $code (attendu $2)"; echec=1; return; fi
+            if [ -n "${3:-}" ] && ! grep -q "$3" page.html; then echo "::error::$1 ne contient plus « $3 »"; echec=1; return; fi
+            echo "OK  $1 ($code)"
+          }
+          verifier https://uborardc.com/ 200 "entreprise"
+          verifier https://uborardc.com/contact 200 "contactForm"
+          verifier https://uborardc.com/confidentialite 200 "Confidentialité"
+          verifier https://uborardc.com/une-page-qui-n-existe-pas 404
+          verifier https://avec.uborardc.com/ 200 "AVEC"
+          verifier https://ong.uborardc.com/ 200 "UBORA"
+          verifier https://bp.uborardc.com/ 200
+          verifier https://akiba.uborardc.com/ 200
+          verifier https://hub.uborardc.com/ 200
+          verifier https://academie.uborardc.com/ 200
+          verifier https://asbl.uborardc.com/ 200
+          exit $echec
+
+      - name: En-têtes de sécurité
+        run: |
+          h=$(curl -sI --max-time 30 https://uborardc.com/ | tr -d '\r')
+          for e in "strict-transport-security" "content-security-policy" "x-frame-options: DENY" "x-content-type-options: nosniff"; do
+            echo "$h" | grep -qi "^$e" || { echo "::error::en-tête manquant : $e"; exit 1; }
+          done
+          echo "OK  en-têtes de sécurité"
+
+      - name: Base de données joignable
+        run: |
+          # clé publique du site (elle figure dans data.js) : lecture du contenu publié seulement
+          cle=$(curl -s --max-time 30 https://uborardc.com/data.js | grep -o 'eyJ[A-Za-z0-9._-]*' | head -1)
+          code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 -H "apikey: $cle" -H "Authorization: Bearer $cle" "https://uoshpvqdszygezkuhhco.supabase.co/rest/v1/site_actualites?select=slug&limit=1")
+          [ "$code" = "200" ] || { echo "::error::la base répond $code"; exit 1; }
+          echo "OK  base ($code)"
+
+      - name: Certificats (alerte 14 jours avant l'expiration)
+        run: |
+          for d in uborardc.com avec.uborardc.com akiba.uborardc.com hub.uborardc.com academie.uborardc.com asbl.uborardc.com; do
+            fin=$(echo | openssl s_client -servername "$d" -connect "$d:443" 2>/dev/null | openssl x509 -noout -enddate | cut -d= -f2)
+            reste=$(( ( $(date -d "$fin" +%s) - $(date +%s) ) / 86400 ))
+            [ "$reste" -ge 14 ] || { echo "::error::certificat de $d : $reste jours restants"; exit 1; }
+            echo "OK  $d : certificat valable encore $reste jours"
+          done

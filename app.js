@@ -333,6 +333,7 @@ function footerHTML() {
       <form class="news-form" id="newsForm" aria-label="Lettre d'information">
         <label class="news-label" for="nlEmail">Votre adresse e-mail</label>
         <div class="news-row"><input id="nlEmail" type="email" required maxlength="160" autocomplete="email" placeholder="Votre adresse e-mail"><input class="hp" id="nlSite" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn btn-accent btn-sm" type="submit">S'inscrire</button></div>
+        <p class="news-note">Des nouvelles de temps en temps, sans publicité. Désinscription à tout moment. <a href="/confidentialite">Confidentialité</a></p>
       </form>
     </div>
     <div class="foot-grid">
@@ -352,7 +353,7 @@ function footerHTML() {
     </div>
     <div class="foot-bottom">
       <span>© ${new Date().getFullYear()} Ubora, entreprise sociale${legal ? ` · <span class="foot-legal">${esc(legal)}</span>` : ""}</span>
-      <span class="foot-links"><a href="/mentions">Mentions légales</a><a href="https://admin.uborardc.com" rel="nofollow">Espace équipe</a></span>
+      <span class="foot-links"><a href="/mentions">Mentions légales</a><a href="/confidentialite">Confidentialité et cookies</a><a href="/conditions">Conditions d'utilisation</a><a href="https://admin.uborardc.com" rel="nofollow">Espace équipe</a></span>
     </div>
   </div>`;
 }
@@ -948,13 +949,14 @@ function pageContact(params) {
       <h2 class="h2-sm">Écrivez-nous</h2>
       <form class="form" id="contactForm" novalidate>
         <label>Nom complet<input id="c-nom" required maxlength="120" autocomplete="name"></label>
-        <label>Organisation<input id="c-org" maxlength="160" autocomplete="organization"></label>
-        <label>Téléphone<input id="c-tel" type="tel" maxlength="30" autocomplete="tel" placeholder="+243"></label>
-        <label>E-mail<input id="c-mail" type="email" maxlength="160" autocomplete="email"></label>
+        <label><span>Organisation <small>(facultatif)</small></span><input id="c-org" maxlength="160" autocomplete="organization"></label>
+        <label><span>Téléphone <small>(ou e-mail)</small></span><input id="c-tel" type="tel" maxlength="30" autocomplete="tel" placeholder="+243"></label>
+        <label><span>E-mail <small>(ou téléphone)</small></span><input id="c-mail" type="email" maxlength="160" autocomplete="email"></label>
         <label class="full">Objet<select id="c-besoin"><option value="" disabled${sel ? "" : " selected"}>Choisissez un objet</option>${besoins.map(b => `<option${b === sel ? " selected" : ""}>${esc(b)}</option>`).join("")}</select></label>
         <label class="full">Message<textarea id="c-msg" required maxlength="3000" placeholder="Présentez-vous en quelques lignes et dites-nous ce dont vous avez besoin.">${sujet && sujet !== sel ? esc(sujet) : ""}</textarea></label>
         <input class="hp" id="c-site" tabindex="-1" autocomplete="off" aria-hidden="true">
         <p class="form-err full" id="c-err" role="alert"></p>
+        <p class="form-note full">Ces informations servent uniquement à vous répondre et sont conservées ${CONSERVATION.messages}. <a href="/confidentialite">Confidentialité</a></p>
         <div class="full"><button class="btn btn-primary" type="submit">Envoyer ${ICON.arrow}</button></div>
       </form>
       <div id="sent" tabindex="-1" hidden></div>
@@ -962,19 +964,92 @@ function pageContact(params) {
   </div></section>`;
 }
 
+/* Durées de conservation : les mêmes que celles appliquées par la base (fonction site_purger). */
+const CONSERVATION = { messages: "3 ans après notre dernier échange", abonnes: "jusqu'à votre désinscription", questions: "12 mois", visites: "25 mois", candidatures: "2 ans après la fin du recrutement" };
+const VERSION_LEGALE = { numero: "1.0", date: "14 novembre 2026" };
+const piedLegal = () => `<p class="legal-version">Version ${VERSION_LEGALE.numero}, en vigueur depuis le ${VERSION_LEGALE.date}. En cas de modification importante, la nouvelle version est datée ici et annoncée sur le site.</p>`;
+const tableLegale = (entetes, lignes) => `<div class="legal-table"><table><thead><tr>${entetes.map(h => `<th scope="col">${h}</th>`).join("")}</tr></thead><tbody>${lignes.map(l => `<tr>${l.map((c, i) => i ? `<td>${c}</td>` : `<th scope="row">${c}</th>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+const liensLegaux = actuel => `<nav class="legal-nav" aria-label="Informations légales">${[["/mentions", "Mentions légales"], ["/confidentialite", "Confidentialité et cookies"], ["/conditions", "Conditions d'utilisation"]].map(([h, t]) => h === actuel ? `<span aria-current="page">${t}</span>` : `<a href="${h}">${t}</a>`).join("")}</nav>`;
+
 function pageMentions() {
   const L = CONFIG.legal || {};
   const lignes = [["Dénomination", "Ubora, entreprise sociale"], ["Siège", CONFIG.adresse], ["RCCM", L.rccm], ["Identification nationale", L.idnat], ["Numéro d'impôt", L.impot], ["Téléphone", CONFIG.telephone], ["E-mail", CONFIG.email], ["Directeur de la publication", L.directeur]].filter(([, v]) => v);
-  return pageHead({ eyebrow: "Informations légales", title: "Mentions légales et données personnelles", crumbs: [["Mentions légales"]] }) + `
+  return pageHead({ eyebrow: "Informations légales", title: "Mentions légales", crumbs: [["Mentions légales"]] }) + `
   <section><div class="wrap narrow legal-page">
+    ${liensLegaux("/mentions")}
     <h2>Éditeur du site</h2><dl class="legal">${lignes.map(([k, v]) => `<dt>${k}</dt><dd>${esc(v)}</dd>`).join("")}</dl>
-    <h2>Hébergement</h2><p>Le site est hébergé par Cloudflare, Inc. (San Francisco, États-Unis), qui gère aussi le nom de domaine et la messagerie. Les données des formulaires sont stockées par Supabase, sur des serveurs situés à Francfort, en Allemagne.</p>
-    <h2>Données personnelles</h2><p>Nous ne collectons que ce que vous nous transmettez :</p>
-    <ul class="checks"><li>le formulaire de contact : nom, organisation, téléphone, e-mail et message, pour vous répondre ;</li><li>la lettre d'information : votre adresse e-mail, jusqu'à votre désinscription ;</li><li>l'assistant du site : le texte de vos questions, sans aucune donnée d'identification.</li></ul>
-    <p>Ces données ne sont ni vendues ni cédées. Pour les consulter, les corriger ou les faire supprimer, écrivez à <a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a>.</p>
-    <h2>Cookies et mesure des visites</h2><p>Le site n'utilise aucun cookie. Nous comptons les visites pour savoir quelles pages sont lues : la page consultée, le site d'où vous venez, votre pays et le type d'appareil. Nous n'enregistrons ni votre adresse IP ni rien qui permette de vous reconnaître. Votre navigateur garde seulement votre choix d'affichage clair ou sombre et la date de votre dernière visite.</p>
-    <h2>Photos</h2><p>Les photos d'ambiance du site proviennent de la banque d'images Unsplash et sont utilisées selon sa licence. Elles illustrent nos domaines d'intervention et ne représentent pas des bénéficiaires ni des projets d'Ubora. Les photos des pages « Notre équipe » et « Nos réalisations » sont les nôtres.</p>
-    <h2>Propriété intellectuelle</h2><p>Le logo, les noms Ubora AVEC, Ubora PME, Ubora Coop, Ubora Fin, Ubora Market, Ubora Vert, Ubora Académie et AKIBA, ainsi que les textes et les documents de ce site, appartiennent à Ubora. Toute reproduction sans autorisation est interdite.</p>
+    <p>L'association UBORA, présentée sur <a href="/ong">sa page</a>, est une personne morale distincte de l'entreprise sociale.</p>
+    <h2>Hébergement</h2><p>Le site est hébergé par Cloudflare, Inc. (États-Unis), qui gère aussi le nom de domaine et l'acheminement des e-mails. Les données des formulaires sont conservées par Supabase, Inc., sur des serveurs situés à Francfort, en Allemagne.</p>
+    <h2>Propriété intellectuelle</h2><p>Le logo, les noms Ubora AVEC, Ubora PME, Ubora Coop, Ubora Fin, Ubora Market, Ubora Vert, Ubora Académie, Ubora Hub et AKIBA, ainsi que les textes, les films et les documents de ce site, appartiennent à Ubora. Toute reproduction sans autorisation écrite est interdite.</p>
+    <p>Les polices Ubuntu (Ubuntu Font Licence 1.0) et IBM Plex Mono (SIL Open Font License 1.1) sont servies par le site lui-même, selon leur licence.</p>
+    <h2>Photos</h2><p>Les photos d'ambiance proviennent de la banque d'images Unsplash et sont utilisées selon sa licence. Elles illustrent nos domaines d'intervention et ne représentent pas des bénéficiaires ni des projets d'Ubora. Les photos des pages « Notre équipe » et « Nos réalisations » sont les nôtres.</p>
+    <h2>Signaler un contenu</h2><p>Une erreur, un contenu qui vous concerne ou qui vous semble illicite ? Écrivez à <a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a> : nous répondons sous deux jours ouvrés.</p>
+    ${piedLegal()}
+  </div></section>`;
+}
+
+function pageConfidentialite() {
+  const C = CONSERVATION;
+  return pageHead({ eyebrow: "Informations légales", title: "Confidentialité et cookies", lead: "Ce que nous recueillons, pourquoi, combien de temps, et comment exercer vos droits.", crumbs: [["Confidentialité"]] }) + `
+  <section><div class="wrap narrow legal-page">
+    ${liensLegaux("/confidentialite")}
+    <h2>En bref</h2>
+    <ul class="checks"><li>Aucun cookie, aucune publicité, aucun traceur, aucun profilage.</li><li>Nous ne recueillons que ce que vous nous écrivez, et des visites comptées sans vous identifier.</li><li>Vos données ne sont ni vendues ni cédées, et ne servent pas à entraîner une intelligence artificielle.</li><li>Vous pouvez à tout moment les consulter, les corriger ou les faire supprimer.</li></ul>
+    <h2>Responsable du traitement</h2><p>Ubora, entreprise sociale (RCCM ${esc((CONFIG.legal || {}).rccm || "")}), ${esc(CONFIG.adresse)}. Contact : <a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a>. Nous appliquons les règles de protection des données personnelles en vigueur en République démocratique du Congo, notamment le Code du numérique, et les mêmes garanties à tous les visiteurs, où qu'ils se trouvent.</p>
+    <h2>Ce que nous recueillons</h2>
+    ${tableLegale(["Pour quoi", "Données", "Raison", "Durée"], [
+      ["Vous répondre (formulaire de contact)", "Nom, organisation (facultatif), téléphone ou e-mail, objet, message", "Votre demande", C.messages],
+      ["La lettre d'information", "Adresse e-mail", "Votre accord, retirable à tout moment", C.abonnes],
+      ["Améliorer l'assistant du site", "Texte de la question, page, réponse trouvée ou non ; aucune donnée d'identification", "Notre intérêt à mieux répondre", C.questions],
+      ["Compter les visites", "Page vue, site d'où l'on vient, pays, type d'appareil ; ni adresse IP, ni cookie, ni identifiant", "Notre intérêt à savoir quelles pages sont lues", C.visites],
+      ["Recruter (candidature par e-mail)", "Ce que contient votre candidature", "Votre candidature", C.candidatures],
+      ["L'espace équipe", "E-mail et session des membres de l'équipe habilités", "La gestion du site", "Tant que la personne est habilitée"]
+    ])}
+    <p>Les durées passées, les données sont effacées automatiquement par la base. Ne nous envoyez pas de données sensibles (santé, opinions, pièces d'identité) : le formulaire n'en a pas besoin.</p>
+    <h2>L'assistant du site</h2><p>L'assistant cherche ses réponses dans le contenu du site, directement dans votre navigateur : aucune question n'est envoyée à un service d'intelligence artificielle. Ses réponses peuvent être incomplètes ; pour une décision, écrivez-nous.</p>
+    <h2>Qui y a accès</h2>
+    ${tableLegale(["Destinataire", "Rôle", "Lieu"], [
+      ["L'équipe d'Ubora", "Seules les personnes habilitées lisent les messages, après connexion personnelle", "RDC"],
+      ["Cloudflare, Inc.", "Hébergement du site et acheminement des e-mails ; voit techniquement l'adresse IP pour livrer la page, sans qu'Ubora l'enregistre", "Réseau mondial, société aux États-Unis"],
+      ["Supabase, Inc.", "Base de données des formulaires et des visites comptées", "Francfort, Allemagne"]
+    ])}
+    <p>Ces prestataires agissent sur nos instructions, dans le cadre de leurs engagements contractuels de protection des données, y compris pour les transferts hors de la RDC. Si vous cliquez vers WhatsApp, YouTube ou une autre application, ce sont leurs propres règles qui s'appliquent ; aucune de leurs vidéos ni aucun de leurs scripts n'est intégré à nos pages.</p>
+    <h2>Sécurité</h2><p>Connexion chiffrée imposée, en-têtes de sécurité, aucune ressource chargée depuis un autre site, base de données verrouillée (un visiteur peut déposer un message mais ne peut en lire aucun), limites d'envoi contre les abus, accès de l'équipe nominatif. En cas d'incident touchant vos données, nous le contenons, nous en évaluons la portée et nous informons sans tarder les personnes concernées et, lorsque la loi l'exige, l'autorité compétente.</p>
+    <h2>Vos droits</h2><p>Vous pouvez demander à consulter vos données, à les corriger, à les supprimer, à en recevoir une copie, ou vous opposer à leur usage. Pour la lettre d'information, il suffit de répondre « désinscription » à l'un de nos e-mails ou de nous écrire. Écrivez à <a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a> : nous répondons sous trente jours au plus, après une vérification d'identité proportionnée. Vous pouvez aussi saisir l'autorité compétente en RDC.</p>
+    <h2>Mineurs</h2><p>Le site s'adresse aux adultes et aux organisations. Nous ne recueillons pas sciemment de données d'enfants de moins de 18 ans ; si cela arrive, écrivez-nous et nous les supprimons.</p>
+    <h2 id="cookies">Cookies et stockage dans votre navigateur</h2><p>Le site ne dépose aucun cookie et ne charge aucun outil de mesure ou de publicité d'un tiers : il n'y a donc rien à accepter, et pas de bandeau. Votre navigateur garde seulement ceci, sans rien transmettre à personne :</p>
+    ${tableLegale(["Élément", "À quoi il sert", "Durée"], [
+      ["Choix clair ou sombre", "Garder l'affichage que vous avez choisi", "Jusqu'à ce que vous l'effaciez"],
+      ["Date de la dernière visite", "Compter une visite par jour, sans identifiant", "Remplacée chaque jour"],
+      ["Brouillon du formulaire", "Ne pas perdre votre message si la connexion coupe", "Effacé à l'envoi ou à la fermeture de l'onglet"],
+      ["Session de l'espace équipe", "Garder connecté un membre de l'équipe", "Jusqu'à la déconnexion"]
+    ])}
+    <p>Si un outil facultatif devait un jour être ajouté, il ne s'activerait qu'après votre accord, et refuser serait aussi simple qu'accepter.</p>
+    <div class="prefs panel" id="prefs">
+      <b>Vos réglages dans ce navigateur</b>
+      <p id="prefEtat" role="status">Vos visites sont comptées, sans vous identifier.</p>
+      <div class="btn-row"><button class="btn btn-ghost btn-sm" type="button" id="prefMesure">Ne plus compter mes visites</button><button class="btn btn-ghost btn-sm" type="button" id="prefEffacer">Effacer ce que le site garde ici</button></div>
+    </div>
+    ${piedLegal()}
+  </div></section>`;
+}
+
+function pageConditions() {
+  return pageHead({ eyebrow: "Informations légales", title: "Conditions d'utilisation", lead: "Les règles d'usage du site uborardc.com et de ses pages de pôles.", crumbs: [["Conditions d'utilisation"]] }) + `
+  <section><div class="wrap narrow legal-page">
+    ${liensLegaux("/conditions")}
+    <h2>Objet</h2><p>Ces conditions s'appliquent au site uborardc.com et à ses pages de pôles (avec, pme, coop, fin, market, vert et ong.uborardc.com). Le site est gratuit et accessible sans compte. L'utiliser vaut acceptation de ces conditions.</p>
+    <h2>Ce que propose le site</h2><p>De l'information sur Ubora et ses pôles, un formulaire de contact, une lettre d'information facultative et un assistant qui répond à partir du contenu du site.</p>
+    <p>Le site ne vend rien, ne prend aucun paiement et ne collecte aucun don en ligne. Nos prestations font l'objet d'un devis ou d'un contrat écrit, qui en fixe le prix, les délais, l'annulation et le remboursement éventuel. Ubora Fin ne prête pas et ne recueille pas d'épargne : elle mobilise le capital d'institutions financières, d'investisseurs et de bailleurs.</p>
+    <h2>Nos applications</h2><p>AKIBA, Akiba Suivi, Ubora Hub, ASBL Manager, Ubora Académie et le générateur de business plan ont leurs propres conditions, affichées dans chaque application. Lorsqu'une application est payante, son prix, sa durée et ses conditions de renouvellement et de résiliation sont indiqués avant tout engagement.</p>
+    <h2>Usage acceptable</h2><p>Il est interdit d'utiliser le site pour :</p>
+    <ul class="checks"><li>envoyer des messages en masse, publicitaires ou automatisés ;</li><li>transmettre un contenu illicite, injurieux ou qui porte atteinte aux droits d'autrui ;</li><li>tenter d'accéder à l'espace équipe ou à la base sans y être habilité, ou d'en perturber le fonctionnement ;</li><li>copier le contenu en masse ou le réutiliser sans autorisation.</li></ul>
+    <p>Les envois sont limités pour protéger le service ; au-delà, un message vous invite à patienter.</p>
+    <h2>Informations publiées</h2><p>Nous veillons à l'exactitude des informations, qui restent générales. Elles ne remplacent pas un conseil financier, juridique ou fiscal adapté à votre situation. Les exemples marqués comme tels sont des démonstrations.</p>
+    <h2>Disponibilité et responsabilité</h2><p>Nous faisons de notre mieux pour que le site reste disponible et sûr, sans pouvoir garantir l'absence de toute interruption. Ubora n'est pas responsable du contenu des sites extérieurs vers lesquels le site renvoie.</p>
+    <h2>Données personnelles</h2><p>Voir la page <a href="/confidentialite">Confidentialité et cookies</a>.</p>
+    <h2>Droit applicable</h2><p>Ces conditions relèvent du droit de la République démocratique du Congo. En cas de désaccord, nous cherchons d'abord une solution amiable ; à défaut, les juridictions compétentes du ressort du siège d'Ubora sont saisies.</p>
+    ${piedLegal()}
   </div></section>`;
 }
 
@@ -1004,7 +1079,9 @@ const DESCR = {
   actualites: "Les actualités d'Ubora : programmes, déploiements, formations et nouvelles du terrain en RDC.",
   carrieres: "Offres d'emploi, de stage et de consultance chez Ubora, entreprise à caractère social qui intervient dans toute la RDC.",
   contact: "Contacter Ubora, entreprise à caractère social, par téléphone, WhatsApp ou e-mail. Une personne de l'équipe vous répond sous deux jours ouvrés.",
-  mentions: "Mentions légales et politique de données personnelles du site d'Ubora.",
+  mentions: "Mentions légales du site d'Ubora, entreprise sociale : éditeur, hébergement, propriété intellectuelle.",
+  confidentialite: "Politique de confidentialité d'Ubora : données recueillies, durées de conservation, destinataires, sécurité, vos droits. Aucun cookie ni traceur.",
+  conditions: "Conditions d'utilisation du site d'Ubora, entreprise sociale : objet, usage acceptable, applications, responsabilité, droit applicable.",
   equipe: "L'équipe d'Ubora, entreprise à caractère social : consultants, formateurs, agents de terrain et développeurs, présents dans toute la RDC.",
   ong: "UBORA, association sans but lucratif à vocation d'ONG de développement en RDC : épargne communautaire, entrepreneuriat inclusif, agriculture durable, formation et environnement, au service des femmes, des jeunes et des plus vulnérables.",
   soutenir: "Ubora n'est pas une entreprise classique : son objectif est social et ses excédents sont réinvestis. Confier une mission, apporter du capital, devenir partenaire : les façons de soutenir nos actions en RDC.",
@@ -1021,9 +1098,9 @@ const SEO_POLES = {
   marche: ["Ubora Market : trouver des acheteurs pour les producteurs en RDC", "Le pôle marché d'Ubora, entreprise à caractère social : relier les coopératives, les PME et les entrepreneurs accompagnés à des acheteurs, et suivre chaque vente jusqu'au paiement."]
 };
 /* Titres complets pour la balise <title> ; TITRES reste court (fil d'Ariane, menus) */
-const SEO_TITRES = { ong: "UBORA, association à vocation d'ONG de développement en RDC", soutenir: "Soutenir Ubora : une entreprise à objectif social en RDC", "a-propos": "Qui sommes-nous : Ubora, entreprise sociale en RDC", approche: "Notre approche : la méthode Ubora en six temps", outils: "Outils numériques pour les AVEC, les PME et les organisations · Ubora", conseil: "Projets pilotes, mise en œuvre et conseil en RDC · Ubora", formations: "Formations AVEC, entrepreneuriat et coopératives · Ubora", actualites: "Actualités d'Ubora : nouvelles du terrain en RDC", realisations: "Nos réalisations en RDC · Ubora, entreprise sociale", equipe: "Notre équipe · Ubora, entreprise sociale en RDC", carrieres: "Carrières : rejoindre Ubora, entreprise sociale en RDC", contact: "Contacter Ubora, entreprise sociale en RDC", mentions: "Mentions légales · Ubora, entreprise sociale" };
+const SEO_TITRES = { ong: "UBORA, association à vocation d'ONG de développement en RDC", soutenir: "Soutenir Ubora : une entreprise à objectif social en RDC", "a-propos": "Qui sommes-nous : Ubora, entreprise sociale en RDC", approche: "Notre approche : la méthode Ubora en six temps", outils: "Outils numériques pour les AVEC, les PME et les organisations · Ubora", conseil: "Projets pilotes, mise en œuvre et conseil en RDC · Ubora", formations: "Formations AVEC, entrepreneuriat et coopératives · Ubora", actualites: "Actualités d'Ubora : nouvelles du terrain en RDC", realisations: "Nos réalisations en RDC · Ubora, entreprise sociale", equipe: "Notre équipe · Ubora, entreprise sociale en RDC", carrieres: "Carrières : rejoindre Ubora, entreprise sociale en RDC", contact: "Contacter Ubora, entreprise sociale en RDC", mentions: "Mentions légales · Ubora, entreprise sociale", confidentialite: "Confidentialité et cookies · Ubora, entreprise sociale", conditions: "Conditions d'utilisation · Ubora, entreprise sociale" };
 const ROBOTS = "index, follow, max-image-preview:large";
-const TITRES = { ong: "L'association UBORA", soutenir: "Soutenir nos actions", "": "Ubora : entreprise sociale en RDC (AVEC, PME, coopératives)", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos outils numériques", conseil: "Projets et conseil", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
+const TITRES = { ong: "L'association UBORA", soutenir: "Soutenir nos actions", "": "Ubora : entreprise sociale en RDC (AVEC, PME, coopératives)", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos outils numériques", conseil: "Projets et conseil", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", confidentialite: "Confidentialité", conditions: "Conditions d'utilisation", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
 
 /* Construit une page à partir d'une adresse. */
 function resolve(pathname, search, host) {
@@ -1066,6 +1143,8 @@ function resolve(pathname, search, host) {
     case "soutenir": html = pageSoutenir(); break;
     case "ong": html = pageOng(); break;
     case "mentions": html = pageMentions(); break;
+    case "confidentialite": html = pageConfidentialite(); break;
+    case "conditions": html = pageConditions(); break;
     /* adresse propre à l'espace équipe : sans elle, admin.uborardc.com garderait le contenu de l'accueil déjà dans la page */
     case "admin": html = typeof pageAdmin === "function" ? pageAdmin() : notFound(); canon = "/admin"; break;
     default: html = notFound(); title = "Page introuvable";
@@ -1120,7 +1199,7 @@ function boot() {
     /* l'équipe peut exclure ses propres visites : uborardc.com/?equipe=1 (et ?equipe=0 pour les compter à nouveau) */
     const equipe = new URLSearchParams(location.search).get("equipe");
     if (equipe === "1") memoire.ecrire("ubora-equipe", "1"); else if (equipe === "0") memoire.ecrire("ubora-equipe", null);
-    if (memoire.lire("ubora-equipe") || r.canon === derniereVue) return;
+    if (memoire.lire("ubora-equipe") || memoire.lire("ubora-sans-mesure") || navigator.globalPrivacyControl === true || r.canon === derniereVue) return;
     derniereVue = r.canon;
     const jour = todayISO(), nouveau = memoire.lire("ubora-vu") !== jour;
     if (nouveau) memoire.ecrire("ubora-vu", jour);
@@ -1159,6 +1238,7 @@ function boot() {
     if (!keep) { $("#menu").classList.remove("open"); $("#burger").setAttribute("aria-expanded", "false"); document.body.classList.remove("menu-open"); fermerDD(); }
     if (r.base === "") { startNet(); startDiapo(); }
     if (r.base === "contact") bindContact();
+    if (r.base === "confidentialite") bindPrefs();
     if (r.base === "admin" && typeof bindAdmin === "function") bindAdmin();
     $$("[data-scroll]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); document.getElementById(a.dataset.scroll)?.scrollIntoView({ behavior: "smooth" }); }));
     const anchor = location.hash.slice(1), ancre = anchor && !anchor.startsWith("/");
@@ -1172,14 +1252,38 @@ function boot() {
   }
   window.route = route;
 
+  /* réglages de confidentialité de ce navigateur */
+  function bindPrefs() {
+    const etat = $("#prefEtat"), b = $("#prefMesure"); if (!etat || !b) return;
+    const maj = () => {
+      const refus = !!memoire.lire("ubora-sans-mesure"), gpc = navigator.globalPrivacyControl === true;
+      etat.textContent = gpc ? "Votre navigateur demande de ne pas être suivi : vos visites ne sont pas comptées." : refus ? "Vos visites ne sont plus comptées dans ce navigateur." : "Vos visites sont comptées, sans vous identifier.";
+      b.textContent = refus ? "Compter à nouveau mes visites" : "Ne plus compter mes visites"; b.hidden = gpc;
+    };
+    b.addEventListener("click", () => { memoire.ecrire("ubora-sans-mesure", memoire.lire("ubora-sans-mesure") ? null : "1"); maj(); });
+    $("#prefEffacer").addEventListener("click", () => {
+      const refus = memoire.lire("ubora-sans-mesure");
+      try { ["ubora_theme_2026", "ubora-vu", "ubora-equipe"].forEach(k => localStorage.removeItem(k)); sessionStorage.removeItem("ubora-brouillon"); } catch (e) {}
+      if (refus) memoire.ecrire("ubora-sans-mesure", "1");
+      toast("C'est fait : le site ne garde plus rien dans ce navigateur" + (refus ? ", sauf votre refus d'être compté." : "."));
+    });
+    maj();
+  }
+
   function bindContact() {
     const f = $("#contactForm"); if (!f) return;
     const debut = Date.now();
+    const CHAMPS = ["c-nom", "c-org", "c-tel", "c-mail", "c-msg"];
+    const brouillon = { lire() { try { return JSON.parse(sessionStorage.getItem("ubora-brouillon") || "null"); } catch (e) { return null; } }, ecrire(o) { try { o ? sessionStorage.setItem("ubora-brouillon", JSON.stringify(o)) : sessionStorage.removeItem("ubora-brouillon"); } catch (e) {} } };
+    const garde = brouillon.lire();
+    if (garde) CHAMPS.forEach(id => { const c = $("#" + id); if (c && !c.value && garde[id]) c.value = garde[id]; });
+    f.addEventListener("input", () => brouillon.ecrire(Object.fromEntries(CHAMPS.map(id => [id, $("#" + id).value]))));
     f.addEventListener("submit", async e => {
       e.preventDefault();
       const v = id => $("#" + id).value.trim();
       const err = $("#c-err");
-      if (v("c-site") || Date.now() - debut < 2500) return;
+      if (v("c-site")) return;
+      const trop = 2500 - (Date.now() - debut); if (trop > 0) await new Promise(r => setTimeout(r, trop));
       $$("#contactForm [aria-invalid]").forEach(x => x.removeAttribute("aria-invalid"));
       const signaler = (msg, id) => { err.textContent = msg; const c = $("#" + id); if (c) { c.setAttribute("aria-invalid", "true"); c.focus(); } };
       if (!v("c-nom") || !v("c-msg")) { signaler("Merci d'indiquer votre nom et votre message.", v("c-nom") ? "c-msg" : "c-nom"); return; }
@@ -1190,6 +1294,7 @@ function boot() {
       const btn = f.querySelector("button[type=submit]"); btn.disabled = true; btn.textContent = "Envoi en cours…";
       const res = await UboraDB.sendMessage({ nom: v("c-nom"), organisation: v("c-org") || null, telephone: v("c-tel") || null, email: v("c-mail") || null, besoin: v("c-besoin"), message: v("c-msg") });
       const texte = `Bonjour Ubora,\n\n${v("c-msg")}\n\n${v("c-nom")}${v("c-org") ? " (" + v("c-org") + ")" : ""}\nObjet : ${v("c-besoin")}${v("c-tel") ? "\nTél. : " + v("c-tel") : ""}${v("c-mail") ? "\nE-mail : " + v("c-mail") : ""}`;
+      if (res.ok) brouillon.ecrire(null);
       f.hidden = true;
       const s = $("#sent"); s.hidden = false;
       s.innerHTML = res.ok
@@ -1357,9 +1462,14 @@ function boot() {
   $("#newsForm").addEventListener("submit", async e => {
     e.preventDefault();
     if ($("#nlSite").value) return;
-    const mail = $("#nlEmail").value.trim(); e.target.reset();
+    const btn = e.target.querySelector("button[type=submit]"), mail = $("#nlEmail").value.trim();
+    if (btn.disabled) return;
+    if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail)) { toast("L'adresse e-mail semble incomplète (exemple : nom@domaine.com)."); $("#nlEmail").focus(); return; }
+    const libelle = btn.textContent; btn.disabled = true; btn.textContent = "Envoi…";
     const r = await UboraDB.subscribe(mail);
-    toast(r.ok ? "Merci, votre inscription est enregistrée." : "L'inscription n'a pas abouti. Réessayez un peu plus tard.");
+    btn.disabled = false; btn.textContent = libelle;
+    if (r.ok) e.target.reset();
+    toast(r.ok ? "Merci, votre inscription est enregistrée." : r.limite ? "Beaucoup d'envois en ce moment. Réessayez dans quelques minutes." : "L'inscription n'a pas abouti. Vérifiez votre connexion et réessayez.");
   });
   $("#waFloat").href = waLink("Bonjour Ubora, je souhaite avoir des informations.");
   window.addEventListener("scroll", () => {

@@ -376,3 +376,32 @@ drop trigger if exists site_questions_debit on public.site_questions;
 create trigger site_questions_debit before insert on public.site_questions for each row execute function public.site_limite_debit('60', '10 minutes');
 drop trigger if exists site_visites_debit on public.site_visites;
 create trigger site_visites_debit before insert on public.site_visites for each row execute function public.site_limite_debit('2000', '10 minutes');
+
+-- ==========================================================================
+-- Durées de conservation (audit du 14 novembre 2026) — les mêmes que celles
+-- annoncées sur /confidentialite. Effacement chaque nuit à 4 h 30 UTC.
+-- ==========================================================================
+alter table public.site_questions drop constraint if exists site_questions_question_longueur;
+alter table public.site_questions add constraint site_questions_question_longueur check (char_length(question) between 1 and 500);
+
+create or replace function public.site_purger()
+returns jsonb
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare q int; v int; m int;
+begin
+  delete from public.site_questions where created_at < now() - interval '12 months';
+  get diagnostics q = row_count;
+  delete from public.site_visites where created_at < now() - interval '25 months';
+  get diagnostics v = row_count;
+  delete from public.site_messages where created_at < now() - interval '3 years';
+  get diagnostics m = row_count;
+  return jsonb_build_object('questions', q, 'visites', v, 'messages', m, 'le', now());
+end $$;
+revoke all on function public.site_purger() from public, anon, authenticated;
+
+create extension if not exists pg_cron;
+select cron.unschedule(jobid) from cron.job where jobname = 'site_purger';
+select cron.schedule('site_purger', '30 4 * * *', 'select public.site_purger()');

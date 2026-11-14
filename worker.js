@@ -21,7 +21,7 @@ const ANCIENNES = {
 const FICHIER = /\.[a-z0-9]{2,5}$/i;
 const VIDEO = /\.(mp4|webm)$/i;
 
-const CSP_SITE = "default-src 'self'; script-src 'self' https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://uoshpvqdszygezkuhhco.supabase.co; connect-src 'self' https://uoshpvqdszygezkuhhco.supabase.co wss://uoshpvqdszygezkuhhco.supabase.co https://cloudflareinsights.com; frame-src 'none'; object-src 'none'; worker-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests";
+const CSP_SITE = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob: https://uoshpvqdszygezkuhhco.supabase.co; connect-src 'self' https://uoshpvqdszygezkuhhco.supabase.co wss://uoshpvqdszygezkuhhco.supabase.co; frame-src 'none'; manifest-src 'self'; media-src 'self'; object-src 'none'; worker-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests";
 const CSP_GENERATEUR = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://hub.uborardc.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'";
 const ENTETES = {
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -71,8 +71,22 @@ const inscrire = ligne => fetch(BASE + "/rest/v1/site_visites", {
   body: JSON.stringify(ligne)
 }).catch(() => {});
 
+/* Panne imprévue : une page simple, sans aucun détail technique, et un code 503 que les moteurs savent attendre. */
+const PANNE = `<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Ubora · site momentanément indisponible</title>
+<style>body{margin:0;min-height:100vh;display:grid;place-items:center;font:17px/1.6 system-ui,sans-serif;color:#1F2933;background:#fff;padding:24px}main{max-width:520px}h1{font-weight:400;font-size:28px;margin:0 0 12px}a{color:#1E7A46}</style></head>
+<body><main><h1>Le site est momentanément indisponible.</h1><p>Réessayez dans quelques minutes. Si c'est urgent, écrivez-nous sur WhatsApp au <a href="https://wa.me/243998275144">+243 998 275 144</a> ou à <a href="mailto:contact@uborardc.com">contact@uborardc.com</a>.</p><p><a href="/">Réessayer</a></p></main></body></html>`;
+
 export default {
   async fetch(request, env, ctx) {
+    try { return await servir(request, env, ctx); }
+    catch (e) {
+      console.error("ubora-site", e && e.message);
+      return new Response(PANNE, { status: 503, headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "no-store", "Retry-After": "120", ...ENTETES, "Content-Security-Policy": "default-src 'none'; style-src 'unsafe-inline'; frame-ancestors 'none'" } });
+    }
+  }
+};
+
+async function servir(request, env, ctx) {
     const url = new URL(request.url);
     const hote = url.hostname.toLowerCase();
     const chemin = url.pathname;
@@ -151,11 +165,13 @@ export default {
     for (const [cle, valeur] of Object.entries(ENTETES)) r.headers.set(cle, valeur);
     r.headers.set("Content-Security-Policy", sd === "bp" || chemin.startsWith("/generateur") ? CSP_GENERATEUR : CSP_SITE);
     if (sd === "admin") r.headers.set("X-Robots-Tag", "noindex, nofollow");
+    if (sd === "admin" && !FICHIER.test(chemin)) r.headers.set("Cache-Control", "no-store");
     if (chemin.startsWith("/img/")) r.headers.set("Cache-Control", "public, max-age=2592000");
+    /* polices et bibliothèque : leur nom porte leur version, on peut les garder un an */
+    else if (reponse.ok && (chemin.startsWith("/polices/") || chemin.startsWith("/lib/"))) r.headers.set("Cache-Control", "public, max-age=31536000, immutable");
     else if (chemin === "/logo.png") r.headers.set("Cache-Control", "public, max-age=604800");
     /* fichiers versionnés (?v=…) : leur adresse change à chaque mise à jour, on peut les garder un an */
     if (reponse.ok && /\.(css|js)$/.test(chemin) && url.searchParams.has("v")) r.headers.set("Cache-Control", "public, max-age=31536000, immutable");
     else if (reponse.ok && (/^\/(favicon|icon-|apple-touch-icon)/.test(chemin) || chemin === "/partage.jpg")) r.headers.set("Cache-Control", "public, max-age=604800");
     return r;
-  }
-};
+}
