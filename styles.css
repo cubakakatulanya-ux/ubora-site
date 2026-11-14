@@ -2194,3 +2194,24 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
 /* Association et entreprise sociale : ce qu'elles font ensemble, sur trois colonnes */
 .relais-temps.complements { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 0; padding: 0; list-style: none; }
 @media (max-width: 900px) { .relais-temps.complements { grid-template-columns: minmax(0, 1fr); } }
+
+/* ==========================================================================
+   Inspiré de transforme.cd (14 novembre 2026), dans l'identité d'Ubora :
+   les pôles sur un bandeau vert, l'appel final sur une grande photo encadrée d'un filet blanc.
+   ========================================================================== */
+.poles-band { background: var(--menthe); }
+:root[data-theme="dark"] .poles-band { background: var(--surface); }
+.final { color: #fff; border: 0; background: #0E2A1C url("/img/terrain-1600.webp") center / cover no-repeat; }
+.final::before { content: ""; display: block; opacity: 1; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(5, 22, 14, .9) 0%, rgba(5, 22, 14, .62) 100%); }
+.final::after { content: ""; display: block; position: absolute; inset: 14px; border: 1px solid rgba(255, 255, 255, .5); border-radius: calc(var(--r-lg) - 4px); pointer-events: none; }
+.final h2, .final p { color: #fff; }
+.final p { opacity: .88; }
+.final .eyebrow { color: #BFE8CF; }
+.final .serif { color: #9BE3B5 !important; }
+.final .btn-glass, .final .btn-ghost { background: transparent; border-color: rgba(255, 255, 255, .7); color: #fff; }
+.final .btn-glass:hover, .final .btn-ghost:hover { background: #fff; color: #0D3B28; }
+.lecon blockquote { margin-bottom: 4px; }
+/* les anciennes couches dessinaient des anneaux sur ces deux calques : on les remet à plat */
+.final::before, .final::after { width: auto; height: auto; transform: none; animation: none; }
+.final::before { border: 0; border-radius: 0; }
+.final::after { background: none; }

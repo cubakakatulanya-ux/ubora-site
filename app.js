@@ -223,15 +223,15 @@ function relais(lien) {
 function blocPilote() {
   const n = OUTILS.filter(o => o.statut === "en-ligne").length;
   const points = [
-    ["Des outils déjà en ligne", `${n} logiciels à essayer avant même de nous appeler.`],
-    ["Une équipe qui connaît les programmes", "Plus de dix ans d'AVEC, d'incubation et d'appui aux PME dans des programmes de coopération en RDC."],
-    ["Des résultats suivis en direct", "Tableaux de bord et exports pour votre équipe, pas seulement un rapport final."],
-    ["Deux façons de financer", "Un contrat de prestation avec l'Entreprise Sociale Ubora, ou une subvention à l'association UBORA."]
+    ["Des outils déjà en ligne", `${n} logiciels à essayer avant de signer.`],
+    ["Une équipe qui connaît les programmes", "Plus de dix ans de programmes de coopération en RDC."],
+    ["Des résultats suivis en direct", "Tableaux de bord et exports, pas seulement un rapport final."],
+    ["Deux façons de financer", "Prestation avec l'entreprise sociale, ou subvention à l'association UBORA."]
   ];
   return `<div class="deep relais pilote">
     <div class="relais-txt"><span class="eyebrow">Bailleurs, ONG et programmes</span>
       <h2>Commencez par un <span class="serif">projet pilote</span>.</h2>
-      <p class="lead">Un périmètre réduit, des indicateurs fixés ensemble au départ, des données que vous suivez en direct. À la fin, vous décidez d'étendre sur des preuves, pas sur des promesses.</p>
+      <p class="lead">Un périmètre réduit, des indicateurs fixés ensemble, des données suivies en direct. Puis vous décidez sur preuves.</p>
       <div class="btn-row"><a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent("Projet pilote")}">Proposer un projet pilote ${ICON.arrow}</a><a class="btn btn-ghost" href="/conseil#pilote">Voir comment ça se passe</a></div></div>
     <ol class="relais-temps">${points.map(([t, x], i) => `<li><span class="bn">${i + 1}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`).join("")}</ol>
   </div>`;
@@ -243,7 +243,7 @@ function expertise() {
     ["financement", "Étudier un crédit de 500 dollars coûte presque autant qu'un crédit de 50 000. Voilà pourquoi les petits emprunteurs sont oubliés.", "Alors Ubora Fin mobilise le capital pour le groupe entier, pas dossier par dossier, en s'appuyant sur son historique d'épargne."],
     ["marche", "Le maillon qui casse le plus souvent n'est ni la production ni le crédit. C'est la vente.", "Alors nous cherchons l'acheteur avant la récolte, et nous suivons la vente jusqu'au paiement du producteur."]
   ];
-  return `<div class="lecons">${lecons.map(([id, q, r]) => { const p = pole(id); return `<figure class="lecon reveal" style="--c:${p.couleur}"><span class="lecon-pole">${esc(p.nom)}</span><blockquote>${esc(q)}</blockquote><figcaption>${esc(r)}</figcaption><a class="link" href="${p.chemin}" aria-label="Voir comment : ${esc(p.nom)}">Voir comment ${ICON.arrow}</a></figure>`; }).join("")}</div>`;
+  return `<div class="lecons">${lecons.map(([id, q, r]) => { const p = pole(id); return `<figure class="lecon reveal" style="--c:${p.couleur}"><span class="lecon-pole">${esc(p.nom)}</span><blockquote>${esc(q)}</blockquote><a class="link" href="${p.chemin}" aria-label="Voir comment : ${esc(p.nom)}">Voir comment ${ICON.arrow}</a></figure>`; }).join("")}</div>`;
 }
 /* Pastilles de filtre : elles filtrent les enfants du bloc qui suit (attribut data-f) */
 function filtres(label, options) {
@@ -255,7 +255,7 @@ function finalCta() {
   return `<div class="deep final">
     <span class="eyebrow">Travaillons ensemble</span>
     <h2>Parlons de ce que vous voulez <span class="serif">faire avancer</span>.</h2>
-    <p>Un groupe à structurer, un programme à lancer, un crédit, un acheteur : dites-nous où vous en êtes. Réponse sous deux jours ouvrés.</p>
+    <p>Dites-nous où vous en êtes : réponse sous deux jours ouvrés.</p>
     <div class="btn-row"><a class="btn btn-wa" href="${waLink("Bonjour Ubora, je souhaite échanger avec vous.")}" target="_blank" rel="noopener">Écrire sur WhatsApp</a><a class="btn btn-glass" href="/contact">Nous écrire</a></div></div>`;
 }
 function cover(n) {
@@ -373,7 +373,7 @@ function pageHome() {
       <div>
         <h1 class="pill"><b>Ubora</b> Entreprise à caractère social, partout en RDC</h1>
         <p class="hero-titre">Des familles qui épargnent, des entrepreneurs qui vendent, des coopératives qui <span class="serif">durent</span>.</p>
-        <p class="lead">Partout en RDC, nous formons, outillons et suivons les groupes d'épargne, les entrepreneurs et les coopératives, jusqu'au crédit et jusqu'à l'acheteur. Avec des outils qui marchent sans réseau. Et nous restons quand le projet se termine.</p>
+        <p class="lead">Nous formons, outillons et suivons les groupes d'épargne, les entrepreneurs et les coopératives, jusqu'au crédit et jusqu'à l'acheteur. Et nous restons après le projet.</p>
         <div class="btn-row"><a class="btn btn-accent" href="#poles" data-scroll="poles">Découvrir nos pôles ${ICON.arrow}</a><a class="btn btn-glass" href="/conseil#pilote">Lancer un projet pilote</a></div>
       </div>
       <div class="stage stage-photo">
@@ -388,7 +388,7 @@ function pageHome() {
     </ul></div>
   </section>
 
-  <section id="poles"><div class="wrap">
+  <section id="poles" class="band poles-band"><div class="wrap">
     ${secHead("Nos pôles", `De la première épargne au premier <span class="serif">contrat de vente</span>`, "Chaque pôle tient un maillon, tous se passent le relais, et notre Académie forme chacun en chemin.")}
     <div class="poles">${POLES.map(p => poleCard(p)).join("")}</div>
   </div></section>
@@ -411,10 +411,10 @@ function pageHome() {
       <div class="btn-row"><a class="btn btn-accent" href="/soutenir">Soutenir nos actions ${ICON.arrow}</a><a class="btn btn-ghost" href="/a-propos#modele">Comprendre notre modèle</a></div>
     </div>
     <ol class="model">
-      <li><span class="bn">1</span><div><b>Les organisations paient</b><span>ONG, bailleurs, institutions et programmes financent nos prestations.</span></div></li>
-      <li><span class="bn">2</span><div><b>Les plus fragiles accèdent à tarif solidaire</b><span>Groupes d'épargne, jeunes et femmes entrepreneurs, producteurs ruraux.</span></div></li>
-      <li><span class="bn">3</span><div><b>Le capital arrive jusqu'aux groupes</b><span>Ubora Fin mobilise pour eux le capital des financeurs. Nous ne prêtons pas nous-mêmes.</span></div></li>
-      <li><span class="bn">4</span><div><b>Les excédents sont réinvestis</b><span>Dans nos outils, dans la formation de relais locaux et dans notre présence sur le terrain.</span></div></li>
+      <li><span class="bn">1</span><div><b>Les organisations paient</b></div></li>
+      <li><span class="bn">2</span><div><b>Les plus fragiles accèdent à tarif solidaire</b></div></li>
+      <li><span class="bn">3</span><div><b>Le capital arrive jusqu'aux groupes</b></div></li>
+      <li><span class="bn">4</span><div><b>Les excédents sont réinvestis</b></div></li>
     </ol>
   </div></section>
 
@@ -693,7 +693,6 @@ function pageConseil() {
   </div></section>
   <section id="mise-en-oeuvre"><div class="wrap">
     ${secHead("Mise en œuvre de projets", `Nous ne faisons pas que conseiller : nous <span class="serif">mettons en œuvre</span>`, MISE_EN_OEUVRE.intro)}
-    <ol class="chaine quatre">${MISE_EN_OEUVRE.temps.map(([t, x, r], i) => `<li class="reveal"><span class="pn">${String(i + 1).padStart(2, "0")}</span><h3>${esc(t)}</h3><p>${esc(x)}</p><p class="resultat">${esc(r)}</p></li>`).join("")}</ol>
     <div class="grid-2 formules">${MISE_EN_OEUVRE.formules.map(([t, x]) => `<div class="fcard"><h3>${esc(t)}</h3><p>${esc(x)}</p></div>`).join("")}</div>
     <p class="suite"><a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent("Conseil et programmes")}">Nous confier un projet ${ICON.arrow}</a></p>
   </div></section>
