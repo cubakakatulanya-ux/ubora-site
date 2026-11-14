@@ -28,8 +28,8 @@ const CONFIG = {
 const TICKER_MESSAGES = [
   ["Ubora est une entreprise à caractère social : ses excédents sont réinvestis", "/soutenir"],
   ["Nouveau à l'Académie : cinq cas pratiques pour entreprendre dans l'agroalimentaire", "/academie"],
-  ["Nouveau : AKIBA s'installe comme une application Android", "/outils/akiba#acces"],
-  ["Nouveau : ASBL Manager, la gestion des associations, des ONG et des entreprises sociales", "/outils/asbl"],
+  ["AKIBA : une AVEC sans réseau ni WhatsApp demande son code par SMS, appel ou image", "/outils/akiba#acces"],
+  ["ASBL Manager rédige vos statuts, votre règlement intérieur et votre manuel de procédures", "/outils/asbl"],
   ["Nouveau : Akiba Suivi, l'application des animateurs et des organisations qui suivent des AVEC", "/outils/akiba#acces"],
   ["En vidéo : AKIBA, le cahier de l'AVEC dans le téléphone, en trois minutes", "/outils/akiba#video"],
   ["En vidéo : Ubora Hub, de l'idée à l'entreprise, en quatre minutes", "/outils/hub#video"],
@@ -508,12 +508,12 @@ const OUTILS = [
       pour: ["Trésoriers et comités d'AVEC", "Animateurs et agents de terrain", "ONG et programmes qui suivent des groupes", "Institutions de microfinance"],
       acces: [
         ["Essayez la démonstration", "Libre et sans engagement : une réunion complète, dans le navigateur ou dans l'application Android."],
-        ["Demandez votre code de validation", "Pour une vraie AVEC, Ubora délivre un code. Écrivez-nous."],
+        ["Demandez votre code de validation", "Pour une vraie AVEC, Ubora délivre un code : demandez-le par WhatsApp, SMS, appel, ou en montrant la demande à l'écran."],
         ["Formez le comité", "Une formation de prise en main, puis un suivi sur le terrain."]
       ]
     },
     resume: "Le cahier de l'AVEC dans le téléphone, même sans réseau : chaque franc écrit au moment où il bouge, un reçu pour chaque membre, un historique qu'une IMF peut étudier.",
-    points: ["Réunion guidée en 8 étapes, clôture à trois clés", "Registre scellé : toute modification se voit", "Reçus imprimés ou envoyés par WhatsApp", "Niveau « prête pour une IMF » et dossier à présenter", "Crédit d'une IMF suivi de bout en bout", "Akiba Suivi pour les animateurs et les organisations", "Sans réseau : point GPS, et réunion transmise par une image", "Application Android de 3 Mo, imprimante des terminaux de caisse", "Langues de la RDC et guide audio", "Démonstration libre ; code Ubora pour une vraie AVEC"]
+    points: ["Réunion guidée en 8 étapes, clôture à trois clés", "Registre scellé : toute modification se voit", "Reçus imprimés ou envoyés par WhatsApp", "Niveau « prête pour une IMF » et dossier à présenter", "Crédit d'une IMF suivi de bout en bout", "Akiba Suivi pour les animateurs et les organisations", "Sans réseau : point GPS, réunion transmise en une ou deux images", "Application Android de 3 Mo, imprimante des terminaux de caisse", "Langues de la RDC et guide audio", "Démonstration libre ; code Ubora pour une vraie AVEC"]
   },
   {
     id: "akiba-suivi", nom: "Akiba Suivi", court: "Le suivi des AVEC, pour les animateurs et les organisations", pole: "avec", statut: "en-ligne", mock: "akiba", couleur: "#2463A6", initiales: "As",
@@ -584,7 +584,7 @@ const OUTILS = [
     id: "asbl", nom: "ASBL Manager", court: "La gestion des associations, des ONG et des entreprises sociales", pole: "conseil", statut: "en-ligne", mock: "asbl", couleur: "#0B3A32", initiales: "Am",
     sousDomaine: "asbl.uborardc.com", url: "https://asbl.uborardc.com",
     resume: "Le logiciel de gestion des associations, des ONG et des entreprises sociales : gouvernance, plan de travail, finances, projets, logistique, personnel et suivi-évaluation, avec des circuits de validation clairs.",
-    points: ["Gouvernance, membres et cotisations", "Plan de travail (PTBA), termes de référence et fiches d'activité", "Dépenses, trésorerie en francs et en dollars, comptabilité", "Projets, bailleurs et rapports", "Achats, stocks, personnel et missions", "Un espace par rôle, même hors connexion"],
+    points: ["Gouvernance, membres, statuts et manuel de procédures", "Plan de travail (PTBA), termes de référence et fiches d'activité", "Dépenses, trésorerie en francs et en dollars, comptabilité d'engagement", "Projets, bailleurs et rapports", "Achats, stocks, personnel et missions", "Un espace par rôle, même hors connexion"],
     fiche: {
       titre: `Gérer son organisation avec la rigueur qu'attendent ses membres et ses <span class="serif">bailleurs</span>.`,
       lead: "Gouvernance, programmes, finances, logistique, personnel et suivi-évaluation réunis dans une seule application, avec un espace de travail pour chaque rôle.",
@@ -592,11 +592,11 @@ const OUTILS = [
       ouvrir: "Ouvrir ASBL Manager",
       atouts: "Tout le fonctionnement d'une organisation, sans double saisie",
       fonctions: [
-        ["Gouvernance et membres", "Adhésions, cotisations, assemblées et conseil, vote à distance par lien WhatsApp, procès-verbaux, auto-évaluation des organes."],
+        ["Gouvernance et membres", "Adhésions, cotisations, assemblées et conseil, vote à distance, procès-verbaux ; statuts, règlement intérieur et manuel de procédures rédigés à partir de vos réglages."],
         ["Plan de travail (PTBA)", "Activités rattachées au cadre de résultats, termes de référence, fiches d'activité et avancement."],
-        ["Finances et comptabilité", "Dépenses signées selon le montant, fonds à justifier, trésorerie en francs et en dollars, états financiers complets."],
+        ["Finances et comptabilité", "Dépenses signées selon le montant, fonds à justifier, trésorerie en francs et en dollars, comptabilité d'engagement et analytique, états financiers complets."],
         ["Projets et bailleurs", "Règles de chaque bailleur contrôlées à chaque dépense, demandes de tranche, réallocations, dossier d'audit prêt, clôture de projet."],
-        ["Logistique et personnel", "Achats, marchés et stocks ; recrutement, contrats, présences, feuilles de temps, paie et évaluations."],
+        ["Logistique et personnel", "Achats, marchés et stocks ; recrutement, contrats, présences, paie et évaluations ; certificats de service rendu et de bonne exécution."],
         ["Suivi-évaluation et rapports", "Cadre logique, indicateurs ventilés par sexe, import Kobo, rapports narratifs mis en page, plaintes ; un assistant IA pour rédiger et repérer les appels à financement."]
       ],
       phasesTitre: "Le circuit d'une dépense",
@@ -604,7 +604,7 @@ const OUTILS = [
       pour: ["ASBL et associations", "ONG", "Entreprises sociales (SARL)", "Projets financés par des bailleurs"],
       accesTitre: "Démarrer en trois étapes",
       acces: [
-        ["Créez votre compte", "Avec votre adresse e-mail et un mot de passe personnel."],
+        ["Créez votre compte", "Avec votre adresse e-mail, en choisissant l'offre avec ou sans formation."],
         ["Enregistrez votre organisation", "Nom, forme juridique, exercice et devise. Ou ouvrez d'abord l'organisation de démonstration."],
         ["Invitez votre équipe", "Chaque collaborateur reçoit un rôle et retrouve aussitôt son espace de travail."]
       ],
