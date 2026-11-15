@@ -540,11 +540,13 @@ function pagePole(id) {
   const P = pole(id); if (!P) return notFound();
   const outilsLies = (P.outils || []).map(outil).filter(Boolean);
   const enLigne = outilsLies.filter(o => o.statut === "en-ligne");
+  /* la grille des outils ne renvoie pas vers la page elle-même (l'Académie s'ouvre déjà depuis l'en-tête) */
+  const cartesOutils = outilsLies.filter(o => lienOutil(o) !== P.chemin);
   const reals = DATA.realisations.filter(r => r.pole === P.id);
   return pageHead({
     eyebrow: esc(P.nom), title: P.titre, lead: esc(P.lead), crumbs: [["Nos pôles", "/#poles"], [esc(P.nom)]], photo: P.photo,
     extra: `<div class="btn-row"><a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent(P.nom)}">Parler de votre projet ${ICON.arrow}</a>
-      ${P.boite ? `<a class="btn btn-glass" href="#boite" data-scroll="boite">La boîte à outils</a>` : ""}
+      ${P.boite && P.boite.statut === "disponible" ? `<a class="btn btn-glass" href="#boite" data-scroll="boite">La boîte à outils</a>` : ""}
       ${enLigne.filter(o => o.pole === P.id && (o.fiche || lienOutil(o) === P.chemin)).map(o => lienOutil(o) === P.chemin ? `<a class="btn btn-glass" href="${o.url}" target="_blank" rel="noopener">Ouvrir ${esc(o.nom)} ${ICON.ext}</a>` : "").join("")}</div>
       <span class="sub-chip">${esc(P.sousDomaine)}</span>`
   }) + `
@@ -615,8 +617,8 @@ function pagePole(id) {
   </div></section>` : ""}
 
   <section><div class="wrap">
-    ${outilsLies.length ? `${secHead("Outils et publics", `Les outils du pôle ${esc(P.nom)}`)}
-    <div class="tools">${outilsLies.map(o => outilCard(o, true)).join("")}</div>` : secHead("Nos publics", "Avec qui nous travaillons")}
+    ${cartesOutils.length ? `${secHead("Outils et publics", `Les outils du pôle ${esc(P.nom)}`)}
+    <div class="tools">${cartesOutils.map(o => outilCard(o, true)).join("")}</div>` : secHead("Nos publics", "Avec qui nous travaillons")}
     <div class="publics"><b>Pour qui</b>${P.publics.map(x => `<span>${esc(x)}</span>`).join("")}</div>
   </div></section>
 
@@ -1059,7 +1061,6 @@ function pageConditions() {
     <p>Les envois sont limités pour protéger le service ; au-delà, un message vous invite à patienter.</p>
     <h2>Informations publiées</h2><p>Nous veillons à l'exactitude des informations, qui restent générales. Elles ne remplacent pas un conseil financier, juridique ou fiscal adapté à votre situation. Les exemples marqués comme tels sont des démonstrations.</p>
     <h2>Disponibilité et responsabilité</h2><p>Nous faisons de notre mieux pour que le site reste disponible et sûr, sans pouvoir garantir l'absence de toute interruption. Ubora n'est pas responsable du contenu des sites extérieurs vers lesquels le site renvoie.</p>
-    <h2>Données personnelles</h2><p>Voir la page <a href="/confidentialite">Confidentialité et cookies</a>.</p>
     <h2>Droit applicable</h2><p>Ces conditions relèvent du droit de la République démocratique du Congo. En cas de désaccord, nous cherchons d'abord une solution amiable ; à défaut, les juridictions compétentes du ressort du siège d'Ubora sont saisies.</p>
     ${piedLegal()}
   </div></section>`;

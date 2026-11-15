@@ -61,7 +61,7 @@ const DIRIGEANT = {
 /* ---------- La méthode Ubora (page « Notre approche ») ---------- */
 const METHODE = {
   nom: "La méthode Ubora",
-  intro: "Trop de projets forment, puis partent. Trop de logiciels sont oubliés six mois plus tard. Notre méthode tient en six temps, et nous restons jusqu'à ce que les résultats tiennent.",
+  intro: "Trop de projets forment puis partent ; trop de logiciels sont oubliés six mois plus tard. Notre méthode tient en six temps, et nous restons jusqu'à ce que les résultats tiennent.",
   /* pour chaque temps : ce qu'il donne pour un groupe d'épargne, un entrepreneur et une coopérative, dans cet ordre */
   publics: ["Groupe d'épargne", "Entrepreneur", "Coopérative"],
   etapes: [
@@ -283,7 +283,7 @@ const POLES = [
     ],
     intermediation: {
       titre: "Le lien entre ceux qui financent et les groupes d'épargne",
-      intro: "Une banque ne peut pas étudier des centaines de petits dossiers éloignés ; un groupe ne sait pas à quelle porte frapper. Ubora Fin fait le lien, sans prêter elle-même.",
+      intro: "Une banque ne peut pas étudier des centaines de petits dossiers éloignés. Ubora Fin fait le lien, sans prêter elle-même.",
       etapes: [
         ["Mobiliser","Lignes de crédit d'IMF et de banques, capitaux d'impact, fonds de garantie de bailleurs."],
         ["Orienter vers les groupes","Au groupe, pas à chaque membre, par paliers, selon l'historique tenu dans AKIBA."],
