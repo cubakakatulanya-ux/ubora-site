@@ -209,7 +209,7 @@ function plusBtn(label) {
 function parcoursList(list) {
   const long = list.length > 4;
   return `<ol class="parcours${long ? " replie" : ""}">${list.map(([t, x, r], k) => `<li class="reveal"><span class="pn">${String(k + 1).padStart(2, "0")}</span>
-    <div><h3>${esc(t)}</h3><p>${esc(x)}</p><p class="resultat">${esc(r)}</p></div></li>`).join("")}</ol>${long ? plusBtn(`Voir toute la démarche (${list.length} étapes)`) : ""}`;
+    <div><h3>${esc(t)}</h3><p>${esc(x)}</p></div></li>`).join("")}</ol>${long ? plusBtn(`Voir toute la démarche (${list.length} étapes)`) : ""}`;
 }
 function boiteOutils(b, sujet) {
   if (!b) return "";
@@ -217,7 +217,7 @@ function boiteOutils(b, sujet) {
   return `<section class="band" id="boite"><div class="wrap">
     ${secHead(dispo ? "Boîte à outils" : "Bientôt disponible", esc(b.titre), esc(b.intro))}
     ${dispo ? (() => {
-      const item = ([t, x], i) => `<li><span class="bn">${String(i + 1).padStart(2, "0")}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`;
+      const item = ([t], i) => `<li><span class="bn">${String(i + 1).padStart(2, "0")}</span><div><b>${esc(t)}</b></div></li>`;
       const reste = b.outils.slice(6);
       return `<ol class="boite">${b.outils.slice(0, 6).map(item).join("")}</ol>`
         + (reste.length ? `<details class="boite-plus"><summary>Voir les ${reste.length} autres documents</summary><ol class="boite">${reste.map((o, i) => item(o, i + 6)).join("")}</ol></details>` : "");
@@ -573,16 +573,16 @@ function pagePole(id) {
 
   ${P.chaine ? `<section id="chaine"><div class="wrap">
     ${secHead("Chaîne de valeur", esc(P.chaine.titre), esc(P.chaine.intro))}
-    <ol class="chaine">${P.chaine.maillons.map(([t, x, r], i) => `<li class="reveal"><span class="pn">${String(i + 1).padStart(2, "0")}</span><h3>${esc(t)}</h3><p>${esc(x)}</p><p class="resultat">${esc(r)}</p></li>`).join("")}</ol>
+    <ol class="chaine">${P.chaine.maillons.map(([t, x, r], i) => `<li class="reveal"><span class="pn">${String(i + 1).padStart(2, "0")}</span><h3>${esc(t)}</h3><p>${esc(x)}</p></li>`).join("")}</ol>
   </div></section>` : ""}
 
   <section${(P.programmes || P.entrees) && !P.chaine ? "" : ' class="band"'}><div class="wrap">
-    ${secHead("Notre démarche", "Étape par étape", "Chaque étape produit un résultat concret avant la suivante.")}
+    ${secHead("Notre démarche", "Étape par étape")}
     ${parcoursList(P.parcours)}
   </div></section>
 
   ${P.avec ? `<section class="band"><div class="wrap">
-    ${secHead("Vers le crédit", `Transformer la discipline d'un groupe en <span class="serif">accès au crédit</span>`, "Trois ans d'épargne restent invisibles pour une banque tant que rien ne les prouve. Nous rendons cette régularité lisible.")}
+    ${secHead("Vers le crédit", `Transformer la discipline d'un groupe en <span class="serif">accès au crédit</span>`)}
     <ol class="bridge">${AVEC.passerelle.map(([t, x], i) => `<li><span class="bn">${i + 1}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`).join("")}</ol>
     <p class="suite"><a class="link" href="/financement#intermediation">Comment Ubora Fin mobilise le capital pour les groupes ${ICON.arrow}</a></p>
   </div></section>` : ""}
