@@ -473,25 +473,24 @@ function teamBand(surPageEquipe) {
 
 function pageAbout() {
   return pageHead({ eyebrow: "Qui sommes-nous", title: `Une entreprise sociale, pour que l'effort des familles <span class="serif">porte ses fruits</span>.`, crumbs: [["Qui sommes-nous"]], photo: ["terrain", "Une communauté réunie en plein air"],
-    lead: "Ubora veut dire « excellence » en swahili. Une exigence, parce que ceux que nous accompagnons n'ont pas droit à l'erreur : une mauvaise récolte ou la chute du franc peuvent effacer des années d'efforts." }) + `
+    lead: "Ubora veut dire « excellence » en swahili : c'est ce que nous devons à ceux que nous accompagnons, qui n'ont pas droit à l'erreur." }) + `
   <section><div class="wrap two">
     <div><span class="eyebrow">Mission</span>
       <p class="quote">Aider les entreprises et les communautés congolaises à tenir face aux chocs, puis à grandir.</p></div>
     <div class="prose-sm">
-      <p>La plupart des entreprises du pays restent informelles, sans outils de gestion et loin du crédit : au moindre choc, elles perdent ce qu'elles ont construit.</p>
-      <p>Nous renforçons ce qui les rend solides : une organisation claire, l'épargne et le crédit, des compétences, et des outils faits pour le réseau instable et les deux monnaies.</p>
+      <p>La plupart des entreprises du pays restent informelles et loin du crédit : au moindre choc, elles perdent ce qu'elles ont construit. Nous renforçons ce qui les rend solides : l'organisation, l'épargne, le crédit, les compétences et des outils adaptés au terrain.</p>
     </div>
   </div></section>
 
   <section class="band" id="modele"><div class="wrap">
-    ${secHead("Notre modèle", `Pourquoi nous avons choisi d'être une <span class="serif">entreprise sociale</span>`, "Les projets de deux ou trois ans s'arrêtent quand les bénéficiaires commencent à progresser. Nous voulions pouvoir rester.")}
+    ${secHead("Notre modèle", `Pourquoi nous avons choisi d'être une <span class="serif">entreprise sociale</span>`, "Un projet de deux ou trois ans s'arrête quand les progrès commencent. Nous voulions pouvoir rester.")}
     <div class="grid-4">
-      <div class="fcard"><span class="ic">${ICON.briefcase}</span><h3>Qui paie</h3><p>ONG, bailleurs, institutions financières, incubateurs et programmes qui nous confient des missions.</p></div>
-      <div class="fcard"><span class="ic">${ICON.heart}</span><h3>Qui en bénéficie</h3><p>Groupes d'épargne, jeunes et femmes entrepreneurs, producteurs ruraux, à tarif solidaire.</p></div>
-      <div class="fcard"><span class="ic">${ICON.coins}</span><h3>Ce que nous mobilisons</h3><p>Par Ubora Fin, le capital des financeurs au profit des groupes que nous accompagnons. Ubora Fin ne prête pas.</p></div>
-      <div class="fcard"><span class="ic">${ICON.spark}</span><h3>Ce que nous réinvestissons</h3><p>Nos outils, la formation de relais locaux, et le suivi sur le terrain quand le projet d'un partenaire s'achève.</p></div>
+      <div class="fcard"><span class="ic">${ICON.briefcase}</span><h3>Qui paie</h3><p>Les organisations qui nous confient des missions : ONG, bailleurs, institutions financières, programmes.</p></div>
+      <div class="fcard"><span class="ic">${ICON.heart}</span><h3>Qui en bénéficie</h3><p>Groupes d'épargne, jeunes, femmes et producteurs ruraux, à tarif solidaire.</p></div>
+      <div class="fcard"><span class="ic">${ICON.coins}</span><h3>Ce que nous mobilisons</h3><p>Par Ubora Fin, le capital des financeurs pour les groupes accompagnés. Ubora Fin ne prête pas.</p></div>
+      <div class="fcard"><span class="ic">${ICON.spark}</span><h3>Ce que nous réinvestissons</h3><p>Nos outils, les relais locaux et le suivi après la fin des projets.</p></div>
     </div>
-    <p class="note">Être rentables n'est pas une fin en soi. C'est ce qui nous permet d'être encore là au cycle suivant. Pour les projets financés par des dons et des subventions, une association distincte, <a class="link" href="/ong">UBORA</a>, porte les actions.</p>
+    <p class="note">La rentabilité n'est pas une fin : elle nous permet de rester. Les projets financés par des dons passent par notre association, <a class="link" href="/ong">UBORA</a>.</p>
   </div></section>
 
   <section><div class="wrap">

@@ -734,15 +734,15 @@ const CATALOGUE = [
 
 /* ---------- Questions fréquentes ---------- */
 const FAQ = [
-  ["Qui peut travailler avec Ubora ?", "Les groupes d'épargne, les entrepreneurs et les PME, les coopératives et les organisations paysannes, les petites institutions financières, ainsi que les ONG, les incubateurs et les bailleurs qui accompagnent ces publics."],
+  ["Qui peut travailler avec Ubora ?", "Les groupes d'épargne, les entrepreneurs, les coopératives et les institutions financières, ainsi que les ONG, les incubateurs et les bailleurs qui les accompagnent."],
   ["Où intervenez-vous ?", "Dans toute la RDC, sur place ou à distance."],
-  ["Vos outils fonctionnent-ils sans internet ?", "Oui. AKIBA fonctionne entièrement sans réseau ; dès que le réseau revient, le groupe envoie ses données à l'animateur et à l'organisation, et l'application se met à jour d'elle-même. Ubora Hub fonctionne aussi hors connexion, les cours téléchargés de l'Académie se suivent sans réseau, et le générateur de business plan reste utilisable une fois ouvert."],
-  ["Proposez-vous des formations sur vos outils ?", "Oui. Chaque déploiement comprend une formation de prise en main, puis un suivi. Notre Académie en ligne, academie.uborardc.com, propose aussi plus de 140 cours avec certificat. Nous organisons également des sessions sur demande, dans votre province ou en ligne."],
-  ["Faut-il être une entreprise déclarée pour être accompagné ?", "Non. Nous accompagnons justement beaucoup d'entrepreneurs et de groupements vers la formalisation, étape par étape."],
-  ["Que devient l'accompagnement quand le projet d'une ONG se termine ?", "Nous restons. Les groupes, les entrepreneurs et les coopératives continuent d'être suivis après la clôture du projet. Notre modèle économique finance une partie de ces activités de terrain, et les outils mis en place restent en service."],
-  ["Ubora peut-elle financer notre groupe d'épargne ?", "Ubora ne prête pas elle-même. Par Ubora Fin, nous mobilisons le capital d'institutions financières, d'investisseurs et de bailleurs au profit des AVEC que nous accompagnons, et nous présentons le groupe à une IMF, une COOPEC ou une banque partenaire. Le groupe obtient ainsi un fonds de roulement, en plus de l'épargne de ses membres."],
-  ["Que fait Ubora pour l'environnement ?", "Par Ubora Vert, nous accompagnons les communautés, les coopératives et les PME dans le reboisement, le recyclage et la valorisation des déchets, l'agroécologie et l'énergie propre. Notre principe : une action pour l'environnement dure quand elle crée des revenus pour ceux qui la portent."],
-  ["Combien coûte l'accompagnement ?", "Cela dépend du programme et du nombre de bénéficiaires. Les prestations facturées aux organisations nous permettent de proposer des tarifs solidaires aux groupes d'épargne et aux micro-entrepreneurs. Contactez-nous pour en parler."]
+  ["Vos outils fonctionnent-ils sans internet ?", "Oui. AKIBA, Ubora Hub, les cours téléchargés de l'Académie et le générateur de business plan restent utilisables sans réseau ; les données partent dès que la connexion revient."],
+  ["Proposez-vous des formations sur vos outils ?", "Oui. Chaque outil s'accompagne d'une formation et d'un suivi. L'Académie propose aussi plus de 140 cours en ligne avec certificat."],
+  ["Faut-il être une entreprise déclarée pour être accompagné ?", "Non. Nous accompagnons aussi les entrepreneurs et les groupements vers la formalisation."],
+  ["Que devient l'accompagnement quand le projet d'une ONG se termine ?", "Nous restons : le suivi continue après la clôture, financé en partie par nos propres revenus, et les outils restent en service."],
+  ["Ubora peut-elle financer notre groupe d'épargne ?", "Ubora ne prête pas. Par Ubora Fin, nous mobilisons le capital d'institutions financières, d'investisseurs et de bailleurs, et nous présentons le groupe à une IMF, une COOPEC ou une banque."],
+  ["Que fait Ubora pour l'environnement ?", "Par Ubora Vert : reboisement, recyclage, agroécologie et énergie propre, avec des revenus pour ceux qui les portent."],
+  ["Combien coûte l'accompagnement ?", "Cela dépend du programme et du nombre de bénéficiaires. Les prestations aux organisations financent des tarifs solidaires pour les groupes et les micro-entrepreneurs."]
 ];
 
 /* Contenus gérés depuis l'espace équipe (base de données).
