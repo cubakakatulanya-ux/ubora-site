@@ -687,16 +687,16 @@ function pageOutil(o) {
 
 function pageConseil() {
   return pageHead({ eyebrow: "Projets et conseil", title: `Vos programmes méritent de durer plus longtemps que leur <span class="serif">financement</span>.`, crumbs: [["Projets et conseil"]],
-    lead: "Commencez par un projet pilote : nous le cadrons avec vous, le mettons en œuvre sur le terrain, et vous suivez les résultats en direct. Puis nous restons quand le financement s'arrête.",
+    lead: "Commencez par un projet pilote : nous le cadrons avec vous, le mettons en œuvre et vous suivez les résultats en direct.",
     extra: `<div class="btn-row"><a class="btn btn-accent" href="#pilote" data-scroll="pilote">Comment se passe un pilote ${ICON.arrow}</a><a class="btn btn-glass" href="/contact?sujet=${encodeURIComponent("Conseil et programmes")}">Parlons de votre projet</a></div>` }) + `
   <section id="pilote"><div class="wrap">
-    ${secHead("Projet pilote", `Commencer petit, mesurer, puis <span class="serif">décider</span>`, "Pour un bailleur ou une ONG qui ne nous connaît pas encore, c'est la façon la plus sûre de commencer. Selon votre mode de financement, le pilote est confié à l'Entreprise Sociale Ubora (contrat de prestation) ou à l'association UBORA (subvention).")}
-    <ol class="chaine quatre">${PILOTE.temps.map(([t, x, r], i) => `<li class="reveal"><span class="pn">${String(i + 1).padStart(2, "0")}</span><h3>${esc(t)}</h3><p>${esc(x)}</p><p class="resultat">${esc(r)}</p></li>`).join("")}</ol>
+    ${secHead("Projet pilote", `Commencer petit, mesurer, puis <span class="serif">décider</span>`, "La façon la plus sûre de commencer avec nous. Le pilote est confié à l'entreprise sociale (prestation) ou à l'association UBORA (subvention).")}
+    <ol class="chaine quatre">${PILOTE.temps.map(([t, x, r], i) => `<li class="reveal"><span class="pn">${String(i + 1).padStart(2, "0")}</span><h3>${esc(t)}</h3><p>${esc(x)}</p></li>`).join("")}</ol>
     <h3 class="sous-titre">Exemples de pilotes</h3>
     <div class="grid-3 pilotes">${PILOTE.exemples.map(([id, t, x, m]) => { const p = poleReal(id); return `<div class="fcard" style="--c:${p.couleur}"><span class="tag" style="background:${p.couleur};color:#fff">${esc(p.nom)}</span><h3>${esc(t)}</h3><p class="mesure"><b>À mesurer</b> ${esc(m)}</p></div>`; }).join("")}</div>
   </div></section>
   <section class="band" id="verifier"><div class="wrap">
-    ${secHead("Avant de signer", `Vérifiez par <span class="serif">vous-même</span>`, "Une jeune entreprise doit montrer ce qu'elle sait faire. Voici ce que vous pouvez contrôler sans nous croire sur parole.")}
+    ${secHead("Avant de signer", `Vérifiez par <span class="serif">vous-même</span>`, "Ce que vous pouvez contrôler sans nous croire sur parole.")}
     <div class="grid-4">${[
       [ICON.check, "Essayez nos outils", "AKIBA et ASBL Manager ont une démonstration libre ; l'Académie compte plus de 140 cours.", "/outils", "Voir les outils"],
       [ICON.doc, "Lisez notre méthode", "Six temps, toujours dans le même ordre, pour chaque public.", "/approche", "Lire la méthode"],
@@ -874,7 +874,7 @@ function pageCareers(openId) {
 function pageOng() {
   const sujet = "/contact?sujet=" + encodeURIComponent("UBORA, l'association");
   return pageHead({ eyebrow: "UBORA · association à vocation d'ONG", title: `L'association UBORA, au service des <span class="serif">communautés</span>.`, crumbs: [["Qui sommes-nous", "/a-propos"], ["L'association UBORA"]], photo: ["terrain", "Une communauté réunie en plein air"],
-    lead: "UBORA est l'association sans but lucratif de l'écosystème Ubora. Elle conduit des projets communautaires financés par des dons et des subventions, au service des femmes, des jeunes et des populations vulnérables.",
+    lead: "L'association sans but lucratif de l'écosystème Ubora : des projets communautaires financés par des dons et des subventions, pour les femmes, les jeunes et les plus vulnérables.",
     extra: `<div class="btn-row"><a class="btn btn-accent" href="${sujet}">Financer un projet de l'association ${ICON.arrow}</a><a class="btn btn-glass" href="#lien" data-scroll="lien">L'association et l'entreprise sociale</a></div><span class="sub-chip">ong.uborardc.com</span>` }) + `
   <section><div class="wrap two">
     <div><span class="eyebrow">Vision</span><p class="quote">${esc(ONG.vision)}</p></div>
@@ -882,12 +882,12 @@ function pageOng() {
       <div class="publics"><b>Valeurs</b>${ONG.valeurs.map(v => `<span>${esc(v)}</span>`).join("")}</div></div>
   </div></section>
   <section class="band"><div class="wrap">
-    ${secHead("Secteurs d'intervention", `Ce que fait <span class="serif">l'association</span>`, "Partout en RDC, en priorité dans le Haut-Katanga : études, formation, sensibilisation, accompagnement et mise en œuvre de projets, seule ou en partenariat.")}
+    ${secHead("Secteurs d'intervention", `Ce que fait <span class="serif">l'association</span>`, "Études, formation, sensibilisation et mise en œuvre de projets, partout en RDC, seule ou en partenariat.")}
     <div class="grid-4">${ONG.secteurs.map(([id, t, x]) => { const p = id && pole(id); return `<div class="fcard"${p ? ` style="--c:${p.couleur}"` : ""}><h3>${esc(t)}</h3>${p ? `<a class="link" href="${p.chemin}">${esc(p.nom)} ${ICON.arrow}</a>` : ""}</div>`; }).join("")}</div>
     <div class="publics"><b>Pour qui</b>${ONG.beneficiaires.map(x => `<span>${esc(x)}</span>`).join("")}</div>
   </div></section>
   <section><div class="wrap">
-    ${secHead("Gouvernance", `Des organes qui se <span class="serif">contrôlent</span>`, "Une gouvernance démocratique, une gestion transparente, et des comptes rendus aux membres, aux bénéficiaires et aux partenaires.")}
+    ${secHead("Gouvernance", `Des organes qui se <span class="serif">contrôlent</span>`, )}
     <div class="grid-4">${ONG.organes.map(([t, x]) => `<div class="fcard"><h3>${esc(t)}</h3><p>${esc(x)}</p></div>`).join("")}</div>
     <ul class="checks cols engagements">${ONG.engagements.map(x => `<li>${esc(x)}</li>`).join("")}</ul>
     <p class="suite muted">Président du conseil d'administration : ${esc(DIRIGEANT.nom)}.</p>
@@ -897,7 +897,6 @@ function pageOng() {
     <div class="grid-2">${ONG.lien.map(([t, x]) => `<div class="fcard"><h3>${esc(t)}</h3><p>${esc(x)}</p></div>`).join("")}</div>
     <h3 class="sous-titre">Ensemble</h3>
     <ol class="relais-temps complements">${ONG.complementarite.map(([t, x], i) => `<li><span class="bn">${i + 1}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`).join("")}</ol>
-    <p class="note">${esc(ONG.lienNote)}</p>
   </div></section>
   <section class="tight-top"><div class="wrap"><div class="deep final">
     <span class="eyebrow">Agir avec l'association</span>
