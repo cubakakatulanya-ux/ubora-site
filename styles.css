@@ -2295,3 +2295,8 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
 /* cartes d'outils de la page Nos outils et des pôles : la même image en tête */
 .tool.avec-img { overflow: hidden; padding-top: 0; }
 .tool.avec-img .solution-img { width: calc(100% + 40px); max-width: none; margin: 0 -20px 6px; }
+
+/* Pied de page réduit à l'essentiel (15 novembre 2026) : marque, coordonnées, liens légaux ; le menu du haut porte la navigation */
+.site-footer .foot-grid { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 22px 48px; }
+@media (max-width: 640px) { .site-footer .foot-grid { grid-template-columns: minmax(0, 1fr); } }
+.site-footer .foot-social { justify-content: flex-start; }

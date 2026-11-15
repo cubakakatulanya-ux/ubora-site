@@ -347,8 +347,7 @@ function footerHTML() {
   const tel = CONFIG.telephone.replace(/\s/g, "");
   return `<div class="wrap">
     <div class="foot-social">
-      <p><b>Ubora est une entreprise à caractère social.</b> Nos excédents sont réinvestis dans nos outils, dans la formation de relais locaux et dans notre présence sur le terrain.</p>
-      <a class="btn btn-accent btn-sm" href="/soutenir">Soutenir nos actions ${ICON.arrow}</a>
+      <p><b>Ubora est une entreprise à caractère social.</b> Nos excédents sont réinvestis dans nos outils, la formation de relais locaux et notre présence sur le terrain.</p>
     </div>
     <div class="foot-news">
       <div class="foot-news-txt"><b>Nouvelles du terrain</b><span>Recevez nos nouvelles par e-mail.</span></div>
@@ -363,8 +362,6 @@ function footerHTML() {
         <a class="brand" href="/"><img class="logo-img" src="/logo-ubora.png" alt="" width="56" height="56" loading="lazy"><span class="brand-txt"><span class="brand-name">Ub<b>o</b>ra</span><span class="brand-sub">Entreprise sociale</span></span></a>
         <p class="foot-accroche">Partout en RDC, sur le terrain et à distance.</p>
       </div>
-      <nav aria-label="Nos pôles"><h4>Nos pôles</h4><ul class="deux">${POLES.map(p => `<li><a class="foot-pole" href="${p.chemin}" style="--c:${p.couleur}">${esc(p.nom)}</a></li>`).join("")}</ul></nav>
-      <nav aria-label="Ubora"><h4>Ubora</h4><ul class="deux"><li><a href="/a-propos">Qui sommes-nous</a></li><li><a href="/ong">L'association UBORA</a></li><li><a href="/equipe">Notre équipe</a></li><li><a href="/approche">Notre approche</a></li><li><a href="/conseil">Projets et conseil</a></li><li><a href="/outils">Outils numériques</a></li><li><a href="/formations">Formations</a></li>${DATA.realisations.length ? `<li><a href="/realisations">Nos réalisations</a></li>` : ""}${allNews().length ? `<li><a href="/actualites">Actualités</a></li>` : ""}<li><a href="/carrieres">Carrières</a></li></ul></nav>
       <div class="foot-contact"><h4>Nous joindre</h4><ul>
         <li><span class="ic">${ICON.phone}</span><a href="tel:${tel}">${esc(CONFIG.telephone)}</a></li>
         <li><span class="ic">${ICON.mail}</span><a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a></li>
