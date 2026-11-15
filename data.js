@@ -33,7 +33,8 @@ const TICKER_MESSAGES = [
   ["Nouveau : Akiba Suivi, l'application des animateurs et des organisations qui suivent des AVEC", "/outils/akiba#acces"],
   ["En vidéo : AKIBA, le cahier de l'AVEC dans le téléphone, en trois minutes", "/outils/akiba#video"],
   ["En vidéo : Ubora Hub, de l'idée à l'entreprise, en quatre minutes", "/outils/hub#video"],
-  ["L'association UBORA porte les projets financés par des dons et des subventions", "/ong"]
+  ["L'association UBORA porte les projets financés par des dons et des subventions", "/ong"],
+  ["En construction : Ubora AgroLab, CoopMart, Ubora Coop et Biashara", "/#solutions"]
 ];
 
 /* ---------- Le Directeur Gérant (page « Notre équipe ») ----------
@@ -175,7 +176,7 @@ const POLES = [
       ["Financer","Plan d'affaires avec notre générateur, dossier de crédit, rencontre des financeurs.","Des rendez-vous obtenus."],
       ["Suivre","Un point par mois après le programme, un appui à distance.","Une entreprise qui tient seule."]
     ],
-    outils: ["bp", "hub"],
+    outils: ["bp", "hub", "biashara"],
     publics: ["Porteurs de projet", "Jeunes entreprises", "PME en croissance", "Incubateurs et programmes partenaires"],
     boite: {
       statut: "bientot",
@@ -232,7 +233,7 @@ const POLES = [
       ["Gérer et vendre","Registres, collecte, stocks, comptes, ventes groupées.","Des comptes vérifiables, un meilleur prix."],
       ["Payer et suivre","Décomptes par producteur, mobile money, appui aux assemblées.","Une coopérative autonome au bout d'une campagne."]
     ],
-    outils: ["logiciel-coop"],
+    outils: ["logiciel-coop", "plateforme-market"],
     publics: ["Organisations paysannes", "Groupements de producteurs", "Coopératives agricoles", "Unions de coopératives", "ONG et programmes agricoles"],
     boite: {
       statut: "bientot",
@@ -446,7 +447,7 @@ const POLES = [
       ["Certifier","Quiz chronométrés, test final, certificat à code QR.","Des compétences prouvées."],
       ["Former les formateurs","Parcours formateur, micro-enseignement, plan de progrès.","Des relais qui forment à leur tour."]
     ],
-    outils: ["academie"],
+    outils: ["academie", "agrolab"],
     publics: ["Membres et bureaux d'AVEC", "Animateurs et agents de terrain", "Entrepreneurs et coopératives", "Formateurs relais", "ONG, programmes et institutions"]
   }
 ];
@@ -619,13 +620,27 @@ const OUTILS = [
   },
   {
     id: "logiciel-coop", nom: "Ubora Coop, le logiciel", pole: "cooperatives", statut: "en-cours", mock: "coop", couleur: "#3E7A1F", initiales: "Co",
+    court: "La gestion des coopératives agricoles, même hors connexion",
     resume: "La gestion des organisations paysannes, du groupement à la coopérative et à l'union : membres et parcelles, collecte, stocks, ventes, finances, crédits et gouvernance, même hors connexion.",
     points: ["Groupement, association, SCOOPS, COOP-CA ou union", "Membres, parcelles géolocalisées et capital social", "Collecte, reçus et paiement des livraisons", "Stocks, ventes groupées, finances en francs et en dollars", "Assemblées, organes et registre des décisions", "Contrôle interne et repérage des anomalies"]
   },
   {
-    id: "plateforme-market", nom: "Ubora Market, la plateforme", pole: "marche", statut: "en-cours", mock: "market", couleur: "#1F7A6B", initiales: "Mk",
-    resume: "Une place de marché où les vendeurs accompagnés publient leur offre et où les acheteurs trouvent des fournisseurs vérifiés.",
-    points: ["Offres des vendeurs vérifiés", "Recherche par produit et par zone", "Historique des livraisons", "Mise en relation encadrée"]
+    id: "plateforme-market", nom: "CoopMart", pole: "marche", statut: "en-cours", mock: "market", couleur: "#1F7A6B", initiales: "Cm",
+    court: "La vitrine en ligne des produits des coopératives",
+    resume: "La vitrine en ligne des produits agricoles des coopératives : catalogue, commandes et demandes d'achat, boutique de chaque coopérative, suivi par code et alertes WhatsApp.",
+    points: ["Catalogue des produits des coopératives", "Commandes et demandes d'achat", "Une boutique par coopérative", "Suivi par code et alertes WhatsApp"]
+  },
+  {
+    id: "agrolab", nom: "Ubora AgroLab", pole: "academie", statut: "en-cours", couleur: "#6A7F1A", initiales: "Al",
+    court: "Le simulateur pour apprendre les métiers agroalimentaires en fabriquant",
+    resume: "Un simulateur immersif en trois dimensions : on apprend à transformer le manioc, le maïs, l'arachide ou les fruits en fabriquant, étape par étape, guidé par une voix en français.",
+    points: ["Ateliers de transformation agroalimentaire en 3D", "Manioc, maïs, arachide, mangue, ananas", "Guidage à la voix, en français", "Pensé pour le téléphone et les connexions faibles"]
+  },
+  {
+    id: "biashara", nom: "Biashara", pole: "pme", statut: "en-cours", couleur: "#8A4B14", initiales: "Bi",
+    court: "La gestion des commerces et des petites entreprises",
+    resume: "La gestion de tous les commerces, même sans internet : ventes, stock, achats, dettes des clients, plusieurs points de vente, caisse en dollars et en francs, Mobile Money.",
+    points: ["34 modèles d'activités prêts à l'emploi", "Ventes, stock, achats et dettes des clients", "Caisse en dollars et en francs, Mobile Money", "Plusieurs points de vente, même sans internet"]
   }
 ];
 

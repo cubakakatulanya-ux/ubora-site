@@ -2300,3 +2300,16 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
 .site-footer .foot-grid { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 22px 48px; }
 @media (max-width: 640px) { .site-footer .foot-grid { grid-template-columns: minmax(0, 1fr); } }
 .site-footer .foot-social { justify-content: flex-start; }
+
+/* Vitrine : solutions en construction (15 novembre 2026) */
+.vitrine-titre { margin: 40px 0 16px; }
+.vitrine-grille.chantier { margin-top: 0; grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 1100px) { .vitrine-grille.chantier { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .vitrine-grille.chantier { grid-template-columns: 1fr; } }
+.solution.bientot { cursor: default; }
+.solution.bientot:hover { transform: none; box-shadow: none; }
+.bientot-img { position: relative; display: flex; align-items: center; justify-content: center; aspect-ratio: 16 / 7; border-bottom: 1px solid var(--line);
+  background: repeating-linear-gradient(135deg, color-mix(in srgb, var(--c) 9%, transparent) 0 12px, transparent 12px 24px), color-mix(in srgb, var(--c) 6%, var(--surface)); }
+.bientot-img .mk { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 12px; background: var(--c); color: #fff; font-weight: 500; font-size: 19px; }
+.bientot-img .status { position: absolute; top: 10px; right: 10px; }
+.solution-txt > .solution-pole { margin-top: 6px; font-size: 12.5px; letter-spacing: .04em; text-transform: uppercase; }

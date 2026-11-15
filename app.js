@@ -152,7 +152,7 @@ function secHead(eyebrow, title, lead, action) {
   return `<div class="sec-head${action ? " split" : ""}"><div><span class="eyebrow">${eyebrow}</span><h2>${title}</h2>${lead ? `<p class="lead">${lead}</p>` : ""}</div>${action || ""}</div>`;
 }
 function statut(o) {
-  return o.statut === "en-ligne" ? `<span class="status st-live">En ligne</span>` : `<span class="status st-soon">En préparation</span>`;
+  return o.statut === "en-ligne" ? `<span class="status st-live">En ligne</span>` : `<span class="status st-soon">En construction</span>`;
 }
 function poleCard(p, feature, compact) {
   const img = !compact && p.photo;
@@ -169,6 +169,8 @@ function poleCard(p, feature, compact) {
 }
 /* Solutions en ligne présentées avec l'écran réel de leur page d'accueil (img/solutions, capturé le 15 novembre 2026) */
 const VITRINE = ["akiba", "akiba-suivi", "hub", "bp", "academie", "asbl"];
+/* solutions en construction : une place dans la vitrine, sans lien vers une application qui n'est pas encore ouverte */
+const CHANTIER = ["agrolab", "logiciel-coop", "plateforme-market", "biashara"];
 const banniere = (o, sizes) => VITRINE.includes(o.id) && o.statut === "en-ligne"
   ? `<img class="solution-img" src="/img/solutions/${o.id}-480.webp" srcset="/img/solutions/${o.id}-480.webp 480w, /img/solutions/${o.id}-960.webp 960w" sizes="${sizes}" width="480" height="300" alt="Page d'accueil de ${esc(o.nom)}" loading="lazy" decoding="async">` : "";
 function vitrine() {
@@ -176,7 +178,7 @@ function vitrine() {
   return `<section id="solutions" class="vitrine">
     <div class="vitrine-banniere"><div class="wrap">
       <span class="eyebrow">Nos solutions numériques</span>
-      <h2>${liste.length} applications en ligne, pensées pour le terrain congolais.</h2>
+      <h2>${liste.length} applications en ligne, d'autres en construction, pensées pour le terrain congolais.</h2>
       <p>Sur téléphone ou sur ordinateur, même avec une connexion faible. Chacune s'accompagne d'une formation.</p>
     </div></div>
     <div class="wrap">
@@ -184,7 +186,12 @@ function vitrine() {
         ${banniere(o, "(max-width: 600px) 100vw, (max-width: 960px) 50vw, 380px")}
         <span class="solution-txt"><b>${esc(o.nom)}</b><span>${esc(o.court || "")}</span><span class="solution-lien">${esc(o.sousDomaine || new URL(o.url).hostname)} ${ICON.ext}</span></span>
       </a>`).join("")}</div>
-      <p class="vitrine-pied"><a class="link" href="/outils">Fiches détaillées et outils en préparation ${ICON.arrow}</a></p>
+      <h3 class="sous-titre vitrine-titre">En construction</h3>
+      <div class="vitrine-grille chantier">${CHANTIER.map(outil).filter(o => o && o.statut !== "en-ligne").map(o => `<article class="solution bientot" style="--c:${o.couleur}">
+        <div class="bientot-img" aria-hidden="true"><span class="mk">${esc(o.initiales)}</span><span class="status st-soon">En construction</span></div>
+        <div class="solution-txt"><b>${esc(o.nom)}</b><span>${esc(o.court || "")}</span><span class="solution-pole">${esc(poleReal(o.pole).nom)}</span></div>
+      </article>`).join("")}</div>
+      <p class="vitrine-pied"><a class="link" href="/outils">Fiches détaillées de tous les outils ${ICON.arrow}</a></p>
     </div>
   </section>`;
 }
@@ -194,7 +201,7 @@ function outilCard(o, court) {
   return `<article class="tool${banniere(o, "") ? " avec-img" : ""}" style="--c:${o.couleur}" data-f="${o.statut} ${o.pole}">
     ${banniere(o, "(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 380px")}
     <div class="pole-top"><span class="mk">${esc(o.initiales)}</span>${statut(o)}</div>
-    <h3><a class="stretch" href="${href}"${ext(href)}>${esc(o.nom)}</a></h3>
+    <h3>${o.statut === "en-ligne" || o.fiche ? `<a class="stretch" href="${href}"${ext(href)}>${esc(o.nom)}</a>` : esc(o.nom)}</h3>
     <p>${esc(court && o.court ? o.court : o.resume)}</p>
     <div class="tool-foot"><span>${pole(o.pole) ? "Pôle " : ""}${esc(p.nom)}</span>${o.sousDomaine ? `<span class="mono">${esc(o.sousDomaine)}</span>` : ""}</div>
   </article>`;
@@ -541,7 +548,7 @@ function pagePole(id) {
   const outilsLies = (P.outils || []).map(outil).filter(Boolean);
   const enLigne = outilsLies.filter(o => o.statut === "en-ligne");
   /* la grille des outils ne renvoie pas vers la page elle-même (l'Académie s'ouvre déjà depuis l'en-tête) */
-  const cartesOutils = outilsLies.filter(o => lienOutil(o) !== P.chemin);
+  const cartesOutils = outilsLies.filter(o => !(o.statut === "en-ligne" && lienOutil(o) === P.chemin));
   const reals = DATA.realisations.filter(r => r.pole === P.id);
   return pageHead({
     eyebrow: esc(P.nom), title: P.titre, lead: esc(P.lead), crumbs: [["Nos pôles", "/#poles"], [esc(P.nom)]], photo: P.photo,
@@ -631,7 +638,7 @@ function pageOutils() {
   return pageHead({ eyebrow: "Nos outils", title: `Des outils qui tiennent là où le réseau <span class="serif">lâche</span>.`, crumbs: [["Nos outils"]],
     lead: "Pensés pour le village sans réseau et pour qui n'a jamais ouvert un tableur. Chacun est livré avec une formation." }) + `
   <section><div class="wrap">
-    ${filtres("Filtrer les outils", [["en-ligne", "En ligne"], ["en-cours", "En préparation"], ...[...new Set(OUTILS.map(o => o.pole))].map(id => [id, poleReal(id).nom])])}
+    ${filtres("Filtrer les outils", [["en-ligne", "En ligne"], ["en-cours", "En construction"], ...[...new Set(OUTILS.map(o => o.pole))].map(id => [id, poleReal(id).nom])])}
     <div class="tools">${OUTILS.map(outilCard).join("")}</div>
   </div></section>
   <section class="tight-top"><div class="wrap">${finalCta()}</div></section>`;
