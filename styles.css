@@ -2268,3 +2268,30 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
 .site-footer .news-note { color: rgba(255, 255, 255, .82); opacity: 1; }
 :root[data-theme="dark"] .menu > li > a.current, :root[data-theme="dark"] .menu > li > .dd-btn.current { color: #0B2418; }
 .ph-tx.out span:last-child { color: #A0541F; }
+
+/* ==========================================================================
+   Vitrine des solutions numériques (15 novembre 2026), à la manière de transforme.cd :
+   une bannière de section sur photo, puis une carte par solution avec son écran réel.
+   ========================================================================== */
+.vitrine { padding: 0 0 56px; }
+.vitrine-banniere { position: relative; isolation: isolate; color: #fff; background: #0E2A1C url("/img/formation-1200.webp") center 35% / cover no-repeat; padding: 64px 0 132px; }
+.vitrine-banniere::before { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(5, 22, 14, .9) 0%, rgba(5, 22, 14, .6) 100%); }
+.vitrine-banniere h2 { color: #fff; font-weight: 300; max-width: 24ch; margin: 10px 0 12px; }
+.vitrine-banniere p { margin: 0; max-width: 58ch; color: rgba(255, 255, 255, .86); }
+.vitrine-banniere .eyebrow { color: #BFE8CF; }
+.vitrine-grille { position: relative; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; margin-top: -84px; }
+@media (max-width: 960px) { .vitrine-grille { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .vitrine-grille { grid-template-columns: 1fr; } .vitrine-banniere { padding: 48px 0 116px; } }
+.solution { display: flex; flex-direction: column; overflow: hidden; background: var(--surface); color: var(--ink); text-decoration: none; border: 1px solid var(--line); border-top: 3px solid var(--c); border-radius: 10px; transition: transform .2s, box-shadow .2s; }
+.solution:hover, .solution:focus-visible { transform: translateY(-3px); box-shadow: 0 12px 28px rgba(13, 59, 40, .14); }
+.solution-img { display: block; width: 100%; max-width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; background: var(--surface-2); border-bottom: 1px solid var(--line); }
+.solution-txt { display: grid; gap: 4px; padding: 16px 18px 18px; }
+.solution-txt b { font-size: 18px; font-weight: 500; }
+.solution-txt > span { color: var(--muted); font-size: 14.5px; line-height: 1.45; }
+.solution-txt > .solution-lien { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; font-family: var(--f-mono); font-size: 12.5px; color: color-mix(in srgb, var(--c) 70%, #000); }
+.solution-lien svg { width: 14px; height: 14px; }
+:root[data-theme="dark"] .solution-txt > .solution-lien { color: color-mix(in srgb, var(--c) 40%, #fff); }
+.vitrine-pied { margin: 18px 0 0; text-align: right; }
+/* cartes d'outils de la page Nos outils et des pôles : la même image en tête */
+.tool.avec-img { overflow: hidden; padding-top: 0; }
+.tool.avec-img .solution-img { width: calc(100% + 40px); max-width: none; margin: 0 -20px 6px; }

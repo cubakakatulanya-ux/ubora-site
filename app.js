@@ -167,10 +167,32 @@ function poleCard(p, feature, compact) {
     </div>
   </article>`;
 }
+/* Solutions en ligne présentées avec l'écran réel de leur page d'accueil (img/solutions, capturé le 15 novembre 2026) */
+const VITRINE = ["akiba", "akiba-suivi", "hub", "bp", "academie", "asbl"];
+const banniere = (o, sizes) => VITRINE.includes(o.id) && o.statut === "en-ligne"
+  ? `<img class="solution-img" src="/img/solutions/${o.id}-480.webp" srcset="/img/solutions/${o.id}-480.webp 480w, /img/solutions/${o.id}-960.webp 960w" sizes="${sizes}" width="480" height="300" alt="Page d'accueil de ${esc(o.nom)}" loading="lazy" decoding="async">` : "";
+function vitrine() {
+  const liste = VITRINE.map(outil).filter(o => o && o.statut === "en-ligne" && o.url);
+  return `<section id="solutions" class="vitrine">
+    <div class="vitrine-banniere"><div class="wrap">
+      <span class="eyebrow">Nos solutions numériques</span>
+      <h2>${liste.length} applications en ligne, pensées pour le terrain congolais.</h2>
+      <p>Sur téléphone ou sur ordinateur, même avec une connexion faible. Chacune s'accompagne d'une formation.</p>
+    </div></div>
+    <div class="wrap">
+      <div class="vitrine-grille">${liste.map(o => `<a class="solution" href="${o.url}" target="_blank" rel="noopener" style="--c:${o.couleur}">
+        ${banniere(o, "(max-width: 600px) 100vw, (max-width: 960px) 50vw, 380px")}
+        <span class="solution-txt"><b>${esc(o.nom)}</b><span>${esc(o.court || "")}</span><span class="solution-lien">${esc(o.sousDomaine || new URL(o.url).hostname)} ${ICON.ext}</span></span>
+      </a>`).join("")}</div>
+      <p class="vitrine-pied"><a class="link" href="/outils">Fiches détaillées et outils en préparation ${ICON.arrow}</a></p>
+    </div>
+  </section>`;
+}
 function outilCard(o, court) {
   const p = poleReal(o.pole);
   const href = lienOutil(o);
-  return `<article class="tool" style="--c:${o.couleur}" data-f="${o.statut} ${o.pole}">
+  return `<article class="tool${banniere(o, "") ? " avec-img" : ""}" style="--c:${o.couleur}" data-f="${o.statut} ${o.pole}">
+    ${banniere(o, "(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 380px")}
     <div class="pole-top"><span class="mk">${esc(o.initiales)}</span>${statut(o)}</div>
     <h3><a class="stretch" href="${href}"${ext(href)}>${esc(o.nom)}</a></h3>
     <p>${esc(court && o.court ? o.court : o.resume)}</p>
@@ -243,7 +265,7 @@ function expertise() {
     ["financement", "Étudier un crédit de 500 dollars coûte presque autant qu'un crédit de 50 000. Voilà pourquoi les petits emprunteurs sont oubliés.", "Alors Ubora Fin mobilise le capital pour le groupe entier, pas dossier par dossier, en s'appuyant sur son historique d'épargne."],
     ["marche", "Le maillon qui casse le plus souvent n'est ni la production ni le crédit. C'est la vente.", "Alors nous cherchons l'acheteur avant la récolte, et nous suivons la vente jusqu'au paiement du producteur."]
   ];
-  return `<div class="lecons">${lecons.map(([id, q, r]) => { const p = pole(id); return `<figure class="lecon reveal" style="--c:${p.couleur}"><span class="lecon-pole">${esc(p.nom)}</span><blockquote>${esc(q)}</blockquote><a class="link" href="${p.chemin}" aria-label="Voir comment : ${esc(p.nom)}">Voir comment ${ICON.arrow}</a></figure>`; }).join("")}</div>`;
+  return `<div class="lecons">${lecons.map(([id, q, r]) => { const p = pole(id); return `<figure class="lecon reveal" style="--c:${p.couleur}"><span class="lecon-pole">${esc(p.nom)}</span><blockquote>${esc(q)}</blockquote></figure>`; }).join("")}</div>`;
 }
 /* Pastilles de filtre : elles filtrent les enfants du bloc qui suit (attribut data-f) */
 function filtres(label, options) {
@@ -333,22 +355,21 @@ function footerHTML() {
       <form class="news-form" id="newsForm" aria-label="Lettre d'information">
         <label class="news-label" for="nlEmail">Votre adresse e-mail</label>
         <div class="news-row"><input id="nlEmail" type="email" required maxlength="160" autocomplete="email" placeholder="Votre adresse e-mail"><input class="hp" id="nlSite" tabindex="-1" autocomplete="off" aria-hidden="true"><button class="btn btn-accent btn-sm" type="submit">S'inscrire</button></div>
-        <p class="news-note">Des nouvelles de temps en temps, sans publicité. Désinscription à tout moment. <a href="/confidentialite">Confidentialité</a></p>
+        <p class="news-note">Des nouvelles de temps en temps, sans publicité. Désinscription à tout moment.</p>
       </form>
     </div>
     <div class="foot-grid">
       <div class="foot-brand">
         <a class="brand" href="/"><img class="logo-img" src="/logo-ubora.png" alt="" width="56" height="56" loading="lazy"><span class="brand-txt"><span class="brand-name">Ub<b>o</b>ra</span><span class="brand-sub">Entreprise sociale</span></span></a>
-        <p class="foot-accroche">Partout en RDC, sur le terrain et à distance. Pour les projets financés par des dons : <a href="/ong">l'association UBORA</a>.</p>
+        <p class="foot-accroche">Partout en RDC, sur le terrain et à distance.</p>
       </div>
       <nav aria-label="Nos pôles"><h4>Nos pôles</h4><ul class="deux">${POLES.map(p => `<li><a class="foot-pole" href="${p.chemin}" style="--c:${p.couleur}">${esc(p.nom)}</a></li>`).join("")}</ul></nav>
-      <nav aria-label="Ubora"><h4>Ubora</h4><ul class="deux"><li><a href="/a-propos">Qui sommes-nous</a></li><li><a href="/ong">L'association UBORA</a></li><li><a href="/equipe">Notre équipe</a></li><li><a href="/approche">Notre approche</a></li><li><a href="/conseil">Projets et conseil</a></li><li><a href="/outils">Outils numériques</a></li><li><a href="/formations">Formations</a></li>${DATA.realisations.length ? `<li><a href="/realisations">Nos réalisations</a></li>` : ""}${allNews().length ? `<li><a href="/actualites">Actualités</a></li>` : ""}<li><a href="/carrieres">Carrières</a></li><li><a href="/soutenir">Soutenir nos actions</a></li></ul></nav>
+      <nav aria-label="Ubora"><h4>Ubora</h4><ul class="deux"><li><a href="/a-propos">Qui sommes-nous</a></li><li><a href="/ong">L'association UBORA</a></li><li><a href="/equipe">Notre équipe</a></li><li><a href="/approche">Notre approche</a></li><li><a href="/conseil">Projets et conseil</a></li><li><a href="/outils">Outils numériques</a></li><li><a href="/formations">Formations</a></li>${DATA.realisations.length ? `<li><a href="/realisations">Nos réalisations</a></li>` : ""}${allNews().length ? `<li><a href="/actualites">Actualités</a></li>` : ""}<li><a href="/carrieres">Carrières</a></li></ul></nav>
       <div class="foot-contact"><h4>Nous joindre</h4><ul>
         <li><span class="ic">${ICON.phone}</span><a href="tel:${tel}">${esc(CONFIG.telephone)}</a></li>
         <li><span class="ic">${ICON.mail}</span><a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a></li>
         <li><span class="ic">${ICON.pin}</span><span>${esc(CONFIG.adresse)}</span></li>
         ${CONFIG.youtube ? `<li><span class="ic">${sv('<rect x="2.5" y="5.5" width="19" height="13" rx="3.5"/><path d="M10 9.5v5l4.5-2.5z"/>')}</span><a href="${CONFIG.youtube}" target="_blank" rel="noopener">Nos films sur YouTube</a></li>` : ""}</ul>
-        <a class="btn btn-wa btn-sm foot-wa" href="${waLink("Bonjour Ubora, je souhaite échanger avec vous.")}" target="_blank" rel="noopener">Écrire sur WhatsApp</a>
       </div>
     </div>
     <div class="foot-bottom">
@@ -374,25 +395,26 @@ function pageHome() {
       <div>
         <h1 class="pill"><b>Ubora</b> Entreprise à caractère social, partout en RDC</h1>
         <p class="hero-titre">Des familles qui épargnent, des entrepreneurs qui vendent, des coopératives qui <span class="serif">durent</span>.</p>
-        <p class="lead">Nous formons, outillons et suivons les groupes d'épargne, les entrepreneurs et les coopératives, jusqu'au crédit et jusqu'à l'acheteur. Et nous restons après le projet.</p>
-        <div class="btn-row"><a class="btn btn-accent" href="#poles" data-scroll="poles">Découvrir nos pôles ${ICON.arrow}</a><a class="btn btn-glass" href="/conseil#pilote">Lancer un projet pilote</a></div>
+        <p class="lead">Nous accompagnons les groupes d'épargne, les entrepreneurs et les coopératives, du premier franc épargné au premier contrat de vente.</p>
+        <div class="btn-row"><a class="btn btn-accent" href="#poles" data-scroll="poles">Nos pôles ${ICON.arrow}</a><a class="btn btn-glass" href="#solutions" data-scroll="solutions">Nos solutions numériques</a></div>
       </div>
       <div class="stage stage-photo">
         <figure class="hero-photo">${photo("avec", "(max-width: 1080px) 100vw, 50vw", "Des femmes réunies en groupe, en pagnes colorés", ' fetchpriority="high"')}</figure>
-        <nav class="hero-tags" aria-label="Nos publics">${[["avec", "Groupes d'épargne"], ["pme", "Entrepreneurs"], ["cooperatives", "Coopératives"]].map(([id, t]) => `<a href="${pole(id).chemin}">${t}</a>`).join("")}</nav></div>
+</div>
     </div>
     <div class="wrap"><ul class="reperes">
       <li><b>${POLES.length}</b><span>pôles d'intervention</span></li>
-      <li><b>${OUTILS.filter(o => o.statut === "en-ligne").length}</b><span>outils numériques en ligne</span></li>
-      <li><b>${pole("avec").boite.outils.length}</b><span>documents dans la boîte à outils AVEC</span></li>
+      <li><b>${OUTILS.filter(o => o.statut === "en-ligne").length}</b><span>solutions numériques en ligne</span></li>
       <li><b>RDC</b><span>interventions dans tout le pays</span></li>
     </ul></div>
   </section>
 
   <section id="poles" class="band poles-band"><div class="wrap">
-    ${secHead("Nos pôles", `De la première épargne au premier <span class="serif">contrat de vente</span>`, "Chaque pôle tient un maillon, tous se passent le relais, et notre Académie forme chacun en chemin.")}
+    ${secHead("Nos pôles", `Un accompagnement <span class="serif">complet</span>`, "Chaque pôle tient un maillon de la chaîne ; l'Académie forme à chaque étape.")}
     <div class="poles">${POLES.map(p => poleCard(p)).join("")}</div>
   </div></section>
+
+  ${vitrine()}
 
   <section class="manifeste"><div class="wrap">
     <blockquote><p>Aider les entreprises et les communautés congolaises à tenir face aux chocs, puis à <span class="serif">grandir</span>.</p>
@@ -400,16 +422,16 @@ function pageHome() {
   </div></section>
 
   <section class="tight-top" id="expertise"><div class="wrap">
-    ${secHead("Notre expertise", `Ce que le terrain nous a <span class="serif">appris</span>`, "Trois leçons du terrain, et ce que nous en avons fait.")}
+    ${secHead("Notre expertise", `Ce que le terrain nous a <span class="serif">appris</span>`)}
     ${expertise()}
   </div></section>
 
   <section class="band"><div class="wrap social">
     <div>
       <span class="eyebrow">Une entreprise sociale</span>
-      <h2>Notre modèle fait payer ceux qui peuvent, pour servir ceux qui ne peuvent pas.</h2>
-      <p class="lead">Une entreprise, pas une ONG : ce sont nos prestations, et non des dons, qui financent notre présence auprès de ceux qui en ont le plus besoin. Les projets financés par des dons passent par notre association, <a class="link" href="/ong">UBORA</a>.</p>
-      <div class="btn-row"><a class="btn btn-accent" href="/soutenir">Soutenir nos actions ${ICON.arrow}</a><a class="btn btn-ghost" href="/a-propos#modele">Comprendre notre modèle</a></div>
+      <h2>Ceux qui peuvent payer financent l'accompagnement de ceux qui ne le peuvent pas.</h2>
+      <p class="lead">Nos prestations, et non des dons, financent notre présence auprès des plus fragiles. Les projets financés par des dons passent par notre association, <a class="link" href="/ong">UBORA</a>.</p>
+      <div class="btn-row"><a class="btn btn-ghost" href="/a-propos#modele">Comprendre notre modèle ${ICON.arrow}</a></div>
     </div>
     <ol class="model">
       <li><span class="bn">1</span><div><b>Les organisations paient</b></div></li>
@@ -421,10 +443,6 @@ function pageHome() {
 
   <section id="bailleurs"><div class="wrap">${blocPilote()}</div></section>
 
-  <section class="tight-top"><div class="wrap">
-    ${secHead("Nos outils numériques", `Des outils faits pour le <span class="serif">terrain</span> congolais`, "", `<a class="btn btn-ghost" href="/outils">Voir tous les outils ${ICON.arrow}</a>`)}
-    <div class="tools-mini">${OUTILS.filter(o => o.statut === "en-ligne").map(o => `<a class="tool-mini" href="${lienOutil(o)}"${ext(lienOutil(o))} style="--c:${o.couleur}"><span class="mk">${esc(o.initiales)}</span><span><b>${esc(o.nom)}</b><small>${esc(o.court || "")}</small></span>${ICON.arrow}</a>`).join("")}</div>
-  </div></section>
 
   ${DATA.realisations.length ? `<section><div class="wrap">
     ${secHead("Nos réalisations", `Ce que nous avons <span class="serif">fait</span>`, "", `<a class="btn btn-ghost" href="/realisations">Toutes les réalisations ${ICON.arrow}</a>`)}
@@ -531,7 +549,7 @@ function pagePole(id) {
     eyebrow: esc(P.nom), title: P.titre, lead: esc(P.lead), crumbs: [["Nos pôles", "/#poles"], [esc(P.nom)]], photo: P.photo,
     extra: `<div class="btn-row"><a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent(P.nom)}">Parler de votre projet ${ICON.arrow}</a>
       ${P.boite ? `<a class="btn btn-glass" href="#boite" data-scroll="boite">La boîte à outils</a>` : ""}
-      ${enLigne.filter(o => o.pole === P.id && (o.fiche || lienOutil(o) === P.chemin)).map(o => lienOutil(o) === P.chemin ? `<a class="btn btn-glass" href="${o.url}" target="_blank" rel="noopener">Ouvrir ${esc(o.nom)} ${ICON.ext}</a>` : `<a class="btn btn-glass" href="${lienOutil(o)}">Découvrir ${esc(o.nomPhrase || o.nom)} ${ICON.arrow}</a>`).join("")}</div>
+      ${enLigne.filter(o => o.pole === P.id && (o.fiche || lienOutil(o) === P.chemin)).map(o => lienOutil(o) === P.chemin ? `<a class="btn btn-glass" href="${o.url}" target="_blank" rel="noopener">Ouvrir ${esc(o.nom)} ${ICON.ext}</a>` : "").join("")}</div>
       <span class="sub-chip">${esc(P.sousDomaine)}</span>`
   }) + `
 
@@ -665,7 +683,7 @@ function pageOutil(o) {
   <section id="acces"><div class="wrap">
     ${secHead("Pour commencer", esc(F.accesTitre || "Trois étapes pour démarrer"))}
     <ol class="bridge">${F.acces.map(([t, x], i) => `<li><span class="bn">${i + 1}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`).join("")}</ol>
-    <div class="btn-row centre">${inscription || ouvrir("btn-primary")}${F.android ? `<a class="btn btn-ghost" href="${F.android}" target="_blank" rel="noopener">Installer sur Android ${ICON.ext}</a>` : ""}${inscription ? ouvrir("btn-ghost") : `<a class="btn btn-ghost" href="/contact?sujet=${encodeURIComponent(o.nom)}">Nous écrire</a>`}</div>
+    <div class="btn-row centre">${F.android ? `<a class="btn btn-primary" href="${F.android}" target="_blank" rel="noopener">Installer sur Android ${ICON.ext}</a>` : ""}<a class="btn btn-ghost" href="/contact?sujet=${encodeURIComponent(o.nom)}">Une question ? Écrivez-nous</a></div>
     ${F.accesNote ? `<p class="suite">${esc(F.accesNote)}</p>` : ""}
     <p class="suite">${pole(o.pole) ? `Ce logiciel accompagne le pôle <a class="link" href="${p.chemin}">${esc(p.nom)}</a>.` : `Ce logiciel accompagne nos <a class="link" href="/conseil">projets et conseil</a> aux organisations.`}</p>
   </div></section>`;
@@ -694,7 +712,6 @@ function pageConseil() {
   <section id="mise-en-oeuvre"><div class="wrap">
     ${secHead("Mise en œuvre de projets", `Nous ne faisons pas que conseiller : nous <span class="serif">mettons en œuvre</span>`, MISE_EN_OEUVRE.intro)}
     <div class="grid-2 formules">${MISE_EN_OEUVRE.formules.map(([t, x]) => `<div class="fcard"><h3>${esc(t)}</h3><p>${esc(x)}</p></div>`).join("")}</div>
-    <p class="suite"><a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent("Conseil et programmes")}">Nous confier un projet ${ICON.arrow}</a></p>
   </div></section>
   <section class="band"><div class="wrap">
     ${secHead("Nos prestations", "Quatre façons de travailler avec nous")}
@@ -890,7 +907,7 @@ function pageOng() {
     <span class="eyebrow">Agir avec l'association</span>
     <h2>Financer un projet, devenir membre, <span class="serif">s'engager</span>.</h2>
     <p>Dons, subventions, partenariats ou adhésion : écrivez-nous, une personne de l'association vous répond.</p>
-    <div class="btn-row"><a class="btn btn-accent" href="${sujet}">Nous écrire ${ICON.arrow}</a><a class="btn btn-glass" href="/conseil">Confier une mission à l'entreprise sociale</a></div>
+    <div class="btn-row"><a class="btn btn-wa" href="${waLink("Bonjour, je souhaite agir avec l'association UBORA.")}" target="_blank" rel="noopener">Écrire sur WhatsApp</a><a class="btn btn-glass" href="/conseil">Confier une mission à l'entreprise sociale</a></div>
   </div></div></section>`;
 }
 
@@ -906,7 +923,7 @@ function pageSoutenir() {
   const voies = [
     [ICON.briefcase, "Confier une mission", "Commencez par un projet pilote. Chaque prestation finance aussi nos services à tarif solidaire.", "/conseil#pilote", "Voir comment"],
     [ICON.coins, "Apporter du capital", "Ubora Fin mobilise votre capital au profit des groupes que nous accompagnons, et vous en rend compte.", "/financement#intermediation", "Voir comment"],
-    [ICON.handshake, "Devenir partenaire", "Compétences, équipements, mises en relation : dites-nous ce que vous pouvez apporter.", sujet, "Nous écrire"],
+    [ICON.handshake, "Devenir partenaire", "Compétences, équipements, mises en relation : dites-nous ce que vous pouvez apporter.", "/contact?sujet=" + encodeURIComponent("Partenariat"), "Proposer un partenariat"],
     [ICON.heart, "Faire un don ou une subvention", "Ils vont à l'association UBORA, qui conduit les projets communautaires sans but lucratif.", "/ong", "L'association UBORA"]
   ];
   return pageHead({ eyebrow: "Soutenir nos actions", title: `Pas une entreprise classique : notre objectif est <span class="serif">social</span>.`, crumbs: [["Soutenir nos actions"]],
@@ -925,7 +942,7 @@ function pageSoutenir() {
     <span class="eyebrow">Soutenir nos actions</span>
     <h2>Dites-nous comment vous voulez agir.</h2>
     <p>Une mission, du capital à orienter, un partenariat : réponse sous deux jours ouvrés.</p>
-    <div class="btn-row"><a class="btn btn-accent" href="${sujet}">Proposer un soutien ${ICON.arrow}</a><a class="btn btn-ghost" href="/contact">Nous contacter</a></div>
+    <div class="btn-row"><a class="btn btn-wa" href="${waLink("Bonjour Ubora, je souhaite soutenir vos actions.")}" target="_blank" rel="noopener">Écrire sur WhatsApp</a></div>
   </div></div></section>`;
 }
 
