@@ -330,7 +330,8 @@ function menuHTML() {
   const item = (h, b, s, c, ini, externe) => `<a href="${h}"${externe ? ' target="_blank" rel="noopener"' : ""} class="dd-item"><span class="mk" style="background:${c}">${esc(ini)}</span><span><b>${esc(b)}</b><small>${esc(s || "")}</small></span></a>`;
   return `
     <li class="has-dd"><button class="dd-btn" type="button" data-r="poles" aria-expanded="false">Pôles ${ICON.chev}</button>
-      <div class="dd dd-mega"><div class="dd-col dd-poles"><h5>Nos pôles</h5><div class="dd-grille">${POLES.map(p => item(p.chemin, p.nom, p.accroche, p.couleur, p.initiales)).join("")}</div></div></div></li>
+      <div class="dd dd-mega"><div class="dd-col dd-poles"><h5>Nos pôles</h5><div class="dd-grille">${POLES.map(p => item(p.chemin, p.nom, p.accroche, p.couleur, p.initiales)).join("")}</div></div>
+        <div class="dd-pied"><a href="/poles" class="dd-more">Vue d'ensemble des pôles ${ICON.arrow}</a></div></div></li>
     <li class="has-dd"><button class="dd-btn" type="button" data-r="outils" aria-expanded="false">Solutions ${ICON.chev}</button>
       <div class="dd dd-mega"><div class="dd-col dd-outils"><h5>En ligne</h5>${enLigne.map(o => item(o.url, o.nom, o.court, o.couleur, o.initiales, true)).join("")}</div>
         <div class="dd-col"><h5>En construction</h5><ul class="dd-chantier">${chantier.map(o => `<li><span class="mk" style="background:${o.couleur}">${esc(o.initiales)}</span>${esc(o.nom)}</li>`).join("")}</ul></div>
@@ -416,7 +417,7 @@ function pageHome() {
   </ul></div></section>
 
   <section id="poles"><div class="wrap">
-    ${secHead("Nos pôles", `Un accompagnement <span class="serif">complet</span>`)}
+    ${secHead("Nos pôles", `Un accompagnement <span class="serif">complet</span>`, "", `<a class="btn btn-ghost" href="/poles">Vue d'ensemble ${ICON.arrow}</a>`)}
     <div class="r-poles">${POLES.map(p => `<a class="r-pole${p.transversal ? " transversal" : ""}" href="${p.chemin}" style="--c:${p.couleur}"><span class="mk">${esc(p.initiales)}</span><b>${esc(p.nom)}</b><span>${esc(p.accroche)}</span></a>`).join("")}</div>
   </div></section>
 
@@ -524,6 +525,48 @@ function pageApproche() {
 }
 
 /* ---------- Page d'un pôle ---------- */
+/* Vue d'ensemble des pôles (/poles) */
+function pagePoles() {
+  return `<section class="pg-tete"><div class="wrap">
+    <div class="pg-hero">
+      <div class="pg-hero-txt">
+        <nav class="crumbs" aria-label="Fil d'Ariane"><a href="/">Accueil</a><span>Nos pôles</span></nav>
+        <span class="eyebrow">Nos pôles</span>
+        <h1>Sept pôles, une même <span class="serif">chaîne</span>.</h1>
+        <p>Du premier franc épargné au premier contrat de vente : chaque pôle tient un maillon, et l'Académie forme à chaque étape.</p>
+      </div>
+      <div class="pg-hero-photo">${photo("terrain", "(max-width: 900px) 100vw, 55vw", "Une communauté réunie en plein air", ' fetchpriority="high"')}</div>
+    </div>
+    <nav class="pg-onglets" aria-label="Aller à un pôle">${POLES.map(p => `<a href="#${p.id}" data-scroll="${p.id}">${esc(p.nom)}</a>`).join("")}</nav>
+  </div></section>
+  <section class="pg-liste"><div class="wrap">
+    ${POLES.map(p => `<article class="pg-carte" id="${p.id}" style="--c:${p.couleur}">
+      <div class="pg-carte-g">
+        ${p.photo ? `<div class="pg-carte-photo">${photo(p.photo[0], "(max-width: 900px) 100vw, 360px", p.photo[1]).replace("<img ", '<img loading="lazy" ')}</div>` : ""}
+        <h2>${esc(p.nom)}</h2>
+        <p class="pg-accroche">${esc(p.accroche)}</p>
+        <p>${esc(p.lead)}</p>
+      </div>
+      <div class="pg-carte-d">
+        <div class="pg-bandeau">Ce que nous faisons</div>
+        <ul class="pg-domaines">${(p.parcours || []).slice(0, 6).map(([t, x]) => `<li><b>${esc(t)}</b><span>${esc(x)}</span></li>`).join("")}</ul>
+        <p class="pg-lien"><a class="link" href="${p.chemin}">Découvrir ${esc(p.nom)} ${ICON.arrow}</a></p>
+      </div>
+    </article>`).join("")}
+  </div></section>
+  <section><div class="wrap">${finalCta()}</div></section>`;
+}
+
+/* Barre de pastilles sous l'en-tête d'une page de pôle : les sections de la page */
+function ongletsPole(P) {
+  const items = [
+    P.video && ["video", "En vidéo"], ["contexte", "Le contexte"], P.chaine && ["chaine", "Chaîne de valeur"], ["demarche", "Notre démarche"],
+    P.avec && ["credit", "Vers le crédit"], P.intermediation && ["intermediation", "Notre rôle"], P.canaux && ["debouches", "Les débouchés"],
+    ["outils", (P.outils || []).length ? "Outils et publics" : "Nos publics"], P.boite && P.boite.statut === "disponible" && ["boite", "Boîte à outils"]
+  ].filter(Boolean);
+  return `<section class="pg-barre"><div class="wrap"><nav class="pg-onglets" aria-label="Sur cette page" style="--c:${P.couleur}">${items.map(([id, t]) => `<a href="#${id}" data-scroll="${id}">${t}</a>`).join("")}</nav></div></section>`;
+}
+
 function pagePole(id) {
   const P = pole(id); if (!P) return notFound();
   const outilsLies = (P.outils || []).map(outil).filter(Boolean);
@@ -532,15 +575,16 @@ function pagePole(id) {
   const cartesOutils = outilsLies.filter(o => !(o.statut === "en-ligne" && lienOutil(o) === P.chemin));
   const reals = DATA.realisations.filter(r => r.pole === P.id);
   return pageHead({
-    eyebrow: esc(P.nom), title: P.titre, lead: esc(P.lead), crumbs: [["Nos pôles", "/#poles"], [esc(P.nom)]], photo: P.photo,
+    eyebrow: esc(P.nom), title: P.titre, lead: esc(P.lead), crumbs: [["Nos pôles", "/poles"], [esc(P.nom)]], photo: P.photo,
     extra: `<div class="btn-row"><a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent(P.nom)}">Parler de votre projet ${ICON.arrow}</a>
       ${P.boite && P.boite.statut === "disponible" ? `<a class="btn btn-glass" href="#boite" data-scroll="boite">La boîte à outils</a>` : ""}
       ${enLigne.filter(o => o.pole === P.id && (o.fiche || lienOutil(o) === P.chemin)).map(o => lienOutil(o) === P.chemin ? `<a class="btn btn-glass" href="${o.url}" target="_blank" rel="noopener">Ouvrir ${esc(o.nom)} ${ICON.ext}</a>` : "").join("")}</div>`
   }) + `
+  ${ongletsPole(P)}
 
   ${P.video ? blocVideo(P.video) : ""}
 
-  <section><div class="wrap two">
+  <section id="contexte"><div class="wrap two">
     <div>
       <span class="eyebrow">Le contexte en RDC</span>
       <h2 class="h2-md">Ce que nous constatons sur le terrain</h2>
@@ -565,12 +609,12 @@ function pagePole(id) {
     <ol class="chaine">${P.chaine.maillons.map(([t, x, r], i) => `<li class="reveal"><span class="pn">${String(i + 1).padStart(2, "0")}</span><h3>${esc(t)}</h3><p>${esc(x)}</p></li>`).join("")}</ol>
   </div></section>` : ""}
 
-  <section${(P.programmes || P.entrees) && !P.chaine ? "" : ' class="band"'}><div class="wrap">
+  <section id="demarche"${(P.programmes || P.entrees) && !P.chaine ? "" : ' class="band"'}><div class="wrap">
     ${secHead("Notre démarche", "Étape par étape")}
     ${parcoursList(P.parcours)}
   </div></section>
 
-  ${P.avec ? `<section class="band"><div class="wrap">
+  ${P.avec ? `<section class="band" id="credit"><div class="wrap">
     ${secHead("Vers le crédit", `Transformer la discipline d'un groupe en <span class="serif">accès au crédit</span>`)}
     <ol class="bridge">${AVEC.passerelle.map(([t, x], i) => `<li><span class="bn">${i + 1}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`).join("")}</ol>
     <p class="suite"><a class="link" href="/financement#intermediation">Comment Ubora Fin mobilise le capital pour les groupes ${ICON.arrow}</a></p>
@@ -586,7 +630,7 @@ function pagePole(id) {
     <div class="grid-3 gains">${P.intermediation.gains.map(([t, x]) => `<div class="fcard reveal"><h3>${esc(t)}</h3><p>${esc(x)}</p></div>`).join("")}</div>
   </div></section>` : ""}
 
-  ${P.canaux ? `<section class="band"><div class="wrap">
+  ${P.canaux ? `<section class="band" id="debouches"><div class="wrap">
     ${secHead("Les débouchés", esc(P.canaux.titre), esc(P.canaux.intro))}
     <div class="grid-2">${P.canaux.liste.map(([t, q, x]) => `<div class="fcard reveal"><h3>${esc(t)}</h3><p class="sub">${esc(q)}</p><p>${esc(x)}</p></div>`).join("")}</div>
   </div></section>` : ""}
@@ -603,7 +647,7 @@ function pagePole(id) {
     <div class="real-grid">${reals.slice(0, 3).map(realCard).join("")}</div>
   </div></section>` : ""}
 
-  <section><div class="wrap">
+  <section id="outils"><div class="wrap">
     ${cartesOutils.length ? `${secHead("Outils et publics", `Les outils du pôle ${esc(P.nom)}`)}
     <div class="tools">${cartesOutils.map(o => outilCard(o, true)).join("")}</div>` : secHead("Nos publics", "Avec qui nous travaillons")}
     <div class="publics"><b>Pour qui</b>${P.publics.map(x => `<span>${esc(x)}</span>`).join("")}</div>
@@ -701,7 +745,7 @@ function pageConseil() {
   <section class="band"><div class="wrap">
     ${secHead("Nos prestations", "Quatre façons de travailler avec nous")}
     <div class="grid-2">${CONSEIL.map(s => `<article class="svc reveal" id="${s.id}"><span class="ic">${ICON[s.ico]}</span><div><h2>${esc(s.titre)}</h2><p>${esc(s.texte)}</p><details class="inclus"><summary>Ce que cela comprend</summary><ul class="checks">${s.points.map(x => `<li>${esc(x)}</li>`).join("")}</ul></details></div></article>`).join("")}</div>
-    <p class="suite"><a class="link" href="/#poles">Vous pouvez aussi mobiliser directement l'un de nos pôles ${ICON.arrow}</a></p>
+    <p class="suite"><a class="link" href="/poles">Vous pouvez aussi mobiliser directement l'un de nos pôles ${ICON.arrow}</a></p>
   </div></section>
   <section id="relais"><div class="wrap">${relais(false)}</div></section>
   <section><div class="wrap">${finalCta()}</div></section>`;
@@ -1079,6 +1123,7 @@ const DESCR = {
   actualites: "Les actualités d'Ubora : programmes, déploiements, formations et nouvelles du terrain en RDC.",
   carrieres: "Offres d'emploi, de stage et de consultance chez Ubora, entreprise à caractère social qui intervient dans toute la RDC.",
   contact: "Contacter Ubora, entreprise à caractère social, par téléphone, WhatsApp ou e-mail. Une personne de l'équipe vous répond sous deux jours ouvrés.",
+  poles: "Les sept pôles d'Ubora, entreprise à caractère social : groupes d'épargne, entrepreneurs, coopératives, accès au financement, accès au marché, environnement et formation, partout en RDC.",
   mentions: "Mentions légales du site d'Ubora, entreprise sociale : éditeur, hébergement, propriété intellectuelle.",
   confidentialite: "Politique de confidentialité d'Ubora : données recueillies, durées de conservation, destinataires, sécurité, vos droits. Aucun cookie ni traceur.",
   conditions: "Conditions d'utilisation du site d'Ubora, entreprise sociale : objet, usage acceptable, applications, responsabilité, droit applicable.",
@@ -1098,9 +1143,9 @@ const SEO_POLES = {
   marche: ["Ubora Market : trouver des acheteurs pour les producteurs en RDC", "Le pôle marché d'Ubora, entreprise à caractère social : relier les coopératives, les PME et les entrepreneurs accompagnés à des acheteurs, et suivre chaque vente jusqu'au paiement."]
 };
 /* Titres complets pour la balise <title> ; TITRES reste court (fil d'Ariane, menus) */
-const SEO_TITRES = { ong: "UBORA, association à vocation d'ONG de développement en RDC", soutenir: "Soutenir Ubora : une entreprise à objectif social en RDC", "a-propos": "Qui sommes-nous : Ubora, entreprise sociale en RDC", approche: "Notre approche : la méthode Ubora en six temps", outils: "Outils numériques pour les AVEC, les PME et les organisations · Ubora", conseil: "Projets pilotes, mise en œuvre et conseil en RDC · Ubora", formations: "Formations AVEC, entrepreneuriat et coopératives · Ubora", actualites: "Actualités d'Ubora : nouvelles du terrain en RDC", realisations: "Nos réalisations en RDC · Ubora, entreprise sociale", equipe: "Notre équipe · Ubora, entreprise sociale en RDC", carrieres: "Carrières : rejoindre Ubora, entreprise sociale en RDC", contact: "Contacter Ubora, entreprise sociale en RDC", mentions: "Mentions légales · Ubora, entreprise sociale", confidentialite: "Confidentialité et cookies · Ubora, entreprise sociale", conditions: "Conditions d'utilisation · Ubora, entreprise sociale" };
+const SEO_TITRES = { ong: "UBORA, association à vocation d'ONG de développement en RDC", soutenir: "Soutenir Ubora : une entreprise à objectif social en RDC", "a-propos": "Qui sommes-nous : Ubora, entreprise sociale en RDC", approche: "Notre approche : la méthode Ubora en six temps", outils: "Outils numériques pour les AVEC, les PME et les organisations · Ubora", conseil: "Projets pilotes, mise en œuvre et conseil en RDC · Ubora", formations: "Formations AVEC, entrepreneuriat et coopératives · Ubora", actualites: "Actualités d'Ubora : nouvelles du terrain en RDC", realisations: "Nos réalisations en RDC · Ubora, entreprise sociale", equipe: "Notre équipe · Ubora, entreprise sociale en RDC", carrieres: "Carrières : rejoindre Ubora, entreprise sociale en RDC", contact: "Contacter Ubora, entreprise sociale en RDC", mentions: "Mentions légales · Ubora, entreprise sociale", poles: "Nos pôles : AVEC, PME, coopératives, financement, marché, environnement, formation · Ubora", confidentialite: "Confidentialité et cookies · Ubora, entreprise sociale", conditions: "Conditions d'utilisation · Ubora, entreprise sociale" };
 const ROBOTS = "index, follow, max-image-preview:large";
-const TITRES = { ong: "L'association UBORA", soutenir: "Soutenir nos actions", "": "Ubora : entreprise sociale en RDC (AVEC, PME, coopératives)", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos outils numériques", conseil: "Projets et conseil", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", confidentialite: "Confidentialité", conditions: "Conditions d'utilisation", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
+const TITRES = { ong: "L'association UBORA", soutenir: "Soutenir nos actions", "": "Ubora : entreprise sociale en RDC (AVEC, PME, coopératives)", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos outils numériques", conseil: "Projets et conseil", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", poles: "Nos pôles", confidentialite: "Confidentialité", conditions: "Conditions d'utilisation", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
 
 /* Construit une page à partir d'une adresse. */
 function resolve(pathname, search, host) {
@@ -1142,6 +1187,7 @@ function resolve(pathname, search, host) {
     case "contact": html = pageContact(params); break;
     case "soutenir": html = pageSoutenir(); break;
     case "ong": html = pageOng(); break;
+    case "poles": html = pagePoles(); break;
     case "mentions": html = pageMentions(); break;
     case "confidentialite": html = pageConfidentialite(); break;
     case "conditions": html = pageConditions(); break;

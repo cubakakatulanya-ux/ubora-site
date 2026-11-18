@@ -1,34 +1,34 @@
 {
  "/": {
-  "empreinte": "a1e3d7af56b0",
+  "empreinte": "7f2e55dad9b9",
   "date": "2026-11-18"
  },
  "/avec": {
-  "empreinte": "1d54c21710dc",
+  "empreinte": "3778109b6864",
   "date": "2026-11-18"
  },
  "/pme": {
-  "empreinte": "744bf15cbc4a",
+  "empreinte": "e16b7ce6e2da",
   "date": "2026-11-18"
  },
  "/cooperatives": {
-  "empreinte": "cddb04caa564",
+  "empreinte": "29de73b798cf",
   "date": "2026-11-18"
  },
  "/financement": {
-  "empreinte": "7be4fc69f869",
+  "empreinte": "0e311bfdff9f",
   "date": "2026-11-18"
  },
  "/marche": {
-  "empreinte": "ffe82bb1850f",
+  "empreinte": "6bda3ea14ebd",
   "date": "2026-11-18"
  },
  "/vert": {
-  "empreinte": "51fce183aa1d",
+  "empreinte": "0a6747d020dc",
   "date": "2026-11-18"
  },
  "/academie": {
-  "empreinte": "a9564178e7c1",
+  "empreinte": "5a7d71c96c1f",
   "date": "2026-11-18"
  },
  "/approche": {
@@ -44,8 +44,8 @@
   "date": "2026-11-15"
  },
  "/conseil": {
-  "empreinte": "8be1baf78c60",
-  "date": "2026-11-15"
+  "empreinte": "ce98dc571bd7",
+  "date": "2026-11-18"
  },
  "/formations": {
   "empreinte": "98ecb3e554a0",
@@ -98,5 +98,9 @@
  "/conditions": {
   "empreinte": "53efa7857d3e",
   "date": "2026-11-15"
+ },
+ "/poles": {
+  "empreinte": "fa65fe14d892",
+  "date": "2026-11-18"
  }
 }
