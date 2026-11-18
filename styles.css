@@ -2313,3 +2313,52 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
 .bientot-img .mk { display: grid; place-items: center; width: 54px; height: 54px; border-radius: 12px; background: var(--c); color: #fff; font-weight: 500; font-size: 19px; }
 .bientot-img .status { position: absolute; top: 10px; right: 10px; }
 .solution-txt > .solution-pole { margin-top: 6px; font-size: 12.5px; letter-spacing: .04em; text-transform: uppercase; }
+
+/* ==========================================================================
+   REFONTE (18 novembre 2026) — accueil et navigation.
+   Inspirée de Cloudflare (grand titre, bande de chiffres, grille de produits),
+   LinkedIn (sobriété, entrées claires) et transforme.cd (ton institutionnel).
+   Identité Ubora conservée : vert, Ubuntu fin, logo.
+   ========================================================================== */
+.r-hero { padding-block: clamp(36px, 6vw, 84px) clamp(28px, 4vw, 56px); background: linear-gradient(180deg, var(--menthe) 0%, var(--bg) 100%); }
+.r-hero-grille { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(28px, 5vw, 72px); align-items: center; }
+@media (max-width: 900px) { .r-hero-grille { grid-template-columns: 1fr; } }
+.r-sur { display: inline-block; font-size: 13px; letter-spacing: .12em; text-transform: uppercase; color: var(--vert-texte); font-weight: 500; }
+.r-hero h1 { margin: 14px 0 18px; font-weight: 300; font-size: clamp(40px, 6.4vw, 78px); line-height: 1.02; letter-spacing: -.03em; color: var(--ink); }
+.r-hero h1 .serif { font-family: var(--f-display); font-style: normal; font-weight: 500; color: var(--vert-texte); }
+.r-chapeau { margin: 0 0 26px; max-width: 34ch; font-size: clamp(17px, 1.6vw, 20px); line-height: 1.5; color: var(--muted); }
+.r-hero-photo { position: relative; margin: 0; }
+.r-hero-photo img { display: block; width: 100%; max-width: 100%; height: auto; aspect-ratio: 4 / 3.4; object-fit: cover; border-radius: 14px; }
+.r-hero-badge { position: absolute; left: -18px; bottom: 22px; display: flex; align-items: center; gap: 12px; max-width: 260px; padding: 14px 18px; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: 0 18px 40px -22px rgba(13, 59, 40, .45); }
+.r-hero-badge b { font-size: 34px; font-weight: 300; color: var(--vert-texte); line-height: 1; }
+.r-hero-badge span { font-size: 13.5px; line-height: 1.35; color: var(--muted); }
+@media (max-width: 900px) { .r-hero-badge { left: 12px; bottom: 12px; } }
+.r-chiffres { padding-block: 0; }
+.r-chiffres ul { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; border-block: 1px solid var(--line); }
+.r-chiffres li { display: grid; gap: 4px; padding: 26px 22px; border-left: 1px solid var(--line); }
+.r-chiffres li:first-child { border-left: 0; }
+.r-chiffres b { font-size: clamp(30px, 3.6vw, 44px); font-weight: 300; line-height: 1.05; color: var(--ink); letter-spacing: -.02em; }
+.r-chiffres span { font-size: 14px; color: var(--muted); }
+@media (max-width: 800px) { .r-chiffres ul { grid-template-columns: repeat(2, minmax(0, 1fr)); } .r-chiffres li:nth-child(3) { border-left: 0; } .r-chiffres li:nth-child(n+3) { border-top: 1px solid var(--line); } }
+.r-poles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 1000px) { .r-poles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .r-poles { grid-template-columns: 1fr; } }
+.r-pole { display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; column-gap: 14px; row-gap: 2px; align-items: center; padding: 18px; background: var(--surface); color: var(--ink); text-decoration: none; border: 1px solid var(--line); border-radius: 10px; transition: border-color .2s, transform .2s, box-shadow .2s; }
+.r-pole .mk { grid-row: 1 / 3; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 10px; background: var(--c); color: #fff; font-weight: 500; }
+.r-pole b { font-size: 16.5px; font-weight: 500; }
+.r-pole > span:last-child { font-size: 14px; line-height: 1.4; color: var(--muted); }
+.r-pole:hover, .r-pole:focus-visible { border-color: var(--c); transform: translateY(-2px); box-shadow: 0 12px 26px -18px rgba(13, 59, 40, .5); }
+.r-bande { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 22px 40px; padding: clamp(26px, 4vw, 44px); background: var(--menthe); border: 1px solid var(--menthe-bord); border-radius: 14px; }
+.r-bande h2 { margin: 8px 0 8px; font-weight: 300; }
+.r-bande p { margin: 0; color: var(--muted); max-width: 52ch; }
+.r-citation blockquote { margin: 0 auto; max-width: 860px; text-align: center; }
+.r-citation blockquote p { margin: 0 0 18px; font-size: clamp(26px, 3.4vw, 42px); font-weight: 300; line-height: 1.2; letter-spacing: -.02em; color: var(--ink); }
+.r-citation footer { font-size: 15px; }
+/* menu : liste des solutions en construction */
+.dd-chantier { display: grid; gap: 10px; margin: 4px 0 0; padding: 0 10px; list-style: none; font-size: 14.5px; color: var(--muted); }
+.dd-chantier li { display: flex; align-items: center; gap: 10px; }
+.dd-chantier .mk { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 7px; color: #fff; font-size: 12px; font-weight: 500; opacity: .75; }
+.r-hero-badge i { flex: none; width: 10px; height: 10px; border-radius: 50%; background: var(--vert-texte); box-shadow: 0 0 0 5px color-mix(in srgb, var(--vert-texte) 18%, transparent); }
+.r-hero-badge span b { font-size: inherit; font-weight: 500; color: var(--ink); }
+@media (min-width: 1001px) { .r-pole.transversal { grid-column: span 2; } }
+@media (max-width: 600px) { .final h2 { font-size: clamp(26px, 7.4vw, 32px); } .r-pole { padding: 14px 16px; } }

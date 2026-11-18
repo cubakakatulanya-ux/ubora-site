@@ -178,7 +178,7 @@ function vitrine() {
   return `<section id="solutions" class="vitrine">
     <div class="vitrine-banniere"><div class="wrap">
       <span class="eyebrow">Nos solutions numériques</span>
-      <h2>${liste.length} applications en ligne, d'autres en construction, pensées pour le terrain congolais.</h2>
+      <h2>${liste.length} applications en ligne. D'autres arrivent.</h2>
       <p>Sur téléphone ou sur ordinateur, même avec une connexion faible. Chacune s'accompagne d'une formation.</p>
     </div></div>
     <div class="wrap">
@@ -325,27 +325,29 @@ function realCard(r) {
 
 /* ---------- En-tête, pied de page, bande déroulante ---------- */
 function menuHTML() {
+  const enLigne = OUTILS.filter(o => o.statut === "en-ligne");
+  const chantier = OUTILS.filter(o => o.statut !== "en-ligne");
+  const item = (h, b, s, c, ini, externe) => `<a href="${h}"${externe ? ' target="_blank" rel="noopener"' : ""} class="dd-item"><span class="mk" style="background:${c}">${esc(ini)}</span><span><b>${esc(b)}</b><small>${esc(s || "")}</small></span></a>`;
   return `
-    <li><a href="/" data-r="">Accueil</a></li>
-    <li class="has-dd"><button class="dd-btn" type="button" data-r="a-propos" aria-expanded="false">Ubora ${ICON.chev}</button>
+    <li class="has-dd"><button class="dd-btn" type="button" data-r="poles" aria-expanded="false">Pôles ${ICON.chev}</button>
+      <div class="dd dd-mega"><div class="dd-col dd-poles"><h5>Nos pôles</h5><div class="dd-grille">${POLES.map(p => item(p.chemin, p.nom, p.accroche, p.couleur, p.initiales)).join("")}</div></div></div></li>
+    <li class="has-dd"><button class="dd-btn" type="button" data-r="outils" aria-expanded="false">Solutions ${ICON.chev}</button>
+      <div class="dd dd-mega"><div class="dd-col dd-outils"><h5>En ligne</h5>${enLigne.map(o => item(o.url, o.nom, o.court, o.couleur, o.initiales, true)).join("")}</div>
+        <div class="dd-col"><h5>En construction</h5><ul class="dd-chantier">${chantier.map(o => `<li><span class="mk" style="background:${o.couleur}">${esc(o.initiales)}</span>${esc(o.nom)}</li>`).join("")}</ul></div>
+        <div class="dd-pied"><a href="/outils" class="dd-more">Fiches détaillées des outils ${ICON.arrow}</a></div></div></li>
+    <li><a href="/conseil" data-r="conseil">Bailleurs et ONG</a></li>
+    <li><a href="/formations" data-r="formations">Formations</a></li>
+    <li class="has-dd"><button class="dd-btn" type="button" data-r="a-propos" aria-expanded="false">À propos ${ICON.chev}</button>
       <div class="dd dd-list">
         <a href="/a-propos"><b>Qui sommes-nous</b><small>Mission, modèle social, valeurs</small></a>
-        <a href="/equipe"><b>Notre équipe</b><small>Les personnes derrière Ubora</small></a>
         <a href="/approche"><b>Notre approche</b><small>La méthode Ubora</small></a>
-        <a href="/ong"><b>L'association UBORA</b><small>À vocation d'ONG de développement</small></a>
+        <a href="/equipe"><b>Notre équipe</b><small>Les personnes derrière Ubora</small></a>
+        <a href="/ong"><b>L'association UBORA</b><small>Les projets financés par des dons</small></a>
+        <a href="/soutenir"><b>Soutenir nos actions</b><small>Une entreprise à objectif social</small></a>
+        ${DATA.realisations.length ? `<a href="/realisations"><b>Nos réalisations</b><small>Ce que nous avons fait</small></a>` : ""}
+        ${allNews().length ? `<a href="/actualites"><b>Actualités</b><small>Nouvelles du terrain</small></a>` : ""}
         <a href="/carrieres"><b>Carrières</b><small>Rejoindre l'équipe</small></a>
       </div></li>
-    <li class="has-dd"><button class="dd-btn" type="button" data-r="poles" aria-expanded="false">Pôles et outils ${ICON.chev}</button>
-      <div class="dd dd-mega">
-        <div class="dd-col dd-poles"><h5>Nos pôles</h5><div class="dd-grille">${POLES.map(p => `<a href="${p.chemin}" class="dd-item${p.transversal ? " large" : ""}"><span class="mk" style="background:${p.couleur}">${p.initiales}</span><span><b>${esc(p.nom)}</b><small>${esc(p.accroche)}</small></span></a>`).join("")}</div></div>
-        <div class="dd-col dd-outils"><h5>Nos logiciels</h5>${OUTILS.filter(o => o.statut === "en-ligne").map(o => `<a href="${lienOutil(o)}"${ext(lienOutil(o))} class="dd-item"><span class="mk" style="background:${o.couleur}">${o.initiales}</span><span><b>${esc(o.nom)}</b><small>${esc(o.court || o.sousDomaine)}</small></span></a>`).join("")}</div>
-        <div class="dd-pied"><a href="/outils" class="dd-more">Tous les outils ${ICON.arrow}</a></div>
-      </div></li>
-    <li><a href="/conseil" data-r="conseil">Projets et conseil</a></li>
-    <li><a href="/formations" data-r="formations">Formations</a></li>
-    ${/* une rubrique encore vide n'encombre pas le menu : elle y revient dès qu'elle a du contenu */ ""}${DATA.realisations.length ? `<li><a href="/realisations" data-r="realisations">Réalisations</a></li>` : ""}
-    ${allNews().length ? `<li><a href="/actualites" data-r="actualites">Actualités</a></li>` : ""}
-    <li class="m-cta"><a class="btn btn-ghost" href="/soutenir">Soutenir nos actions</a></li>
     <li class="m-cta"><a class="btn btn-accent" href="/contact">Nous contacter</a></li>`;
 }
 function footerHTML() {
@@ -366,7 +368,7 @@ function footerHTML() {
     </div>
     <div class="foot-grid">
       <div class="foot-brand">
-        <a class="brand" href="/"><img class="logo-img" src="/logo-ubora.png" alt="" width="56" height="56" loading="lazy"><span class="brand-txt"><span class="brand-name">Ub<b>o</b>ra</span><span class="brand-sub">Entreprise sociale</span></span></a>
+        <a class="brand" href="/"><img class="logo-img" src="/logo-ubora-112.webp" alt="" width="56" height="56" loading="lazy"><span class="brand-txt"><span class="brand-name">Ub<b>o</b>ra</span><span class="brand-sub">Entreprise sociale</span></span></a>
         <p class="foot-accroche">Partout en RDC, sur le terrain et à distance.</p>
       </div>
       <div class="foot-contact"><h4>Nous joindre</h4><ul>
@@ -393,65 +395,44 @@ function tickerHTML() {
    ========================================================================== */
 function pageHome() {
   const news = allNews().slice(0, 3);
+  const enLigne = OUTILS.filter(o => o.statut === "en-ligne").length;
   return `
-  <section class="deep hero">
-    <div class="wrap hero-grid">
-      <div>
-        <h1 class="pill"><b>Ubora</b> Entreprise à caractère social, partout en RDC</h1>
-        <p class="hero-titre">Des familles qui épargnent, des entrepreneurs qui vendent, des coopératives qui <span class="serif">durent</span>.</p>
-        <p class="lead">Nous accompagnons les groupes d'épargne, les entrepreneurs et les coopératives, du premier franc épargné au premier contrat de vente.</p>
-        <div class="btn-row"><a class="btn btn-accent" href="#poles" data-scroll="poles">Nos pôles ${ICON.arrow}</a><a class="btn btn-glass" href="#solutions" data-scroll="solutions">Nos solutions numériques</a></div>
-      </div>
-      <div class="stage stage-photo">
-        <figure class="hero-photo">${photo("avec", "(max-width: 1080px) 100vw, 50vw", "Des femmes réunies en groupe, en pagnes colorés", ' fetchpriority="high"')}</figure>
-</div>
+  <section class="r-hero"><div class="wrap r-hero-grille">
+    <div class="r-hero-txt">
+      <span class="r-sur">Entreprise à caractère social · RDC</span>
+      <h1>Épargner. Entreprendre. <span class="serif">Vendre.</span></h1>
+      <p class="r-chapeau">Nous accompagnons les groupes d'épargne, les entrepreneurs et les coopératives, jusqu'au crédit et jusqu'à l'acheteur.</p>
+      <div class="btn-row"><a class="btn btn-accent" href="#solutions" data-scroll="solutions">Nos solutions ${ICON.arrow}</a><a class="btn btn-ghost" href="#poles" data-scroll="poles">Nos pôles</a></div>
     </div>
-    <div class="wrap"><ul class="reperes">
-      <li><b>${POLES.length}</b><span>pôles d'intervention</span></li>
-      <li><b>${OUTILS.filter(o => o.statut === "en-ligne").length}</b><span>solutions numériques en ligne</span></li>
-      <li><b>RDC</b><span>interventions dans tout le pays</span></li>
-    </ul></div>
-  </section>
+    <figure class="r-hero-photo">${photo("avec", "(max-width: 900px) 100vw, 46vw", "Des femmes réunies en groupe d'épargne", ' fetchpriority="high"')}
+      <figcaption class="r-hero-badge"><i aria-hidden="true"></i><span><b>Entreprise à caractère social</b> : nos excédents sont réinvestis sur le terrain.</span></figcaption></figure>
+  </div></section>
 
-  <section id="poles" class="band poles-band"><div class="wrap">
-    ${secHead("Nos pôles", `Un accompagnement <span class="serif">complet</span>`, "Chaque pôle tient un maillon de la chaîne ; l'Académie forme à chaque étape.")}
-    <div class="poles">${POLES.map(p => poleCard(p)).join("")}</div>
+  <section class="r-chiffres" aria-label="Ubora en chiffres"><div class="wrap"><ul>
+    <li><b>${POLES.length}</b><span>pôles d'intervention</span></li>
+    <li><b>${enLigne}</b><span>applications en ligne</span></li>
+    <li><b>140+</b><span>cours à l'Académie</span></li>
+    <li><b>Hors ligne</b><span>nos outils marchent sans réseau</span></li>
+  </ul></div></section>
+
+  <section id="poles"><div class="wrap">
+    ${secHead("Nos pôles", `Un accompagnement <span class="serif">complet</span>`)}
+    <div class="r-poles">${POLES.map(p => `<a class="r-pole${p.transversal ? " transversal" : ""}" href="${p.chemin}" style="--c:${p.couleur}"><span class="mk">${esc(p.initiales)}</span><b>${esc(p.nom)}</b><span>${esc(p.accroche)}</span></a>`).join("")}</div>
   </div></section>
 
   ${vitrine()}
 
-  <section class="manifeste"><div class="wrap">
-    <blockquote><p>Aider les entreprises et les communautés congolaises à tenir face aux chocs, puis à <span class="serif">grandir</span>.</p>
-      <footer>La mission d'Ubora</footer></blockquote>
+  <section><div class="wrap"><div class="r-bande">
+    <div><span class="eyebrow">Bailleurs, ONG et programmes</span>
+      <h2>Commencez par un <span class="serif">projet pilote</span>.</h2>
+      <p>Un périmètre réduit, des indicateurs fixés ensemble, des résultats suivis en direct.</p></div>
+    <div class="btn-row"><a class="btn btn-accent" href="/conseil#pilote">Comment ça marche ${ICON.arrow}</a></div>
+  </div></div></section>
+
+  <section class="r-citation"><div class="wrap">
+    <blockquote><p>Ceux qui peuvent payer financent l'accompagnement de ceux qui ne le peuvent pas.</p>
+      <footer><a class="link" href="/a-propos#modele">Notre modèle d'entreprise sociale ${ICON.arrow}</a></footer></blockquote>
   </div></section>
-
-  <section class="tight-top" id="expertise"><div class="wrap">
-    ${secHead("Notre expertise", `Ce que le terrain nous a <span class="serif">appris</span>`)}
-    ${expertise()}
-  </div></section>
-
-  <section class="band"><div class="wrap social">
-    <div>
-      <span class="eyebrow">Une entreprise sociale</span>
-      <h2>Ceux qui peuvent payer financent l'accompagnement de ceux qui ne le peuvent pas.</h2>
-      <p class="lead">Nos prestations, et non des dons, financent notre présence auprès des plus fragiles. Les projets financés par des dons passent par notre association, <a class="link" href="/ong">UBORA</a>.</p>
-      <div class="btn-row"><a class="btn btn-ghost" href="/a-propos#modele">Comprendre notre modèle ${ICON.arrow}</a></div>
-    </div>
-    <ol class="model">
-      <li><span class="bn">1</span><div><b>Les organisations paient</b></div></li>
-      <li><span class="bn">2</span><div><b>Les plus fragiles accèdent à tarif solidaire</b></div></li>
-      <li><span class="bn">3</span><div><b>Le capital arrive jusqu'aux groupes</b></div></li>
-      <li><span class="bn">4</span><div><b>Les excédents sont réinvestis</b></div></li>
-    </ol>
-  </div></section>
-
-  <section id="bailleurs"><div class="wrap">${blocPilote()}</div></section>
-
-
-  ${DATA.realisations.length ? `<section><div class="wrap">
-    ${secHead("Nos réalisations", `Ce que nous avons <span class="serif">fait</span>`, "", `<a class="btn btn-ghost" href="/realisations">Toutes les réalisations ${ICON.arrow}</a>`)}
-    <div class="real-grid">${DATA.realisations.slice(0, 3).map(realCard).join("")}</div>
-  </div></section>` : ""}
 
   ${news.length ? `<section><div class="wrap">
     ${secHead("Actualités", "Nouvelles du terrain", "", `<a class="btn btn-ghost" href="/actualites">Toutes les actualités ${ICON.arrow}</a>`)}
