@@ -33,7 +33,7 @@
 <script src="/theme.js"></script>
 <link rel="preload" href="/polices/ubuntu-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/polices/ubuntu-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/styles.min.css?v=cad5e34ab7">
+<link rel="stylesheet" href="/styles.min.css?v=32984f35a2">
 </head>
 <body>
 <a class="skip" href="#app">Aller au contenu</a>
@@ -54,14 +54,14 @@
         <div class="dd-col"><h5>En construction</h5><ul class="dd-chantier"><li><span class="mk" style="background:#3E7A1F">Co</span>Ubora Coop, le logiciel</li><li><span class="mk" style="background:#1F7A6B">Cm</span>CoopMart</li><li><span class="mk" style="background:#6A7F1A">Al</span>Ubora AgroLab</li><li><span class="mk" style="background:#8A4B14">Bi</span>Biashara</li></ul></div>
         <div class="dd-pied"><a href="/outils" class="dd-more">Fiches détaillées des outils <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a></div></div></li>
     <li><a href="/conseil" data-r="conseil">Bailleurs et ONG</a></li>
-    <li><a href="/formations" data-r="formations">Formations</a></li>
+    <li><a href="/academie" data-r="academie">Académie</a></li>
     <li class="has-dd"><button class="dd-btn" type="button" data-r="a-propos" aria-expanded="false">À propos <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
       <div class="dd dd-list">
         <a href="/a-propos"><b>Qui sommes-nous</b><small>Mission, modèle social, valeurs</small></a>
-        <a href="/approche"><b>Notre approche</b><small>La méthode Ubora</small></a>
-        <a href="/equipe"><b>Notre équipe</b><small>Les personnes derrière Ubora</small></a>
+        <a href="/a-propos#methode"><b>Notre méthode</b><small>Six temps, toujours dans le même ordre</small></a>
+        <a href="/a-propos#equipe"><b>L'équipe</b><small>Les personnes derrière Ubora</small></a>
         <a href="/ong"><b>L'association UBORA</b><small>Les projets financés par des dons</small></a>
-        <a href="/soutenir"><b>Soutenir nos actions</b><small>Une entreprise à objectif social</small></a>
+        <a href="/a-propos#soutenir"><b>Nous soutenir</b><small>Une entreprise à objectif social</small></a>
         
         
         <a href="/carrieres"><b>Carrières</b><small>Rejoindre l'équipe</small></a>
@@ -77,10 +77,6 @@
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
       </button>
     </div>
-  </div>
-  <div class="ticker">
-    <span class="ticker-label"><i></i><span>À la une</span></span>
-    <div class="ticker-track"><div class="ticker-move" id="tickerMove"><a href="/soutenir">Ubora est une entreprise à caractère social : ses excédents sont réinvestis</a><a href="/academie">Nouveau à l&#39;Académie : cinq cas pratiques pour entreprendre dans l&#39;agroalimentaire</a><a href="/outils/akiba#acces">AKIBA : une AVEC sans réseau ni WhatsApp demande son code par SMS, appel ou image</a><a href="/outils/asbl">ASBL Manager rédige vos statuts, votre règlement intérieur et votre manuel de procédures</a><a href="/outils/akiba#acces">Nouveau : Akiba Suivi, l&#39;application des animateurs et des organisations qui suivent des AVEC</a><a href="/outils/akiba#video">En vidéo : AKIBA, le cahier de l&#39;AVEC dans le téléphone, en trois minutes</a><a href="/outils/hub#video">En vidéo : Ubora Hub, de l&#39;idée à l&#39;entreprise, en quatre minutes</a><a href="/ong">L&#39;association UBORA porte les projets financés par des dons et des subventions</a><a href="/#solutions">En construction : Ubora AgroLab, CoopMart, Ubora Coop et Biashara</a><a tabindex="-1" aria-hidden="true" href="/soutenir">Ubora est une entreprise à caractère social : ses excédents sont réinvestis</a><a tabindex="-1" aria-hidden="true" href="/academie">Nouveau à l&#39;Académie : cinq cas pratiques pour entreprendre dans l&#39;agroalimentaire</a><a tabindex="-1" aria-hidden="true" href="/outils/akiba#acces">AKIBA : une AVEC sans réseau ni WhatsApp demande son code par SMS, appel ou image</a><a tabindex="-1" aria-hidden="true" href="/outils/asbl">ASBL Manager rédige vos statuts, votre règlement intérieur et votre manuel de procédures</a><a tabindex="-1" aria-hidden="true" href="/outils/akiba#acces">Nouveau : Akiba Suivi, l&#39;application des animateurs et des organisations qui suivent des AVEC</a><a tabindex="-1" aria-hidden="true" href="/outils/akiba#video">En vidéo : AKIBA, le cahier de l&#39;AVEC dans le téléphone, en trois minutes</a><a tabindex="-1" aria-hidden="true" href="/outils/hub#video">En vidéo : Ubora Hub, de l&#39;idée à l&#39;entreprise, en quatre minutes</a><a tabindex="-1" aria-hidden="true" href="/ong">L&#39;association UBORA porte les projets financés par des dons et des subventions</a><a tabindex="-1" aria-hidden="true" href="/#solutions">En construction : Ubora AgroLab, CoopMart, Ubora Coop et Biashara</a></div></div>
   </div>
 </header>
 
@@ -141,10 +137,10 @@
 
 <script type="application/json" id="ubora-donnees">{"actualites":[],"formations":[],"offres":[],"equipe":[],"realisations":[]}</script>
 <script src="/lib/supabase-2.45.4.min.js" integrity="sha384-GFr3yTh5lJznCbZfpTtXnwboFsxqtTQoeTZCRHhE0579KrRmlCzen5AA8ohaB5ug"></script>
-<script src="/data.js?v=cad5e34ab7"></script>
-<script src="/db.js?v=cad5e34ab7"></script>
-<script src="/admin.js?v=cad5e34ab7"></script>
-<script src="/app.js?v=cad5e34ab7"></script>
-<script src="/chat.js?v=cad5e34ab7"></script>
+<script src="/data.js?v=32984f35a2"></script>
+<script src="/db.js?v=32984f35a2"></script>
+<script src="/admin.js?v=32984f35a2"></script>
+<script src="/app.js?v=32984f35a2"></script>
+<script src="/chat.js?v=32984f35a2"></script>
 </body>
 </html>

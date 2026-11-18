@@ -2409,3 +2409,14 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
 .pg-domaines span { font-size: 14.5px; line-height: 1.45; color: var(--muted); }
 .pg-lien { margin-top: 22px !important; text-align: right; }
 .pole-page [id], section[id] { scroll-margin-top: 100px; }
+
+/* Réorganisation (18 novembre 2026) : méthode en version courte, catalogue de l'Académie, en-tête sans bandeau défilant */
+.steps.steps-court { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 900px) { .steps.steps-court { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .steps.steps-court { grid-template-columns: 1fr; } }
+#modele .table-wrap { margin-top: 26px; }
+#equipe .dirigeant { margin-top: 8px; }
+.catalogue { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 22px; margin: 26px 0 0; padding: 0; list-style: none; }
+@media (max-width: 700px) { .catalogue { grid-template-columns: 1fr; } }
+.catalogue li { display: flex; align-items: baseline; gap: 10px; padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-left: 3px solid var(--c); border-radius: 8px; }
+.catalogue .tag { flex: none; font-size: 11.5px; }

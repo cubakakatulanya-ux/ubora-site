@@ -4,56 +4,44 @@
   "date": "2026-11-18"
  },
  "/avec": {
-  "empreinte": "3778109b6864",
+  "empreinte": "bb5b2c09ac77",
   "date": "2026-11-18"
  },
  "/pme": {
-  "empreinte": "e16b7ce6e2da",
+  "empreinte": "6c63b64e13c9",
   "date": "2026-11-18"
  },
  "/cooperatives": {
-  "empreinte": "29de73b798cf",
+  "empreinte": "1936a6c04db9",
   "date": "2026-11-18"
  },
  "/financement": {
-  "empreinte": "0e311bfdff9f",
+  "empreinte": "244d36ac531b",
   "date": "2026-11-18"
  },
  "/marche": {
-  "empreinte": "6bda3ea14ebd",
+  "empreinte": "e1a813cea9f5",
   "date": "2026-11-18"
  },
  "/vert": {
-  "empreinte": "0a6747d020dc",
+  "empreinte": "1ad295c6f583",
   "date": "2026-11-18"
  },
  "/academie": {
-  "empreinte": "5a7d71c96c1f",
+  "empreinte": "aa8eef385e8e",
   "date": "2026-11-18"
  },
- "/approche": {
-  "empreinte": "637c789ce0dc",
-  "date": "2026-11-15"
- },
  "/a-propos": {
-  "empreinte": "0f5e4f4af284",
-  "date": "2026-11-15"
+  "empreinte": "346bac59e8e8",
+  "date": "2026-11-18"
  },
  "/outils": {
   "empreinte": "e271ad6dd33f",
   "date": "2026-11-15"
  },
  "/conseil": {
-  "empreinte": "ce98dc571bd7",
+  "empreinte": "57e5910d3361",
   "date": "2026-11-18"
- },
- "/formations": {
-  "empreinte": "98ecb3e554a0",
-  "date": "2026-11-14"
- },
- "/equipe": {
-  "empreinte": "ceb780088daf",
-  "date": "2026-11-14"
  },
  "/carrieres": {
   "empreinte": "68b2f5fe51d4",
@@ -78,10 +66,6 @@
  "/outils/hub": {
   "empreinte": "a60664bf58f9",
   "date": "2026-11-18"
- },
- "/soutenir": {
-  "empreinte": "29034018b30a",
-  "date": "2026-11-15"
  },
  "/outils/asbl": {
   "empreinte": "b26517e758b6",

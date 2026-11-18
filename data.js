@@ -26,7 +26,7 @@ const CONFIG = {
 
 /* Bande déroulante. Les dernières actualités publiées s'y ajoutent d'elles-mêmes. */
 const TICKER_MESSAGES = [
-  ["Ubora est une entreprise à caractère social : ses excédents sont réinvestis", "/soutenir"],
+  ["Ubora est une entreprise à caractère social : ses excédents sont réinvestis", "/a-propos#soutenir"],
   ["Nouveau à l'Académie : cinq cas pratiques pour entreprendre dans l'agroalimentaire", "/academie"],
   ["AKIBA : une AVEC sans réseau ni WhatsApp demande son code par SMS, appel ou image", "/outils/akiba#acces"],
   ["ASBL Manager rédige vos statuts, votre règlement intérieur et votre manuel de procédures", "/outils/asbl"],

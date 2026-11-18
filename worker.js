@@ -16,7 +16,9 @@ const ANCIENNES = {
   "/solutions/ubora-avec": "/avec", "/solutions/akiba": "/outils/akiba", "/solutions/ubora-pme": "/pme", "/solutions/ubora-coop": "/cooperatives",
   "/solutions/ubora-fin": "/financement", "/solutions/ubora-market": "/marche", "/solutions/ubora-hub": "/outils/hub", "/solutions/uborahub": "/outils/hub",
   "/solutions": "/outils", "/services": "/conseil", "/diagnostic": "/contact",
-  "/rediger": "https://admin.uborardc.com/", "/admin": "https://admin.uborardc.com/", "/hub": "/outils/hub"
+  "/rediger": "https://admin.uborardc.com/", "/admin": "https://admin.uborardc.com/", "/hub": "/outils/hub",
+  /* pages fusionnées le 18 novembre 2026 */
+  "/approche": "/a-propos#methode", "/equipe": "/a-propos#equipe", "/soutenir": "/a-propos#soutenir", "/formations": "/academie#sessions"
 };
 const FICHIER = /\.[a-z0-9]{2,5}$/i;
 const VIDEO = /\.(mp4|webm)$/i;
