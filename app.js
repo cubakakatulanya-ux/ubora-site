@@ -191,7 +191,7 @@ function vitrine() {
         <div class="bientot-img" aria-hidden="true"><span class="mk">${esc(o.initiales)}</span><span class="status st-soon">En construction</span></div>
         <div class="solution-txt"><b>${esc(o.nom)}</b><span>${esc(o.court || "")}</span><span class="solution-pole">${esc(poleReal(o.pole).nom)}</span></div>
       </article>`).join("")}</div>
-      <p class="vitrine-pied"><a class="link" href="/outils">Fiches détaillées de tous les outils ${ICON.arrow}</a></p>
+      <p class="vitrine-pied"><a class="link" href="/outils">Toutes nos solutions, en détail ${ICON.arrow}</a></p>
     </div>
   </section>`;
 }
@@ -335,7 +335,7 @@ function menuHTML() {
     <li class="has-dd"><button class="dd-btn" type="button" data-r="outils" aria-expanded="false">Solutions ${ICON.chev}</button>
       <div class="dd dd-mega"><div class="dd-col dd-outils"><h5>En ligne</h5>${enLigne.map(o => item(o.url, o.nom, o.court, o.couleur, o.initiales, true)).join("")}</div>
         <div class="dd-col"><h5>En construction</h5><ul class="dd-chantier">${chantier.map(o => `<li><span class="mk" style="background:${o.couleur}">${esc(o.initiales)}</span>${esc(o.nom)}</li>`).join("")}</ul></div>
-        <div class="dd-pied"><a href="/outils" class="dd-more">Fiches détaillées des outils ${ICON.arrow}</a></div></div></li>
+        <div class="dd-pied"><a href="/outils" class="dd-more">Toutes nos solutions ${ICON.arrow}</a></div></div></li>
     <li><a href="/conseil" data-r="conseil">Bailleurs et ONG</a></li>
     <li><a href="/academie" data-r="academie">Académie</a></li>
     <li class="has-dd"><button class="dd-btn" type="button" data-r="a-propos" aria-expanded="false">À propos ${ICON.chev}</button>
@@ -347,7 +347,7 @@ function menuHTML() {
         <a href="/a-propos#soutenir"><b>Nous soutenir</b><small>Une entreprise à objectif social</small></a>
         ${DATA.realisations.length ? `<a href="/realisations"><b>Nos réalisations</b><small>Ce que nous avons fait</small></a>` : ""}
         ${allNews().length ? `<a href="/actualites"><b>Actualités</b><small>Nouvelles du terrain</small></a>` : ""}
-        <a href="/carrieres"><b>Carrières</b><small>Rejoindre l'équipe</small></a>
+        <a href="/a-propos#rejoindre"><b>Nous rejoindre</b><small>Offres et candidature spontanée</small></a>
       </div></li>
     <li class="m-cta"><a class="btn btn-accent" href="/contact">Nous contacter</a></li>`;
 }
@@ -445,7 +445,7 @@ function pageHome() {
 
 function pageAbout() {
   const membres = DATA.equipe;
-  const ongletsPropos = [["mission", "Mission"], ["modele", "Notre modèle"], ["methode", "Notre méthode"], ["equipe", "L'équipe"], ["valeurs", "Nos valeurs"], ["soutenir", "Nous soutenir"], ["faq", "Questions"]];
+  const ongletsPropos = [["mission", "Mission"], ["modele", "Notre modèle"], ["methode", "Notre méthode"], ["equipe", "L'équipe"], ["valeurs", "Nos valeurs"], ["soutenir", "Nous soutenir"], ["rejoindre", "Nous rejoindre"], ["faq", "Questions"]];
   const distingue = [
     ["Le but", "Rémunérer ses propriétaires.", "Rendre plus solides ceux que nous accompagnons."],
     ["Qui est servi", "Ceux qui peuvent payer le prix du marché.", "Aussi ceux qui ne le peuvent pas, à tarif solidaire."],
@@ -491,7 +491,6 @@ function pageAbout() {
     ${secHead("L'équipe", `Des gens de terrain, et des <span class="serif">spécialistes</span>`)}
     ${profilDirigeant()}
     ${membres.length ? `<div class="team-grid">${membres.map(memberCard).join("")}</div>` : ""}
-    <p class="suite"><a class="link" href="/carrieres">Nous rejoindre : offres et candidature spontanée ${ICON.arrow}</a></p>
   </div></section>
 
   <section id="valeurs"><div class="wrap">
@@ -512,6 +511,8 @@ function pageAbout() {
     ${secHead("Nous soutenir", `Quatre façons d'<span class="serif">agir</span> avec nous`, "L'entreprise sociale ne reçoit pas de dons : ils vont à l'association UBORA.")}
     <div class="grid-4">${voies.map(([ic, t, x, lien, lib]) => `<div class="fcard"><span class="ic">${ic}</span><h3>${t}</h3><p>${x}</p><a class="link" href="${lien}">${lib} ${ICON.arrow}</a></div>`).join("")}</div>
   </div></section>
+
+${blocOffres(typeof window !== "undefined" && window.location ? (location.hash.match(/^#offre-(.+)$/) || [])[1] : null)}
 
   <section id="faq"><div class="wrap">${secHead("Questions fréquentes", "Vous vous demandez peut-être")}${faq(FAQ)}</div></section>
   <section><div class="wrap">${finalCta()}</div></section>`;
@@ -654,13 +655,43 @@ function pagePole(id) {
 }
 
 function pageOutils() {
-  return pageHead({ eyebrow: "Nos outils", title: `Des outils qui tiennent là où le réseau <span class="serif">lâche</span>.`, crumbs: [["Nos outils"]],
-    lead: "Pensés pour le village sans réseau et pour qui n'a jamais ouvert un tableur. Chacun est livré avec une formation." }) + `
-  <section><div class="wrap">
-    ${filtres("Filtrer les outils", [["en-ligne", "En ligne"], ["en-cours", "En construction"], ...[...new Set(OUTILS.map(o => o.pole))].map(id => [id, poleReal(id).nom])])}
-    <div class="tools">${OUTILS.map(outilCard).join("")}</div>
+  const enLigne = OUTILS.filter(o => o.statut === "en-ligne"), chantier = OUTILS.filter(o => o.statut !== "en-ligne");
+  const plus = o => o.fiche ? "/outils/" + o.id : (o.page && o.page.startsWith("/") ? o.page : "");
+  return `<section class="pg-tete"><div class="wrap">
+    <div class="pg-hero">
+      <div class="pg-hero-txt">
+        <nav class="crumbs" aria-label="Fil d'Ariane"><a href="/">Accueil</a><span>Nos solutions</span></nav>
+        <span class="eyebrow">Nos solutions numériques</span>
+        <h1>Des outils qui tiennent là où le réseau <span class="serif">lâche</span>.</h1>
+        <p>Pensés pour le village sans réseau et pour qui n'a jamais ouvert un tableur. Chacun s'accompagne d'une formation.</p>
+      </div>
+      <div class="pg-hero-photo">${photo("akiba", "(max-width: 900px) 100vw, 55vw", "Un groupe d'épargne tient ses comptes sur téléphone", ' fetchpriority="high"')}</div>
+    </div>
+    <nav class="pg-onglets" aria-label="Aller à une solution">${enLigne.map(o => `<a href="#${o.id}" data-scroll="${o.id}">${esc(o.nom)}</a>`).join("")}<a href="#chantier" data-scroll="chantier">En construction</a></nav>
   </div></section>
-  <section class="tight-top"><div class="wrap">${finalCta()}</div></section>`;
+  <section class="pg-liste"><div class="wrap">
+    ${enLigne.map(o => `<article class="pg-carte" id="${o.id}" style="--c:${o.couleur}">
+      <div class="pg-carte-g">
+        <div class="pg-carte-photo">${banniere(o, "(max-width: 900px) 100vw, 360px")}</div>
+        <h2>${esc(o.nom)}</h2>
+        <p class="pg-accroche">${esc(o.court || "")}</p>
+        <p>${esc(o.resume)}</p>
+      </div>
+      <div class="pg-carte-d">
+        <div class="pg-bandeau">Ce que fait ${esc(o.nomPhrase || o.nom)}</div>
+        <ul class="pg-domaines pg-points">${(o.points || []).slice(0, 6).map(x => `<li><b>${esc(x)}</b></li>`).join("")}</ul>
+        <div class="pg-actions"><a class="btn btn-accent" href="${o.url}" target="_blank" rel="noopener">Ouvrir ${esc(o.nom)} ${ICON.ext}</a>${plus(o) ? `<a class="link" href="${plus(o)}">En savoir plus ${ICON.arrow}</a>` : ""}</div>
+      </div>
+    </article>`).join("")}
+    <div id="chantier">
+      <h2 class="sous-titre vitrine-titre">En construction</h2>
+      <div class="vitrine-grille chantier">${chantier.map(o => `<article class="solution bientot" style="--c:${o.couleur}">
+        <div class="bientot-img" aria-hidden="true"><span class="mk">${esc(o.initiales)}</span><span class="status st-soon">En construction</span></div>
+        <div class="solution-txt"><b>${esc(o.nom)}</b><span>${esc(o.resume)}</span><span class="solution-pole">${esc(poleReal(o.pole).nom)}</span></div>
+      </article>`).join("")}</div>
+    </div>
+  </div></section>
+  <section><div class="wrap">${finalCta()}</div></section>`;
 }
 
 /* ---------- Page de présentation d'un logiciel (/outils/<id>) ---------- */
@@ -683,7 +714,7 @@ function pageOutil(o) {
     : `<a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent(o.nom)}">Demander un accès ${ICON.arrow}</a>`) : "";
   const ouvrir = classe => `<a class="btn ${classe}" href="${o.url}" target="_blank" rel="noopener">${esc(F.ouvrir)} ${ICON.ext}</a>`;
   return pageHead({
-    eyebrow: esc(o.nom), title: F.titre, lead: esc(F.lead || o.resume), crumbs: [["Nos outils", "/outils"], [esc(o.nom)]], ecran: mockFor(o.mock),
+    eyebrow: esc(o.nom), title: F.titre, lead: esc(F.lead || o.resume), crumbs: [["Nos solutions", "/outils"], [esc(o.nom)]], ecran: mockFor(o.mock),
     extra: `<div class="btn-row">${inscription}${ouvrir(inscription ? "btn-glass" : "btn-accent")}</div>`
   }) + `
 
@@ -837,22 +868,12 @@ function pageRealisations(params) {
   <section><div class="wrap">${finalCta()}</div></section>`;
 }
 
-function pageCareers(openId) {
+/* Offres d'emploi et candidature spontanée (section « Nous rejoindre » de Qui sommes-nous) */
+function blocOffres(openId) {
   const t = todayISO();
   const ouvertes = [...DATA.offres].filter(o => o.cloture >= t).sort((a, b) => (b.publie || "").localeCompare(a.publie || ""));
-  return pageHead({ eyebrow: "Carrières", title: `Rejoindre une équipe <span class="serif">engagée</span>.`, crumbs: [["Carrières"]],
-    lead: "Vous voulez mettre vos compétences au service des familles, des entrepreneurs et des coopératives de la RDC ? Nos offres d'emploi, de stage et de consultance sont publiées ici." }) + `
-  <section><div class="wrap">
-    ${secHead("Pourquoi nous rejoindre", "Un travail qui a du sens")}
-    <div class="grid-4">
-      <div class="fcard reveal"><span class="ic">${ICON.heart}</span><h3>Un impact visible</h3><p>Vous voyez chaque jour ce que votre travail change pour des familles et des entrepreneurs.</p></div>
-      <div class="fcard reveal"><span class="ic">${ICON.map}</span><h3>Le terrain</h3><p>Des missions au contact des bénéficiaires, dans plusieurs provinces.</p></div>
-      <div class="fcard reveal"><span class="ic">${ICON.school}</span><h3>Apprendre sans cesse</h3><p>Formation interne, numérique, méthodes d'accompagnement.</p></div>
-      <div class="fcard reveal"><span class="ic">${ICON.users}</span><h3>Une équipe soudée</h3><p>Des profils complémentaires, qui s'entraident.</p></div>
-    </div>
-  </div></section>
-  <section class="band" id="offres"><div class="wrap">
-    ${secHead("Offres", "Les postes ouverts")}
+  return `  <section class="band" id="rejoindre"><div class="wrap">
+    ${secHead("Nous rejoindre", "Offres d'emploi, de stage et de consultance")}
     ${ouvertes.length ? `<div class="list-rows">${ouvertes.map(o => {
       const subj = "Candidature : " + o.titre;
       return `<article class="row-card two-cols" id="offre-${esc(o.id)}">
@@ -1079,7 +1100,7 @@ const SEO_POLES = {
 /* Titres complets pour la balise <title> ; TITRES reste court (fil d'Ariane, menus) */
 const SEO_TITRES = { ong: "UBORA, association à vocation d'ONG de développement en RDC", soutenir: "Soutenir Ubora : une entreprise à objectif social en RDC", "a-propos": "Qui sommes-nous : Ubora, entreprise sociale en RDC", approche: "Notre approche : la méthode Ubora en six temps", outils: "Outils numériques pour les AVEC, les PME et les organisations · Ubora", conseil: "Projets pilotes, mise en œuvre et conseil en RDC · Ubora", formations: "Formations AVEC, entrepreneuriat et coopératives · Ubora", actualites: "Actualités d'Ubora : nouvelles du terrain en RDC", realisations: "Nos réalisations en RDC · Ubora, entreprise sociale", equipe: "Notre équipe · Ubora, entreprise sociale en RDC", carrieres: "Carrières : rejoindre Ubora, entreprise sociale en RDC", contact: "Contacter Ubora, entreprise sociale en RDC", mentions: "Mentions légales · Ubora, entreprise sociale", poles: "Nos pôles : AVEC, PME, coopératives, financement, marché, environnement, formation · Ubora", confidentialite: "Confidentialité et cookies · Ubora, entreprise sociale", conditions: "Conditions d'utilisation · Ubora, entreprise sociale" };
 const ROBOTS = "index, follow, max-image-preview:large";
-const TITRES = { ong: "L'association UBORA", soutenir: "Soutenir nos actions", "": "Ubora : entreprise sociale en RDC (AVEC, PME, coopératives)", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos outils numériques", conseil: "Projets et conseil", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", poles: "Nos pôles", confidentialite: "Confidentialité", conditions: "Conditions d'utilisation", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
+const TITRES = { ong: "L'association UBORA", soutenir: "Soutenir nos actions", "": "Ubora : entreprise sociale en RDC (AVEC, PME, coopératives)", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos solutions", conseil: "Projets et conseil", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", poles: "Nos pôles", confidentialite: "Confidentialité", conditions: "Conditions d'utilisation", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
 
 /* Construit une page à partir d'une adresse. */
 function resolve(pathname, search, host) {
@@ -1092,6 +1113,8 @@ function resolve(pathname, search, host) {
   if (!base && SOUS_DOMAINES[sd]) base = SOUS_DOMAINES[sd];
   const alias = ANCIENNES[path];
   if (alias) return { redirect: alias };
+  /* les offres d'emploi sont dans « Nous rejoindre », sur Qui sommes-nous (18 novembre 2026) */
+  if (base === "carrieres") return { redirect: sub ? "/a-propos#offre-" + encodeURIComponent(sub) : "/a-propos#rejoindre" };
 
   let html, title, desc, canon = "/" + path;
   const P = pole(base);
@@ -1114,7 +1137,6 @@ function resolve(pathname, search, host) {
       break;
     }
     case "realisations": html = pageRealisations(params); break;
-    case "carrieres": html = pageCareers(sub); canon = "/carrieres"; break;
     case "contact": html = pageContact(params); break;
     case "ong": html = pageOng(); break;
     case "poles": html = pagePoles(); break;
@@ -1207,7 +1229,7 @@ function boot() {
     setMeta('meta[property="og:url"]', "content", CONFIG.site + r.canon);
     setMeta('meta[name="robots"]', "content", r.robots);
     $$("#menu [data-r]").forEach(a => {
-      const on = a.dataset.r === r.base || (a.dataset.r === "poles" && !!pole(r.base) && r.base !== "academie") || (a.dataset.r === "a-propos" && ["a-propos", "carrieres", "ong", "realisations", "actualites"].includes(r.base));
+      const on = a.dataset.r === r.base || (a.dataset.r === "poles" && !!pole(r.base) && r.base !== "academie") || (a.dataset.r === "a-propos" && ["a-propos", "ong", "realisations", "actualites"].includes(r.base));
       a.classList.toggle("current", on);
       if (a.tagName === "A") on ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current");
     });
@@ -1469,7 +1491,7 @@ function boot() {
     if (empreinte() === avant) return;
     const tk = $("#tickerMove"); if (tk) tk.innerHTML = tickerHTML();
     const r = resolve(location.pathname, location.search, location.hostname);
-    if (["", "actualites", "a-propos", "carrieres", "realisations"].includes(r.base) || pole(r.base)) route({ keep: true });
+    if (["", "actualites", "a-propos", "realisations"].includes(r.base) || pole(r.base)) route({ keep: true });
   });
 }
 

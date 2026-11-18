@@ -1,6 +1,6 @@
 {
  "/": {
-  "empreinte": "7f2e55dad9b9",
+  "empreinte": "0cc56e24154d",
   "date": "2026-11-18"
  },
  "/avec": {
@@ -32,20 +32,16 @@
   "date": "2026-11-18"
  },
  "/a-propos": {
-  "empreinte": "346bac59e8e8",
+  "empreinte": "7fc1fdfc9016",
   "date": "2026-11-18"
  },
  "/outils": {
-  "empreinte": "e271ad6dd33f",
-  "date": "2026-11-15"
+  "empreinte": "11d404892428",
+  "date": "2026-11-18"
  },
  "/conseil": {
   "empreinte": "57e5910d3361",
   "date": "2026-11-18"
- },
- "/carrieres": {
-  "empreinte": "68b2f5fe51d4",
-  "date": "2026-10-04"
  },
  "/contact": {
   "empreinte": "a584f0e8d68e",
@@ -56,19 +52,19 @@
   "date": "2026-11-14"
  },
  "/outils/akiba": {
-  "empreinte": "5a8167aec528",
+  "empreinte": "f5a9d243ea89",
   "date": "2026-11-18"
  },
  "/outils/bp": {
-  "empreinte": "dccb7c05eecf",
+  "empreinte": "08e045f338e4",
   "date": "2026-11-18"
  },
  "/outils/hub": {
-  "empreinte": "a60664bf58f9",
+  "empreinte": "00a1aa69064d",
   "date": "2026-11-18"
  },
  "/outils/asbl": {
-  "empreinte": "b26517e758b6",
+  "empreinte": "d4955155f1c2",
   "date": "2026-11-18"
  },
  "/ong": {

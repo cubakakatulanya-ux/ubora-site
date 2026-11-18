@@ -18,7 +18,7 @@ const ANCIENNES = {
   "/solutions": "/outils", "/services": "/conseil", "/diagnostic": "/contact",
   "/rediger": "https://admin.uborardc.com/", "/admin": "https://admin.uborardc.com/", "/hub": "/outils/hub",
   /* pages fusionnées le 18 novembre 2026 */
-  "/approche": "/a-propos#methode", "/equipe": "/a-propos#equipe", "/soutenir": "/a-propos#soutenir", "/formations": "/academie#sessions"
+  "/approche": "/a-propos#methode", "/equipe": "/a-propos#equipe", "/soutenir": "/a-propos#soutenir", "/formations": "/academie#sessions", "/carrieres": "/a-propos#rejoindre"
 };
 const FICHIER = /\.[a-z0-9]{2,5}$/i;
 const VIDEO = /\.(mp4|webm)$/i;
@@ -116,6 +116,9 @@ async function servir(request, env, ctx) {
 
     /* 2. Anciennes adresses du site */
     const ancienne = ANCIENNES[chemin.replace(/\/+$/, "")];
+    /* une ancienne adresse d'offre d'emploi mène à l'offre, dans « Nous rejoindre » */
+    const offre = /^\/carrieres\/([^/]+)\/?$/.exec(chemin);
+    if (offre) return renvoi(`https://${APEX}/a-propos#offre-${offre[1]}`);
     if (ancienne) return renvoi(ancienne.startsWith("http") ? ancienne : `https://${APEX}${ancienne}`);
 
     /* 3. Sous-domaines */

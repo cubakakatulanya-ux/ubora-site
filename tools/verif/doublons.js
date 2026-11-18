@@ -2,7 +2,7 @@
    le menu du haut est commun à tout le site), et aucune page ne renvoie vers elle-même.
    PAGES=accueil,avec,... (par défaut : toutes) ; signale aussi un débordement horizontal. */
 const B = process.env.BASE || "http://localhost:5188";
-const TOUTES = "accueil,avec,pme,cooperatives,financement,marche,vert,academie,poles,a-propos,outils,conseil,carrieres,contact,ong,mentions,confidentialite,conditions,outils/akiba,outils/hub,outils/asbl,outils/bp";
+const TOUTES = "accueil,avec,pme,cooperatives,financement,marche,vert,academie,poles,a-propos,outils,conseil,contact,ong,mentions,confidentialite,conditions,outils/akiba,outils/hub,outils/asbl,outils/bp";
 module.exports = async p => {
   await p.taille(1366, 900, false);
   const pb = [];
