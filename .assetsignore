@@ -12,5 +12,3 @@ node_modules
 worker.js
 .wrangler/
 
-# la source de la feuille de style ; le site sert styles.min.css (tools/css.js)
-styles.css
