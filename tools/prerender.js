@@ -101,6 +101,9 @@ function donneesStructurees(chemin, r) {
 }
 
 async function main() {
+  /* feuille de style servie : allégée et compactée à partir de styles.css (tools/css.js) */
+  const css = require("./css")();
+  console.log(`styles.min.css : ${Math.round(css.avant / 1024)} Ko → ${Math.round(css.apres / 1024)} Ko`);
   await chargerBase();
 
   const version = crypto.createHash("sha1").update(["styles.css", "data.js", "db.js", "admin.js", "app.js", "chat.js"].map(read).join("")).digest("hex").slice(0, 10);
