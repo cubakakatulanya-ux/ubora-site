@@ -184,6 +184,8 @@ ${pages.map(c => `  <url><loc>${S.CONFIG.site}${c === "/" ? "/" : c}</loc>${modi
   <url><loc>https://akiba.uborardc.com/</loc><priority>0.8</priority></url>
   <url><loc>https://academie.uborardc.com/</loc><priority>0.8</priority></url>
   <url><loc>https://hub.uborardc.com/</loc><priority>0.8</priority></url>
+  <url><loc>https://akibas.uborardc.com/</loc><priority>0.7</priority></url>
+  <url><loc>https://asbl.uborardc.com/</loc><priority>0.8</priority></url>
 </urlset>
 `);
 
