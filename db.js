@@ -23,10 +23,43 @@ const UboraDB = (() => {
   let client = null;
 
   const configured = () => !!(typeof SUPABASE !== "undefined" && SUPABASE.url && SUPABASE.anonKey);
-  function sb() {
-    if (!configured() || typeof window === "undefined" || !window.supabase) return null;
-    if (!client) client = window.supabase.createClient(SUPABASE.url, SUPABASE.anonKey, { auth: { persistSession: true, storageKey: "ubora-admin" } });
+  /* la bibliothèque Supabase n'est chargée qu'à la demande (espace équipe), avec son empreinte SRI */
+  let chargement = null;
+  function bibliotheque() {
+    if (typeof window === "undefined" || typeof document === "undefined" || !document.createElement) return Promise.resolve(null);
+    if (window.supabase) return Promise.resolve(window.supabase);
+    if (!chargement) chargement = new Promise(ok => {
+      const s = document.createElement("script");
+      s.src = "/lib/supabase-2.45.4.min.js"; s.integrity = "sha384-GFr3yTh5lJznCbZfpTtXnwboFsxqtTQoeTZCRHhE0579KrRmlCzen5AA8ohaB5ug";
+      s.onload = () => ok(window.supabase || null);
+      s.onerror = () => { chargement = null; ok(null); };
+      document.head.appendChild(s);
+    });
+    return chargement;
+  }
+  async function sb() {
+    if (!configured()) return null;
+    const lib = await bibliotheque(); if (!lib) return null;
+    if (!client) client = lib.createClient(SUPABASE.url, SUPABASE.anonKey, { auth: { persistSession: true, storageKey: "ubora-admin" } });
     return client;
+  }
+  const pret = async () => !!(await sb());
+
+  /* pages publiques : requêtes directes à la base, sans bibliothèque (même clé publique, mêmes règles d'accès) */
+  const entetes = () => ({ apikey: SUPABASE.anonKey, Authorization: "Bearer " + SUPABASE.anonKey });
+  async function lireTable(table, ordre) {
+    const r = await fetch(`${SUPABASE.url}/rest/v1/${table}?select=*&publie=eq.true&order=${ordre}`, { headers: entetes() });
+    if (!r.ok) throw new Error(table + " : " + r.status);
+    return r.json();
+  }
+  async function deposer(table, ligne) {
+    try {
+      const r = await delai(fetch(`${SUPABASE.url}/rest/v1/${table}`, { method: "POST", headers: { ...entetes(), "Content-Type": "application/json", Prefer: "return=minimal" }, body: JSON.stringify(ligne) }));
+      if (r && r.error) return r;
+      if (r.ok) return { error: null };
+      let e = {}; try { e = await r.json(); } catch (x) {}
+      return { error: { code: e.code, message: e.message || "HTTP " + r.status } };
+    } catch (e) { return { error: { message: String((e && e.message) || e) } }; }
   }
 
   /* --- Conversion base <-> site --- */
@@ -52,22 +85,16 @@ const UboraDB = (() => {
 
   /* --- Contenu public --- */
   async function load() {
-    const c = sb(); if (!c) return DATA;
-    try {
-      const [a, f, o, e, r] = await Promise.all([
-        c.from("site_actualites").select("*").eq("publie", true).order("date", { ascending: false }),
-        c.from("site_formations").select("*").eq("publie", true).order("date", { ascending: true }),
-        c.from("site_offres").select("*").eq("publie", true).order("publie_le", { ascending: false }),
-        c.from("site_equipe").select("*").eq("publie", true).order("ordre", { ascending: true }).order("nom", { ascending: true }),
-        c.from("site_realisations").select("*").eq("publie", true).order("ordre", { ascending: true }).order("created_at", { ascending: false })
-      ]);
-      if (!a.error) DATA.actualites = (a.data || []).map(fromNews);
-      if (!f.error) DATA.formations = (f.data || []).map(fromTrain);
-      if (!o.error) DATA.offres = (o.data || []).map(fromJob);
-      if (!e.error) DATA.equipe = (e.data || []).map(fromMember);
-      if (!r.error) DATA.realisations = (r.data || []).map(fromReal);
-      DATA.source = "base";
-    } catch (e) { console.warn("Ubora : base indisponible.", e); }
+    if (!configured() || typeof fetch === "undefined" || typeof window === "undefined" || window.UBORA_PRERENDER) return DATA;
+    const lu = await Promise.allSettled([lireTable("site_actualites", "date.desc"), lireTable("site_formations", "date.asc"), lireTable("site_offres", "publie_le.desc"),
+      lireTable("site_equipe", "ordre.asc,nom.asc"), lireTable("site_realisations", "ordre.asc,created_at.desc")]);
+    const [a, f, o, e, r] = lu.map(x => x.status === "fulfilled" ? x.value : null);
+    if (a) DATA.actualites = a.map(fromNews);
+    if (f) DATA.formations = f.map(fromTrain);
+    if (o) DATA.offres = o.map(fromJob);
+    if (e) DATA.equipe = e.map(fromMember);
+    if (r) DATA.realisations = r.map(fromReal);
+    if (lu.some(x => x.status === "fulfilled")) DATA.source = "base"; else console.warn("Ubora : base indisponible.");
     return DATA;
   }
 
@@ -77,66 +104,66 @@ const UboraDB = (() => {
   /* la base refuse les envois trop nombreux en peu de temps, tous visiteurs confondus (fonction site_limite_debit) */
   const limite = error => !!error && /trop|limite|rate/i.test(String(error.message || ""));
   async function sendMessage(m) {
-    const c = sb(); if (!c) return { ok: false };
-    const { error } = await delai(c.from("site_messages").insert([m]));
+    if (!configured()) return { ok: false };
+    const { error } = await deposer("site_messages", m);
     return { ok: !error, error, limite: limite(error) };
   }
   async function logQuestion(q) {
-    const c = sb(); if (!c) return { ok: false };
-    const { error } = await delai(c.from("site_questions").insert([q]));
+    if (!configured()) return { ok: false };
+    const { error } = await deposer("site_questions", q);
     return { ok: !error, error };
   }
   async function subscribe(email) {
-    const c = sb(); if (!c) return { ok: false };
-    const { error } = await delai(c.from("site_abonnes").insert([{ email: email.toLowerCase() }]));
+    if (!configured()) return { ok: false };
+    const { error } = await deposer("site_abonnes", { email: email.toLowerCase() });
     return { ok: !error || error.code === "23505", error, limite: limite(error) };
   }
 
   /* --- Espace équipe --- */
   async function signIn(email, password) {
-    const c = sb(); if (!c) return { ok: false, message: "La base de données est injoignable." };
+    const c = await sb(); if (!c) return { ok: false, message: "La base de données est injoignable." };
     const { data, error } = await c.auth.signInWithPassword({ email, password });
     if (error) return { ok: false, message: error.message === "Invalid login credentials" ? "Adresse e-mail ou mot de passe incorrect." : error.message };
     return { ok: true, user: data.user };
   }
-  async function signOut() { const c = sb(); if (c) await c.auth.signOut(); }
+  async function signOut() { const c = await sb(); if (c) await c.auth.signOut(); }
   async function currentUser() {
-    const c = sb(); if (!c) return null;
+    const c = await sb(); if (!c) return null;
     const { data } = await c.auth.getSession();
     return data?.session?.user || null;
   }
   async function isAdmin() {
-    const c = sb(); if (!c) return false;
+    const c = await sb(); if (!c) return false;
     const { data, error } = await c.from("site_admins").select("email").limit(1);
     return !error && data && data.length > 0;
   }
   async function listAll(kind) {
-    const c = sb(), m = MAP[kind]; if (!c) return [];
+    const c = await sb(), m = MAP[kind]; if (!c) return [];
     const { data, error } = await c.from(m.table).select("*").order(m.order, { ascending: !!m.asc });
     if (error) { console.warn(error); return []; }
     return data.map(r => ({ ...m.from(r), _id: r.id, _publie: r.publie }));
   }
   async function save(kind, obj, id) {
-    const c = sb(), m = MAP[kind]; if (!c) return { ok: false, message: "Base injoignable." };
+    const c = await sb(), m = MAP[kind]; if (!c) return { ok: false, message: "Base injoignable." };
     const row = m.to(obj);
     const { error } = id ? await c.from(m.table).update(row).eq("id", id) : await c.from(m.table).insert([row]);
     if (error) return { ok: false, message: error.code === "23505" ? "Un élément porte déjà ce titre. Modifiez-le légèrement." : error.message };
     return { ok: true };
   }
   async function remove(kind, id) {
-    const c = sb(), m = MAP[kind]; if (!c) return { ok: false };
+    const c = await sb(), m = MAP[kind]; if (!c) return { ok: false };
     const { error } = await c.from(m.table).delete().eq("id", id);
     return { ok: !error, message: error?.message };
   }
   async function list(table, order = "created_at", limit = 500) {
-    const c = sb(); if (!c) return [];
+    const c = await sb(); if (!c) return [];
     const { data, error } = await c.from(table).select("*").order(order, { ascending: false }).limit(limit);
     if (error) console.warn(error);
     return data || [];
   }
   /* Photo déjà réduite par l'espace équipe ; renvoie son adresse publique */
   async function uploadImage(blob, dossier) {
-    const c = sb(); if (!c) return { ok: false, message: "Base injoignable." };
+    const c = await sb(); if (!c) return { ok: false, message: "Base injoignable." };
     const nom = `${dossier}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.jpg`;
     const { error } = await c.storage.from("site-medias").upload(nom, blob, { contentType: "image/jpeg", cacheControl: "31536000", upsert: false });
     if (error) return { ok: false, message: error.message };
@@ -144,17 +171,17 @@ const UboraDB = (() => {
   }
   async function removeRow(table, id) {
     if (!["site_messages", "site_abonnes", "site_questions"].includes(table)) return { ok: false };
-    const c = sb(); if (!c) return { ok: false };
+    const c = await sb(); if (!c) return { ok: false };
     const { error } = await c.from(table).delete().eq("id", id);
     return { ok: !error };
   }
   async function setTraite(id, traite) {
-    const c = sb(); if (!c) return { ok: false };
+    const c = await sb(); if (!c) return { ok: false };
     const { error } = await c.from("site_messages").update({ traite }).eq("id", id);
     return { ok: !error };
   }
   async function counts() {
-    const c = sb(); if (!c) return {};
+    const c = await sb(); if (!c) return {};
     const q = (t, f) => { let r = c.from(t).select("id", { count: "exact", head: true }); if (f) r = f(r); return r; };
     const [m, mn, a, s, f, o, e, re] = await Promise.all([
       q("site_messages"), q("site_messages", r => r.eq("traite", false)), q("site_actualites"),
@@ -166,7 +193,7 @@ const UboraDB = (() => {
 
   /* Résumé des visites sur les derniers jours (fonction site_stats de la base) */
   async function stats(jours) {
-    const c = sb(); if (!c) return null;
+    const c = await sb(); if (!c) return null;
     const { data, error } = await c.rpc("site_stats", { p_jours: jours });
     if (error) { console.warn(error); return null; }
     return data;
@@ -178,19 +205,19 @@ const UboraDB = (() => {
      La base n'accorde les droits de l'équipe qu'à une session validée par le code
      dès qu'un code est activé sur le compte (fonction est_admin_site). */
   async function mfaEtat() {
-    const c = sb(); if (!c) return null;
+    const c = await sb(); if (!c) return null;
     const [n, f] = await Promise.all([c.auth.mfa.getAuthenticatorAssuranceLevel(), c.auth.mfa.listFactors()]);
     if (n.error || f.error) return null;
     const actifs = (f.data && f.data.totp) || [];
     return { niveau: n.data.currentLevel, requis: n.data.nextLevel, actif: actifs.length > 0, facteur: actifs[0] || null, tous: (f.data && f.data.all) || [] };
   }
   async function mfaValider(code) {
-    const c = sb(), e = await mfaEtat(); if (!c || !e || !e.facteur) return { ok: false, message: "Aucun code n'est activé sur ce compte." };
+    const c = await sb(), e = await mfaEtat(); if (!c || !e || !e.facteur) return { ok: false, message: "Aucun code n'est activé sur ce compte." };
     const { error } = await c.auth.mfa.challengeAndVerify({ factorId: e.facteur.id, code });
     return error ? { ok: false, message: "Code incorrect ou expiré. Saisissez le code affiché maintenant dans l'application." } : { ok: true };
   }
   async function mfaPreparer() {
-    const c = sb(), e = await mfaEtat(); if (!c || !e) return { ok: false, message: "Base injoignable." };
+    const c = await sb(), e = await mfaEtat(); if (!c || !e) return { ok: false, message: "Base injoignable." };
     /* une activation commencée puis abandonnée laisse un facteur non vérifié : on le retire avant d'en créer un autre */
     for (const f of e.tous.filter(x => x.status !== "verified")) await c.auth.mfa.unenroll({ factorId: f.id });
     const { data, error } = await c.auth.mfa.enroll({ factorType: "totp", friendlyName: "Espace équipe Ubora " + new Date().toISOString().slice(0, 16) });
@@ -198,10 +225,10 @@ const UboraDB = (() => {
     return { ok: true, id: data.id, qr: data.totp.qr_code, secret: data.totp.secret };
   }
   async function mfaConfirmer(factorId, code) {
-    const c = sb(); if (!c) return { ok: false, message: "Base injoignable." };
+    const c = await sb(); if (!c) return { ok: false, message: "Base injoignable." };
     const { error } = await c.auth.mfa.challengeAndVerify({ factorId, code });
     return error ? { ok: false, message: "Code incorrect. Vérifiez l'heure du téléphone, puis saisissez le code affiché maintenant." } : { ok: true };
   }
 
-  return { configured, mappers, load, sendMessage, subscribe, logQuestion, signIn, signOut, currentUser, isAdmin, listAll, save, remove, list, uploadImage, removeRow, setTraite, counts, stats, mfaEtat, mfaValider, mfaPreparer, mfaConfirmer };
+  return { configured, pret, mappers, load, sendMessage, subscribe, logQuestion, signIn, signOut, currentUser, isAdmin, listAll, save, remove, list, uploadImage, removeRow, setTraite, counts, stats, mfaEtat, mfaValider, mfaPreparer, mfaConfirmer };
 })();

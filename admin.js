@@ -27,7 +27,7 @@ function pageAdmin() {
 
 async function bindAdmin() {
   const pane = $("#adminPane"); if (!pane) return;
-  if (!UboraDB.configured() || !window.supabase) { pane.innerHTML = `<div class="empty"><b>La base de données est injoignable.</b><p>Vérifiez votre connexion, puis rechargez la page.</p></div>`; return; }
+  if (!UboraDB.configured() || !(await UboraDB.pret())) { pane.innerHTML = `<div class="empty"><b>La base de données est injoignable.</b><p>Vérifiez votre connexion, puis rechargez la page.</p></div>`; return; }
   const user = await UboraDB.currentUser();
   if (!user) return renderLogin(pane);
   /* compte protégé par un code : la session doit d'abord être validée par ce code (la base l'exige aussi) */

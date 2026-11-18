@@ -1157,6 +1157,12 @@ function resolve(pathname, search, host) {
    NAVIGATEUR
    ========================================================================== */
 function boot() {
+  /* l'espace équipe charge son code à la demande (les pages publiques ne le téléchargent pas) */
+  if (typeof pageAdmin !== "function" && (/^admin\./.test(location.hostname) || location.pathname.replace(/\/+$/, "") === "/admin")) {
+    const v = ((document.querySelector('script[src*="/app.js"]') || {}).src || "").split("v=")[1] || "";
+    const s = document.createElement("script"); s.src = "/admin.js" + (v ? "?v=" + v : ""); s.onload = boot; s.onerror = boot;
+    document.head.appendChild(s); return;
+  }
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const app = $("#app");
