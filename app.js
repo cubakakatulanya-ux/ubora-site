@@ -535,8 +535,7 @@ function pagePole(id) {
     eyebrow: esc(P.nom), title: P.titre, lead: esc(P.lead), crumbs: [["Nos pôles", "/#poles"], [esc(P.nom)]], photo: P.photo,
     extra: `<div class="btn-row"><a class="btn btn-accent" href="/contact?sujet=${encodeURIComponent(P.nom)}">Parler de votre projet ${ICON.arrow}</a>
       ${P.boite && P.boite.statut === "disponible" ? `<a class="btn btn-glass" href="#boite" data-scroll="boite">La boîte à outils</a>` : ""}
-      ${enLigne.filter(o => o.pole === P.id && (o.fiche || lienOutil(o) === P.chemin)).map(o => lienOutil(o) === P.chemin ? `<a class="btn btn-glass" href="${o.url}" target="_blank" rel="noopener">Ouvrir ${esc(o.nom)} ${ICON.ext}</a>` : "").join("")}</div>
-      <span class="sub-chip">${esc(P.sousDomaine)}</span>`
+      ${enLigne.filter(o => o.pole === P.id && (o.fiche || lienOutil(o) === P.chemin)).map(o => lienOutil(o) === P.chemin ? `<a class="btn btn-glass" href="${o.url}" target="_blank" rel="noopener">Ouvrir ${esc(o.nom)} ${ICON.ext}</a>` : "").join("")}</div>`
   }) + `
 
   ${P.video ? blocVideo(P.video) : ""}
@@ -646,7 +645,7 @@ function pageOutil(o) {
   const ouvrir = classe => `<a class="btn ${classe}" href="${o.url}" target="_blank" rel="noopener">${esc(F.ouvrir)} ${ICON.ext}</a>`;
   return pageHead({
     eyebrow: esc(o.nom), title: F.titre, lead: esc(F.lead || o.resume), crumbs: [["Nos outils", "/outils"], [esc(o.nom)]], ecran: mockFor(o.mock),
-    extra: `<div class="btn-row">${inscription}${ouvrir(inscription ? "btn-glass" : "btn-accent")}</div><span class="sub-chip">${esc(o.sousDomaine)}</span>`
+    extra: `<div class="btn-row">${inscription}${ouvrir(inscription ? "btn-glass" : "btn-accent")}</div>`
   }) + `
 
   ${F.video ? blocVideo(F.video) : ""}
@@ -865,7 +864,7 @@ function pageOng() {
   const sujet = "/contact?sujet=" + encodeURIComponent("UBORA, l'association");
   return pageHead({ eyebrow: "UBORA · association à vocation d'ONG", title: `L'association UBORA, au service des <span class="serif">communautés</span>.`, crumbs: [["Qui sommes-nous", "/a-propos"], ["L'association UBORA"]], photo: ["terrain", "Une communauté réunie en plein air"],
     lead: "L'association sans but lucratif de l'écosystème Ubora : des projets communautaires financés par des dons et des subventions, pour les femmes, les jeunes et les plus vulnérables.",
-    extra: `<div class="btn-row"><a class="btn btn-accent" href="${sujet}">Financer un projet de l'association ${ICON.arrow}</a><a class="btn btn-glass" href="#lien" data-scroll="lien">L'association et l'entreprise sociale</a></div><span class="sub-chip">ong.uborardc.com</span>` }) + `
+    extra: `<div class="btn-row"><a class="btn btn-accent" href="${sujet}">Financer un projet de l'association ${ICON.arrow}</a><a class="btn btn-glass" href="#lien" data-scroll="lien">L'association et l'entreprise sociale</a></div>` }) + `
   <section><div class="wrap two">
     <div><span class="eyebrow">Vision</span><p class="quote">${esc(ONG.vision)}</p></div>
     <div class="prose-sm"><p><b>Mission.</b> ${esc(ONG.mission)}</p><p class="muted">${esc(ONG.statut)} ${esc(ONG.creation)}</p>
@@ -1232,7 +1231,7 @@ function boot() {
     setMeta('meta[property="og:url"]', "content", CONFIG.site + r.canon);
     setMeta('meta[name="robots"]', "content", r.robots);
     $$("#menu [data-r]").forEach(a => {
-      const on = a.dataset.r === r.base || (a.dataset.r === "poles" && (!!pole(r.base) || r.base === "outils")) || (a.dataset.r === "a-propos" && ["a-propos", "approche", "carrieres", "equipe"].includes(r.base));
+      const on = a.dataset.r === r.base || (a.dataset.r === "poles" && !!pole(r.base)) || (a.dataset.r === "a-propos" && ["a-propos", "approche", "carrieres", "equipe", "ong", "soutenir", "realisations", "actualites"].includes(r.base));
       a.classList.toggle("current", on);
       if (a.tagName === "A") on ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current");
     });

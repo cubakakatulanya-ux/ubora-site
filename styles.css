@@ -2362,3 +2362,8 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
 .r-hero-badge span b { font-size: inherit; font-weight: 500; color: var(--ink); }
 @media (min-width: 1001px) { .r-pole.transversal { grid-column: span 2; } }
 @media (max-width: 600px) { .final h2 { font-size: clamp(26px, 7.4vw, 32px); } .r-pole { padding: 14px 16px; } }
+
+/* REFONTE, étape 2 : en-têtes de page alignés sur l'accueil (titre fin et grand, chapeau court) */
+.page-head h1 { font-size: clamp(34px, 4.6vw, 58px); font-weight: 300; line-height: 1.06; letter-spacing: -.025em; }
+.page-head h1 .serif { font-family: var(--f-display); font-style: normal; font-weight: 500; }
+.page-head .lead { max-width: 52ch; font-size: clamp(16px, 1.4vw, 18.5px); }
