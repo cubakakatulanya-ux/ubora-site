@@ -2455,3 +2455,31 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
   .menu > li:not(.m-cta) { border-bottom: 1px solid var(--line); }
   .menu > li > a, .dd-btn { font-size: 18px; font-weight: 500; }
 }
+
+/* ==========================================================================
+   Même en-tête sur toutes les pages (18 novembre 2026) : la carte de « Nos pôles ».
+   ========================================================================== */
+.pg-hero .lead { margin: 0; max-width: 46ch; color: rgba(255, 255, 255, .86); font-size: clamp(16px, 1.4vw, 18px); }
+.pg-hero .btn-row { margin-top: 8px; }
+.pg-hero .btn-glass, .pg-hero .btn-ghost { background: transparent; border-color: rgba(255, 255, 255, .6); color: #fff; }
+.pg-hero .btn-glass:hover, .pg-hero .btn-ghost:hover { background: #fff; color: #0D3B28; }
+.pg-hero .crumbs span::before { color: rgba(255, 255, 255, .5); }
+/* carte claire, quand la page n'a ni photo ni écran */
+.pg-hero.pg-hero-clair { grid-template-columns: 1fr; min-height: 0; background: var(--menthe); color: var(--ink); border: 1px solid var(--menthe-bord); }
+.pg-hero-clair .pg-hero-txt { padding-block: clamp(28px, 4vw, 52px); }
+.pg-hero-clair h1 { color: var(--ink); }
+.pg-hero-clair h1 .serif { color: var(--vert-texte); }
+.pg-hero-clair .eyebrow { color: var(--vert-texte); }
+.pg-hero-clair .lead, .pg-hero-clair .pg-hero-txt p { color: var(--muted); }
+.pg-hero-clair .crumbs, .pg-hero-clair .crumbs a { color: var(--muted); }
+.pg-hero-clair .crumbs span::before { color: var(--muted); }
+.pg-hero-clair .btn-glass, .pg-hero-clair .btn-ghost { border-color: var(--line); color: var(--ink); }
+.pg-hero-clair .btn-glass:hover, .pg-hero-clair .btn-ghost:hover { background: var(--surface); color: var(--ink); }
+/* carte avec l'écran d'une application (fiches des solutions) */
+.pg-hero.pg-hero-ecran { align-items: center; }
+.pg-ecran { position: relative; display: grid; place-items: center; padding: clamp(18px, 3vw, 36px); }
+.pg-ecran .screen { width: 100%; max-width: 440px; }
+.pg-ecran .mock-note { position: absolute; right: 20px; bottom: 14px; color: rgba(255, 255, 255, .6); font-size: 12px; }
+@media (max-width: 900px) { .pg-ecran { padding-top: 0; } }
+.pg-hero-txt { text-align: left; align-items: flex-start; }
+.pg-hero-txt .btn-row { justify-content: flex-start; }

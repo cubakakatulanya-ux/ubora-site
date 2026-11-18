@@ -129,20 +129,16 @@ const photo = (nom, sizes, alt = "", extra = "") =>
 
 /* ---------- Composants ---------- */
 function pageHead({ eyebrow, title, lead, crumbs = [], extra = "", photo: visuel, ecran }) {
+  /* même en-tête partout (18 novembre 2026) : une grande carte arrondie, vert foncé avec la photo ou l'écran, claire sans visuel */
   const texte = `<nav class="crumbs" aria-label="Fil d'Ariane"><a href="/">Accueil</a>${crumbs.map(([t, h]) => h ? `<span><a href="${h}">${t}</a></span>` : `<span>${t}</span>`).join("")}</nav>
       <span class="eyebrow">${eyebrow}</span>
       <h1>${title}</h1>
       ${lead ? `<p class="lead">${lead}</p>` : ""}
       ${extra}`;
-  if (ecran) return `<section class="deep page-head has-photo has-ecran"><div class="wrap head-grid">
-      <div>${texte}</div>
-      <div class="screen head-ecran">${ecran}<span class="mock-note" aria-hidden="true">Écran illustratif</span></div>
-    </div></section>`;
-  if (!visuel) return `<section class="deep page-head"><div class="wrap">${texte}</div></section>`;
-  return `<section class="deep page-head has-photo"><div class="wrap head-grid">
-      <div>${texte}</div>
-      <figure class="head-photo">${photo(visuel[0], "(max-width: 900px) 100vw, 44vw", visuel[1], ' fetchpriority="high"')}</figure>
-    </div></section>`;
+  const carte = (classe, visuelHTML) => `<section class="pg-tete"><div class="wrap"><div class="pg-hero ${classe}"><div class="pg-hero-txt">${texte}</div>${visuelHTML}</div></div></section>`;
+  if (ecran) return carte("pg-hero-ecran", `<div class="pg-ecran"><div class="screen">${ecran}</div><span class="mock-note" aria-hidden="true">Écran illustratif</span></div>`);
+  if (!visuel) return carte("pg-hero-clair", "");
+  return carte("", `<div class="pg-hero-photo">${photo(visuel[0], "(max-width: 900px) 100vw, 55vw", visuel[1], ' fetchpriority="high"')}</div>`);
 }
 function bandePhotos() {
   const une = PHOTOS.map(([nom, t]) => `<figure>${photo(nom, "360px", "", ' loading="lazy"')}<figcaption>${esc(t)}</figcaption></figure>`).join("");
