@@ -2495,3 +2495,23 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
   .final { background-image: url("/img/terrain-fond-1400.webp"); }
   .vitrine-banniere { background-image: url("/img/formation-fond-1400.webp"); }
 }
+
+/* Nouvelle organisation (19 novembre 2026) : outils par pôle, étapes en pastilles, blocs de Notre approche, réalisations déjà en place */
+.pg-carte-d { display: grid; gap: 14px; align-content: start; }
+.pg-outils { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.pg-outils li > a, .pg-outils li.bientot { display: flex; align-items: center; gap: 12px; padding: 10px 12px; border: 1px solid var(--line); border-radius: 10px; text-decoration: none; color: var(--ink); background: var(--surface); }
+.pg-outils li > a:hover { border-color: var(--c); }
+.pg-outils .mk { flex: none; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 9px; color: #fff; font-size: 13px; font-weight: 500; }
+.pg-outils b { display: block; font-weight: 500; }
+.pg-outils small { display: block; color: var(--muted); font-size: 13.5px; }
+.pg-outils li.bientot { opacity: .8; border-style: dashed; }
+.pg-etapes { display: flex; flex-wrap: wrap; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.pg-etapes li { padding: 6px 12px; border-radius: 999px; background: var(--surface-2); color: var(--ink); font-size: 14px; }
+.pg-carte-d .pg-lien { margin-top: 6px !important; }
+.approche-bloc { margin-top: 34px; scroll-margin-top: 110px; }
+.approche-bloc .muted { max-width: 70ch; margin: 0 0 16px; }
+#bailleurs .btn-row.centre { margin-top: 30px; }
+.deja { margin-bottom: 40px; }
+.deja .deja-n { display: block; font-size: 40px; font-weight: 300; line-height: 1; color: var(--vert-texte); }
+.deja-liste { display: grid; gap: 6px; margin: 8px 0 0; padding: 0; list-style: none; }
+.deja-liste a { color: var(--ink); }

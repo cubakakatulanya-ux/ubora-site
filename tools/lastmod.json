@@ -1,47 +1,39 @@
 {
  "/": {
-  "empreinte": "0cc56e24154d",
-  "date": "2026-11-18"
+  "empreinte": "f6e90415f4a7",
+  "date": "2026-11-19"
  },
  "/avec": {
-  "empreinte": "e8bbc3a25d22",
-  "date": "2026-11-18"
+  "empreinte": "fe24257da420",
+  "date": "2026-11-19"
  },
  "/pme": {
-  "empreinte": "29de3cbd7ba3",
-  "date": "2026-11-18"
+  "empreinte": "99938bf3ebb4",
+  "date": "2026-11-19"
  },
  "/cooperatives": {
-  "empreinte": "a3f0b711e581",
-  "date": "2026-11-18"
+  "empreinte": "dba25455f5df",
+  "date": "2026-11-19"
  },
  "/financement": {
-  "empreinte": "d153733e1f65",
-  "date": "2026-11-18"
+  "empreinte": "721df1ccbae4",
+  "date": "2026-11-19"
  },
  "/marche": {
-  "empreinte": "84fe21a10896",
-  "date": "2026-11-18"
+  "empreinte": "aa19cc3098bd",
+  "date": "2026-11-19"
  },
  "/vert": {
-  "empreinte": "4b726f4b7787",
-  "date": "2026-11-18"
+  "empreinte": "6c045d654a28",
+  "date": "2026-11-19"
  },
  "/academie": {
-  "empreinte": "c8a502c0ebdb",
-  "date": "2026-11-18"
+  "empreinte": "189c0519f651",
+  "date": "2026-11-19"
  },
  "/a-propos": {
-  "empreinte": "8602d6e2b7c7",
-  "date": "2026-11-18"
- },
- "/outils": {
-  "empreinte": "11d404892428",
-  "date": "2026-11-18"
- },
- "/conseil": {
-  "empreinte": "3e8ea0e6743a",
-  "date": "2026-11-18"
+  "empreinte": "917c2fcb4152",
+  "date": "2026-11-19"
  },
  "/contact": {
   "empreinte": "019541502fd5",
@@ -52,24 +44,24 @@
   "date": "2026-11-18"
  },
  "/outils/akiba": {
-  "empreinte": "8ca5018324b9",
-  "date": "2026-11-18"
+  "empreinte": "f2304799821f",
+  "date": "2026-11-19"
  },
  "/outils/bp": {
-  "empreinte": "d357bb2715a7",
-  "date": "2026-11-18"
+  "empreinte": "6ed21f6bb63c",
+  "date": "2026-11-19"
  },
  "/outils/hub": {
-  "empreinte": "b167d7f16cd0",
-  "date": "2026-11-18"
+  "empreinte": "513228d66376",
+  "date": "2026-11-19"
  },
  "/outils/asbl": {
-  "empreinte": "4b0cea89e828",
-  "date": "2026-11-18"
+  "empreinte": "8d7adfdd3e93",
+  "date": "2026-11-19"
  },
  "/ong": {
-  "empreinte": "ffc37438c1b4",
-  "date": "2026-11-18"
+  "empreinte": "159731e1c8eb",
+  "date": "2026-11-19"
  },
  "/confidentialite": {
   "empreinte": "ed276d9c69a6",
@@ -79,8 +71,20 @@
   "empreinte": "ae09e5181957",
   "date": "2026-11-18"
  },
- "/poles": {
-  "empreinte": "fa65fe14d892",
-  "date": "2026-11-18"
+ "/approche": {
+  "empreinte": "5c838ed935a3",
+  "date": "2026-11-19"
+ },
+ "/solutions": {
+  "empreinte": "611f76be0bb8",
+  "date": "2026-11-19"
+ },
+ "/equipe": {
+  "empreinte": "ba8c86d4e6e7",
+  "date": "2026-11-19"
+ },
+ "/realisations": {
+  "empreinte": "7a351544616c",
+  "date": "2026-11-19"
  }
 }
