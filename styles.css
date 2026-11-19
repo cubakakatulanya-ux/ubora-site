@@ -2515,3 +2515,25 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
 .deja .deja-n { display: block; font-size: 40px; font-weight: 300; line-height: 1; color: var(--vert-texte); }
 .deja-liste { display: grid; gap: 6px; margin: 8px 0 0; padding: 0; list-style: none; }
 .deja-liste a { color: var(--ink); }
+
+/* ==========================================================================
+   Grands écrans (19 novembre 2026) : le contenu occupe davantage la largeur,
+   les sections et les cartes sont moins espacées.
+   ========================================================================== */
+section { padding-block: clamp(36px, 3.8vw, 58px); }
+.sec-head { margin-bottom: clamp(20px, 2.4vw, 32px); }
+.pg-liste .wrap { gap: 18px; }
+@media (min-width: 1600px) {
+  .wrap { max-width: 1400px; }
+  :root { --bord-ecran: calc(max(0px, (100vw - 1400px) / 2) + 24px); }
+  .r-poles { gap: 16px; }
+  .vitrine-grille { gap: 22px; }
+}
+@media (min-width: 1900px) {
+  .wrap { max-width: 1520px; }
+  :root { --bord-ecran: calc(max(0px, (100vw - 1520px) / 2) + 24px); }
+  .vitrine-grille:not(.chantier) { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+/* les textes courants gardent une largeur de lecture confortable, quelle que soit la largeur de l'écran */
+.wrap.narrow { max-width: 860px; }
+.sec-head .lead { max-width: 62ch; margin-inline: auto; }
