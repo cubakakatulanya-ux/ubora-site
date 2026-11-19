@@ -585,7 +585,7 @@ const OUTILS = [
     id: "asbl", nom: "ASBL Manager", court: "La gestion des associations, des ONG et des entreprises sociales", pole: "conseil", statut: "en-ligne", mock: "asbl", couleur: "#0B3A32", initiales: "Am",
     sousDomaine: "asbl.uborardc.com", url: "https://asbl.uborardc.com",
     resume: "Le logiciel de gestion des associations, des ONG et des entreprises sociales : gouvernance, plan de travail, finances, projets, logistique, personnel et suivi-évaluation, avec des circuits de validation clairs.",
-    points: ["Gouvernance, membres, statuts et manuel de procédures", "Plan de travail (PTBA), termes de référence et fiches d'activité", "Dépenses, trésorerie en francs et en dollars, comptabilité d'engagement", "Projets, bailleurs et rapports", "Achats, stocks, personnel et missions", "Un espace par rôle, même hors connexion"],
+    points: ["Gouvernance, membres, statuts et manuel de procédures", "Plan de travail (PTBA), termes de référence et fiches d'activité", "Dépenses, trésorerie en francs et en dollars, comptabilité d'engagement", "Projets, bailleurs et rapports", "Achats, stocks, personnel et missions", "Un espace par rôle, même hors connexion ; double authentification"],
     fiche: {
       titre: `Gérer son organisation avec la rigueur qu'attendent ses membres et ses <span class="serif">bailleurs</span>.`,
       lead: "Gouvernance, programmes, finances, logistique, personnel et suivi-évaluation réunis dans une seule application, avec un espace de travail pour chaque rôle.",
@@ -596,8 +596,8 @@ const OUTILS = [
         ["Gouvernance et membres", "Adhésions, cotisations, assemblées et conseil, vote à distance, procès-verbaux ; statuts, règlement intérieur et manuel de procédures rédigés à partir de vos réglages."],
         ["Plan de travail (PTBA)", "Activités rattachées au cadre de résultats, termes de référence, fiches d'activité et avancement."],
         ["Finances et comptabilité", "Dépenses signées selon le montant, fonds à justifier, trésorerie en francs et en dollars, comptabilité d'engagement et analytique, états financiers complets."],
-        ["Projets et bailleurs", "Règles de chaque bailleur contrôlées à chaque dépense, demandes de tranche, réallocations, dossier d'audit prêt, clôture de projet."],
-        ["Logistique et personnel", "Achats, marchés et stocks ; recrutement, contrats, présences, paie et évaluations ; certificats de service rendu et de bonne exécution."],
+        ["Projets et bailleurs", "Règles de chaque bailleur contrôlées à chaque dépense, demandes de tranche, réallocations, dossier d'audit prêt, clôture de projet ; un espace de suivi en ligne pour le bailleur."],
+        ["Logistique et personnel", "Achats, marchés et stocks ; recrutement, contrats, présences, paie et évaluation du personnel ; courrier et archives ; certificats de service rendu et de bonne exécution."],
         ["Suivi-évaluation et rapports", "Cadre logique, indicateurs ventilés par sexe, import Kobo, rapports narratifs mis en page, plaintes ; un assistant IA pour rédiger et repérer les appels à financement."]
       ],
       phasesTitre: "Le circuit d'une dépense",
