@@ -1486,7 +1486,8 @@ function boot() {
   /* contenu publié dans la base : on ne réaffiche la page que si quelque chose a changé depuis sa génération */
   const empreinte = () => JSON.stringify([DATA.actualites, DATA.formations, DATA.offres, DATA.equipe, DATA.realisations]);
   const avant = empreinte();
-  UboraDB.load().catch(() => {}).then(() => {
+  /* le contenu est déjà dans la page : on ne consulte la base qu'une fois la page affichée, pour ne pas ralentir son chargement */
+  const relire = () => UboraDB.load().catch(() => {}).then(() => {
     baseConsultee = true;
     const ici = resolve(location.pathname, location.search, location.hostname);
     if (ici.base === "actualites" && ici.sub) { route({ keep: true }); return; }
@@ -1495,6 +1496,8 @@ function boot() {
     const r = resolve(location.pathname, location.search, location.hostname);
     if (["", "actualites", "a-propos", "realisations"].includes(r.base) || pole(r.base)) route({ keep: true });
   });
+  const plusTard = () => setTimeout(relire, 1200);
+  if (document.readyState === "complete") plusTard(); else addEventListener("load", plusTard, { once: true });
 }
 
 if (typeof window !== "undefined" && window.document && !window.UBORA_PRERENDER) boot();

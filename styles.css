@@ -2485,3 +2485,13 @@ table.compare thead th { font-family: var(--f-display); font-weight: 700; font-s
 .pg-hero-txt .btn-row { justify-content: flex-start; }
 /* barre de pastilles : vert foncé fixe, lisible dans les deux thèmes (le vert « texte » s'éclaircit en thème sombre) */
 .pg-onglets { background: var(--c, #17704A); }
+
+/* Vitesse (19 novembre 2026) : photos de fond assombries servies en petit format (elles sont sous un voile),
+   et plus de police à chasse fixe (une seule famille, Ubuntu, moins de fichiers à télécharger) */
+:root { --f-mono: var(--f-body); }
+.final { background-image: url("/img/terrain-fond-800.webp"); }
+.vitrine-banniere { background-image: url("/img/formation-fond-800.webp"); }
+@media (min-width: 900px) {
+  .final { background-image: url("/img/terrain-fond-1400.webp"); }
+  .vitrine-banniere { background-image: url("/img/formation-fond-1400.webp"); }
+}

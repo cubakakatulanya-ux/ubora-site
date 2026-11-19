@@ -53,6 +53,7 @@ async function lancer() {
     if (r.exceptionDetails) throw new Error((r.exceptionDetails.exception || {}).description || r.exceptionDetails.text);
     return r.result.value;
   };
+  p.cdp = cmd; /* commande brute du protocole DevTools (Network.emulateNetworkConditions, …) */
   p.vue = async () => Buffer.from((await cmd("Page.captureScreenshot", { format: "png" })).data, "base64");
   p.fermer = () => { try { ws.close(); } catch (e) {} nav.kill(); try { fs.rmSync(profil, { recursive: true, force: true }); } catch (e) {} };
   return p;
