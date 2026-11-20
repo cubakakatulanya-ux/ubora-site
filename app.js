@@ -1295,7 +1295,7 @@ function boot() {
     $$("[data-scroll]").forEach(a => a.addEventListener("click", e => { e.preventDefault(); document.getElementById(a.dataset.scroll)?.scrollIntoView({ behavior: "smooth" }); }));
     const anchor = location.hash.slice(1), ancre = anchor && !anchor.startsWith("/");
     /* la page va remonter en haut : les cartes se mesurent depuis le haut de la page, pas depuis l'ancienne position */
-    reveal(); mouvement(keep || garder || ancre ? 0 : scrollY); if (!garder) typo(app);
+    reveal(); mouvement(keep || garder || ancre ? 0 : scrollY); relief(keep || garder || ancre ? 0 : scrollY); if (!garder) typo(app);
     if (keep) return;
     if (route.deja) app.focus({ preventScroll: true });
     route.deja = true;
@@ -1399,6 +1399,45 @@ function boot() {
       });
     });
     $$(".pole-img img, .member img, .real img, .lecon img", app).forEach(im => { if (sousEcran(im)) { im.classList.add("img-mouv"); ioJeu.observe(im); } });
+  }
+
+  /* Relief 3D : les photos, les écrans et les cartes s'inclinent en perspective sous la souris, avec un reflet
+     de lumière ; au défilement, les cartes se redressent depuis un léger angle. Souris seulement pour l'inclinaison,
+     et rien du tout si le visiteur a demandé moins d'animations. */
+  let ioRelief;
+  function relief(depart = 0) {
+    ioRelief?.disconnect();
+    if (calme()) return;
+    if (matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      $$(".r-hero-photo, .pg-hero, .solution:not(.bientot), .r-pole, .pg-carte-photo, .pg-ecran .screen", app).forEach(el => {
+        if (el.dataset.relief) return;
+        el.dataset.relief = "1"; el.classList.add("r3d-tilt");
+        const max = el.matches(".pg-hero") ? 2.5 : el.matches(".r-pole") ? 5 : 7;
+        let raf = 0;
+        el.addEventListener("pointermove", e => {
+          const b = el.getBoundingClientRect(), x = (e.clientX - b.left) / b.width, y = (e.clientY - b.top) / b.height;
+          cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(() => {
+            el.style.setProperty("--ry", ((x - .5) * 2 * max).toFixed(2) + "deg");
+            el.style.setProperty("--rx", ((.5 - y) * 2 * max).toFixed(2) + "deg");
+            el.style.setProperty("--gx", (x * 100).toFixed(1) + "%");
+            el.style.setProperty("--gy", (y * 100).toFixed(1) + "%");
+            el.classList.add("r3d-actif");
+          });
+        });
+        el.addEventListener("pointerleave", () => { cancelAnimationFrame(raf); el.classList.remove("r3d-actif"); ["--rx", "--ry"].forEach(v => el.style.removeProperty(v)); });
+      });
+    }
+    if (!("IntersectionObserver" in window)) return;
+    ioRelief = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target; ioRelief.unobserve(el); el.classList.add("r3d-vu");
+      setTimeout(() => { el.classList.remove("r3d-entree", "r3d-vu"); el.style.removeProperty("--r3d-retard"); }, 1600);
+    }), { rootMargin: "0px 0px -6% 0px" });
+    $$(".pg-carte, .vitrine-grille > .solution, .r-poles > .r-pole, .r-chiffres li, .r-bande", app).forEach((el, i) => {
+      if (el.getBoundingClientRect().top + depart < innerHeight * .95) return;
+      el.classList.add("r3d-entree"); el.style.setProperty("--r3d-retard", (i % 4) * 80 + "ms"); ioRelief.observe(el);
+    });
   }
 
   /* Accueil : la photo de la bannière change toutes les six secondes et demie, avec le même mouvement.

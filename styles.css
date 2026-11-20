@@ -2537,3 +2537,34 @@ section { padding-block: clamp(36px, 3.8vw, 58px); }
 /* les textes courants gardent une largeur de lecture confortable, quelle que soit la largeur de l'écran */
 .wrap.narrow { max-width: 860px; }
 .sec-head .lead { max-width: 62ch; margin-inline: auto; }
+
+/* ==========================================================================
+   Relief 3D (20 novembre 2026) : perspective, reflet de lumière, profondeur.
+   Seulement des transformations (fluides, sans recalcul de mise en page) ;
+   aucune animation si le visiteur a demandé moins de mouvement.
+   ========================================================================== */
+@media (prefers-reduced-motion: no-preference) {
+  /* inclinaison sous la souris */
+  .r3d-tilt { position: relative; transform-style: preserve-3d; transition: transform .6s cubic-bezier(.2, .8, .2, 1), box-shadow .5s ease; }
+  .r3d-tilt.r3d-actif { transition: transform .12s linear, box-shadow .3s ease; transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateZ(0); box-shadow: 0 34px 70px -34px rgba(8, 36, 24, .5); will-change: transform; }
+  .r3d-tilt.r3d-actif::after { content: ""; position: absolute; inset: 0; z-index: 3; border-radius: inherit; pointer-events: none; background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255, 255, 255, .26), rgba(255, 255, 255, 0) 55%); mix-blend-mode: soft-light; }
+  .r-hero-photo.r3d-actif .r-hero-badge { transform: translateZ(60px); transition: transform .3s ease; }
+  .r-hero-badge { transition: transform .6s cubic-bezier(.2, .8, .2, 1); }
+  .r-pole.r3d-actif { transform: perspective(700px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)) translateY(-3px); }
+  /* entrée en perspective au défilement */
+  .r3d-entree { opacity: 0; transform: perspective(1100px) rotateX(16deg) translateY(40px) scale(.97); transform-origin: 50% 100%; }
+  .r3d-entree.r3d-vu { opacity: 1; transform: none; transition: opacity .8s ease var(--r3d-retard, 0ms), transform 1.2s cubic-bezier(.16, .84, .24, 1) var(--r3d-retard, 0ms); }
+  /* photos d'en-tête : lent mouvement de profondeur */
+  .r-hero-photo img, .pg-hero-photo img { animation: r3d-profondeur 26s ease-in-out infinite alternate; transform-origin: 60% 40%; }
+  @keyframes r3d-profondeur { from { transform: scale(1); } to { transform: scale(1.08) translate3d(-1.4%, -1%, 0); } }
+  /* écrans des applications : présentés de biais, ils flottent, et se redressent sous la souris */
+  .pg-ecran { perspective: 1200px; animation: r3d-flotte 7s ease-in-out infinite alternate; }
+  .pg-ecran .screen { transform: rotateY(-14deg) rotateX(5deg); box-shadow: 34px 44px 80px -40px rgba(0, 0, 0, .65); border-radius: 18px; }
+  .pg-ecran .screen.r3d-actif { transform: perspective(1000px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); }
+  @keyframes r3d-flotte { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+  /* vitrine : l'écran de l'application avance légèrement quand la carte s'incline */
+  .solution .solution-img { transition: transform .6s cubic-bezier(.2, .8, .2, 1); }
+  .solution.r3d-actif .solution-img { transform: translateZ(30px) scale(1.03); }
+  .pg-carte-photo { border-radius: 12px; }
+  .pg-carte-photo.r3d-actif img { transform: scale(1.04); transition: transform .4s ease; }
+}
