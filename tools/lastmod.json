@@ -32,8 +32,8 @@
   "date": "2026-11-19"
  },
  "/a-propos": {
-  "empreinte": "917c2fcb4152",
-  "date": "2026-11-19"
+  "empreinte": "b18781260b01",
+  "date": "2026-11-20"
  },
  "/contact": {
   "empreinte": "019541502fd5",
@@ -44,8 +44,8 @@
   "date": "2026-11-18"
  },
  "/outils/akiba": {
-  "empreinte": "f2304799821f",
-  "date": "2026-11-19"
+  "empreinte": "c04e777575e7",
+  "date": "2026-11-20"
  },
  "/outils/bp": {
   "empreinte": "6ed21f6bb63c",
@@ -84,7 +84,7 @@
   "date": "2026-11-19"
  },
  "/realisations": {
-  "empreinte": "7a351544616c",
-  "date": "2026-11-19"
+  "empreinte": "86a379b4c390",
+  "date": "2026-11-20"
  }
 }

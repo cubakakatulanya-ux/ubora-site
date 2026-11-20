@@ -462,7 +462,7 @@ function pageAbout() {
       <div class="fcard"><span class="ic">${ICON.spark}</span><h3>Ce que nous réinvestissons</h3><p>Nos outils, les relais locaux et le suivi après la fin des projets.</p></div>
     </div>
     <div class="table-wrap"><table class="compare"><thead><tr><th></th><th>Une entreprise classique</th><th>Ubora, entreprise sociale</th></tr></thead>
-      <tbody>${distingue.map(([a, b, c]) => `<tr><th scope="row">${a}</th><td>${b}</td><td class="ok">${c}</td></tr>`).join("")}</tbody></table></div>
+      <tbody>${distingue.map(([a, b, c]) => `<tr><th scope="row">${a}</th><td data-l="Une entreprise classique">${b}</td><td class="ok" data-l="Ubora, entreprise sociale">${c}</td></tr>`).join("")}</tbody></table></div>
   </div></section>
 
 
@@ -802,7 +802,7 @@ function pageOutil(o) {
   ${o.id === "akiba" ? `<section class="band"><div class="wrap">
     ${secHead("Avant, après", `Ce qui change avec <span class="serif">AKIBA</span>`, "Le groupe garde ses règles et ses réunions. Seule la tenue des comptes change, et tout le monde peut désormais la vérifier.")}
     <div class="table-wrap replie"><table class="compare"><thead><tr><th></th><th>Avec le cahier</th><th>Avec AKIBA</th></tr></thead>
-      <tbody>${AVEC.avantApres.map(([q, x, y]) => `<tr><th scope="row">${esc(q)}</th><td>${esc(x)}</td><td class="ok">${esc(y)}</td></tr>`).join("")}</tbody></table></div>${plusBtn("Voir toute la comparaison")}
+      <tbody>${AVEC.avantApres.map(([q, x, y]) => `<tr><th scope="row">${esc(q)}</th><td data-l="Avec le cahier">${esc(x)}</td><td class="ok" data-l="Avec AKIBA">${esc(y)}</td></tr>`).join("")}</tbody></table></div>${plusBtn("Voir toute la comparaison")}
   </div></section>` : ""}
 
   <section id="acces"><div class="wrap">
@@ -897,7 +897,7 @@ function pageRealisations(params) {
   const liste = filtre ? tout.filter(r => r.pole === filtre) : tout;
   const presents = [...new Set(tout.map(r => r.pole))];
   return pageHead({ eyebrow: "Nos réalisations", title: `Ce que nous avons fait, et ce que cela a <span class="serif">changé</span>.`, crumbs: [["Nos réalisations"]],
-    lead: "Des programmes menés avec des ONG, des bailleurs, des institutions financières et des communautés, partout en RDC. Pour chacun : le contexte, ce que nous avons fait et les résultats obtenus." }) + `
+    lead: "Ce que nous avons déjà construit, et bientôt les programmes menés sur le terrain avec nos partenaires : le contexte, ce que nous avons fait, les résultats." }) + `
   <section><div class="wrap">
     ${secHead("Déjà en place", "Ce que nous avons construit", "Des outils et des contenus en service, que chacun peut ouvrir et vérifier.")}
     <div class="grid-3 deja">
