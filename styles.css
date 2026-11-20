@@ -2592,3 +2592,5 @@ section { padding-block: clamp(36px, 3.8vw, 58px); }
 @media (max-width: 640px) {
   table.compare tbody th, table.compare td { width: auto !important; padding-inline: 0 !important; }
 }
+/* téléphone : seul le bouton WhatsApp reste flottant (l'assistant faisait double emploi) — choix de Christian, 20 novembre 2026 */
+@media (max-width: 760px) { .chat-fab { display: none !important; } }
