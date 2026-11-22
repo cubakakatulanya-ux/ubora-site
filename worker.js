@@ -26,6 +26,7 @@ const FICHIER = /\.[a-z0-9]{2,5}$/i;
 const VIDEO = /\.(mp4|webm)$/i;
 
 const CSP_SITE = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: blob: https://uoshpvqdszygezkuhhco.supabase.co; connect-src 'self' https://uoshpvqdszygezkuhhco.supabase.co wss://uoshpvqdszygezkuhhco.supabase.co; frame-src 'none'; manifest-src 'self'; media-src 'self'; object-src 'none'; worker-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests";
+const CSP_PUBLIC = CSP_SITE.replace(/connect-src [^;]*;/, "connect-src 'self';");
 const CSP_GENERATEUR = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://hub.uborardc.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'";
 const ENTETES = {
   "Strict-Transport-Security": "max-age=31536000; includeSubDomains",
@@ -75,6 +76,112 @@ const inscrire = ligne => fetch(BASE + "/rest/v1/site_visites", {
   body: JSON.stringify(ligne)
 }).catch(() => {});
 
+/* ==========================================================================
+   API du site (22 novembre 2026) : tout ce qui écrit dans la base passe par ici.
+   La clé publique Supabase reste dans le Worker ; les limites sont appliquées par
+   adresse IP (empreinte salée, jamais conservée en clair, effacée au bout de 15 minutes au plus).
+   ========================================================================== */
+const MO = 1024 * 1024;
+const LIMITES = {
+  connexion: { essais: 5, fenetre: 60, blocage: 900 },          /* 5 essais par minute, puis 15 minutes de blocage */
+  message: { essais: 5, fenetre: 600 }, abonnement: { essais: 5, fenetre: 600 }, question: { essais: 30, fenetre: 600 }
+};
+const TABLES = { message: "site_messages", abonnement: "site_abonnes", question: "site_questions" };
+const CHAMPS = { message: ["nom", "organisation", "telephone", "email", "besoin", "message"], abonnement: ["email"], question: ["question", "repondu", "page"] };
+const json = (o, status = 200, extra = {}) => new Response(JSON.stringify(o), { status, headers: { "Content-Type": "application/json; charset=utf-8", "Cache-Control": "no-store", "X-Robots-Tag": "noindex", ...ENTETES, ...extra } });
+async function empreinteIP(request) {
+  const ip = request.headers.get("CF-Connecting-IP") || request.headers.get("X-Forwarded-For") || "inconnue";
+  const d = await crypto.subtle.digest("SHA-256", new TextEncoder().encode("ubora-limites-2026|" + ip));
+  return [...new Uint8Array(d)].slice(0, 16).map(b => b.toString(16).padStart(2, "0")).join("");
+}
+/* compteurs et blocages dans le cache de Cloudflare (par centre de données), avec une durée de vie */
+const cleCache = (sorte, nom, ip) => `https://${APEX}/__${sorte}/${nom}/${ip}`;
+async function compter(nom, ip, fenetre) {
+  const c = caches.default, url = cleCache("limites", nom, ip);
+  const r = await c.match(url); const n = (r ? parseInt(await r.text(), 10) || 0 : 0) + 1;
+  await c.put(url, new Response(String(n), { headers: { "Cache-Control": `public, max-age=${fenetre}` } }));
+  return n;
+}
+const estBloque = async (nom, ip) => !!(await caches.default.match(cleCache("blocage", nom, ip)));
+const bloquer = (nom, ip, duree) => caches.default.put(cleCache("blocage", nom, ip), new Response("1", { headers: { "Cache-Control": `public, max-age=${duree}` } }));
+async function lireJSON(request, max) {
+  if (Number(request.headers.get("Content-Length") || 0) > max) return null;
+  try { const t = await request.text(); return t.length > max ? null : JSON.parse(t); } catch (e) { return null; }
+}
+/* vrai type d'une image, d'après ses premiers octets (la déclaration du navigateur ne compte pas) */
+function typeImage(o) {
+  if (o.length >= 3 && o[0] === 0xFF && o[1] === 0xD8 && o[2] === 0xFF) return ["image/jpeg", "jpg"];
+  if (o.length >= 8 && [0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A].every((b, i) => o[i] === b)) return ["image/png", "png"];
+  if (o.length >= 12 && String.fromCharCode(...o.slice(0, 4)) === "RIFF" && String.fromCharCode(...o.slice(8, 12)) === "WEBP") return ["image/webp", "webp"];
+  return null;
+}
+async function api(request, chemin, sd) {
+  const nom = chemin.slice(5);
+  let origine = ""; try { origine = new URL(request.headers.get("Origin") || "").hostname; } catch (e) {}
+  if (nom === "config") {
+    /* la clé publique n'est remise qu'à l'espace équipe, qui en a besoin pour sa session */
+    if (request.method !== "GET" || sd !== "admin") return json({ erreur: "Introuvable." }, 404);
+    return json({ url: BASE, cle: CLE_PUBLIQUE });
+  }
+  if (nom === "contenu") {
+    if (request.method !== "GET") return json({ erreur: "Méthode non autorisée." }, 405, { Allow: "GET" });
+    const h = { apikey: CLE_PUBLIQUE, Authorization: "Bearer " + CLE_PUBLIQUE };
+    const lu = await Promise.all([["actualites", "date.desc"], ["formations", "date.asc"], ["offres", "publie_le.desc"], ["equipe", "ordre.asc,nom.asc"], ["realisations", "ordre.asc,created_at.desc"]]
+      .map(([t, o]) => fetch(`${BASE}/rest/v1/site_${t}?select=*&publie=eq.true&order=${o}`, { headers: h }).then(r => r.ok ? r.json() : null).catch(() => null)));
+    const [actualites, formations, offres, equipe, realisations] = lu;
+    return json({ actualites, formations, offres, equipe, realisations }, 200, { "Cache-Control": "public, max-age=60" });
+  }
+  if (request.method !== "POST") return json({ erreur: "Méthode non autorisée." }, 405, { Allow: "POST" });
+  if (!duSite(origine)) return json({ erreur: "Origine refusée." }, 403);
+  const ip = await empreinteIP(request);
+
+  if (nom === "connexion") {
+    const L = LIMITES.connexion;
+    if (await estBloque("connexion", ip)) return json({ erreur: "Trop de tentatives de connexion. Réessayez dans 15 minutes.", bloque: true }, 429, { "Retry-After": String(L.blocage) });
+    if (await compter("connexion", ip, L.fenetre) > L.essais) {
+      await bloquer("connexion", ip, L.blocage);
+      return json({ erreur: "Trop de tentatives de connexion. Réessayez dans 15 minutes.", bloque: true }, 429, { "Retry-After": String(L.blocage) });
+    }
+    const b = await lireJSON(request, 2048);
+    if (!b || typeof b.email !== "string" || typeof b.password !== "string" || b.email.length > 160 || b.password.length > 200) return json({ erreur: "Adresse e-mail ou mot de passe incorrect." }, 400);
+    const r = await fetch(`${BASE}/auth/v1/token?grant_type=password`, { method: "POST", headers: { apikey: CLE_PUBLIQUE, "Content-Type": "application/json" }, body: JSON.stringify({ email: b.email.trim(), password: b.password }) });
+    if (r.status === 429) return json({ erreur: "Trop de tentatives de connexion. Réessayez dans quelques minutes.", bloque: true }, 429);
+    const d = await r.json().catch(() => ({}));
+    /* même réponse pour une adresse inconnue et un mauvais mot de passe : rien ne révèle qui a un compte */
+    if (!r.ok || !d.access_token) return json({ erreur: "Adresse e-mail ou mot de passe incorrect." }, 401);
+    return json({ ok: true, session: { access_token: d.access_token, refresh_token: d.refresh_token, expires_in: d.expires_in, token_type: d.token_type } });
+  }
+
+  if (nom === "media") {
+    const jeton = request.headers.get("Authorization") || "";
+    if (!/^Bearer [A-Za-z0-9._-]{20,}$/.test(jeton)) return json({ erreur: "Connexion requise." }, 401);
+    const dossier = new URL(request.url).searchParams.get("dossier") || "divers";
+    if (!/^[a-z0-9-]{1,30}$/.test(dossier)) return json({ erreur: "Dossier invalide." }, 400);
+    if (Number(request.headers.get("Content-Length") || 0) > 5 * MO) return json({ erreur: "Image trop lourde : 5 Mo au plus." }, 413);
+    const octets = new Uint8Array(await request.arrayBuffer());
+    if (octets.length > 5 * MO) return json({ erreur: "Image trop lourde : 5 Mo au plus." }, 413);
+    const type = typeImage(octets);
+    if (!type) return json({ erreur: "Seules les images JPEG, PNG et WebP sont acceptées." }, 415);
+    const fichier = `${dossier}/${crypto.randomUUID()}.${type[1]}`;
+    const r = await fetch(`${BASE}/storage/v1/object/site-medias/${fichier}`, { method: "POST", headers: { apikey: CLE_PUBLIQUE, Authorization: jeton, "Content-Type": type[0], "Cache-Control": "max-age=31536000", "x-upsert": "false" }, body: octets });
+    if (!r.ok) return json({ erreur: r.status === 400 || r.status === 401 || r.status === 403 ? "Envoi refusé : réservé à l'équipe du site." : "L'envoi n'a pas abouti." }, r.status === 400 || r.status === 401 || r.status === 403 ? 403 : 502);
+    return json({ ok: true, url: `${BASE}/storage/v1/object/public/site-medias/${fichier}` });
+  }
+
+  if (TABLES[nom]) {
+    const L = LIMITES[nom];
+    if (await compter(nom, ip, L.fenetre) > L.essais) return json({ ok: false, limite: true, erreur: "Trop d'envois depuis cette connexion. Réessayez un peu plus tard." }, 429, { "Retry-After": String(L.fenetre) });
+    const b = await lireJSON(request, 8192);
+    if (!b || typeof b !== "object") return json({ ok: false, erreur: "Envoi illisible." }, 400);
+    const ligne = Object.fromEntries(CHAMPS[nom].filter(k => k in b).map(k => [k, b[k]]));
+    const r = await fetch(`${BASE}/rest/v1/${TABLES[nom]}`, { method: "POST", headers: { apikey: CLE_PUBLIQUE, Authorization: "Bearer " + CLE_PUBLIQUE, "Content-Type": "application/json", Prefer: "return=minimal" }, body: JSON.stringify(ligne) });
+    if (r.ok) return json({ ok: true }, 201);
+    const e = await r.json().catch(() => ({}));
+    return json({ ok: false, code: e.code || null, limite: /trop/i.test(e.message || ""), erreur: "L'envoi a été refusé." }, r.status >= 500 ? 502 : 400);
+  }
+  return json({ erreur: "Introuvable." }, 404);
+}
+
 /* Panne imprévue : une page simple, sans aucun détail technique, et un code 503 que les moteurs savent attendre. */
 const PANNE = `<!doctype html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="robots" content="noindex"><title>Ubora · site momentanément indisponible</title>
 <style>body{margin:0;min-height:100vh;display:grid;place-items:center;font:17px/1.6 system-ui,sans-serif;color:#1F2933;background:#fff;padding:24px}main{max-width:520px}h1{font-weight:400;font-size:28px;margin:0 0 12px}a{color:#1E7A46}</style></head>
@@ -111,6 +218,8 @@ async function servir(request, env, ctx) {
       }
       return new Response(null, { status: 204, headers: { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" } });
     }
+    /* 1 ter. API du site (connexion, formulaires, photos) */
+    if (chemin.startsWith("/api/")) return api(request, chemin, sd);
     if (request.method !== "GET" && request.method !== "HEAD") {
       return new Response("Méthode non autorisée", { status: 405, headers: { Allow: "GET, HEAD", "Cache-Control": "no-store", ...ENTETES } });
     }
@@ -170,7 +279,7 @@ async function servir(request, env, ctx) {
       }
     }
     for (const [cle, valeur] of Object.entries(ENTETES)) r.headers.set(cle, valeur);
-    r.headers.set("Content-Security-Policy", sd === "bp" || chemin.startsWith("/generateur") ? CSP_GENERATEUR : CSP_SITE);
+    r.headers.set("Content-Security-Policy", sd === "bp" || chemin.startsWith("/generateur") ? CSP_GENERATEUR : sd === "admin" ? CSP_SITE : CSP_PUBLIC);
     if (sd === "admin") r.headers.set("X-Robots-Tag", "noindex, nofollow");
     if (sd === "admin" && !FICHIER.test(chemin)) r.headers.set("Cache-Control", "no-store");
     if (chemin.startsWith("/img/")) r.headers.set("Cache-Control", "public, max-age=2592000");

@@ -1047,7 +1047,8 @@ function pageConfidentialite() {
       ["Améliorer l'assistant du site", "Texte de la question, page, réponse trouvée ou non ; aucune donnée d'identification", "Notre intérêt à mieux répondre", C.questions],
       ["Compter les visites", "Page vue, site d'où l'on vient, pays, type d'appareil ; ni adresse IP, ni cookie, ni identifiant", "Notre intérêt à savoir quelles pages sont lues", C.visites],
       ["Recruter (candidature par e-mail)", "Ce que contient votre candidature", "Votre candidature", C.candidatures],
-      ["L'espace équipe", "E-mail et session des membres de l'équipe habilités", "La gestion du site", "Tant que la personne est habilitée"]
+      ["L'espace équipe", "E-mail et session des membres de l'équipe habilités", "La gestion du site", "Tant que la personne est habilitée"],
+      ["Protéger le site contre les abus", "Une empreinte chiffrée de l'adresse IP, jamais l'adresse elle-même, pour limiter les envois et les tentatives de connexion", "Notre intérêt à protéger le service", "15 minutes au plus"]
     ])}
     <p>Les durées passées, les données sont effacées automatiquement par la base. Ne nous envoyez pas de données sensibles (santé, opinions, pièces d'identité) : le formulaire n'en a pas besoin.</p>
     <h2>L'assistant du site</h2><p>L'assistant cherche ses réponses dans le contenu du site, directement dans votre navigateur : aucune question n'est envoyée à un service d'intelligence artificielle. Ses réponses peuvent être incomplètes ; pour une décision, écrivez-nous.</p>

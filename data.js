@@ -6,9 +6,10 @@
    équipe (uborardc.com/admin) et sont enregistrées dans la base de données.
    ========================================================================== */
 
+/* La clé de la base n'est plus dans les pages publiques : les formulaires passent par le serveur du site (/api),
+   et l'espace équipe reçoit la clé publique du serveur quand il en a besoin (/api/config). */
 const SUPABASE = {
-  url: "https://uoshpvqdszygezkuhhco.supabase.co",
-  anonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVvc2hwdnFkc3p5Z2V6a3VoaGNvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAyNjYwNzQsImV4cCI6MjEwNTg0MjA3NH0.mMV8Z2dl981BGl0o_CLSAsxPsO3QzQlAAWWwT4YVVW4"
+  url: "https://uoshpvqdszygezkuhhco.supabase.co"
 };
 
 const CONFIG = {

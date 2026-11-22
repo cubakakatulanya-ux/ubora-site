@@ -24,7 +24,9 @@ const S = vm.runInContext(["data.js", "db.js", "admin.js", "app.js"].map(read).j
   "\n;({ DATA_ONG: ONG, SEO_POLES, resolve, typoHTML, menuHTML, footerHTML, tickerHTML, allNews, esc, DATA, POLES, OUTILS, CONFIG, SUPABASE, UboraDB, TITRES })", ctx);
 
 async function chargerBase() {
-  const h = { apikey: S.SUPABASE.anonKey, Authorization: "Bearer " + S.SUPABASE.anonKey };
+  /* la clé publique n'est plus dans data.js : on la prend dans le Worker (ou dans la variable SUPABASE_ANON) */
+  const cle = process.env.SUPABASE_ANON || (read("worker.js").match(/const CLE_PUBLIQUE = "([^"]+)"/) || [])[1];
+  const h = { apikey: cle, Authorization: "Bearer " + cle };
   const get = async (table, order) => {
     const r = await fetch(`${S.SUPABASE.url}/rest/v1/${table}?select=*&publie=eq.true&order=${order}`, { headers: h });
     if (!r.ok) throw new Error(table + " : " + r.status);

@@ -22,7 +22,14 @@ const DATA = (() => {
 const UboraDB = (() => {
   let client = null;
 
-  const configured = () => !!(typeof SUPABASE !== "undefined" && SUPABASE.url && SUPABASE.anonKey);
+  const configured = () => !!(typeof SUPABASE !== "undefined" && SUPABASE.url);
+  /* clé publique de la base : remise par le serveur du site, à l'espace équipe seulement */
+  let cleCharge = null;
+  function clePublique() {
+    if (typeof SUPABASE !== "undefined" && SUPABASE.anonKey) return Promise.resolve(SUPABASE.anonKey);
+    if (!cleCharge) cleCharge = fetch("/api/config", { credentials: "same-origin" }).then(r => r.ok ? r.json() : null).then(d => (d && d.cle) || null).catch(() => null).then(c => { if (!c) cleCharge = null; return c; });
+    return cleCharge;
+  }
   /* la bibliothèque Supabase n'est chargée qu'à la demande (espace équipe), avec son empreinte SRI */
   let chargement = null;
   function bibliotheque() {
@@ -40,25 +47,20 @@ const UboraDB = (() => {
   async function sb() {
     if (!configured()) return null;
     const lib = await bibliotheque(); if (!lib) return null;
-    if (!client) client = lib.createClient(SUPABASE.url, SUPABASE.anonKey, { auth: { persistSession: true, storageKey: "ubora-admin" } });
+    if (!client) { const cle = await clePublique(); if (!cle) return null; client = lib.createClient(SUPABASE.url, cle, { auth: { persistSession: true, storageKey: "ubora-admin" } }); }
     return client;
   }
   const pret = async () => !!(await sb());
 
-  /* pages publiques : requêtes directes à la base, sans bibliothèque (même clé publique, mêmes règles d'accès) */
-  const entetes = () => ({ apikey: SUPABASE.anonKey, Authorization: "Bearer " + SUPABASE.anonKey });
-  async function lireTable(table, ordre) {
-    const r = await fetch(`${SUPABASE.url}/rest/v1/${table}?select=*&publie=eq.true&order=${ordre}`, { headers: entetes() });
-    if (!r.ok) throw new Error(table + " : " + r.status);
-    return r.json();
-  }
+  /* pages publiques : tout passe par le serveur du site (/api), qui garde la clé et limite les envois par adresse IP */
+  const ROUTES = { site_messages: "message", site_questions: "question", site_abonnes: "abonnement" };
   async function deposer(table, ligne) {
     try {
-      const r = await delai(fetch(`${SUPABASE.url}/rest/v1/${table}`, { method: "POST", headers: { ...entetes(), "Content-Type": "application/json", Prefer: "return=minimal" }, body: JSON.stringify(ligne) }));
+      const r = await delai(fetch("/api/" + ROUTES[table], { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(ligne) }));
       if (r && r.error) return r;
-      if (r.ok) return { error: null };
-      let e = {}; try { e = await r.json(); } catch (x) {}
-      return { error: { code: e.code, message: e.message || "HTTP " + r.status } };
+      const d = await r.json().catch(() => ({}));
+      if (r.ok && d.ok) return { error: null };
+      return { error: { code: d.code, message: d.limite ? "trop d'envois" : (d.erreur || "HTTP " + r.status) } };
     } catch (e) { return { error: { message: String((e && e.message) || e) } }; }
   }
 
@@ -86,15 +88,16 @@ const UboraDB = (() => {
   /* --- Contenu public --- */
   async function load() {
     if (!configured() || typeof fetch === "undefined" || typeof window === "undefined" || window.UBORA_PRERENDER) return DATA;
-    const lu = await Promise.allSettled([lireTable("site_actualites", "date.desc"), lireTable("site_formations", "date.asc"), lireTable("site_offres", "publie_le.desc"),
-      lireTable("site_equipe", "ordre.asc,nom.asc"), lireTable("site_realisations", "ordre.asc,created_at.desc")]);
-    const [a, f, o, e, r] = lu.map(x => x.status === "fulfilled" ? x.value : null);
-    if (a) DATA.actualites = a.map(fromNews);
-    if (f) DATA.formations = f.map(fromTrain);
-    if (o) DATA.offres = o.map(fromJob);
-    if (e) DATA.equipe = e.map(fromMember);
-    if (r) DATA.realisations = r.map(fromReal);
-    if (lu.some(x => x.status === "fulfilled")) DATA.source = "base"; else console.warn("Ubora : base indisponible.");
+    try {
+      const r = await fetch("/api/contenu"); if (!r.ok) throw new Error("HTTP " + r.status);
+      const d = await r.json();
+      if (d.actualites) DATA.actualites = d.actualites.map(fromNews);
+      if (d.formations) DATA.formations = d.formations.map(fromTrain);
+      if (d.offres) DATA.offres = d.offres.map(fromJob);
+      if (d.equipe) DATA.equipe = d.equipe.map(fromMember);
+      if (d.realisations) DATA.realisations = d.realisations.map(fromReal);
+      DATA.source = "base";
+    } catch (e) { console.warn("Ubora : base indisponible."); }
     return DATA;
   }
 
@@ -122,8 +125,13 @@ const UboraDB = (() => {
   /* --- Espace équipe --- */
   async function signIn(email, password) {
     const c = await sb(); if (!c) return { ok: false, message: "La base de données est injoignable." };
-    const { data, error } = await c.auth.signInWithPassword({ email, password });
-    if (error) return { ok: false, message: error.message === "Invalid login credentials" ? "Adresse e-mail ou mot de passe incorrect." : error.message };
+    /* la connexion passe par le serveur du site : 5 essais par minute et par adresse IP, puis 15 minutes de blocage */
+    let r, d;
+    try { r = await fetch("/api/connexion", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ email, password }) }); d = await r.json().catch(() => ({})); }
+    catch (e) { return { ok: false, message: "Connexion impossible. Vérifiez votre réseau." }; }
+    if (!r.ok || !d.session) return { ok: false, message: d.erreur || "Adresse e-mail ou mot de passe incorrect.", bloque: !!d.bloque };
+    const { data, error } = await c.auth.setSession({ access_token: d.session.access_token, refresh_token: d.session.refresh_token });
+    if (error) return { ok: false, message: "La session n'a pas pu s'ouvrir." };
     return { ok: true, user: data.user };
   }
   async function signOut() { const c = await sb(); if (c) await c.auth.signOut(); }
@@ -164,10 +172,15 @@ const UboraDB = (() => {
   /* Photo déjà réduite par l'espace équipe ; renvoie son adresse publique */
   async function uploadImage(blob, dossier) {
     const c = await sb(); if (!c) return { ok: false, message: "Base injoignable." };
-    const nom = `${dossier}/${Date.now()}-${Math.random().toString(36).slice(2, 8)}.jpg`;
-    const { error } = await c.storage.from("site-medias").upload(nom, blob, { contentType: "image/jpeg", cacheControl: "31536000", upsert: false });
-    if (error) return { ok: false, message: error.message };
-    return { ok: true, url: c.storage.from("site-medias").getPublicUrl(nom).data.publicUrl };
+    if (blob.size > 5 * 1024 * 1024) return { ok: false, message: "image trop lourde (5 Mo au plus)." };
+    /* le serveur vérifie le vrai type du fichier, sa taille, et lui donne un nom aléatoire ; la base vérifie que l'envoi vient de l'équipe */
+    const { data } = await c.auth.getSession(); const jeton = data && data.session && data.session.access_token;
+    if (!jeton) return { ok: false, message: "reconnectez-vous." };
+    try {
+      const r = await fetch("/api/media?dossier=" + encodeURIComponent(dossier), { method: "POST", headers: { Authorization: "Bearer " + jeton, "Content-Type": blob.type || "application/octet-stream" }, body: blob });
+      const d = await r.json().catch(() => ({}));
+      return r.ok && d.ok ? { ok: true, url: d.url } : { ok: false, message: d.erreur || "envoi refusé." };
+    } catch (e) { return { ok: false, message: "envoi impossible, vérifiez votre réseau." }; }
   }
   async function removeRow(table, id) {
     if (!["site_messages", "site_abonnes", "site_questions"].includes(table)) return { ok: false };
