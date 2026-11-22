@@ -444,7 +444,7 @@ function pageAbout() {
     [ICON.handshake, "Devenir partenaire", "Compétences, équipements, mises en relation : dites-nous ce que vous pouvez apporter.", "/contact?sujet=" + encodeURIComponent("Partenariat"), "Proposer un partenariat"],
     [ICON.heart, "Faire un don", "Les dons et les subventions vont à l'association UBORA, qui conduit les projets sans but lucratif.", "/ong", "L'association UBORA"]
   ];
-  return pageHead({ eyebrow: "Qui sommes-nous", title: `Une entreprise sociale, pour que l'effort des familles <span class="serif">porte ses fruits</span>.`, crumbs: [["Qui sommes-nous"]], photo: ["terrain", "Une communauté réunie en plein air"],
+  return pageHead({ eyebrow: "À propos", title: `Une entreprise sociale, pour que l'effort des familles <span class="serif">porte ses fruits</span>.`, crumbs: [["À propos"]], photo: ["terrain", "Une communauté réunie en plein air"],
     lead: "Ubora veut dire « excellence » en swahili : c'est ce que nous devons à ceux que nous accompagnons, qui n'ont pas droit à l'erreur." }) + `
   <section class="pg-barre"><div class="wrap"><nav class="pg-onglets" aria-label="Sur cette page">${ongletsPropos.map(([id, t]) => `<a href="#${id}" data-scroll="${id}">${t}</a>`).join("")}</nav></div></section>
 
@@ -916,7 +916,7 @@ function pageRealisations(params) {
   <section><div class="wrap">${finalCta()}</div></section>`;
 }
 
-/* Offres d'emploi et candidature spontanée (section « Nous rejoindre » de Qui sommes-nous) */
+/* Offres d'emploi et candidature spontanée (section « Carrières » de Notre équipe) */
 function blocOffres(openId) {
   const t = todayISO();
   const ouvertes = [...DATA.offres].filter(o => o.cloture >= t).sort((a, b) => (b.publie || "").localeCompare(a.publie || ""));
@@ -942,7 +942,7 @@ function blocOffres(openId) {
 /* L'association UBORA : d'après ses statuts du 1er novembre 2025 */
 function pageOng() {
   const sujet = "/contact?sujet=" + encodeURIComponent("UBORA, l'association");
-  return pageHead({ eyebrow: "UBORA · association à vocation d'ONG", title: `L'association UBORA, au service des <span class="serif">communautés</span>.`, crumbs: [["Qui sommes-nous", "/a-propos"], ["L'association UBORA"]], photo: ["terrain", "Une communauté réunie en plein air"],
+  return pageHead({ eyebrow: "UBORA · association à vocation d'ONG", title: `L'association UBORA, au service des <span class="serif">communautés</span>.`, crumbs: [["À propos", "/a-propos"], ["L'association UBORA"]], photo: ["terrain", "Une communauté réunie en plein air"],
     lead: "L'association sans but lucratif de l'écosystème Ubora : des projets communautaires financés par des dons et des subventions, pour les femmes, les jeunes et les plus vulnérables.",
     extra: `<div class="btn-row"><a class="btn btn-accent" href="${sujet}">Financer un projet de l'association ${ICON.arrow}</a><a class="btn btn-glass" href="#lien" data-scroll="lien">L'association et l'entreprise sociale</a></div>` }) + `
   <section><div class="wrap two">
@@ -1120,7 +1120,7 @@ const ANCIENNES = {
 };
 const DESCR = {
   "": "Entreprise à caractère social, Ubora réinvestit ses excédents pour accompagner les groupes d'épargne (AVEC), les entrepreneurs et les coopératives, partout en RDC.",
-  "a-propos": "Qui est Ubora : une entreprise à caractère social dont les prestations financent la présence auprès des plus fragiles, et son association, UBORA, pour les projets financés par des dons. Mission, modèle, valeurs.",
+  "a-propos": "Qui est Ubora : une entreprise à caractère social qui vit de ses prestations et réinvestit ses excédents sur le terrain, et son association, UBORA, distincte, pour les projets financés par des dons. Mission, modèle économique, valeurs.",
   approche: "L'approche d'Ubora : une méthode en six temps, et pour les bailleurs et les ONG, des projets pilotes, la mise en œuvre de programmes et le relais après le projet, partout en RDC.",
   solutions: "Les solutions d'Ubora : sept pôles (AVEC, PME, coopératives, financement, marché, environnement, Académie) et leurs applications, AKIBA, Ubora Hub, ASBL Manager et les autres.",
   outils: "AKIBA et Akiba Suivi, le générateur de business plan, Ubora Hub, Ubora Académie, ASBL Manager et les outils en préparation : des outils numériques conçus pour la RDC.",
@@ -1149,9 +1149,9 @@ const SEO_POLES = {
   marche: ["Ubora Market : trouver des acheteurs pour les producteurs en RDC", "Le pôle marché d'Ubora, entreprise à caractère social : relier les coopératives, les PME et les entrepreneurs accompagnés à des acheteurs, et suivre chaque vente jusqu'au paiement."]
 };
 /* Titres complets pour la balise <title> ; TITRES reste court (fil d'Ariane, menus) */
-const SEO_TITRES = { approche: "Notre approche : la méthode Ubora et nos services aux bailleurs et aux ONG", solutions: "Nos solutions : sept pôles et leurs applications · Ubora", equipe: "Notre équipe et nos carrières · Ubora, entreprise sociale", ong: "UBORA, association à vocation d'ONG de développement en RDC", soutenir: "Soutenir Ubora : une entreprise à objectif social en RDC", "a-propos": "Qui sommes-nous : Ubora, entreprise sociale en RDC", approche: "Notre approche : la méthode Ubora en six temps", outils: "Outils numériques pour les AVEC, les PME et les organisations · Ubora", conseil: "Projets pilotes, mise en œuvre et conseil en RDC · Ubora", formations: "Formations AVEC, entrepreneuriat et coopératives · Ubora", actualites: "Actualités d'Ubora : nouvelles du terrain en RDC", realisations: "Nos réalisations en RDC · Ubora, entreprise sociale", equipe: "Notre équipe · Ubora, entreprise sociale en RDC", carrieres: "Carrières : rejoindre Ubora, entreprise sociale en RDC", contact: "Contacter Ubora, entreprise sociale en RDC", mentions: "Mentions légales · Ubora, entreprise sociale", poles: "Nos pôles : AVEC, PME, coopératives, financement, marché, environnement, formation · Ubora", confidentialite: "Confidentialité et cookies · Ubora, entreprise sociale", conditions: "Conditions d'utilisation · Ubora, entreprise sociale" };
+const SEO_TITRES = { approche: "Notre approche : la méthode Ubora et nos services aux bailleurs et aux ONG", solutions: "Nos solutions : sept pôles et leurs applications · Ubora", equipe: "Notre équipe et nos carrières · Ubora, entreprise sociale", ong: "UBORA, association à vocation d'ONG de développement en RDC", soutenir: "Soutenir Ubora : une entreprise à objectif social en RDC", "a-propos": "À propos d'Ubora, entreprise sociale en RDC", approche: "Notre approche : la méthode Ubora en six temps", outils: "Outils numériques pour les AVEC, les PME et les organisations · Ubora", conseil: "Projets pilotes, mise en œuvre et conseil en RDC · Ubora", formations: "Formations AVEC, entrepreneuriat et coopératives · Ubora", actualites: "Actualités d'Ubora : nouvelles du terrain en RDC", realisations: "Nos réalisations en RDC · Ubora, entreprise sociale", equipe: "Notre équipe · Ubora, entreprise sociale en RDC", carrieres: "Carrières : rejoindre Ubora, entreprise sociale en RDC", contact: "Contacter Ubora, entreprise sociale en RDC", mentions: "Mentions légales · Ubora, entreprise sociale", poles: "Nos pôles : AVEC, PME, coopératives, financement, marché, environnement, formation · Ubora", confidentialite: "Confidentialité et cookies · Ubora, entreprise sociale", conditions: "Conditions d'utilisation · Ubora, entreprise sociale" };
 const ROBOTS = "index, follow, max-image-preview:large";
-const TITRES = { approche: "Notre approche", solutions: "Nos solutions", equipe: "Notre équipe", ong: "L'association UBORA", soutenir: "Soutenir nos actions", "": "Ubora : entreprise sociale en RDC (AVEC, PME, coopératives)", "a-propos": "Qui sommes-nous", approche: "Notre approche", outils: "Nos solutions", conseil: "Projets et conseil", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", poles: "Nos pôles", confidentialite: "Confidentialité", conditions: "Conditions d'utilisation", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
+const TITRES = { approche: "Notre approche", solutions: "Nos solutions", equipe: "Notre équipe", ong: "L'association UBORA", soutenir: "Soutenir nos actions", "": "Ubora : entreprise sociale en RDC (AVEC, PME, coopératives)", "a-propos": "À propos", approche: "Notre approche", outils: "Nos solutions", conseil: "Projets et conseil", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", poles: "Nos pôles", confidentialite: "Confidentialité", conditions: "Conditions d'utilisation", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
 
 /* Construit une page à partir d'une adresse. */
 function resolve(pathname, search, host) {
@@ -1177,7 +1177,7 @@ function resolveFR(pathname, search, host) {
   if (!base && SOUS_DOMAINES[sd]) base = SOUS_DOMAINES[sd];
   const alias = ANCIENNES[path];
   if (alias) return { redirect: alias };
-  /* les offres d'emploi sont dans « Nous rejoindre », sur Qui sommes-nous (18 novembre 2026) */
+  /* les offres d'emploi sont dans « Nous rejoindre », sur À propos (18 novembre 2026) */
   if (base === "carrieres") return { redirect: sub ? "/equipe#offre-" + encodeURIComponent(sub) : "/equipe#carrieres" };
 
   let html, title, desc, canon = "/" + path;

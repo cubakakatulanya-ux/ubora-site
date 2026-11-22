@@ -99,7 +99,7 @@ function donneesStructurees(chemin, r) {
   } else {
     const P = S.POLES.find(p => p.chemin === chemin);
     if (chemin === "/ong") graph.push({ "@type": "NGO", name: "UBORA", url, foundingDate: "2025-11-01", description: texte(S.DATA_ONG.mission), areaServed: { "@type": "Country", name: "République démocratique du Congo" }, address: { "@type": "PostalAddress", streetAddress: "Avenue Mapendo n° 11, Quartier Kalubwe 2", addressLocality: "Lubumbashi", addressRegion: "Haut-Katanga", addressCountry: "CD" } });
-    if (chemin === "/equipe" || chemin === "/ong") miettes.itemListElement.push({ "@type": "ListItem", position: 2, name: "Qui sommes-nous", item: "https://uborardc.com/a-propos" });
+    if (chemin === "/equipe" || chemin === "/ong") miettes.itemListElement.push({ "@type": "ListItem", position: 2, name: "À propos", item: "https://uborardc.com/a-propos" });
     miettes.itemListElement.push({ "@type": "ListItem", position: miettes.itemListElement.length + 1, name: texte(P ? P.nom : r.court), item: url });
     if (P) graph.push({ "@type": "Service", name: P.nom, description: (S.SEO_POLES[P.id] || [])[1] || texte(P.lead), url, serviceType: texte(P.carte), areaServed: { "@type": "Country", name: "République démocratique du Congo" }, provider: { "@id": ORG["@id"] } });
   }
