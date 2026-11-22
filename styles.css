@@ -2598,3 +2598,48 @@ section { padding-block: clamp(36px, 3.8vw, 58px); }
 /* Bouton de langue (FR / EN), à côté du thème — 22 novembre 2026 */
 .lang-btn { font: 600 .74rem/1 inherit; font-family: inherit; letter-spacing: .06em; text-decoration: none; }
 .lang-btn:hover, .lang-btn:focus-visible { border-color: var(--c, #17704A); color: var(--c, #17704A); }
+
+/* Vitrine de l'accueil resserrée (22 novembre 2026) : environ trois fois moins haute */
+.vitrine.compacte { padding: 0 0 40px; }
+.vitrine.compacte .vitrine-banniere { padding: 34px 0 70px; }
+.vitrine-tete { display: flex; align-items: flex-end; justify-content: space-between; gap: 12px 40px; flex-wrap: wrap; }
+.vitrine.compacte .vitrine-banniere h2 { margin: 6px 0 0; max-width: none; }
+.vitrine.compacte .vitrine-banniere p { max-width: 46ch; font-size: 15px; }
+.vitrine.compacte .vitrine-grille { margin-top: -46px; gap: 14px; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+@media (max-width: 1020px) { .vitrine.compacte .vitrine-grille { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .vitrine.compacte .vitrine-grille { grid-template-columns: minmax(0, 1fr); gap: 10px; } .vitrine.compacte .vitrine-banniere { padding: 28px 0 62px; } }
+.vitrine.compacte .solution { flex-direction: row; align-items: center; gap: 14px; padding: 12px; border-top-width: 1px; border-left: 3px solid var(--c); }
+.vitrine.compacte .solution-img { flex: none; width: 112px; height: 70px; aspect-ratio: auto; border: 1px solid var(--line); border-radius: 6px; }
+.vitrine.compacte .solution-txt { padding: 0; gap: 2px; min-width: 0; }
+.vitrine.compacte .solution-txt b { font-size: 16px; }
+.vitrine.compacte .solution-txt > span { font-size: 13.5px; line-height: 1.35; }
+.vitrine.compacte .solution-txt > .solution-lien { margin-top: 2px; font-size: 12px; overflow-wrap: anywhere; }
+.vitrine.compacte .solution.r3d-actif .solution-img { transform: none; }
+@media (max-width: 400px) { .vitrine.compacte .solution-img { width: 84px; height: 54px; } }
+.vitrine.compacte .vitrine-pied { display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; margin-top: 18px; text-align: left; }
+.vitrine-bientot { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin: 0; font-size: 13.5px; }
+.vitrine-bientot .puce { padding: 3px 10px; border: 1px solid var(--line); border-left: 3px solid var(--c); border-radius: 999px; background: var(--surface); color: var(--ink); }
+
+/* Domaines de l'accueil resserrés (22 novembre 2026) : cartes plus basses, deux colonnes sur téléphone */
+#poles { padding-block: 40px 24px; }
+#poles .sec-head { margin-bottom: 18px; }
+.r-poles { gap: 10px; }
+.r-pole { padding: 12px 14px; column-gap: 12px; row-gap: 0; border-left: 3px solid var(--c); }
+.r-pole .mk { width: 36px; height: 36px; border-radius: 8px; font-size: 14px; }
+.r-pole b { font-size: 15.5px; }
+.r-pole > span:last-child { font-size: 13.5px; line-height: 1.35; }
+
+@media (max-width: 600px) {
+  #poles { padding-block: 28px 12px; }
+  .r-poles { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .r-pole { grid-template-columns: auto minmax(0, 1fr); padding: 10px; column-gap: 9px; }
+  .r-pole .mk { grid-row: auto; width: 30px; height: 30px; font-size: 12.5px; }
+  .r-pole b { font-size: 14.5px; line-height: 1.25; }
+  .r-pole > span:last-child { display: none; }
+  .r-pole.transversal { grid-column: span 2; }
+}
+@media (max-width: 640px) {
+  .vitrine.compacte .solution { padding: 10px; gap: 12px; }
+  .vitrine.compacte .solution-txt > .solution-lien { display: none; }
+  .vitrine.compacte .solution-img { width: 92px; height: 58px; }
+}

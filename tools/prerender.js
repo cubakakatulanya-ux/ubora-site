@@ -77,7 +77,7 @@ const ORG = {
   knowsAbout: ["Associations villageoises d'épargne et de crédit", "entrepreneuriat social", "inclusion financière", "entrepreneuriat", "incubation", "coopératives agricoles", "accès au marché", "protection de l'environnement", "recyclage"]
 };
 const legal = S.CONFIG.legal || {};
-ORG.hasOfferCatalog = { "@type": "OfferCatalog", name: "Les pôles d'Ubora", itemListElement: S.POLES.map(p => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: p.nom, url: S.CONFIG.site + p.chemin, description: (S.SEO_POLES[p.id] || [])[1] || texte(p.carte) } })) };
+ORG.hasOfferCatalog = { "@type": "OfferCatalog", name: "Les domaines d'Ubora", itemListElement: S.POLES.map(p => ({ "@type": "Offer", itemOffered: { "@type": "Service", name: p.nom, url: S.CONFIG.site + p.chemin, description: (S.SEO_POLES[p.id] || [])[1] || texte(p.carte) } })) };
 ORG.identifier = [["RCCM", legal.rccm], ["Identification nationale", legal.idnat], ["Numéro d'impôt", legal.impot]]
   .filter(([, v]) => v).map(([k, v]) => ({ "@type": "PropertyValue", propertyID: k, value: v }));
 

@@ -112,7 +112,7 @@ const UboraChat = (() => {
     $("#chatClose").addEventListener("click", toggle);
     $("#chatForm").addEventListener("submit", e => { e.preventDefault(); send($("#chatInput").value); });
     $$("#chatSugg button").forEach(b => b.addEventListener("click", () => send(b.textContent)));
-    say("bot", `Karibu. Je réponds à partir de ce qui est écrit sur le site : nos pôles, nos outils, les boîtes à outils, les formations, les offres d'emploi et nos coordonnées. Que cherchez-vous ?`);
+    say("bot", `Karibu. Je réponds à partir de ce qui est écrit sur le site : nos domaines, nos outils, les boîtes à outils, les formations, les offres d'emploi et nos coordonnées. Que cherchez-vous ?`);
   }
 
   function say(who, html) {

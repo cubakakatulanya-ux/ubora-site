@@ -46,7 +46,7 @@ const todayISO = () => new Date().toISOString().slice(0, 10);
 const waLink = txt => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(txt)}`;
 const pole = id => POLES.find(p => p.id === id);
 const outil = id => OUTILS.find(o => o.id === id);
-/* page qui présente un logiciel : sa fiche (/outils/<id>), la page de son pôle, ou à défaut le logiciel lui-même */
+/* page qui présente un logiciel : sa fiche (/outils/<id>), la page de son domaine, ou à défaut le logiciel lui-même */
 const lienOutil = o => o.page || (o.fiche ? "/outils/" + o.id : pole(o.pole).chemin);
 const store = {
   get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch (e) { return d; } },
@@ -158,11 +158,11 @@ function poleCard(p, feature, compact) {
   return `<article class="pole${feature ? " feature" : ""}${img ? " has-img" : ""}${p.transversal ? " transversal" : ""}" style="--c:${p.couleur}">
     ${img ? `<div class="pole-img">${photo(p.photo[0], feature ? "(max-width: 860px) 100vw, 800px" : "(max-width: 560px) 100vw, (max-width: 900px) 50vw, 380px", "", ' loading="lazy"')}</div>` : ""}
     <div class="pole-body">
-      <div class="pole-top"><span class="mk">${esc(p.initiales)}</span><span class="pole-sub">${esc(p.sousDomaine)}</span>${p.transversal ? '<span class="pole-tag">Pour tous les pôles</span>' : ""}</div>
+      <div class="pole-top"><span class="mk">${esc(p.initiales)}</span><span class="pole-sub">${esc(p.sousDomaine)}</span>${p.transversal ? '<span class="pole-tag">Pour tous les domaines</span>' : ""}</div>
       <h3><a class="stretch" href="${p.chemin}">${esc(p.nom)}</a></h3>
       ${p.accroche ? `<p class="accroche">${esc(p.accroche)}</p>` : ""}
       <p>${esc(p.carte)}</p>
-      <span class="link">Découvrir le pôle ${ICON.arrow}</span>
+      <span class="link">Découvrir le domaine ${ICON.arrow}</span>
     </div>
   </article>`;
 }
@@ -174,23 +174,22 @@ const banniere = (o, sizes) => VITRINE.includes(o.id) && o.statut === "en-ligne"
   ? `<img class="solution-img" src="/img/solutions/${o.id}-480.webp" srcset="/img/solutions/${o.id}-480.webp 480w, /img/solutions/${o.id}-960.webp 960w" sizes="${sizes}" width="480" height="300" alt="Page d'accueil de ${esc(o.nom)}" loading="lazy" decoding="async">` : "";
 function vitrine() {
   const liste = VITRINE.map(outil).filter(o => o && o.statut === "en-ligne" && o.url);
-  return `<section id="solutions" class="vitrine">
-    <div class="vitrine-banniere"><div class="wrap">
-      <span class="eyebrow">Nos solutions numériques</span>
-      <h2>${liste.length} applications en ligne. D'autres arrivent.</h2>
-      <p>Sur téléphone ou sur ordinateur, même avec une connexion faible. Chacune s'accompagne d'une formation.</p>
+  const bientot = CHANTIER.map(outil).filter(o => o && o.statut !== "en-ligne");
+  return `<section id="solutions" class="vitrine compacte">
+    <div class="vitrine-banniere"><div class="wrap vitrine-tete">
+      <div><span class="eyebrow">Nos solutions numériques</span>
+      <h2>${liste.length} applications en ligne</h2></div>
+      <p>Sur téléphone ou ordinateur, même avec une connexion faible. Chacune s'accompagne d'une formation.</p>
     </div></div>
     <div class="wrap">
       <div class="vitrine-grille">${liste.map(o => `<a class="solution" href="${o.url}" target="_blank" rel="noopener" style="--c:${o.couleur}">
-        ${banniere(o, "(max-width: 600px) 100vw, (max-width: 960px) 50vw, 380px")}
+        ${banniere(o, "120px")}
         <span class="solution-txt"><b>${esc(o.nom)}</b><span>${esc(o.court || "")}</span><span class="solution-lien">${esc(o.sousDomaine || new URL(o.url).hostname)} ${ICON.ext}</span></span>
       </a>`).join("")}</div>
-      <h3 class="sous-titre vitrine-titre">En construction</h3>
-      <div class="vitrine-grille chantier">${CHANTIER.map(outil).filter(o => o && o.statut !== "en-ligne").map(o => `<article class="solution bientot" style="--c:${o.couleur}">
-        <div class="bientot-img" aria-hidden="true"><span class="mk">${esc(o.initiales)}</span><span class="status st-soon">En construction</span></div>
-        <div class="solution-txt"><b>${esc(o.nom)}</b><span>${esc(o.court || "")}</span><span class="solution-pole">${esc(poleReal(o.pole).nom)}</span></div>
-      </article>`).join("")}</div>
-      <p class="vitrine-pied"><a class="link" href="/solutions">Toutes nos solutions, en détail ${ICON.arrow}</a></p>
+      <div class="vitrine-pied">
+        <p class="vitrine-bientot"><span class="status st-soon">En construction</span> ${bientot.map(o => `<span class="puce" style="--c:${o.couleur}">${esc(o.nom)}</span>`).join("")}</p>
+        <a class="link" href="/solutions">Toutes nos solutions, en détail ${ICON.arrow}</a>
+      </div>
     </div>
   </section>`;
 }
@@ -202,7 +201,7 @@ function outilCard(o, court) {
     <div class="pole-top"><span class="mk">${esc(o.initiales)}</span>${statut(o)}</div>
     <h3>${o.statut === "en-ligne" || o.fiche ? `<a class="stretch" href="${href}"${ext(href)}>${esc(o.nom)}</a>` : esc(o.nom)}</h3>
     <p>${esc(court && o.court ? o.court : o.resume)}</p>
-    <div class="tool-foot"><span>${pole(o.pole) ? "Pôle " : ""}${esc(p.nom)}</span>${o.sousDomaine ? `<span class="mono">${esc(o.sousDomaine)}</span>` : ""}</div>
+    <div class="tool-foot"><span>${pole(o.pole) ? "Domaine " : ""}${esc(p.nom)}</span>${o.sousDomaine ? `<span class="mono">${esc(o.sousDomaine)}</span>` : ""}</div>
   </article>`;
 }
 function constats(list) {
@@ -306,7 +305,7 @@ function memberCard(m) {
       ${m.linkedin ? `<a class="link" href="${esc(m.linkedin)}" target="_blank" rel="noopener">LinkedIn ${ICON.ext}</a>` : ""}</div>
   </article>`;
 }
-/* pôle d'une réalisation ; « conseil » regroupe les missions pour les ONG et les bailleurs */
+/* domaine d'une réalisation ; « conseil » regroupe les missions pour les ONG et les bailleurs */
 const poleReal = id => pole(id) || { id: "conseil", nom: "Conseil et programmes", initiales: "Cp", couleur: "#0F3170", chemin: "/approche#bailleurs" };
 function realCard(r) {
   const p = poleReal(r.pole);
@@ -330,7 +329,7 @@ function menuHTML() {
     <li><a href="/a-propos" data-r="a-propos">À propos</a></li>
     <li><a href="/approche" data-r="approche">Notre approche</a></li>
     <li class="has-dd"><button class="dd-btn" type="button" data-r="solutions" aria-expanded="false">Nos solutions ${ICON.chev}</button>
-      <div class="dd dd-mega"><div class="dd-col dd-poles"><h5>Nos pôles</h5><div class="dd-grille">${POLES.map(p => item(p.chemin, p.nom, p.accroche, p.couleur, p.initiales)).join("")}</div></div>
+      <div class="dd dd-mega"><div class="dd-col dd-poles"><h5>Nos domaines</h5><div class="dd-grille">${POLES.map(p => item(p.chemin, p.nom, p.accroche, p.couleur, p.initiales)).join("")}</div></div>
         <div class="dd-col dd-outils"><h5>Applications en ligne</h5>${enLigne.map(o => item(o.url, o.nom, o.court, o.couleur, o.initiales, true)).join("")}</div>
         <div class="dd-pied"><a href="/solutions" class="dd-more">Vue d'ensemble des solutions ${ICON.arrow}</a></div></div></li>
     <li><a href="/realisations" data-r="realisations">Nos réalisations</a></li>
@@ -389,21 +388,21 @@ function pageHome() {
       <span class="r-sur">Entreprise à caractère social · RDC</span>
       <h1>Épargner. Entreprendre. <span class="serif">Vendre.</span></h1>
       <p class="r-chapeau">Nous accompagnons les groupes d'épargne, les entrepreneurs et les coopératives, jusqu'au crédit et jusqu'à l'acheteur.</p>
-      <div class="btn-row"><a class="btn btn-accent" href="#solutions" data-scroll="solutions">Nos solutions ${ICON.arrow}</a><a class="btn btn-ghost" href="#poles" data-scroll="poles">Nos pôles</a></div>
+      <div class="btn-row"><a class="btn btn-accent" href="#solutions" data-scroll="solutions">Nos solutions ${ICON.arrow}</a><a class="btn btn-ghost" href="#poles" data-scroll="poles">Nos domaines</a></div>
     </div>
     <figure class="r-hero-photo">${photo("avec", "(max-width: 900px) 100vw, 46vw", "Des femmes réunies en groupe d'épargne", ' fetchpriority="high"')}
       <figcaption class="r-hero-badge"><i aria-hidden="true"></i><span><b>Entreprise à caractère social</b> : nos excédents sont réinvestis sur le terrain.</span></figcaption></figure>
   </div></section>
 
   <section class="r-chiffres" aria-label="Ubora en chiffres"><div class="wrap"><ul>
-    <li><b>${POLES.length}</b><span>pôles d'intervention</span></li>
+    <li><b>${POLES.length}</b><span>domaines d'intervention</span></li>
     <li><b>${enLigne}</b><span>applications en ligne</span></li>
     <li><b>140+</b><span>cours à l'Académie</span></li>
     <li><b>Hors ligne</b><span>nos outils marchent sans réseau</span></li>
   </ul></div></section>
 
   <section id="poles"><div class="wrap">
-    ${secHead("Nos pôles", `Un accompagnement <span class="serif">complet</span>`)}
+    ${secHead("Nos domaines", `Un accompagnement <span class="serif">complet</span>`)}
     <div class="r-poles">${POLES.map(p => `<a class="r-pole${p.transversal ? " transversal" : ""}" href="${p.chemin}" style="--c:${p.couleur}"><span class="mk">${esc(p.initiales)}</span><b>${esc(p.nom)}</b><span>${esc(p.accroche)}</span></a>`).join("")}</div>
   </div></section>
 
@@ -494,8 +493,8 @@ function pageAbout() {
   <section><div class="wrap">${finalCta()}</div></section>`;
 }
 
-/* ---------- Page d'un pôle ---------- */
-/* Nos solutions (/solutions) : les pôles, chacun avec ses applications, en synthèse */
+/* ---------- Page d'un domaine ---------- */
+/* Nos solutions (/solutions) : les domaines, chacun avec ses applications, en synthèse */
 function pageSolutions() {
   const lienO = o => o.fiche ? "/outils/" + o.id : o.url;
   const ligne = o => o.statut === "en-ligne"
@@ -508,12 +507,12 @@ function pageSolutions() {
       <div class="pg-hero-txt">
         <nav class="crumbs" aria-label="Fil d'Ariane"><a href="/">Accueil</a><span>Nos solutions</span></nav>
         <span class="eyebrow">Nos solutions</span>
-        <h1>Sept pôles, et les outils qui les <span class="serif">servent</span>.</h1>
-        <p>Du premier franc épargné au premier contrat de vente : chaque pôle tient un maillon, avec des applications pensées pour le terrain.</p>
+        <h1>Sept domaines, et les outils qui les <span class="serif">servent</span>.</h1>
+        <p>Du premier franc épargné au premier contrat de vente : chaque domaine tient un maillon, avec des applications pensées pour le terrain.</p>
       </div>
       <div class="pg-hero-photo">${photo("akiba", "(max-width: 900px) 100vw, 55vw", "Un groupe d'épargne tient ses comptes sur téléphone", ' fetchpriority="high"')}</div>
     </div>
-    <nav class="pg-onglets" aria-label="Aller à un pôle">${POLES.map(p => `<a href="#${p.id}" data-scroll="${p.id}">${esc(p.nom)}</a>`).join("")}${orga.length ? `<a href="#organisations" data-scroll="organisations">Organisations</a>` : ""}</nav>
+    <nav class="pg-onglets" aria-label="Aller à un domaine">${POLES.map(p => `<a href="#${p.id}" data-scroll="${p.id}">${esc(p.nom)}</a>`).join("")}${orga.length ? `<a href="#organisations" data-scroll="organisations">Organisations</a>` : ""}</nav>
   </div></section>
   <section class="pg-liste"><div class="wrap">
     ${POLES.map(p => { const o = outilsDe(p.id); return `<article class="pg-carte" id="${p.id}" style="--c:${p.couleur}">
@@ -524,7 +523,7 @@ function pageSolutions() {
         <p>${esc(p.lead)}</p>
       </div>
       <div class="pg-carte-d">
-        ${o.length ? `<div class="pg-bandeau">Les outils du pôle</div><ul class="pg-outils">${o.map(ligne).join("")}</ul>` : ""}
+        ${o.length ? `<div class="pg-bandeau">Les outils du domaine</div><ul class="pg-outils">${o.map(ligne).join("")}</ul>` : ""}
         <div class="pg-bandeau">Ce que nous faisons</div>
         <ul class="pg-etapes">${(p.parcours || []).map(([t]) => `<li>${esc(t)}</li>`).join("")}</ul>
         <p class="pg-lien"><a class="link" href="${p.chemin}">Découvrir ${esc(p.nom)} ${ICON.arrow}</a></p>
@@ -592,19 +591,19 @@ function pageEquipe() {
   <section><div class="wrap">${finalCta()}</div></section>`;
 }
 
-/* Vue d'ensemble des pôles (/poles) — remplacée par Nos solutions */
+/* Vue d'ensemble des domaines (/poles) — remplacée par Nos solutions */
 function pagePoles() {
   return `<section class="pg-tete"><div class="wrap">
     <div class="pg-hero">
       <div class="pg-hero-txt">
-        <nav class="crumbs" aria-label="Fil d'Ariane"><a href="/">Accueil</a><span>Nos pôles</span></nav>
-        <span class="eyebrow">Nos pôles</span>
-        <h1>Sept pôles, une même <span class="serif">chaîne</span>.</h1>
-        <p>Du premier franc épargné au premier contrat de vente : chaque pôle tient un maillon, et l'Académie forme à chaque étape.</p>
+        <nav class="crumbs" aria-label="Fil d'Ariane"><a href="/">Accueil</a><span>Nos domaines</span></nav>
+        <span class="eyebrow">Nos domaines</span>
+        <h1>Sept domaines, une même <span class="serif">chaîne</span>.</h1>
+        <p>Du premier franc épargné au premier contrat de vente : chaque domaine tient un maillon, et l'Académie forme à chaque étape.</p>
       </div>
       <div class="pg-hero-photo">${photo("terrain", "(max-width: 900px) 100vw, 55vw", "Une communauté réunie en plein air", ' fetchpriority="high"')}</div>
     </div>
-    <nav class="pg-onglets" aria-label="Aller à un pôle">${POLES.map(p => `<a href="#${p.id}" data-scroll="${p.id}">${esc(p.nom)}</a>`).join("")}</nav>
+    <nav class="pg-onglets" aria-label="Aller à un domaine">${POLES.map(p => `<a href="#${p.id}" data-scroll="${p.id}">${esc(p.nom)}</a>`).join("")}</nav>
   </div></section>
   <section class="pg-liste"><div class="wrap">
     ${POLES.map(p => `<article class="pg-carte" id="${p.id}" style="--c:${p.couleur}">
@@ -624,7 +623,7 @@ function pagePoles() {
   <section><div class="wrap">${finalCta()}</div></section>`;
 }
 
-/* Barre de pastilles sous l'en-tête d'une page de pôle : les sections de la page */
+/* Barre de pastilles sous l'en-tête d'une page de domaine : les sections de la page */
 function ongletsPole(P) {
   const items = [
     P.video && ["video", "En vidéo"], ["contexte", "Le contexte"], P.chaine && ["chaine", "Chaîne de valeur"], ["demarche", "Notre démarche"],
@@ -715,7 +714,7 @@ function pagePole(id) {
   </div></section>` : ""}
 
   <section id="outils"><div class="wrap">
-    ${cartesOutils.length ? `${secHead("Outils et publics", `Les outils du pôle ${esc(P.nom)}`)}
+    ${cartesOutils.length ? `${secHead("Outils et publics", `Les outils du domaine ${esc(P.nom)}`)}
     <div class="tools">${cartesOutils.map(o => outilCard(o, true)).join("")}</div>` : secHead("Nos publics", "Avec qui nous travaillons")}
     <div class="publics"><b>Pour qui</b>${P.publics.map(x => `<span>${esc(x)}</span>`).join("")}</div>
   </div></section>
@@ -768,7 +767,7 @@ function pageOutils() {
 }
 
 /* ---------- Page de présentation d'un logiciel (/outils/<id>) ---------- */
-/* Vidéo de présentation (page d'un pôle ou d'un logiciel). Elle ne se charge qu'à la demande ;
+/* Vidéo de présentation (page d'un domaine ou d'un logiciel). Elle ne se charge qu'à la demande ;
    « leger » est une version de plus petite taille, proposée pour les connexions lentes. */
 function blocVideo(v) {
   return `<section id="video"><div class="wrap">
@@ -813,7 +812,7 @@ function pageOutil(o) {
     <ol class="bridge">${F.acces.map(([t, x], i) => `<li><span class="bn">${i + 1}</span><div><b>${esc(t)}</b><span>${esc(x)}</span></div></li>`).join("")}</ol>
     <div class="btn-row centre">${F.android ? `<a class="btn btn-primary" href="${F.android}" target="_blank" rel="noopener">Installer sur Android ${ICON.ext}</a>` : ""}<a class="btn btn-ghost" href="/contact?sujet=${encodeURIComponent(o.nom)}">Une question ? Écrivez-nous</a></div>
     ${F.accesNote ? `<p class="suite">${esc(F.accesNote)}</p>` : ""}
-    <p class="suite">${pole(o.pole) ? `Ce logiciel accompagne le pôle <a class="link" href="${p.chemin}">${esc(p.nom)}</a>.` : `Ce logiciel accompagne nos <a class="link" href="/approche#bailleurs">projets et conseil</a> aux organisations.`}</p>
+    <p class="suite">${pole(o.pole) ? `Ce logiciel accompagne le domaine <a class="link" href="${p.chemin}">${esc(p.nom)}</a>.` : `Ce logiciel accompagne nos <a class="link" href="/approche#bailleurs">projets et conseil</a> aux organisations.`}</p>
   </div></section>`;
 }
 
@@ -909,7 +908,7 @@ function pageRealisations(params) {
       <div class="fcard"><b class="deja-n">${pole("avec").boite.outils.length}</b><h3>Documents de la boîte à outils AVEC</h3><p>Tirés de nos déploiements : guide, études, formation des animateurs, carnets et règlements.</p></div>
     </div>
     ${secHead("Sur le terrain", "Programmes et missions")}
-    ${presents.length > 1 ? `<nav class="chips filtres" aria-label="Filtrer par pôle"><a class="chip" href="/realisations"${filtre ? "" : ' aria-current="page"'}>Toutes</a>${presents.map(id => `<a class="chip" href="/realisations?pole=${id}"${filtre === id ? ' aria-current="page"' : ""}>${esc(poleReal(id).nom)}</a>`).join("")}</nav>` : ""}
+    ${presents.length > 1 ? `<nav class="chips filtres" aria-label="Filtrer par domaine"><a class="chip" href="/realisations"${filtre ? "" : ' aria-current="page"'}>Toutes</a>${presents.map(id => `<a class="chip" href="/realisations?pole=${id}"${filtre === id ? ' aria-current="page"' : ""}>${esc(poleReal(id).nom)}</a>`).join("")}</nav>` : ""}
     ${liste.length ? `<div class="real-grid">${liste.map(realCard).join("")}</div>`
       : `<div class="empty"><b>Nos réalisations seront présentées ici prochainement.</b><p>Vous préparez un programme avec des groupes d'épargne, des entrepreneurs ou des coopératives ? Parlons de ce que nous pouvons faire ensemble.</p><a class="btn btn-primary" href="/contact?sujet=${encodeURIComponent("Partenariat")}">Nous écrire</a></div>`}
   </div></section>
@@ -1083,11 +1082,11 @@ function pageConfidentialite() {
 }
 
 function pageConditions() {
-  return pageHead({ eyebrow: "Informations légales", title: "Conditions d'utilisation", lead: "Les règles d'usage du site uborardc.com et de ses pages de pôles.", crumbs: [["Conditions d'utilisation"]] }) + `
+  return pageHead({ eyebrow: "Informations légales", title: "Conditions d'utilisation", lead: "Les règles d'usage du site uborardc.com et de ses pages de domaines.", crumbs: [["Conditions d'utilisation"]] }) + `
   <section><div class="wrap narrow legal-page">
     ${liensLegaux("/conditions")}
-    <h2>Objet</h2><p>Ces conditions s'appliquent au site uborardc.com et à ses pages de pôles (avec, pme, coop, fin, market, vert et ong.uborardc.com). Le site est gratuit et accessible sans compte. L'utiliser vaut acceptation de ces conditions.</p>
-    <h2>Ce que propose le site</h2><p>De l'information sur Ubora et ses pôles, un formulaire de contact, une lettre d'information facultative et un assistant qui répond à partir du contenu du site.</p>
+    <h2>Objet</h2><p>Ces conditions s'appliquent au site uborardc.com et à ses pages de domaines (avec, pme, coop, fin, market, vert et ong.uborardc.com). Le site est gratuit et accessible sans compte. L'utiliser vaut acceptation de ces conditions.</p>
+    <h2>Ce que propose le site</h2><p>De l'information sur Ubora et ses domaines, un formulaire de contact, une lettre d'information facultative et un assistant qui répond à partir du contenu du site.</p>
     <p>Le site ne vend rien, ne prend aucun paiement et ne collecte aucun don en ligne. Nos prestations font l'objet d'un devis ou d'un contrat écrit, qui en fixe le prix, les délais, l'annulation et le remboursement éventuel. Ubora Fin ne prête pas et ne recueille pas d'épargne : elle mobilise le capital d'institutions financières, d'investisseurs et de bailleurs.</p>
     <h2>Nos applications</h2><p>AKIBA, Akiba Suivi, Ubora Hub, ASBL Manager, Ubora Académie et le générateur de business plan ont leurs propres conditions, affichées dans chaque application. Lorsqu'une application est payante, son prix, sa durée et ses conditions de renouvellement et de résiliation sont indiqués avant tout engagement.</p>
     <h2>Usage acceptable</h2><p>Il est interdit d'utiliser le site pour :</p>
@@ -1122,14 +1121,14 @@ const DESCR = {
   "": "Entreprise à caractère social, Ubora réinvestit ses excédents pour accompagner les groupes d'épargne (AVEC), les entrepreneurs et les coopératives, partout en RDC.",
   "a-propos": "Qui est Ubora : une entreprise à caractère social qui vit de ses prestations et réinvestit ses excédents sur le terrain, et son association, UBORA, distincte, pour les projets financés par des dons. Mission, modèle économique, valeurs.",
   approche: "L'approche d'Ubora : une méthode en six temps, et pour les bailleurs et les ONG, des projets pilotes, la mise en œuvre de programmes et le relais après le projet, partout en RDC.",
-  solutions: "Les solutions d'Ubora : sept pôles (AVEC, PME, coopératives, financement, marché, environnement, Académie) et leurs applications, AKIBA, Ubora Hub, ASBL Manager et les autres.",
+  solutions: "Les solutions d'Ubora : sept domaines (AVEC, PME, coopératives, financement, marché, environnement, Académie) et leurs applications, AKIBA, Ubora Hub, ASBL Manager et les autres.",
   outils: "AKIBA et Akiba Suivi, le générateur de business plan, Ubora Hub, Ubora Académie, ASBL Manager et les outils en préparation : des outils numériques conçus pour la RDC.",
   conseil: "Projets pilotes et mise en œuvre de projets de développement économique pour les bailleurs, les ONG et les institutions en RDC : indicateurs fixés ensemble, résultats suivis en direct.",
   formations: "Formations d'Ubora en RDC : Académie en ligne (plus de 140 cours avec certificat), prise en main des outils, AVEC, entrepreneuriat et gestion coopérative.",
   actualites: "Les actualités d'Ubora : programmes, déploiements, formations et nouvelles du terrain en RDC.",
   carrieres: "Offres d'emploi, de stage et de consultance chez Ubora, entreprise à caractère social qui intervient dans toute la RDC.",
   contact: "Contacter Ubora, entreprise à caractère social, par téléphone, WhatsApp ou e-mail. Une personne de l'équipe vous répond sous deux jours ouvrés.",
-  poles: "Les sept pôles d'Ubora, entreprise à caractère social : groupes d'épargne, entrepreneurs, coopératives, accès au financement, accès au marché, environnement et formation, partout en RDC.",
+  poles: "Les sept domaines d'Ubora, entreprise à caractère social : groupes d'épargne, entrepreneurs, coopératives, accès au financement, accès au marché, environnement et formation, partout en RDC.",
   mentions: "Mentions légales du site d'Ubora, entreprise sociale : éditeur, hébergement, propriété intellectuelle.",
   confidentialite: "Politique de confidentialité d'Ubora : données recueillies, durées de conservation, destinataires, sécurité, vos droits. Aucun cookie ni traceur.",
   conditions: "Conditions d'utilisation du site d'Ubora, entreprise sociale : objet, usage acceptable, applications, responsabilité, droit applicable.",
@@ -1138,20 +1137,20 @@ const DESCR = {
   soutenir: "Ubora n'est pas une entreprise classique : son objectif est social et ses excédents sont réinvestis. Confier une mission, apporter du capital, devenir partenaire : les façons de soutenir nos actions en RDC.",
   realisations: "Les réalisations d'Ubora en RDC : groupes d'épargne, entrepreneurs, coopératives, accès au financement et au marché. Contexte, actions et résultats."
 };
-/* Titre et description des pôles pour les moteurs de recherche */
+/* Titre et description des domaines pour les moteurs de recherche */
 const SEO_POLES = {
-  avec: ["Ubora AVEC : accompagner les groupes d'épargne (AVEC) en RDC", "Le pôle d'Ubora, entreprise à caractère social, consacré aux groupes d'épargne : création, formation et suivi des AVEC, et leur cahier dans le téléphone avec l'application AKIBA."],
-  pme: ["Ubora PME : de l'idée à l'entreprise, pour les entrepreneurs en RDC", "Le pôle entrepreneuriat d'Ubora, entreprise à caractère social : idéation, incubation, lancement de l'entreprise et mise à niveau des PME, avec Ubora Hub et le générateur de business plan."],
-  cooperatives: ["Ubora Coop : créer et gérer une coopérative en RDC", "Le pôle coopératives d'Ubora, entreprise à caractère social : statuts OHADA, gestion, collecte, stockage, transformation et vente groupée, jusqu'au paiement des producteurs."],
-  financement: ["Ubora Fin : mobiliser le capital pour les petits emprunteurs en RDC", "Ubora Fin ne prête pas : ce pôle d'Ubora, entreprise à caractère social, prépare les groupes, les coopératives et les PME, les présente aux institutions financières et mobilise le capital à leur profit."],
+  avec: ["Ubora AVEC : accompagner les groupes d'épargne (AVEC) en RDC", "Le domaine d'Ubora, entreprise à caractère social, consacré aux groupes d'épargne : création, formation et suivi des AVEC, et leur cahier dans le téléphone avec l'application AKIBA."],
+  pme: ["Ubora PME : de l'idée à l'entreprise, pour les entrepreneurs en RDC", "Le domaine entrepreneuriat d'Ubora, entreprise à caractère social : idéation, incubation, lancement de l'entreprise et mise à niveau des PME, avec Ubora Hub et le générateur de business plan."],
+  cooperatives: ["Ubora Coop : créer et gérer une coopérative en RDC", "Le domaine coopératives d'Ubora, entreprise à caractère social : statuts OHADA, gestion, collecte, stockage, transformation et vente groupée, jusqu'au paiement des producteurs."],
+  financement: ["Ubora Fin : mobiliser le capital pour les petits emprunteurs en RDC", "Ubora Fin ne prête pas : ce domaine d'Ubora, entreprise à caractère social, prépare les groupes, les coopératives et les PME, les présente aux institutions financières et mobilise le capital à leur profit."],
   academie: ["Ubora Académie : formations en ligne certifiantes en RDC", "L'école d'Ubora, entreprise à caractère social : plus de 140 cours en ligne, utilisables sans réseau, sur les AVEC, les AGR, l'entrepreneuriat, l'agriculture et les coopératives, avec certificats vérifiables."],
-  vert: ["Ubora Vert : protéger l'environnement et en vivre, en RDC", "Le pôle environnement d'Ubora, entreprise à caractère social : reboisement, recyclage, agroécologie et énergie propre, pour que protéger l'environnement fasse vivre ceux qui le portent."],
-  marche: ["Ubora Market : trouver des acheteurs pour les producteurs en RDC", "Le pôle marché d'Ubora, entreprise à caractère social : relier les coopératives, les PME et les entrepreneurs accompagnés à des acheteurs, et suivre chaque vente jusqu'au paiement."]
+  vert: ["Ubora Vert : protéger l'environnement et en vivre, en RDC", "Le domaine environnement d'Ubora, entreprise à caractère social : reboisement, recyclage, agroécologie et énergie propre, pour que protéger l'environnement fasse vivre ceux qui le portent."],
+  marche: ["Ubora Market : trouver des acheteurs pour les producteurs en RDC", "Le domaine marché d'Ubora, entreprise à caractère social : relier les coopératives, les PME et les entrepreneurs accompagnés à des acheteurs, et suivre chaque vente jusqu'au paiement."]
 };
 /* Titres complets pour la balise <title> ; TITRES reste court (fil d'Ariane, menus) */
-const SEO_TITRES = { approche: "Notre approche : la méthode Ubora et nos services aux bailleurs et aux ONG", solutions: "Nos solutions : sept pôles et leurs applications · Ubora", equipe: "Notre équipe et nos carrières · Ubora, entreprise sociale", ong: "UBORA, association à vocation d'ONG de développement en RDC", soutenir: "Soutenir Ubora : une entreprise à objectif social en RDC", "a-propos": "À propos d'Ubora, entreprise sociale en RDC", approche: "Notre approche : la méthode Ubora en six temps", outils: "Outils numériques pour les AVEC, les PME et les organisations · Ubora", conseil: "Projets pilotes, mise en œuvre et conseil en RDC · Ubora", formations: "Formations AVEC, entrepreneuriat et coopératives · Ubora", actualites: "Actualités d'Ubora : nouvelles du terrain en RDC", realisations: "Nos réalisations en RDC · Ubora, entreprise sociale", equipe: "Notre équipe · Ubora, entreprise sociale en RDC", carrieres: "Carrières : rejoindre Ubora, entreprise sociale en RDC", contact: "Contacter Ubora, entreprise sociale en RDC", mentions: "Mentions légales · Ubora, entreprise sociale", poles: "Nos pôles : AVEC, PME, coopératives, financement, marché, environnement, formation · Ubora", confidentialite: "Confidentialité et cookies · Ubora, entreprise sociale", conditions: "Conditions d'utilisation · Ubora, entreprise sociale" };
+const SEO_TITRES = { approche: "Notre approche : la méthode Ubora et nos services aux bailleurs et aux ONG", solutions: "Nos solutions : sept domaines et leurs applications · Ubora", equipe: "Notre équipe et nos carrières · Ubora, entreprise sociale", ong: "UBORA, association à vocation d'ONG de développement en RDC", soutenir: "Soutenir Ubora : une entreprise à objectif social en RDC", "a-propos": "À propos d'Ubora, entreprise sociale en RDC", approche: "Notre approche : la méthode Ubora en six temps", outils: "Outils numériques pour les AVEC, les PME et les organisations · Ubora", conseil: "Projets pilotes, mise en œuvre et conseil en RDC · Ubora", formations: "Formations AVEC, entrepreneuriat et coopératives · Ubora", actualites: "Actualités d'Ubora : nouvelles du terrain en RDC", realisations: "Nos réalisations en RDC · Ubora, entreprise sociale", equipe: "Notre équipe · Ubora, entreprise sociale en RDC", carrieres: "Carrières : rejoindre Ubora, entreprise sociale en RDC", contact: "Contacter Ubora, entreprise sociale en RDC", mentions: "Mentions légales · Ubora, entreprise sociale", poles: "Nos domaines : AVEC, PME, coopératives, financement, marché, environnement, formation · Ubora", confidentialite: "Confidentialité et cookies · Ubora, entreprise sociale", conditions: "Conditions d'utilisation · Ubora, entreprise sociale" };
 const ROBOTS = "index, follow, max-image-preview:large";
-const TITRES = { approche: "Notre approche", solutions: "Nos solutions", equipe: "Notre équipe", ong: "L'association UBORA", soutenir: "Soutenir nos actions", "": "Ubora : entreprise sociale en RDC (AVEC, PME, coopératives)", "a-propos": "À propos", approche: "Notre approche", outils: "Nos solutions", conseil: "Projets et conseil", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", poles: "Nos pôles", confidentialite: "Confidentialité", conditions: "Conditions d'utilisation", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
+const TITRES = { approche: "Notre approche", solutions: "Nos solutions", equipe: "Notre équipe", ong: "L'association UBORA", soutenir: "Soutenir nos actions", "": "Ubora : entreprise sociale en RDC (AVEC, PME, coopératives)", "a-propos": "À propos", approche: "Notre approche", outils: "Nos solutions", conseil: "Projets et conseil", formations: "Formations", actualites: "Actualités", carrieres: "Carrières", contact: "Contact", mentions: "Mentions légales", poles: "Nos domaines", confidentialite: "Confidentialité", conditions: "Conditions d'utilisation", admin: "Espace équipe", equipe: "Notre équipe", realisations: "Nos réalisations" };
 
 /* Construit une page à partir d'une adresse. */
 function resolve(pathname, search, host) {
@@ -1532,7 +1531,7 @@ function boot() {
     if (!href.startsWith("/") || href.startsWith("//") || href.startsWith("/generateur")) return;
     e.preventDefault();
     const [p, h] = href.split("#");
-    /* sur un sous-domaine de pôle, seuls les liens vers le pôle lui-même restent sur place ; le reste mène au site principal */
+    /* sur un sous-domaine d'un domaine, seuls les liens vers le domaine lui-même restent sur place ; le reste mène au site principal */
     if (SOUS_DOMAINES[sd]) {
       if (p.split("?")[0] !== "/" + SOUS_DOMAINES[sd]) { location.href = CONFIG.site + href; return; }
       if (h) document.getElementById(h)?.scrollIntoView({ behavior: "smooth" }); else scrollTo({ top: 0, behavior: "smooth" });

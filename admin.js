@@ -346,7 +346,7 @@ function renderForm(kind, row) {
     ${champ("Texte : un paragraphe par ligne, ### devant un intertitre, - devant un élément de liste", `<textarea id="f-contenu" rows="10" required>${esc((r.contenu || []).join("\n"))}</textarea>`, true)}`;
   if (kind === "formations") body = `
     ${champ("Titre", `<input id="f-titre" value="${esc(r.titre || "")}" required maxlength="160">`, true)}
-    ${champ("Pôle", `<select id="f-outil">${cibles.map(([v, l]) => `<option value="${v}"${v === (r.outil || "") ? " selected" : ""}>${l}</option>`).join("")}</select>`)}
+    ${champ("Domaine", `<select id="f-outil">${cibles.map(([v, l]) => `<option value="${v}"${v === (r.outil || "") ? " selected" : ""}>${l}</option>`).join("")}</select>`)}
     ${champ("Date", `<input id="f-date" type="date" value="${r.date || todayISO()}" required>`)}
     ${champ("Durée", `<input id="f-duree" value="${esc(r.duree || "1 jour")}" maxlength="60">`)}
     ${champ("Format", `<select id="f-mode">${["Présentiel", "En ligne", "Hybride"].map(m => `<option${m === r.mode ? " selected" : ""}>${m}</option>`).join("")}</select>`)}
@@ -373,7 +373,7 @@ function renderForm(kind, row) {
     ${champImage("Photo (carrée de préférence)", r.photo)}`;
   if (kind === "realisations") body = `
     ${champ("Titre", `<input id="f-titre" value="${esc(r.titre || "")}" required maxlength="160">`, true)}
-    ${champ("Pôle", `<select id="f-pole">${[...POLES.map(p => [p.id, p.nom]), ["conseil", "Conseil et programmes"]].map(([v, l]) => `<option value="${v}"${v === r.pole ? " selected" : ""}>${l}</option>`).join("")}</select>`)}
+    ${champ("Domaine", `<select id="f-pole">${[...POLES.map(p => [p.id, p.nom]), ["conseil", "Conseil et programmes"]].map(([v, l]) => `<option value="${v}"${v === r.pole ? " selected" : ""}>${l}</option>`).join("")}</select>`)}
     ${champ("Période", `<input id="f-periode" value="${esc(r.periode || "")}" maxlength="40" placeholder="Par exemple : 2024-2025">`)}
     ${champ("Lieu", `<input id="f-lieu" value="${esc(r.lieu || "")}" maxlength="120" placeholder="Province, ville ou territoire">`)}
     ${champ("Partenaire ou commanditaire", `<input id="f-partenaire" value="${esc(r.partenaire || "")}" maxlength="160">`)}

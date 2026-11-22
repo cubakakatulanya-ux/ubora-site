@@ -89,8 +89,8 @@ const METHODE = {
 };
 
 /* ==========================================================================
-   LES SEPT PÔLES (Ubora Académie est transversale : elle sert tous les autres)
-   Chaque pôle a sa page (et son sous-domaine), avec la même construction :
+   LES SEPT DOMAINES (Ubora Académie est transversale : elle sert tous les autres)
+   Chaque domaine a sa page (et son sous-domaine), avec la même construction :
    le contexte en RDC, notre démarche, les outils liés, la boîte à outils.
    ========================================================================== */
 const POLES = [
@@ -420,9 +420,9 @@ const POLES = [
     /* vidéo de présentation (montage du 9 octobre 2026) : captures réelles d'academie.uborardc.com */
     video: { src: "/img/video/ubora-academie.mp4", affiche: "/img/video/ubora-academie-couverture.webp", duree: "1 min 21",
       titre: "Ubora Académie en une minute vingt", youtube: "X7eC9dx4l_k", legende: "Les images sont des captures réelles d'academie.uborardc.com. Photo : marché de Goma, MONUSCO / M. Asmani, CC BY-SA." },
-    carte: "L'école de tous nos pôles : cours en ligne sans réseau, sessions sur le terrain, certificats vérifiables.",
-    titre: `Une académie pour tous nos pôles : apprendre, pratiquer, être <span class="serif">certifié</span>.`,
-    lead: "L'école d'Ubora forme ceux que nos pôles accompagnent, et leurs équipes. Des cours en ligne qui marchent sans réseau, et des certificats vérifiables.",
+    carte: "L'école de tous nos domaines : cours en ligne sans réseau, sessions sur le terrain, certificats vérifiables.",
+    titre: `Une académie pour tous nos domaines : apprendre, pratiquer, être <span class="serif">certifié</span>.`,
+    lead: "L'école d'Ubora forme ceux que nos domaines accompagnent, et leurs équipes. Des cours en ligne qui marchent sans réseau, et des certificats vérifiables.",
     contexte: {
       intro: "Une formation donnée une fois, en salle, le temps d'un projet, s'oublie vite. L'Académie la rend durable : accessible partout, à son rythme, et reconnue.",
       constats: [
@@ -466,7 +466,7 @@ const PHOTOS = [
   ["terrain", "Communautés"]
 ];
 
-/* Page AVEC : éléments propres à ce pôle */
+/* Page AVEC : éléments propres à ce domaine */
 const AVEC = {
   definition: "Quinze à trente personnes qui épargnent chaque semaine et s'accordent de petits prêts. En fin de cycle, souvent après neuf à douze mois, la caisse est partagée. Un fonds social aide en cas de coup dur.",
   avantApres: [
@@ -490,7 +490,7 @@ const AVEC = {
 
 /* ==========================================================================
    LES OUTILS NUMÉRIQUES
-   Chaque outil est rattaché à un pôle. statut : "en-ligne" ou "en-cours".
+   Chaque outil est rattaché à un domaine. statut : "en-ligne" ou "en-cours".
    ========================================================================== */
 const OUTILS = [
   {
