@@ -226,7 +226,11 @@ async function servir(request, env, ctx) {
     const versSite = () => renvoi(`https://${APEX}${chemin}${url.search}`);
 
     /* 2. Anciennes adresses du site */
-    const ancienne = ANCIENNES[chemin.replace(/\/+$/, "")];
+    const sansSlash = chemin.replace(/\/+$/, "");
+    /* version anglaise : les anciennes adresses mènent aussi à leur équivalent sous /en */
+    const enAncienne = /^\/en\//.test(sansSlash) && ANCIENNES[sansSlash.slice(3)];
+    if (enAncienne && !enAncienne.startsWith("http")) return renvoi(`https://${APEX}/en${enAncienne}`);
+    const ancienne = ANCIENNES[sansSlash];
     /* une ancienne adresse d'offre d'emploi mène à l'offre, dans « Nous rejoindre » */
     const offre = /^\/carrieres\/([^/]+)\/?$/.exec(chemin);
     if (offre) return renvoi(`https://${APEX}/equipe#offre-${offre[1]}`);

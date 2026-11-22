@@ -38,7 +38,10 @@ const ICON = {
 /* ---------- Utilitaires ---------- */
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const d12 = d => new Date(d + "T12:00:00");
-const fmtDate = d => d12(d).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });
+/* langue de la page : « en » sous uborardc.com/en/… (voir tools/i18n-moteur.js) */
+let LANGUE = "fr";
+const T = s => LANGUE === "en" && typeof traduire === "function" ? traduire(s) : s;
+const fmtDate = d => d12(d).toLocaleDateString(LANGUE === "en" ? "en-GB" : "fr-FR", { day: "numeric", month: "long", year: "numeric" });
 const todayISO = () => new Date().toISOString().slice(0, 10);
 const waLink = txt => `https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(txt)}`;
 const pole = id => POLES.find(p => p.id === id);
@@ -1152,6 +1155,19 @@ const TITRES = { approche: "Notre approche", solutions: "Nos solutions", equipe:
 
 /* Construit une page à partir d'une adresse. */
 function resolve(pathname, search, host) {
+  const en = /^\/en(\/|$)/.test(pathname || "");
+  LANGUE = en ? "en" : "fr";
+  const r = resolveFR(en ? (pathname.slice(3) || "/") : pathname, search, host);
+  if (!en) return r;
+  if (r.redirect) return { redirect: /^https?:/.test(r.redirect) ? r.redirect : "/en" + (r.redirect === "/" ? "" : r.redirect) };
+  let html = traduire(r.html);
+  /* pages légales : le texte français fait foi */
+  if (["mentions", "confidentialite", "conditions"].includes(r.base)) html = html.replace('<p class="legal-version">', '<p class="legal-version">This English version is provided for information. The French version is the authoritative text.</p><p class="legal-version">');
+  return { ...r, html, title: traduire(r.title), court: traduire(r.court), desc: traduire(r.desc), canon: r.canon === "/" ? "/en" : "/en" + r.canon };
+}
+/* adresse de la même page dans l'autre langue */
+const autreLangue = p => /^\/en(\/|$)/.test(p) ? (p.slice(3) || "/") : p === "/" ? "/en" : "/en" + p;
+function resolveFR(pathname, search, host) {
   const path = decodeURIComponent(pathname || "/").replace(/^\/+|\/+$/g, "");
   const params = new URLSearchParams(search || "");
   const parts = (host || "").split(".");
@@ -1219,13 +1235,14 @@ function boot() {
   const $ = (s, r = document) => r.querySelector(s);
   const $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const app = $("#app");
-  window.$ = $; window.$$ = $$;
+  window.$ = $; window.$ = $;
+  LANGUE = /^\/en(\/|$)/.test(location.pathname) ? "en" : "fr";
 
-  function toast(msg) { const t = $("#toast"); t.textContent = msg; t.classList.add("show"); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove("show"), 3000); }
+  function toast(msg) { const t = $("#toast"); t.textContent = T(msg); t.classList.add("show"); clearTimeout(toast._t); toast._t = setTimeout(() => t.classList.remove("show"), 3000); }
   window.toast = toast;
 
   function typo(root) {
-    if (!root) return;
+    if (!root || LANGUE === "en") return;
     const walk = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: n => n.parentElement && n.parentElement.closest("pre,code,input,textarea,script,style") ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT });
     let n;
     while ((n = walk.nextNode())) { const t = n.nodeValue; if (/ [;:!?»]|« /.test(t)) n.nodeValue = t.replace(/ ([;:!?»])/g, " $1").replace(/« /g, "« "); }
@@ -1270,7 +1287,7 @@ function boot() {
     /* l'espace équipe a sa propre adresse */
     if (r.base === "admin" && sd !== "admin" && /(^|\.)uborardc\.com$/.test(location.hostname)) { location.replace("https://admin.uborardc.com/"); return; }
     /* article publié depuis le dernier pré-rendu : on attend la base avant de conclure « introuvable » */
-    if (!r.found && r.base === "actualites" && r.sub && !baseConsultee) { premier = false; app.innerHTML = '<div class="wrap"><div class="empty" style="margin-block:80px">Chargement de l\'article…</div></div>'; return; }
+    if (!r.found && r.base === "actualites" && r.sub && !baseConsultee) { premier = false; app.innerHTML = T('<div class="wrap"><div class="empty" style="margin-block:80px">Chargement de l\'article…</div></div>'); return; }
     stopNet(); stopDiapo();
     compter(r);
     const garder = premier && !keep && app.dataset.pre === CONFIG.site + r.canon && !location.search && !["formations", "carrieres"].includes(r.base);
@@ -1283,6 +1300,7 @@ function boot() {
     setMeta('link[rel="canonical"]', "href", CONFIG.site + r.canon);
     setMeta('meta[property="og:url"]', "content", CONFIG.site + r.canon);
     setMeta('meta[name="robots"]', "content", r.robots);
+    const lg = $("#langBtn"); if (lg) lg.href = autreLangue(location.pathname) + location.hash;
     $$("#menu [data-r]").forEach(a => {
       const on = a.dataset.r === r.base || (a.dataset.r === "solutions" && (!!pole(r.base) || r.base === "outils")) || (a.dataset.r === "a-propos" && ["ong", "actualites"].includes(r.base));
       a.classList.toggle("current", on);
@@ -1310,8 +1328,8 @@ function boot() {
     const etat = $("#prefEtat"), b = $("#prefMesure"); if (!etat || !b) return;
     const maj = () => {
       const refus = !!memoire.lire("ubora-sans-mesure"), gpc = navigator.globalPrivacyControl === true;
-      etat.textContent = gpc ? "Votre navigateur demande de ne pas être suivi : vos visites ne sont pas comptées." : refus ? "Vos visites ne sont plus comptées dans ce navigateur." : "Vos visites sont comptées, sans vous identifier.";
-      b.textContent = refus ? "Compter à nouveau mes visites" : "Ne plus compter mes visites"; b.hidden = gpc;
+      etat.textContent = T(gpc ? "Votre navigateur demande de ne pas être suivi : vos visites ne sont pas comptées." : refus ? "Vos visites ne sont plus comptées dans ce navigateur." : "Vos visites sont comptées, sans vous identifier.");
+      b.textContent = T(refus ? "Compter à nouveau mes visites" : "Ne plus compter mes visites"); b.hidden = gpc;
     };
     b.addEventListener("click", () => { memoire.ecrire("ubora-sans-mesure", memoire.lire("ubora-sans-mesure") ? null : "1"); maj(); });
     $("#prefEffacer").addEventListener("click", () => {
@@ -1338,21 +1356,21 @@ function boot() {
       if (v("c-site")) return;
       const trop = 2500 - (Date.now() - debut); if (trop > 0) await new Promise(r => setTimeout(r, trop));
       $$("#contactForm [aria-invalid]").forEach(x => x.removeAttribute("aria-invalid"));
-      const signaler = (msg, id) => { err.textContent = msg; const c = $("#" + id); if (c) { c.setAttribute("aria-invalid", "true"); c.focus(); } };
+      const signaler = (msg, id) => { err.textContent = T(msg); const c = $("#" + id); if (c) { c.setAttribute("aria-invalid", "true"); c.focus(); } };
       if (!v("c-nom") || !v("c-msg")) { signaler("Merci d'indiquer votre nom et votre message.", v("c-nom") ? "c-msg" : "c-nom"); return; }
       if (!v("c-tel") && !v("c-mail")) { signaler("Laissez-nous un téléphone ou une adresse e-mail pour que nous puissions vous répondre.", "c-tel"); return; }
       if (v("c-mail") && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v("c-mail"))) { signaler("L'adresse e-mail semble incomplète (exemple : nom@domaine.com).", "c-mail"); return; }
       if (!v("c-besoin")) { signaler("Choisissez l'objet de votre message.", "c-besoin"); return; }
       err.textContent = "";
-      const btn = f.querySelector("button[type=submit]"); btn.disabled = true; btn.textContent = "Envoi en cours…";
+      const btn = f.querySelector("button[type=submit]"); btn.disabled = true; btn.textContent = T("Envoi en cours…");
       const res = await UboraDB.sendMessage({ nom: v("c-nom"), organisation: v("c-org") || null, telephone: v("c-tel") || null, email: v("c-mail") || null, besoin: v("c-besoin"), message: v("c-msg") });
       const texte = `Bonjour Ubora,\n\n${v("c-msg")}\n\n${v("c-nom")}${v("c-org") ? " (" + v("c-org") + ")" : ""}\nObjet : ${v("c-besoin")}${v("c-tel") ? "\nTél. : " + v("c-tel") : ""}${v("c-mail") ? "\nE-mail : " + v("c-mail") : ""}`;
       if (res.ok) brouillon.ecrire(null);
       f.hidden = true;
       const s = $("#sent"); s.hidden = false;
-      s.innerHTML = res.ok
+      s.innerHTML = T(res.ok
         ? `<div class="sent"><b>Merci, votre message est bien arrivé.</b><p>Nous vous répondons sous deux jours ouvrés. Si c'est urgent, écrivez-nous aussi sur WhatsApp.</p><div class="btn-row"><a class="btn btn-wa btn-sm" target="_blank" rel="noopener" href="${waLink(texte)}">Envoyer aussi par WhatsApp</a></div></div>`
-        : `<div class="sent"><b>Votre message n'a pas pu être enregistré.</b><p>Envoyez-le directement par WhatsApp ou par e-mail : il est déjà rédigé.</p><div class="btn-row"><a class="btn btn-wa" target="_blank" rel="noopener" href="${waLink(texte)}">WhatsApp</a><a class="btn btn-ghost" href="mailto:${CONFIG.email}?subject=${encodeURIComponent(v("c-besoin"))}&body=${encodeURIComponent(texte)}">E-mail</a></div></div>`;
+        : `<div class="sent"><b>Votre message n'a pas pu être enregistré.</b><p>Envoyez-le directement par WhatsApp ou par e-mail : il est déjà rédigé.</p><div class="btn-row"><a class="btn btn-wa" target="_blank" rel="noopener" href="${waLink(texte)}">WhatsApp</a><a class="btn btn-ghost" href="mailto:${CONFIG.email}?subject=${encodeURIComponent(v("c-besoin"))}&body=${encodeURIComponent(texte)}">E-mail</a></div></div>`);
       typo(s); s.focus();
     });
   }
@@ -1499,8 +1517,8 @@ function boot() {
   }
 
   /* en-tête, pied de page, bande */
-  $("#menu").innerHTML = menuHTML();
-  $("#footer").innerHTML = footerHTML();
+  $("#menu").innerHTML = T(menuHTML());
+  $("#footer").innerHTML = T(footerHTML());
   $$(".dd-btn").forEach(b => b.addEventListener("click", () => {
     const li = b.parentElement, open = !li.classList.contains("open");
     $$(".has-dd").forEach(x => { x.classList.remove("open"); x.querySelector(".dd-btn").setAttribute("aria-expanded", "false"); });
@@ -1509,7 +1527,7 @@ function boot() {
   document.addEventListener("click", e => {
     if (!e.target.closest(".has-dd")) fermerDD();
     const a = e.target.closest && e.target.closest("a");
-    if (!a || e.metaKey || e.ctrlKey || e.shiftKey || a.target === "_blank") return;
+    if (!a || e.metaKey || e.ctrlKey || e.shiftKey || a.target === "_blank" || a.id === "langBtn") return;
     const href = a.getAttribute("href") || "";
     if (!href.startsWith("/") || href.startsWith("//") || href.startsWith("/generateur")) return;
     e.preventDefault();
@@ -1520,6 +1538,8 @@ function boot() {
       if (h) document.getElementById(h)?.scrollIntoView({ behavior: "smooth" }); else scrollTo({ top: 0, behavior: "smooth" });
       return;
     }
+    /* changer de langue recharge la page (menu, pied de page et dictionnaire) */
+    if (/^\/en(\/|$)/.test(p || "/") !== (LANGUE === "en")) { location.href = href; return; }
     if ((p || "/") === location.pathname && h) { document.getElementById(h)?.scrollIntoView({ behavior: "smooth" }); return; }
     nav(href);
   });
@@ -1530,7 +1550,7 @@ function boot() {
     const bloc = b.previousElementSibling; if (!bloc) return;
     const ouvert = bloc.classList.toggle("ouvert");
     b.setAttribute("aria-expanded", String(ouvert));
-    b.querySelector(".plus-t").textContent = ouvert ? "Réduire" : b.dataset.plus;
+    b.querySelector(".plus-t").textContent = ouvert ? T("Réduire") : b.dataset.plus;
     if (!ouvert) bloc.scrollIntoView({ block: "nearest", behavior: "smooth" });
   });
   document.addEventListener("click", e => {
@@ -1556,13 +1576,13 @@ function boot() {
     const btn = e.target.querySelector("button[type=submit]"), mail = $("#nlEmail").value.trim();
     if (btn.disabled) return;
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(mail)) { toast("L'adresse e-mail semble incomplète (exemple : nom@domaine.com)."); $("#nlEmail").focus(); return; }
-    const libelle = btn.textContent; btn.disabled = true; btn.textContent = "Envoi…";
+    const libelle = btn.textContent; btn.disabled = true; btn.textContent = T("Envoi…");
     const r = await UboraDB.subscribe(mail);
     btn.disabled = false; btn.textContent = libelle;
     if (r.ok) e.target.reset();
     toast(r.ok ? "Merci, votre inscription est enregistrée." : r.limite ? "Beaucoup d'envois en ce moment. Réessayez dans quelques minutes." : "L'inscription n'a pas abouti. Vérifiez votre connexion et réessayez.");
   });
-  $("#waFloat").href = waLink("Bonjour Ubora, je souhaite avoir des informations.");
+  $("#waFloat").href = waLink(LANGUE === "en" ? "Hello Ubora, I would like some information." : "Bonjour Ubora, je souhaite avoir des informations.");
   window.addEventListener("scroll", () => {
     const max = document.documentElement.scrollHeight - innerHeight;
     $("#readBar").style.width = (max > 0 ? scrollY / max * 100 : 0) + "%";
@@ -1584,7 +1604,7 @@ function boot() {
     const ici = resolve(location.pathname, location.search, location.hostname);
     if (ici.base === "actualites" && ici.sub) { route({ keep: true }); return; }
     if (empreinte() === avant) return;
-    const tk = $("#tickerMove"); if (tk) tk.innerHTML = tickerHTML();
+    const tk = $("#tickerMove"); if (tk) tk.innerHTML = T(tickerHTML());
     const r = resolve(location.pathname, location.search, location.hostname);
     if (["", "actualites", "a-propos", "realisations"].includes(r.base) || pole(r.base)) route({ keep: true });
   });

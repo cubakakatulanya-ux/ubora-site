@@ -17,11 +17,15 @@ const ROOT = path.join(__dirname, "..");
 const read = f => fs.readFileSync(path.join(ROOT, f), "utf8");
 const write = (f, s) => { const p = path.join(ROOT, f); fs.mkdirSync(path.dirname(p), { recursive: true }); fs.writeFileSync(p, s); };
 
+/* Version anglaise : moteur (tools/i18n-moteur.js) + dictionnaire (tools/en.json) → i18n.js, chargé par les pages /en/ */
+const DICO = fs.existsSync(path.join(ROOT, "tools/en.json")) ? JSON.parse(read("tools/en.json")) : {};
+write("i18n.js", read("tools/i18n-moteur.js") + "\nconst EN_I18N = " + JSON.stringify(DICO) + ";\n");
+
 /* Charge le code du site dans un bac à sable, sans navigateur. */
 const ctx = { window: { UBORA_PRERENDER: true }, console, URLSearchParams, Date, Intl, Math, JSON };
 vm.createContext(ctx);
-const S = vm.runInContext(["data.js", "db.js", "admin.js", "app.js"].map(read).join("\n;\n") +
-  "\n;({ DATA_ONG: ONG, SEO_POLES, resolve, typoHTML, menuHTML, footerHTML, tickerHTML, allNews, esc, DATA, POLES, OUTILS, CONFIG, SUPABASE, UboraDB, TITRES })", ctx);
+const S = vm.runInContext(["i18n.js", "data.js", "db.js", "admin.js", "app.js"].map(read).join("\n;\n") +
+  "\n;({ traduire, DATA_ONG: ONG, SEO_POLES, resolve, typoHTML, menuHTML, footerHTML, tickerHTML, allNews, esc, DATA, POLES, OUTILS, CONFIG, SUPABASE, UboraDB, TITRES })", ctx);
 
 async function chargerBase() {
   /* la clé publique n'est plus dans data.js : on la prend dans le Worker (ou dans la variable SUPABASE_ANON) */
@@ -108,7 +112,7 @@ async function main() {
   console.log(`styles.min.css : ${Math.round(css.avant / 1024)} Ko → ${Math.round(css.apres / 1024)} Ko`);
   await chargerBase();
 
-  const version = crypto.createHash("sha1").update(["styles.css", "data.js", "db.js", "admin.js", "app.js", "chat.js"].map(read).join("")).digest("hex").slice(0, 10);
+  const version = crypto.createHash("sha1").update(["styles.css", "data.js", "db.js", "admin.js", "app.js", "chat.js", "i18n.js"].map(read).join("")).digest("hex").slice(0, 10);
   const shell = read("tools/shell.html");
   const menu = S.menuHTML(), footer = S.footerHTML(), ticker = S.tickerHTML();
 
@@ -125,12 +129,51 @@ async function main() {
     for (const f of fs.readdirSync(path.join(ROOT, "actualites"))) if (f.endsWith(".html") && !garder.has(f)) fs.unlinkSync(path.join(ROOT, "actualites", f));
   }
 
+  const manquants = new Set();
+  const enChemin = c => c === "/" ? "/en" : "/en" + c;
+  const aVersionEN = c => !c.startsWith("/actualites/");
+  const shellEN = S.traduire(shell, manquants);
+  const menuEN = S.traduire(menu, manquants), footerEN = S.traduire(footer, manquants), tickerEN = S.traduire(ticker, manquants);
+  const pagesEN = [];
+  const alternates = c => aVersionEN(c) ? [["fr", S.CONFIG.site + (c === "/" ? "/" : c)], ["en", S.CONFIG.site + enChemin(c)], ["x-default", S.CONFIG.site + (c === "/" ? "/" : c)]]
+    .map(([l, h]) => `<link rel="alternate" hreflang="${l}" href="${h}">`).join("\n") : "";
+  const langue = (html, fr, c) => html
+    .replace("{{ALTERNATES}}", alternates(c))
+    .replace("{{LOCALE}}", fr ? "fr_FR" : "en_GB")
+    .replace("{{AUTRE}}", fr ? (aVersionEN(c) ? enChemin(c) : "/en") : (c === "/" ? "/" : c))
+    .replace(/{{AUTRE_LANGUE}}/g, fr ? "en" : "fr")
+    .replace("{{AUTRE_LIBELLE}}", fr ? "English version" : "Version française")
+    .replace("{{AUTRE_CODE}}", fr ? "EN" : "FR")
+    .replace("{{I18N}}", fr ? "" : `<script src="/i18n.js?v={{VERSION}}"></script>\n`)
+    .replace("{{CHAT}}", fr ? `<script src="/chat.js?v={{VERSION}}"></script>` : "")
+    .replace('<html lang="fr">', fr ? '<html lang="fr">' : '<html lang="en">');
+
   for (const chemin of chemins) {
     const r = S.resolve(chemin, "", "uborardc.com");
     if (r.redirect) continue;
     const canon = S.CONFIG.site + (chemin === "/" ? "/" : chemin);
     const robots = r.robots;
-    const html = shell
+    if (aVersionEN(chemin)) {
+      S.traduire(r.html, manquants);
+      const e = S.resolve(enChemin(chemin), "", "uborardc.com");
+      [r.title, r.desc].forEach(t => S.traduire(t, manquants));
+      const htmlEN = langue(shellEN, false, chemin)
+        .replace(/{{TITLE}}/g, attr(texte(e.title)))
+        .replace(/{{DESC}}/g, attr(texte(e.desc)))
+        .replace(/{{CANON}}/g, S.CONFIG.site + enChemin(chemin))
+        .replace("{{ROBOTS}}", e.robots)
+        .replace("{{OGTYPE}}", "website")
+        .replace("{{JSONLD}}", "")
+        .replace("{{DONNEES}}", () => donnees)
+        .replace(/{{VERSION}}/g, version)
+        .replace("{{MENU}}", () => menuEN)
+        .replace("{{TICKER}}", () => tickerEN)
+        .replace("{{FOOTER}}", () => footerEN)
+        .replace("{{APP}}", () => e.html);
+      write(chemin === "/" ? "en.html" : "en" + chemin + ".html", htmlEN);
+      if (e.robots.startsWith("index")) pagesEN.push(chemin);
+    }
+    const html = langue(shell, true, chemin)
       .replace(/{{TITLE}}/g, attr(fine(texte(r.title))))
       .replace(/{{DESC}}/g, attr(fine(texte(r.desc))))
       .replace(/{{CANON}}/g, canon)
@@ -150,7 +193,7 @@ async function main() {
 
   /* Page 404 : vraie erreur, jamais indexée, sans adresse canonique */
   const r404 = S.resolve("/page-introuvable", "", "uborardc.com");
-  write("404.html", shell
+  write("404.html", langue(shell, true, "/actualites/x")
     .replace(/[ \t]*<link rel="canonical"[^>]*>\r?\n?/, "")
     .replace(/[ \t]*<meta property="og:url"[^>]*>\r?\n?/, "")
     .replace(/{{TITLE}}/g, attr(fine(texte(r404.title))))
@@ -182,9 +225,11 @@ async function main() {
   const prio = c => c === "/" ? "1.0" : S.POLES.some(p => p.chemin === c) ? "0.9" : c === "/realisations" || c.startsWith("/outils/") ? "0.8" : c.startsWith("/actualites/") ? "0.6" : "0.7";
   /* seule la date des articles est connue avec certitude ; les autres pages n'en indiquent pas */
   const modif = c => { const n = S.allNews().find(x => "/actualites/" + x.slug === c); return `<lastmod>${n ? n.date : dates[c].date}</lastmod>`; };
+  const versions = c => pagesEN.includes(c) ? `<xhtml:link rel="alternate" hreflang="fr" href="${S.CONFIG.site}${c === "/" ? "/" : c}"/><xhtml:link rel="alternate" hreflang="en" href="${S.CONFIG.site}${enChemin(c)}"/>` : "";
   write("sitemap.xml", `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-${pages.map(c => `  <url><loc>${S.CONFIG.site}${c === "/" ? "/" : c}</loc>${modif(c)}<priority>${prio(c)}</priority></url>`).join("\n")}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+${pages.map(c => `  <url><loc>${S.CONFIG.site}${c === "/" ? "/" : c}</loc>${modif(c)}<priority>${prio(c)}</priority>${versions(c)}</url>`).join("\n")}
+${pagesEN.filter(c => pages.includes(c)).map(c => `  <url><loc>${S.CONFIG.site}${enChemin(c)}</loc>${modif(c)}<priority>${(prio(c) - .1).toFixed(1)}</priority>${versions(c)}</url>`).join("\n")}
   <url><loc>https://bp.uborardc.com/</loc><priority>0.8</priority></url>
   <url><loc>https://akiba.uborardc.com/</loc><priority>0.8</priority></url>
   <url><loc>https://academie.uborardc.com/</loc><priority>0.8</priority></url>
@@ -201,6 +246,10 @@ Disallow: /admin
 Sitemap: ${S.CONFIG.site}/sitemap.xml
 `);
 
+  /* textes encore sans traduction anglaise : à ajouter dans tools/en.json */
+  const liste = [...manquants].filter(k => !(k in DICO) && !/^{{[A-Z_]+}}$/.test(k));
+  fs.writeFileSync(path.join(ROOT, "tools/en-manquants.json"), JSON.stringify(Object.fromEntries(liste.map(k => [k, ""])), null, 1) + "\n");
+  console.log(`Version anglaise : ${pagesEN.length} pages, ${liste.length} texte(s) sans traduction (tools/en-manquants.json).`);
   console.log(`${pages.length} pages générées (version ${version}), sitemap.xml et robots.txt mis à jour.`);
 }
 

@@ -2594,3 +2594,7 @@ section { padding-block: clamp(36px, 3.8vw, 58px); }
 }
 /* téléphone : seul le bouton WhatsApp reste flottant (l'assistant faisait double emploi) — choix de Christian, 20 novembre 2026 */
 @media (max-width: 760px) { .chat-fab { display: none !important; } }
+
+/* Bouton de langue (FR / EN), à côté du thème — 22 novembre 2026 */
+.lang-btn { font: 600 .74rem/1 inherit; font-family: inherit; letter-spacing: .06em; text-decoration: none; }
+.lang-btn:hover, .lang-btn:focus-visible { border-color: var(--c, #17704A); color: var(--c, #17704A); }

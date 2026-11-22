@@ -162,5 +162,5 @@ const UboraChat = (() => {
 })();
 
 /* l'assistant attend que le site soit prêt (sur l'espace équipe, son code arrive un peu plus tard) */
-const demarrerChat = () => { if (typeof window.$ === "function") UboraChat.build(); else setTimeout(demarrerChat, 200); };
+const demarrerChat = () => { if (typeof window.$ === "function" && typeof window.$$ === "function") UboraChat.build(); else setTimeout(demarrerChat, 200); };
 if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", demarrerChat); else demarrerChat();
