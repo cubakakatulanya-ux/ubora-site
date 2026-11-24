@@ -943,7 +943,7 @@ function pageOng() {
   const sujet = "/contact?sujet=" + encodeURIComponent("UBORA, l'association");
   return pageHead({ eyebrow: "UBORA · association à vocation d'ONG", title: `L'association UBORA, au service des <span class="serif">communautés</span>.`, crumbs: [["À propos", "/a-propos"], ["L'association UBORA"]], photo: ["terrain", "Une communauté réunie en plein air"],
     lead: "L'association sans but lucratif de l'écosystème Ubora : des projets communautaires financés par des dons et des subventions, pour les femmes, les jeunes et les plus vulnérables.",
-    extra: `<div class="btn-row"><a class="btn btn-accent" href="https://uborardc.org/">Visiter le site de l'association : uborardc.org ${ICON.arrow}</a><a class="btn btn-glass" href="${sujet}">Financer un projet de l'association ${ICON.arrow}</a><a class="btn btn-glass" href="#lien" data-scroll="lien">L'association et l'entreprise sociale</a></div>` }) + `
+    extra: `<div class="btn-row"><a class="btn btn-accent" href="${LANGUE === "en" ? "https://uborardc.org/en/" : "https://uborardc.org/"}">Visiter le site de l'association : uborardc.org ${ICON.arrow}</a><a class="btn btn-glass" href="${sujet}">Financer un projet de l'association ${ICON.arrow}</a><a class="btn btn-glass" href="#lien" data-scroll="lien">L'association et l'entreprise sociale</a></div>` }) + `
   <section><div class="wrap two">
     <div><span class="eyebrow">Vision</span><p class="quote">${esc(ONG.vision)}</p></div>
     <div class="prose-sm"><p><b>Mission.</b> ${esc(ONG.mission)}</p><p class="muted">${esc(ONG.statut)} ${esc(ONG.creation)}</p>
@@ -970,7 +970,7 @@ function pageOng() {
     <span class="eyebrow">Agir avec l'association</span>
     <h2>Financer un projet, devenir membre, <span class="serif">s'engager</span>.</h2>
     <p>Dons, subventions, partenariats ou adhésion : écrivez-nous, une personne de l'association vous répond.</p>
-    <div class="btn-row"><a class="btn btn-accent" href="https://uborardc.org/">Aller sur uborardc.org</a><a class="btn btn-wa" href="${waLink("Bonjour, je souhaite agir avec l'association UBORA.")}" target="_blank" rel="noopener">Écrire sur WhatsApp</a><a class="btn btn-glass" href="/approche#bailleurs">Confier une mission à l'entreprise sociale</a></div>
+    <div class="btn-row"><a class="btn btn-accent" href="${LANGUE === "en" ? "https://uborardc.org/en/" : "https://uborardc.org/"}">Aller sur uborardc.org</a><a class="btn btn-wa" href="${waLink("Bonjour, je souhaite agir avec l'association UBORA.")}" target="_blank" rel="noopener">Écrire sur WhatsApp</a><a class="btn btn-glass" href="/approche#bailleurs">Confier une mission à l'entreprise sociale</a></div>
   </div></div></section>`;
 }
 
