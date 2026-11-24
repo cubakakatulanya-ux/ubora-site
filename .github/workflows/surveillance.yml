@@ -55,10 +55,11 @@ jobs:
 
       - name: Base de données joignable
         run: |
-          # clé publique du site (elle figure dans data.js) : lecture du contenu publié seulement
-          cle=$(curl -s --max-time 30 https://uborardc.com/data.js | grep -o 'eyJ[A-Za-z0-9._-]*' | head -1)
-          code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 30 -H "apikey: $cle" -H "Authorization: Bearer $cle" "https://uoshpvqdszygezkuhhco.supabase.co/rest/v1/site_actualites?select=slug&limit=1")
-          [ "$code" = "200" ] || { echo "::error::la base répond $code"; exit 1; }
+          # depuis le 22/11/2026, la clé de la base reste dans le Worker : on lit le contenu publié par la route publique /api/contenu
+          # (le Worker interroge la base ; une lecture qui échoue y vaut null, une base joignable donne des listes, même vides)
+          code=$(curl -s -o contenu.json -w "%{http_code}" --max-time 30 "https://uborardc.com/api/contenu?surveillance=$(date +%s)" || true)
+          [ "$code" = "200" ] || { echo "::error::la base (via /api/contenu) répond $code"; exit 1; }
+          node -e 'const d = JSON.parse(require("fs").readFileSync("contenu.json", "utf8")); const ko = Object.keys(d).filter(k => !Array.isArray(d[k])); if (!Object.keys(d).length || ko.length) { console.log("::error::lecture de la base en échec pour : " + (ko.join(", ") || "tout")); process.exit(1); }'
           echo "OK  base ($code)"
 
       - name: Certificats (alerte 14 jours avant l'expiration)
