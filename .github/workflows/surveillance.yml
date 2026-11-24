@@ -37,7 +37,8 @@ jobs:
           verifier https://uborardc.com/confidentialite 200 "Confidentialité"
           verifier https://uborardc.com/une-page-qui-n-existe-pas 404
           verifier https://avec.uborardc.com/ 200 "AVEC"
-          verifier https://ong.uborardc.com/ 200 "UBORA"
+          verifier https://ong.uborardc.com/ 301              # redirige vers uborardc.org (le site de l'ONG a changé d'adresse)
+          verifier https://uborardc.org/ 200 "UBORA"
           verifier https://bp.uborardc.com/ 200
           verifier https://akiba.uborardc.com/ 200
           verifier https://hub.uborardc.com/ 200
