@@ -363,7 +363,7 @@ const POLES = [
     boite: {
       statut: "bientot",
       titre: "Les outils de l'accès au marché",
-      intro: "Les documents commerciaux que nous utilisons avec nos bénéficiaires seront bientôt disponibles.",
+      intro: "Les documents commerciaux que nous utilisons avec nos clients seront bientôt disponibles.",
       outils: [
         ["Contrat de vente groupée", "Les clauses à ne pas oublier face à un acheteur."],
         ["Fiche technique produit", "Présenter son produit comme un acheteur le demande."],
@@ -758,7 +758,7 @@ const FAQ = [
   ["Que devient l'accompagnement quand le projet d'une ONG se termine ?", "Nous restons : le suivi continue après la clôture, financé en partie par nos propres revenus, et les outils restent en service."],
   ["Ubora peut-elle financer notre groupe d'épargne ?", "Ubora ne prête pas. Par Ubora Fin, nous mobilisons le capital d'institutions financières, d'investisseurs et de bailleurs, et nous présentons le groupe à une IMF, une COOPEC ou une banque."],
   ["Que fait Ubora pour l'environnement ?", "Par Ubora Vert : reboisement, recyclage, agroécologie et énergie propre, avec des revenus pour ceux qui les portent."],
-  ["Combien coûte l'accompagnement ?", "Cela dépend du programme et du nombre de bénéficiaires. Les prestations aux organisations financent des tarifs solidaires pour les groupes et les micro-entrepreneurs."]
+  ["Combien coûte l'accompagnement ?", "Cela dépend du programme et du nombre de participants. Les prestations aux organisations financent des tarifs solidaires pour les groupes et les micro-entrepreneurs."]
 ];
 
 /* Contenus gérés depuis l'espace équipe (base de données).

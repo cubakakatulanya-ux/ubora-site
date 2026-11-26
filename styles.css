@@ -2726,3 +2726,19 @@ section.r-citation { padding-block: 36px; }
 .r-porte p { margin: 0; font-size: 14px; line-height: 1.5; color: var(--muted); }
 .r-porte .link { margin-top: 4px; }
 @media (max-width: 900px) { .r-portes { grid-template-columns: minmax(0, 1fr); gap: 10px; } .r-porte { padding: 16px; } }
+
+/* Titres de section à gauche, phrase d'introduction à droite (modèle uborardc.org, 26 novembre 2026) */
+.sec-head { max-width: none; margin-inline: 0; justify-items: stretch; text-align: left; }
+.sec-head > div { justify-items: start; gap: 6px; }
+.sec-head .lead { margin: 6px 0 0; max-width: 60ch; color: var(--muted); font-size: 15px; }
+.sec-head h2 { font-size: clamp(26px, 2.6vw, 36px); margin: 0; }
+.sec-head.split { grid-template-columns: minmax(0, 1fr) auto; justify-items: stretch; align-items: end; }
+@media (min-width: 900px) {
+  .sec-head > div:has(> .lead) { grid-template-columns: minmax(0, 1.1fr) minmax(0, .9fr); column-gap: 56px; align-items: end; }
+  .sec-head > div:has(> .lead) > .eyebrow, .sec-head > div:has(> .lead) > h2 { grid-column: 1; }
+  .sec-head > div:has(> .lead) > .lead { grid-column: 2; grid-row: 1 / span 2; align-self: end; margin: 0; }
+}
+@media (max-width: 760px) { .sec-head.split { grid-template-columns: minmax(0, 1fr); } }
+/* sous-titres internes à gauche */
+.sous-titre { text-align: left; }
+.btn-row.centre { justify-content: flex-start; }

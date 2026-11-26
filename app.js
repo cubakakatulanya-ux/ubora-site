@@ -396,8 +396,8 @@ function pageHome() {
     <div class="wrap r-hero-txt">
       <span class="r-sur">Entreprise à caractère social · Lubumbashi, RDC</span>
       <h1>Épargner. Entreprendre. <span class="serif">Vendre.</span></h1>
-      <p class="r-chapeau">Nous accompagnons les groupes d'épargne, les entrepreneurs et les coopératives, jusqu'au crédit et jusqu'à l'acheteur. Nos excédents sont réinvestis sur le terrain.</p>
-      <div class="btn-row"><a class="btn btn-accent" href="#solutions" data-scroll="solutions">Nos solutions ${ICON.arrow}</a><a class="btn btn-glass" href="#poles" data-scroll="poles">Nos domaines</a></div>
+      <p class="r-chapeau">Formation, mise en œuvre de projets et logiciels pour l'épargne, l'entrepreneuriat et les coopératives. Les organisations paient le prix du service ; les groupes et les petits entrepreneurs, un tarif solidaire.</p>
+      <div class="btn-row"><a class="btn btn-accent" href="#solutions" data-scroll="solutions">Nos solutions ${ICON.arrow}</a><a class="btn btn-glass" href="/contact?sujet=${encodeURIComponent("Demande de devis")}">Demander un devis</a></div>
     </div>
   </section>
 
@@ -429,10 +429,10 @@ function pageHome() {
   </div></section>
 
   <section class="r-avec"><div class="wrap">
-    <div class="r-tete"><div><span class="eyebrow">Travailler avec nous</span><h2>Chacun sa porte d'entrée, une même <span class="serif">exigence</span>.</h2></div><p>Trois façons de commencer, selon qui vous êtes.</p></div>
+    <div class="r-tete"><div><span class="eyebrow">Nos clients</span><h2>Trois clientèles, une même <span class="serif">exigence</span>.</h2></div><p>Ce que paient les organisations finance le tarif solidaire des groupes et des petits entrepreneurs.</p></div>
     <div class="r-portes">
-      <div class="r-porte"><span class="ic">${ICON.handshake}</span><h3>Bailleurs, ONG et programmes</h3><p>Confiez-nous la mise en œuvre d'un programme, ou commencez par un projet pilote aux indicateurs fixés ensemble.</p><a class="link" href="/approche#pilote">Le projet pilote ${ICON.arrow}</a></div>
-      <div class="r-porte"><span class="ic">${ICON.users}</span><h3>Groupes, entrepreneurs et coopératives</h3><p>Dites-nous où vous en êtes : nous vous orientons vers le bon domaine et le bon outil.</p><a class="link" href="${waLink("Bonjour Ubora, je souhaite être accompagné.")}" target="_blank" rel="noopener">Écrire sur WhatsApp ${ICON.arrow}</a></div>
+      <div class="r-porte"><span class="ic">${ICON.handshake}</span><h3>Bailleurs, ONG et programmes</h3><p>Mise en œuvre, suivi et outils, sur devis. Pour commencer : un projet pilote aux indicateurs fixés ensemble.</p><a class="link" href="/approche#pilote">Le projet pilote ${ICON.arrow}</a></div>
+      <div class="r-porte"><span class="ic">${ICON.users}</span><h3>Groupes, entrepreneurs et coopératives</h3><p>Formations, accompagnement et applications à tarif solidaire. Dites-nous où vous en êtes.</p><a class="link" href="${waLink("Bonjour Ubora, je souhaite être accompagné.")}" target="_blank" rel="noopener">Écrire sur WhatsApp ${ICON.arrow}</a></div>
       <div class="r-porte"><span class="ic">${ICON.coins}</span><h3>Institutions financières et acheteurs</h3><p>Des clients formés et suivis pour les IMF et les COOPEC, des producteurs organisés pour les acheteurs.</p><a class="link" href="/contact">Nous écrire ${ICON.arrow}</a></div>
     </div>
   </div></section>
@@ -449,7 +449,7 @@ function pageHome() {
 }
 function pageAbout() {
   const membres = DATA.equipe;
-  const ongletsPropos = [["mission", "Mission"], ["modele", "Notre modèle"], ["valeurs", "Nos valeurs"], ["soutenir", "Nous soutenir"], ["faq", "Questions"]];
+  const ongletsPropos = [["mission", "Mission"], ["modele", "Notre modèle"], ["valeurs", "Nos valeurs"], ["soutenir", "Travailler avec nous"], ["faq", "Questions"]];
   const distingue = [
     ["Le but", "Rémunérer ses propriétaires.", "Rendre plus solides ceux que nous accompagnons."],
     ["Qui est servi", "Ceux qui peuvent payer le prix du marché.", "Aussi ceux qui ne le peuvent pas, à tarif solidaire."],
@@ -460,7 +460,7 @@ function pageAbout() {
     [ICON.briefcase, "Confier une mission", "Commencez par un projet pilote : chaque prestation finance aussi nos services à tarif solidaire.", "/approche#pilote", "Le projet pilote"],
     [ICON.coins, "Apporter du capital", "Ubora Fin oriente votre capital vers les groupes que nous accompagnons, et vous en rend compte.", "/financement#intermediation", "Le rôle d'Ubora Fin"],
     [ICON.handshake, "Devenir partenaire", "Compétences, équipements, mises en relation : dites-nous ce que vous pouvez apporter.", "/contact?sujet=" + encodeURIComponent("Partenariat"), "Proposer un partenariat"],
-    [ICON.heart, "Faire un don", "Les dons et les subventions vont à l'association UBORA, qui conduit les projets sans but lucratif.", "/ong", "L'association UBORA"]
+    [ICON.heart, "Un don ?", "L'entreprise n'en reçoit pas : dons et subventions vont à l'association UBORA, qui conduit les projets sans but lucratif.", "/ong", "L'association UBORA"]
   ];
   return pageHead({ eyebrow: "À propos", title: `Une entreprise sociale, pour que l'effort des familles <span class="serif">porte ses fruits</span>.`, crumbs: [["À propos"]], photo: ["terrain", "Une communauté réunie en plein air"],
     lead: "Ubora veut dire « excellence » en swahili : c'est ce que nous devons à ceux que nous accompagnons, qui n'ont pas droit à l'erreur." }) + `
@@ -491,7 +491,7 @@ function pageAbout() {
   <section id="valeurs"><div class="wrap">
     ${secHead("Nos valeurs", `Quatre mots <span class="serif">swahili</span> qui nous guident`)}
     <div class="grid-4">
-      <div class="value"><small lang="sw">ubora</small><h3>L'excellence</h3><p>Un travail sérieux et des outils fiables. Nos bénéficiaires ne méritent pas moins.</p></div>
+      <div class="value"><small lang="sw">ubora</small><h3>L'excellence</h3><p>Un travail sérieux et des outils fiables. Nos clients ne méritent pas moins.</p></div>
       <div class="value"><small lang="sw">ustahimilivu</small><h3>La résilience</h3><p>Aider les familles et les entreprises à traverser les crises, puis à repartir.</p></div>
       <div class="value"><small lang="sw">uwazi</small><h3>La transparence</h3><p>Des comptes clairs et des données partagées. La confiance se construit ainsi.</p></div>
       <div class="value"><small lang="sw">umoja</small><h3>La solidarité</h3><p>Personne n'est laissé de côté. Les femmes, les jeunes et les zones rurales d'abord.</p></div>
@@ -503,7 +503,7 @@ function pageAbout() {
   </div></section>
 
   <section class="band" id="soutenir"><div class="wrap">
-    ${secHead("Nous soutenir", `Quatre façons d'<span class="serif">agir</span> avec nous`, "L'entreprise sociale ne reçoit pas de dons : ils vont à l'association UBORA.")}
+    ${secHead("Travailler avec nous", `Quatre façons de travailler avec <span class="serif">Ubora</span>`, "Trois relèvent de l'entreprise, sur devis ou par contrat. Les dons, eux, vont à l'association UBORA, entité distincte.")}
     <div class="grid-4">${voies.map(([ic, t, x, lien, lib]) => `<div class="fcard"><span class="ic">${ic}</span><h3>${t}</h3><p>${x}</p><a class="link" href="${lien}">${lib} ${ICON.arrow}</a></div>`).join("")}</div>
   </div></section>
 
@@ -989,19 +989,19 @@ function pageOng() {
     <span class="eyebrow">Agir avec l'association</span>
     <h2>Financer un projet, devenir membre, <span class="serif">s'engager</span>.</h2>
     <p>Dons, subventions, partenariats ou adhésion : écrivez-nous, une personne de l'association vous répond.</p>
-    <div class="btn-row"><a class="btn btn-accent" href="${LANGUE === "en" ? "https://uborardc.org/en/" : "https://uborardc.org/"}">Aller sur uborardc.org</a><a class="btn btn-wa" href="${waLink("Bonjour, je souhaite agir avec l'association UBORA.")}" target="_blank" rel="noopener">Écrire sur WhatsApp</a><a class="btn btn-glass" href="/approche#bailleurs">Confier une mission à l'entreprise sociale</a></div>
+    <div class="btn-row"><a class="btn btn-wa" href="${waLink("Bonjour, je souhaite agir avec l'association UBORA.")}" target="_blank" rel="noopener">Écrire sur WhatsApp</a><a class="btn btn-glass" href="/approche#bailleurs">Confier une mission à l'entreprise sociale</a></div>
   </div></div></section>`;
 }
 
 
 function pageContact(params) {
   const sujet = params.get("sujet") || "";
-  const besoins = ["Ubora AVEC (groupes d'épargne)", "Ubora PME (entrepreneuriat)", "Ubora Coop (coopératives)", "Ubora Fin (accès au financement)", "Ubora Market (accès au marché)", "Ubora Vert (environnement)", "Ubora Académie (formations)", "Boîte à outils", "Projet pilote", "Présentation d'Ubora", "Conseil et programmes", "Formation", "Soutenir nos actions", "UBORA, l'association", "Partenariat", "Recrutement", "Autre"];
+  const besoins = ["Ubora AVEC (groupes d'épargne)", "Ubora PME (entrepreneuriat)", "Ubora Coop (coopératives)", "Ubora Fin (accès au financement)", "Ubora Market (accès au marché)", "Ubora Vert (environnement)", "Ubora Académie (formations)", "Boîte à outils", "Demande de devis", "Projet pilote", "Présentation d'Ubora", "Conseil et programmes", "Formation", "UBORA, l'association", "Partenariat", "Recrutement", "Autre"];
   const low = sujet.toLowerCase();
   const sel = !low ? "" : low.includes("boîte") || low.startsWith("les outils de") ? "Boîte à outils"
     : besoins.find(b => low.includes(b.split(" (")[0].toLowerCase()) || b.toLowerCase().includes(low)) || "Autre";
   return pageHead({ eyebrow: "Contact", title: `<span lang="sw">Karibu</span>. Parlons de votre <span class="serif">projet</span>.`, crumbs: [["Contact"]],
-    lead: "Une question, une demande de boîte à outils, un programme à monter ? Où que vous soyez en RDC, nous vous répondons sous deux jours ouvrés." }) + `
+    lead: "Une demande de devis, une question, un programme à monter ? Où que vous soyez en RDC, nous vous répondons sous deux jours ouvrés." }) + `
   <section><div class="wrap contact-grid">
     <ul class="contact-list">
       <li><span class="ic">${ICON.phone}</span><div><small>Téléphone et WhatsApp</small><b><a href="tel:${CONFIG.telephone.replace(/\s/g, "")}">${esc(CONFIG.telephone)}</a></b></div></li>
@@ -1047,7 +1047,7 @@ function pageMentions() {
     <h2>Hébergement</h2><p>Le site est hébergé par Cloudflare, Inc. (États-Unis), qui gère aussi le nom de domaine et l'acheminement des e-mails. Les données des formulaires sont conservées par Supabase, Inc., sur des serveurs situés à Francfort, en Allemagne.</p>
     <h2>Propriété intellectuelle</h2><p>Le logo, les noms Ubora AVEC, Ubora PME, Ubora Coop, Ubora Fin, Ubora Market, Ubora Vert, Ubora Académie, Ubora Hub et AKIBA, ainsi que les textes, les films et les documents de ce site, appartiennent à Ubora. Toute reproduction sans autorisation écrite est interdite.</p>
     <p>Les polices Ubuntu (Ubuntu Font Licence 1.0) et IBM Plex Mono (SIL Open Font License 1.1) sont servies par le site lui-même, selon leur licence.</p>
-    <h2>Photos</h2><p>Les photos d'ambiance proviennent de la banque d'images Unsplash et sont utilisées selon sa licence. Elles illustrent nos domaines d'intervention et ne représentent pas des bénéficiaires ni des projets d'Ubora. Les photos des pages « Notre équipe » et « Nos réalisations » sont les nôtres.</p>
+    <h2>Photos</h2><p>Les photos d'ambiance proviennent de la banque d'images Unsplash et sont utilisées selon sa licence. Elles illustrent nos domaines d'intervention et ne représentent pas des clients ni des projets d'Ubora. Les photos des pages « Notre équipe » et « Nos réalisations » sont les nôtres.</p>
     <h2>Signaler un contenu</h2><p>Une erreur, un contenu qui vous concerne ou qui vous semble illicite ? Écrivez à <a href="mailto:${CONFIG.email}">${esc(CONFIG.email)}</a> : nous répondons sous deux jours ouvrés.</p>
     ${piedLegal()}
   </div></section>`;

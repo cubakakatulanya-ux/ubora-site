@@ -1,6 +1,6 @@
 {
  "/": {
-  "empreinte": "e94502bb0a65",
+  "empreinte": "b4b4c6cf26d9",
   "date": "2026-11-26"
  },
  "/avec": {
@@ -20,8 +20,8 @@
   "date": "2026-11-22"
  },
  "/marche": {
-  "empreinte": "8d95f4fe0334",
-  "date": "2026-11-22"
+  "empreinte": "ce663b7ccb6a",
+  "date": "2026-11-26"
  },
  "/vert": {
   "empreinte": "6c045d654a28",
@@ -32,16 +32,16 @@
   "date": "2026-11-22"
  },
  "/a-propos": {
-  "empreinte": "014c67197060",
-  "date": "2026-11-22"
+  "empreinte": "6cfd0fe5deff",
+  "date": "2026-11-26"
  },
  "/contact": {
-  "empreinte": "019541502fd5",
-  "date": "2026-11-18"
+  "empreinte": "a5bdd2ed0379",
+  "date": "2026-11-26"
  },
  "/mentions": {
-  "empreinte": "905d995fd9c5",
-  "date": "2026-11-18"
+  "empreinte": "d806ef6e8bdf",
+  "date": "2026-11-26"
  },
  "/outils/akiba": {
   "empreinte": "a2092dbe54b8",
@@ -60,8 +60,8 @@
   "date": "2026-11-19"
  },
  "/ong": {
-  "empreinte": "81cb850b1f6a",
-  "date": "2026-11-24"
+  "empreinte": "ebb47bec848b",
+  "date": "2026-11-26"
  },
  "/confidentialite": {
   "empreinte": "f40c5c315628",
