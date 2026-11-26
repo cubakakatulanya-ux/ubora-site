@@ -379,20 +379,27 @@ function tickerHTML() {
 /* ==========================================================================
    PAGES
    ========================================================================== */
+const ENGAGEMENTS = [
+  ["Un devis écrit avant chaque mission", "Prix, délais et livrables sont fixés par écrit avant de commencer."],
+  ["Un tarif solidaire", "Les prestations aux organisations financent des tarifs réduits pour les groupes et les micro-entrepreneurs."],
+  ["Des excédents réinvestis", "Dans nos outils, la formation de relais locaux et notre présence sur le terrain."],
+  ["Des résultats suivis en direct", "Indicateurs fixés ensemble, données dans nos outils dès le premier jour."],
+  ["Des outils qui restent", "À la clôture, les groupes, les relais formés, les outils et l'historique restent en place."],
+  ["Les dons à part", "L'entreprise vit de ses prestations. Les dons et subventions vont à l'association UBORA, entité distincte."]
+];
 function pageHome() {
   const news = allNews().slice(0, 3);
   const enLigne = OUTILS.filter(o => o.statut === "en-ligne").length;
   return `
-  <section class="r-hero"><div class="wrap r-hero-grille">
-    <div class="r-hero-txt">
-      <span class="r-sur">Entreprise à caractère social · RDC</span>
+  <section class="r-hero r-hero-plein">
+    <div class="r-hero-fond">${photo("avec", "100vw", "Des femmes réunies en groupe d'épargne", ' fetchpriority="high"')}</div>
+    <div class="wrap r-hero-txt">
+      <span class="r-sur">Entreprise à caractère social · Lubumbashi, RDC</span>
       <h1>Épargner. Entreprendre. <span class="serif">Vendre.</span></h1>
-      <p class="r-chapeau">Nous accompagnons les groupes d'épargne, les entrepreneurs et les coopératives, jusqu'au crédit et jusqu'à l'acheteur.</p>
-      <div class="btn-row"><a class="btn btn-accent" href="#solutions" data-scroll="solutions">Nos solutions ${ICON.arrow}</a><a class="btn btn-ghost" href="#poles" data-scroll="poles">Nos domaines</a></div>
+      <p class="r-chapeau">Nous accompagnons les groupes d'épargne, les entrepreneurs et les coopératives, jusqu'au crédit et jusqu'à l'acheteur. Nos excédents sont réinvestis sur le terrain.</p>
+      <div class="btn-row"><a class="btn btn-accent" href="#solutions" data-scroll="solutions">Nos solutions ${ICON.arrow}</a><a class="btn btn-glass" href="#poles" data-scroll="poles">Nos domaines</a></div>
     </div>
-    <figure class="r-hero-photo">${photo("avec", "(max-width: 900px) 100vw, 46vw", "Des femmes réunies en groupe d'épargne", ' fetchpriority="high"')}
-      <figcaption class="r-hero-badge"><i aria-hidden="true"></i><span><b>Entreprise à caractère social</b> : nos excédents sont réinvestis sur le terrain.</span></figcaption></figure>
-  </div></section>
+  </section>
 
   <section class="r-chiffres" aria-label="Ubora en chiffres"><div class="wrap"><ul>
     <li><b>${POLES.length}</b><span>domaines d'intervention</span></li>
@@ -408,12 +415,27 @@ function pageHome() {
 
   ${vitrine()}
 
-  <section><div class="wrap"><div class="r-bande">
-    <div><span class="eyebrow">Bailleurs, ONG et programmes</span>
-      <h2>Commencez par un <span class="serif">projet pilote</span>.</h2>
-      <p>Un périmètre réduit, des indicateurs fixés ensemble, des résultats suivis en direct.</p></div>
-    <div class="btn-row"><a class="btn btn-accent" href="/approche#pilote">Comment ça marche ${ICON.arrow}</a></div>
-  </div></div></section>
+  <section class="r-methode"><div class="wrap">
+    <div class="r-tete"><div><span class="eyebrow">${esc(METHODE.nom)}</span><h2>De l'écoute au suivi, en six temps.</h2></div>
+      <p>Pour un groupe d'épargne, un entrepreneur ou une coopérative : seul le contenu change. Nous restons jusqu'à ce que les résultats tiennent.</p></div>
+    <ol class="r-etapes">${METHODE.etapes.map((e, i) => `<li><span class="pn">${String(i + 1).padStart(2, "0")}</span><b>${esc(e.titre)}</b><span>${esc(e.texte)}</span></li>`).join("")}</ol>
+    <a class="link" href="/approche#methode">Notre approche en détail ${ICON.arrow}</a>
+  </div></section>
+
+  <section class="r-engagements"><div class="wrap">
+    <div class="r-tete"><div><span class="eyebrow">Nos engagements</span><h2>Une entreprise qui rend des comptes.</h2></div>
+      <p>Nos clients paient un service : ils savent ce qu'ils achètent, et ce que devient l'excédent.</p></div>
+    <ul class="r-engage">${ENGAGEMENTS.map(([t, x]) => `<li><b>${esc(t)}</b><span>${esc(x)}</span></li>`).join("")}</ul>
+  </div></section>
+
+  <section class="r-avec"><div class="wrap">
+    <div class="r-tete"><div><span class="eyebrow">Travailler avec nous</span><h2>Chacun sa porte d'entrée, une même <span class="serif">exigence</span>.</h2></div><p>Trois façons de commencer, selon qui vous êtes.</p></div>
+    <div class="r-portes">
+      <div class="r-porte"><span class="ic">${ICON.handshake}</span><h3>Bailleurs, ONG et programmes</h3><p>Confiez-nous la mise en œuvre d'un programme, ou commencez par un projet pilote aux indicateurs fixés ensemble.</p><a class="link" href="/approche#pilote">Le projet pilote ${ICON.arrow}</a></div>
+      <div class="r-porte"><span class="ic">${ICON.users}</span><h3>Groupes, entrepreneurs et coopératives</h3><p>Dites-nous où vous en êtes : nous vous orientons vers le bon domaine et le bon outil.</p><a class="link" href="${waLink("Bonjour Ubora, je souhaite être accompagné.")}" target="_blank" rel="noopener">Écrire sur WhatsApp ${ICON.arrow}</a></div>
+      <div class="r-porte"><span class="ic">${ICON.coins}</span><h3>Institutions financières et acheteurs</h3><p>Des clients formés et suivis pour les IMF et les COOPEC, des producteurs organisés pour les acheteurs.</p><a class="link" href="/contact">Nous écrire ${ICON.arrow}</a></div>
+    </div>
+  </div></section>
 
   <section class="r-citation"><div class="wrap">
     <blockquote><p>Ceux qui peuvent payer financent l'accompagnement de ceux qui ne le peuvent pas.</p>
@@ -423,11 +445,8 @@ function pageHome() {
   ${news.length ? `<section><div class="wrap">
     ${secHead("Actualités", "Nouvelles du terrain", "", `<a class="btn btn-ghost" href="/actualites">Toutes les actualités ${ICON.arrow}</a>`)}
     <div class="news-grid">${news.map(newsCard).join("")}</div>
-  </div></section>` : ""}
-
-  <section><div class="wrap">${finalCta()}</div></section>`;
+  </div></section>` : ""}`;
 }
-
 function pageAbout() {
   const membres = DATA.equipe;
   const ongletsPropos = [["mission", "Mission"], ["modele", "Notre modèle"], ["valeurs", "Nos valeurs"], ["soutenir", "Nous soutenir"], ["faq", "Questions"]];

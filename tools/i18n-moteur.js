@@ -42,15 +42,25 @@ function traduire(html, manquants) {
     if (!run.length) return;
     const textes = run.map((m, i) => (m.t === "x" && /\S/.test(m.s)) ? i : -1).filter(i => i >= 0);
     if (!textes.length) { run.forEach(m => sortie.push(m.t === "g" ? traduireAttrs(m.s) : m.s)); run = []; return; }
-    const i = textes[0], j = textes[textes.length - 1];
+    let i = textes[0], j = textes[textes.length - 1];
     /* les balises d'un bloc sont-elles équilibrées ? (sinon on traduit chaque texte séparément) */
-    let pile = [], ok = true;
-    for (let k = i; k <= j; k++) {
-      const m = run[k]; if (m.t !== "g") continue;
-      const n = tagNom(m.s); if (!n || VIDES_I18N.has(n) || autoFerme(m.s) || m.s.startsWith("<!")) continue;
-      if (estOuvrant(m.s)) pile.push(n); else if (pile[pile.length - 1] === n) pile.pop(); else { ok = false; break; }
-    }
-    if (pile.length) ok = false;
+    const equilibre = (a, b) => {
+      const pile = [], fermees = [];
+      for (let k = a; k <= b; k++) {
+        const m = run[k]; if (m.t !== "g") continue;
+        const n = tagNom(m.s); if (!n || VIDES_I18N.has(n) || autoFerme(m.s) || m.s.startsWith("<!")) continue;
+        if (estOuvrant(m.s)) pile.push(n); else if (pile[pile.length - 1] === n) pile.pop(); else fermees.push(n);
+      }
+      return { pile, fermees };
+    };
+    /* un titre dont la fin est mise en valeur (« … <span>complet</span> ») se traduit d'un seul tenant :
+       on englobe la balise fermante qui suit, ou la balise ouvrante qui précède */
+    const cleStricte = normI18N(run.slice(i, j + 1).map(m => m.s).join(""));
+    let e = equilibre(i, j);
+    while (e.pile.length && j + 1 < run.length && run[j + 1].t === "g" && !estOuvrant(run[j + 1].s) && tagNom(run[j + 1].s) === e.pile[e.pile.length - 1]) { j++; e = equilibre(i, j); }
+    while (e.fermees.length && i > 0 && run[i - 1].t === "g" && estOuvrant(run[i - 1].s) && tagNom(run[i - 1].s) === e.fermees[0]) { i--; e = equilibre(i, j); }
+    let ok = !e.pile.length && !e.fermees.length;
+    if (!(ok && D[normI18N(run.slice(i, j + 1).map(m => m.s).join(""))] != null) && D[cleStricte] != null) { i = textes[0]; j = textes[textes.length - 1]; e = equilibre(i, j); ok = !e.pile.length && !e.fermees.length; }
     const avant = run.slice(0, i).map(m => m.t === "g" ? traduireAttrs(m.s) : m.s).join("");
     const apres = run.slice(j + 1).map(m => m.t === "g" ? traduireAttrs(m.s) : m.s).join("");
     const premier = run[i].s, dernier = run[j].s;
@@ -60,14 +70,17 @@ function traduire(html, manquants) {
     let milieu;
     if (ok && D[cle] != null) milieu = blancDebut + D[cle] + blancFin;
     else {
-      if (ok && manquants && aDesLettres(cle)) manquants.add(cle);
+      let reste = false;
       milieu = run.slice(i, j + 1).map(m => {
         if (m.t === "g") return traduireAttrs(m.s);
         const k = normI18N(m.s); if (!k) return m.s;
         if (D[k] != null) return m.s.match(/^\s*/)[0] + D[k] + m.s.match(/\s*$/)[0];
+        if (aDesLettres(k)) reste = true;
         if (!ok && manquants && aDesLettres(k)) manquants.add(k);
         return m.s;
       }).join("");
+      /* bloc absent du dictionnaire et pas entièrement traduit morceau par morceau : à traduire d'un seul tenant */
+      if (ok && reste && manquants && aDesLettres(cle)) manquants.add(cle);
     }
     sortie.push(avant + milieu + apres);
     run = [];
