@@ -36,7 +36,7 @@
 <script src="/theme.js"></script>
 <link rel="preload" href="/polices/ubuntu-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/polices/ubuntu-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/styles.min.css?v=470abfca81">
+<link rel="stylesheet" href="/styles.min.css?v=9408d5c5c4">
 </head>
 <body>
 <a class="skip" href="#app">Aller au contenu</a>
@@ -81,15 +81,37 @@
       <h1>Épargner. Entreprendre. <span class="serif">Vendre.</span></h1>
       <p class="r-chapeau">Formation, mise en œuvre de projets et logiciels pour l'épargne, l'entrepreneuriat et les coopératives. Les organisations paient le prix du service ; les groupes et les petits entrepreneurs, un tarif solidaire.</p>
       <div class="btn-row"><a class="btn btn-accent" href="#solutions" data-scroll="solutions">Nos solutions <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn btn-glass" href="/contact?sujet=Demande%20de%20devis">Demander un devis</a></div>
+      <form class="r-demander" data-demander aria-label="Poser une question à l'assistant Ubora">
+        <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/></svg></span>
+        <input name="q" maxlength="300" autocomplete="off" placeholder="Posez votre question sur Ubora…" aria-label="Votre question à l'assistant Ubora">
+        <button class="btn btn-sm" type="submit">Demander</button>
+      </form>
+      <p class="r-demander-note">L'assistant répond à partir des informations de ce site.</p>
     </div>
   </section>
 
   <section class="r-chiffres" aria-label="Ubora en chiffres"><div class="wrap"><ul>
-    <li><b>7</b><span>domaines d'intervention</span></li>
-    <li><b>6</b><span>applications en ligne</span></li>
-    <li><b>140+</b><span>cours à l'Académie</span></li>
+    <li><b data-compte="7">7</b><span>domaines d'intervention</span></li>
+    <li><b data-compte="6">6</b><span>applications en ligne</span></li>
+    <li><b data-compte="140" data-suffixe="+">140+</b><span>cours à l'Académie</span></li>
     <li><b>Hors ligne</b><span>nos outils marchent sans réseau</span></li>
   </ul></div></section>
+
+  <section class="r-globe" aria-labelledby="titre-globe"><div class="wrap r-globe-in">
+    <div class="r-globe-scene">
+      <canvas id="globe" tabindex="0" role="img" aria-label="Globe en relief : la République démocratique du Congo et Lubumbashi, siège d'Ubora. Faites-le tourner avec la souris, le doigt ou les flèches du clavier."></canvas>
+      <p class="r-globe-aide" aria-hidden="true">Faites glisser pour tourner le globe</p>
+    </div>
+    <div class="r-globe-txt">
+      <span class="eyebrow">Où nous intervenons</span>
+      <h2 id="titre-globe">Basés à Lubumbashi, au service de toute la <span class="serif">RDC</span>.</h2>
+      <p>Notre siège est à Lubumbashi, dans le Haut-Katanga. Nous travaillons partout en RDC, sur le terrain et à distance : nos applications fonctionnent même sans réseau.</p>
+      <ul class="r-globe-reperes">
+        <li><b>Lubumbashi</b><span>notre siège, dans le Haut-Katanga</span></li>
+        <li><b data-compte="26">26</b><span>provinces où nous pouvons intervenir</span></li>
+      </ul>
+    </div>
+  </div></section>
 
   <section id="poles"><div class="wrap">
     <div class="sec-head"><div><span class="eyebrow">Nos domaines</span><h2>Un accompagnement <span class="serif">complet</span></h2></div></div>
@@ -197,9 +219,9 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script type="application/json" id="ubora-donnees">{"actualites":[],"formations":[],"offres":[],"equipe":[],"realisations":[]}</script>
-<script src="/data.js?v=470abfca81"></script>
-<script src="/db.js?v=470abfca81"></script>
-<script src="/app.js?v=470abfca81"></script>
-<script src="/chat.js?v=470abfca81"></script>
+<script src="/data.js?v=9408d5c5c4"></script>
+<script src="/db.js?v=9408d5c5c4"></script>
+<script src="/app.js?v=9408d5c5c4"></script>
+<script src="/chat.js?v=9408d5c5c4"></script>
 </body>
 </html>

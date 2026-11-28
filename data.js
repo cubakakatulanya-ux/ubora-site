@@ -162,7 +162,7 @@ const POLES = [
         ["Un accompagnement qui s'arrête trop tôt","Souvent au concours de pitch, juste avant les vraies difficultés."]
       ]
     },
-    programmesTitre: ["Nos programmes", "Quatre phases, selon le stade de l'entreprise"],
+    programmesTitre: ["Nos offres", "Quatre offres, selon le stade de l'entreprise"],
     programmes: [
       ["Idéation", "Pour les porteurs d'idée", "Trouver et vérifier un problème réel, et une idée de solution que des clients veulent."],
       ["Incubation", "Pour les projets qui démarrent", "Construire l'offre, la tester, faire les premières ventes et bâtir le plan d'affaires."],

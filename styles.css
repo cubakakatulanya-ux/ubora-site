@@ -2742,3 +2742,47 @@ section.r-citation { padding-block: 36px; }
 /* sous-titres internes à gauche */
 .sous-titre { text-align: left; }
 .btn-row.centre { justify-content: flex-start; }
+
+/* ==========================================================================
+   Accueil dynamique, sur le modèle de uborardc.org (28 novembre 2026) :
+   question directe à l'assistant, globe 3D, chiffres animés (le code est dans app.js)
+   ========================================================================== */
+.r-demander { display: flex; align-items: center; gap: 8px; max-width: 520px; margin-top: 22px; padding: 6px 6px 6px 16px;
+  border: 1px solid rgba(255, 255, 255, .26); border-radius: 999px; background: rgba(255, 255, 255, .08);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.r-demander:focus-within { border-color: rgba(169, 230, 191, .8); background: rgba(255, 255, 255, .12); }
+.r-demander .ic { display: inline-flex; color: #A9E6BF; }
+.r-demander .ic svg { width: 18px; height: 18px; }
+.r-demander input { flex: 1; min-width: 0; border: 0; background: transparent; color: #fff; font: inherit; font-size: 15px; padding: 8px 0; outline: none; }
+.r-demander input::placeholder { color: rgba(255, 255, 255, .7); }
+.r-demander .btn { flex: none; background: #fff; color: #0F4A31; border-color: #fff; border-radius: 999px; }
+.r-demander .btn:hover { background: #EAF6EC; border-color: #EAF6EC; }
+.r-demander-note { margin: 8px 0 0 18px; font-size: 12.5px; color: rgba(255, 255, 255, .72); }
+html[lang="en"] .r-demander, html[lang="en"] .r-demander-note { display: none; }
+
+.r-globe { padding-block: clamp(40px, 6vw, 72px); color: #fff;
+  background: radial-gradient(120% 90% at 22% 50%, #135C3B 0%, #0A3A26 58%, #062A1B 100%); }
+.r-globe-in { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: center; }
+.r-globe-scene { display: grid; justify-items: center; gap: 6px; }
+#globe { display: block; width: min(100%, 460px); aspect-ratio: 1; max-width: 100%; cursor: grab; touch-action: pan-y; border-radius: 50%; }
+#globe:active { cursor: grabbing; }
+#globe:focus-visible { outline: 2px solid #A9E6BF; outline-offset: 6px; }
+.r-globe-aide { margin: 0; font-size: 12.5px; color: rgba(255, 255, 255, .62); }
+.r-globe .eyebrow { color: #A9E6BF; }
+.r-globe h2 { color: #fff; margin: 8px 0 14px; }
+.r-globe h2 .serif { color: #A9E6BF; }
+.r-globe-txt > p { margin: 0 0 22px; max-width: 46ch; color: rgba(255, 255, 255, .82); line-height: 1.6; }
+.r-globe-reperes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; border-top: 1px solid rgba(255, 255, 255, .16); }
+.r-globe-reperes li { display: grid; gap: 4px; padding: 16px 18px 0 0; }
+.r-globe-reperes li + li { padding-left: 18px; border-left: 1px solid rgba(255, 255, 255, .16); }
+.r-globe-reperes b { font-size: clamp(22px, 2.4vw, 30px); font-weight: 300; line-height: 1.1; color: #fff; }
+.r-globe-reperes span { font-size: 13.5px; color: rgba(255, 255, 255, .7); }
+@media (max-width: 860px) {
+  .r-globe-in { grid-template-columns: minmax(0, 1fr); }
+  .r-globe-scene { order: 2; }
+  #globe { width: min(100%, 340px); }
+}
+@media (max-width: 520px) {
+  .r-demander { padding-left: 12px; }
+  .r-demander-note { margin-left: 12px; }
+}

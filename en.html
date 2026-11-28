@@ -36,7 +36,7 @@
 <script src="/theme.js"></script>
 <link rel="preload" href="/polices/ubuntu-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="/polices/ubuntu-latin-300-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="/styles.min.css?v=470abfca81">
+<link rel="stylesheet" href="/styles.min.css?v=9408d5c5c4">
 </head>
 <body>
 <a class="skip" href="#app">Skip to content</a>
@@ -81,15 +81,37 @@
       <h1>Save. Start a business. <span class="serif">Sell.</span></h1>
       <p class="r-chapeau">Training, project implementation and software for savings, entrepreneurship and cooperatives. Organisations pay the full price of the service; groups and small entrepreneurs pay a reduced rate.</p>
       <div class="btn-row"><a class="btn btn-accent" href="#solutions" data-scroll="solutions">Our solutions <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a class="btn btn-glass" href="/en/contact?sujet=Demande%20de%20devis">Request a quote</a></div>
+      <form class="r-demander" data-demander aria-label="Ask the Ubora assistant a question">
+        <span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/></svg></span>
+        <input name="q" maxlength="300" autocomplete="off" placeholder="Ask your question about Ubora…" aria-label="Your question for the Ubora assistant">
+        <button class="btn btn-sm" type="submit">Ask</button>
+      </form>
+      <p class="r-demander-note">The assistant answers from the information on this website.</p>
     </div>
   </section>
 
   <section class="r-chiffres" aria-label="Ubora in figures"><div class="wrap"><ul>
-    <li><b>7</b><span>areas</span></li>
-    <li><b>6</b><span>live applications</span></li>
-    <li><b>140+</b><span>courses at the Academy</span></li>
+    <li><b data-compte="7">7</b><span>areas</span></li>
+    <li><b data-compte="6">6</b><span>live applications</span></li>
+    <li><b data-compte="140" data-suffixe="+">140+</b><span>courses at the Academy</span></li>
     <li><b>Offline</b><span>our tools work without a network</span></li>
   </ul></div></section>
+
+  <section class="r-globe" aria-labelledby="titre-globe"><div class="wrap r-globe-in">
+    <div class="r-globe-scene">
+      <canvas id="globe" tabindex="0" role="img" aria-label="3D globe showing the Democratic Republic of the Congo and Lubumbashi, Ubora's head office. Turn it with the mouse, a finger or the arrow keys."></canvas>
+      <p class="r-globe-aide" aria-hidden="true">Drag to turn the globe</p>
+    </div>
+    <div class="r-globe-txt">
+      <span class="eyebrow">Where we work</span>
+      <h2 id="titre-globe">Based in Lubumbashi, serving the whole <span class="serif">DRC</span>.</h2>
+      <p>Our head office is in Lubumbashi, Haut-Katanga. We work across the DRC, on the ground and remotely: our apps work even without a network.</p>
+      <ul class="r-globe-reperes">
+        <li><b>Lubumbashi</b><span>our head office, in Haut-Katanga</span></li>
+        <li><b data-compte="26">26</b><span>provinces where we can work</span></li>
+      </ul>
+    </div>
+  </div></section>
 
   <section id="poles"><div class="wrap">
     <div class="sec-head"><div><span class="eyebrow">Our areas of work</span><h2>Support at <span class="serif">every stage</span></h2></div></div>
@@ -196,10 +218,10 @@
 </button>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<script type="application/json" id="ubora-donnees">{"actualites":[],"formations":[],"offres":[],"equipe":[],"realisations":[]}</script> <script src="/i18n.js?v=470abfca81"></script>
-<script src="/data.js?v=470abfca81"></script>
-<script src="/db.js?v=470abfca81"></script>
-<script src="/app.js?v=470abfca81"></script>
+<script type="application/json" id="ubora-donnees">{"actualites":[],"formations":[],"offres":[],"equipe":[],"realisations":[]}</script> <script src="/i18n.js?v=9408d5c5c4"></script>
+<script src="/data.js?v=9408d5c5c4"></script>
+<script src="/db.js?v=9408d5c5c4"></script>
+<script src="/app.js?v=9408d5c5c4"></script>
 
 </body>
 </html>
