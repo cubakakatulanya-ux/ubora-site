@@ -388,6 +388,8 @@ function tickerHTML() {
 /* ==========================================================================
    PAGES
    ========================================================================== */
+/* photo d'ouverture de l'accueil : sous un voile sombre, une petite image suffit sur téléphone ; le pré-rendu la précharge */
+const HERO = { srcset: "/img/avec-480.webp 480w, /img/avec-800.webp 800w, /img/avec-1200.webp 1200w, /img/avec-1600.webp 1600w, /img/avec-2400.webp 2400w", sizes: "(max-width: 700px) 40vw, 100vw" };
 const ENGAGEMENTS = [
   ["Un devis écrit avant chaque mission", "Prix, délais et livrables sont fixés par écrit avant de commencer."],
   ["Un tarif solidaire", "Les prestations aux organisations financent des tarifs réduits pour les groupes et les micro-entrepreneurs."],
@@ -401,7 +403,7 @@ function pageHome() {
   const enLigne = OUTILS.filter(o => o.statut === "en-ligne").length;
   return `
   <section class="r-hero r-hero-plein">
-    <div class="r-hero-fond">${photo("avec", "100vw", "Des femmes réunies en groupe d'épargne", ' fetchpriority="high"')}</div>
+    <div class="r-hero-fond"><img src="/img/avec-1600.webp" srcset="${HERO.srcset}" sizes="${HERO.sizes}" alt="Des femmes réunies en groupe d'épargne" width="1600" height="1067" decoding="async" fetchpriority="high"></div>
     <div class="wrap r-hero-txt">
       <span class="r-sur">Entreprise à caractère social · Lubumbashi, RDC</span>
       <h1>Épargner. Entreprendre. <span class="serif">Vendre.</span></h1>

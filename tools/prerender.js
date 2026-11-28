@@ -25,7 +25,7 @@ write("i18n.js", read("tools/i18n-moteur.js") + "\nconst EN_I18N = " + JSON.stri
 const ctx = { window: { UBORA_PRERENDER: true }, console, URLSearchParams, Date, Intl, Math, JSON };
 vm.createContext(ctx);
 const S = vm.runInContext(["i18n.js", "data.js", "db.js", "admin.js", "app.js"].map(read).join("\n;\n") +
-  "\n;({ traduire, DATA_ONG: ONG, SEO_POLES, resolve, typoHTML, menuHTML, footerHTML, tickerHTML, allNews, esc, DATA, POLES, OUTILS, CONFIG, SUPABASE, UboraDB, TITRES })", ctx);
+  "\n;({ HERO, traduire, DATA_ONG: ONG, SEO_POLES, resolve, typoHTML, menuHTML, footerHTML, tickerHTML, allNews, esc, DATA, POLES, OUTILS, CONFIG, SUPABASE, UboraDB, TITRES })", ctx);
 
 async function chargerBase() {
   /* la clé publique n'est plus dans data.js : on la prend dans le Worker (ou dans la variable SUPABASE_ANON) */
@@ -148,6 +148,7 @@ async function main() {
     .replace("{{CHAT}}", fr ? `<script src="/chat.js?v={{VERSION}}"></script>` : "")
     .replace('<html lang="fr">', fr ? '<html lang="fr">' : '<html lang="en">');
 
+  const precharge = c => c === "/" ? html => html.replace('<link rel="stylesheet"', `<link rel="preload" as="image" href="/img/avec-800.webp" imagesrcset="${S.HERO.srcset}" imagesizes="${S.HERO.sizes}" fetchpriority="high">\n<link rel="stylesheet"`) : html => html;
   for (const chemin of chemins) {
     const r = S.resolve(chemin, "", "uborardc.com");
     if (r.redirect) continue;
@@ -170,7 +171,7 @@ async function main() {
         .replace("{{TICKER}}", () => tickerEN)
         .replace("{{FOOTER}}", () => footerEN)
         .replace("{{APP}}", () => e.html);
-      write(chemin === "/" ? "en.html" : "en" + chemin + ".html", htmlEN);
+      write(chemin === "/" ? "en.html" : "en" + chemin + ".html", precharge(chemin)(htmlEN));
       if (e.robots.startsWith("index")) pagesEN.push(chemin);
     }
     const html = langue(shell, true, chemin)
@@ -187,7 +188,7 @@ async function main() {
       .replace("{{FOOTER}}", () => S.typoHTML(footer))
       .replace("{{APP}}", () => S.typoHTML(r.html));
     const fichier = chemin === "/" ? "index.html" : chemin.slice(1) + ".html";
-    write(fichier, html);
+    write(fichier, precharge(chemin)(html));
     if (robots.startsWith("index")) pages.push(chemin);
   }
 
