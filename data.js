@@ -262,9 +262,9 @@ const POLES = [
 
   {
     id: "financement", chemin: "/financement", sousDomaine: "fin.uborardc.com",
-    accroche: "Le crédit, jusqu'où il n'allait pas.",
+    accroche: "Le capital, jusqu'à ceux qu'il n'atteignait pas.",
     photo: ["fin", "Trois femmes échangent autour d'une table de réunion"],
-    nom: "Ubora Fin", initiales: "Fi", couleur: "#1D5FB8",
+    nom: "Ubora Fin", initiales: "Fi", couleur: "#8A6810",
     carte: "Nous préparons les emprunteurs et mobilisons pour eux le capital des financeurs.",
     titre: `Rapprocher ceux qui ont besoin de crédit de ceux qui <span class="serif">prêtent</span>.`,
     lead: "Le crédit existe en RDC, mais il atteint mal les petits emprunteurs. Ubora Fin ne prête pas : elle les prépare, les présente aux institutions financières et mobilise le capital à leur profit.",

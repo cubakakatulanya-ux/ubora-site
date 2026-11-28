@@ -32,8 +32,16 @@ const ICON = {
   seat: sv('<circle cx="12" cy="7" r="3"/><path d="M5 21c0-4 3-7 7-7s7 3 7 7"/>', 2),
   heart: sv('<path d="M12 20s-8-4.5-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 9c0 6.5-8 11-8 11z"/>'),
   spark: sv('<path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5L18 18M6 18l2.5-2.5M15.5 8.5L18 6"/>'),
+  store: sv('<path d="M4 10v10h16V10"/><path d="M3 4h18l-1.4 5.2a2.6 2.6 0 0 1-5 .1 2.6 2.6 0 0 1-5.2 0 2.6 2.6 0 0 1-5.2 0 2.6 2.6 0 0 1-.6-.1z"/><path d="M10 20v-5h4v5"/>'),
+  leaf: sv('<path d="M5 20c0-9 6-15 15-15 0 9-6 15-15 15z"/><path d="M5 20l9-9"/>'),
+  chart: sv('<path d="M3 20h18"/><path d="M6 16v-5M11 16V6M16 16v-8M21 16V9"/>'),
   doc: sv('<path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/>')
 };
+
+/* pictogramme d'un domaine ou d'une application, à la place des deux lettres */
+const PICTOS = { avec: "coins", pme: "briefcase", cooperatives: "users", financement: "handshake", marche: "store", vert: "leaf", academie: "school", conseil: "compass",
+  akiba: "phoneM", "akiba-suivi": "chart", bp: "doc", hub: "flow", asbl: "seat", "logiciel-coop": "users", "plateforme-market": "store", agrolab: "leaf", biashara: "briefcase" };
+const picto = x => ICON[PICTOS[(x || {}).id]] || esc((x || {}).initiales);
 
 /* ---------- Utilitaires ---------- */
 const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -158,7 +166,7 @@ function poleCard(p, feature, compact) {
   return `<article class="pole${feature ? " feature" : ""}${img ? " has-img" : ""}${p.transversal ? " transversal" : ""}" style="--c:${p.couleur}">
     ${img ? `<div class="pole-img">${photo(p.photo[0], feature ? "(max-width: 860px) 100vw, 800px" : "(max-width: 560px) 100vw, (max-width: 900px) 50vw, 380px", "", ' loading="lazy"')}</div>` : ""}
     <div class="pole-body">
-      <div class="pole-top"><span class="mk">${esc(p.initiales)}</span><span class="pole-sub">${esc(p.sousDomaine)}</span>${p.transversal ? '<span class="pole-tag">Pour tous les domaines</span>' : ""}</div>
+      <div class="pole-top"><span class="mk">${picto(p)}</span><span class="pole-sub">${esc(p.sousDomaine)}</span>${p.transversal ? '<span class="pole-tag">Pour tous les domaines</span>' : ""}</div>
       <h3><a class="stretch" href="${p.chemin}">${esc(p.nom)}</a></h3>
       ${p.accroche ? `<p class="accroche">${esc(p.accroche)}</p>` : ""}
       <p>${esc(p.carte)}</p>
@@ -198,7 +206,7 @@ function outilCard(o, court) {
   const href = lienOutil(o);
   return `<article class="tool${banniere(o, "") ? " avec-img" : ""}" style="--c:${o.couleur}" data-f="${o.statut} ${o.pole}">
     ${banniere(o, "(max-width: 600px) 100vw, (max-width: 1000px) 50vw, 380px")}
-    <div class="pole-top"><span class="mk">${esc(o.initiales)}</span>${statut(o)}</div>
+    <div class="pole-top"><span class="mk">${picto(o)}</span>${statut(o)}</div>
     <h3>${o.statut === "en-ligne" || o.fiche ? `<a class="stretch" href="${href}"${ext(href)}>${esc(o.nom)}</a>` : esc(o.nom)}</h3>
     <p>${esc(court && o.court ? o.court : o.resume)}</p>
     <div class="tool-foot"><span>${pole(o.pole) ? "Domaine " : ""}${esc(p.nom)}</span>${o.sousDomaine ? `<span class="mono">${esc(o.sousDomaine)}</span>` : ""}</div>
@@ -310,7 +318,7 @@ const poleReal = id => pole(id) || { id: "conseil", nom: "Conseil et programmes"
 function realCard(r) {
   const p = poleReal(r.pole);
   return `<article class="real reveal" style="--c:${p.couleur}">
-    ${r.image ? `<img class="real-img" src="${esc(r.image)}" alt="" loading="lazy">` : `<div class="real-img real-cover"><span class="mk">${esc(p.initiales)}</span></div>`}
+    ${r.image ? `<img class="real-img" src="${esc(r.image)}" alt="" loading="lazy">` : `<div class="real-img real-cover"><span class="mk">${picto(p)}</span></div>`}
     <div class="real-txt">
       <div class="tags"><a class="tag" style="background:${p.couleur};color:#fff" href="${p.chemin}">${esc(p.nom)}</a>${r.periode ? `<span class="tag">${esc(r.periode)}</span>` : ""}</div>
       <h3>${esc(r.titre)}</h3>
@@ -324,13 +332,14 @@ function realCard(r) {
 /* ---------- En-tête, pied de page, bande déroulante ---------- */
 function menuHTML() {
   const enLigne = OUTILS.filter(o => o.statut === "en-ligne");
-  const item = (h, b, s, c, ini, externe) => `<a href="${h}"${externe ? ' target="_blank" rel="noopener"' : ""} class="dd-item"><span class="mk" style="background:${c}">${esc(ini)}</span><span><b>${esc(b)}</b><small>${esc(s || "")}</small></span></a>`;
+  const domaine = p => `<a href="${p.chemin}" class="dd-item dd-domaine${p.transversal ? " large" : ""}" style="--c:${p.couleur}"><span class="dd-picto">${picto(p)}</span><span><b>${esc(p.nom)}${p.transversal ? '<em class="dd-tag">Pour tous les domaines</em>' : ""}</b><small>${esc(p.accroche)}</small></span></a>`;
+  const appli = o => `<a href="${o.url}" target="_blank" rel="noopener" class="dd-item dd-appli"><img class="dd-ecran" src="/img/solutions/${o.id}-160.webp" alt="" width="64" height="40" loading="lazy" decoding="async"><span><b>${esc(o.nom)} ${ICON.ext}</b><small>${esc(o.court || "")}</small></span></a>`;
   return `
     <li><a href="/a-propos" data-r="a-propos">À propos</a></li>
     <li><a href="/approche" data-r="approche">Notre approche</a></li>
     <li class="has-dd"><button class="dd-btn" type="button" data-r="solutions" aria-expanded="false">Nos solutions ${ICON.chev}</button>
-      <div class="dd dd-mega"><div class="dd-col dd-poles"><h5>Nos domaines</h5><div class="dd-grille">${POLES.map(p => item(p.chemin, p.nom, p.accroche, p.couleur, p.initiales)).join("")}</div></div>
-        <div class="dd-col dd-outils"><h5>Applications en ligne</h5>${enLigne.map(o => item(o.url, o.nom, o.court, o.couleur, o.initiales, true)).join("")}</div>
+      <div class="dd dd-mega"><div class="dd-col dd-poles"><h5>Nos domaines</h5><div class="dd-grille">${POLES.map(domaine).join("")}</div></div>
+        <div class="dd-col dd-outils"><h5>Applications en ligne</h5>${enLigne.map(appli).join("")}</div>
         <div class="dd-pied"><a href="/solutions" class="dd-more">Vue d'ensemble des solutions ${ICON.arrow}</a></div></div></li>
     <li><a href="/realisations" data-r="realisations">Nos réalisations</a></li>
     <li><a href="/equipe" data-r="equipe">Notre équipe</a></li>
@@ -432,7 +441,7 @@ function pageHome() {
 
   <section id="poles"><div class="wrap">
     ${secHead("Nos domaines", `Un accompagnement <span class="serif">complet</span>`)}
-    <div class="r-poles">${POLES.map(p => `<a class="r-pole${p.transversal ? " transversal" : ""}" href="${p.chemin}" style="--c:${p.couleur}"><span class="mk">${esc(p.initiales)}</span><b>${esc(p.nom)}</b><span>${esc(p.accroche)}</span></a>`).join("")}</div>
+    <div class="r-poles">${POLES.map(p => `<a class="r-pole${p.transversal ? " transversal" : ""}" href="${p.chemin}" style="--c:${p.couleur}"><span class="mk">${picto(p)}</span><b>${esc(p.nom)}</b><span>${esc(p.accroche)}</span></a>`).join("")}</div>
   </div></section>
 
   ${vitrine()}
@@ -539,8 +548,8 @@ function pageAbout() {
 function pageSolutions() {
   const lienO = o => o.fiche ? "/outils/" + o.id : o.url;
   const ligne = o => o.statut === "en-ligne"
-    ? `<li><a href="${lienO(o)}"${ext(lienO(o))}><span class="mk" style="background:${o.couleur}">${esc(o.initiales)}</span><span><b>${esc(o.nom)}</b><small>${esc(o.court || "")}</small></span></a></li>`
-    : `<li class="bientot"><span class="mk" style="background:${o.couleur}">${esc(o.initiales)}</span><span><b>${esc(o.nom)}</b><small>En construction</small></span></li>`;
+    ? `<li><a href="${lienO(o)}"${ext(lienO(o))}><span class="mk" style="background:${o.couleur}">${picto(o)}</span><span><b>${esc(o.nom)}</b><small>${esc(o.court || "")}</small></span></a></li>`
+    : `<li class="bientot"><span class="mk" style="background:${o.couleur}">${picto(o)}</span><span><b>${esc(o.nom)}</b><small>En construction</small></span></li>`;
   const outilsDe = id => OUTILS.filter(o => o.pole === id);
   const orga = outilsDe("conseil");
   return `<section class="pg-tete"><div class="wrap">
@@ -799,7 +808,7 @@ function pageOutils() {
     <div id="chantier">
       <h2 class="sous-titre vitrine-titre">En construction</h2>
       <div class="vitrine-grille chantier">${chantier.map(o => `<article class="solution bientot" style="--c:${o.couleur}">
-        <div class="bientot-img" aria-hidden="true"><span class="mk">${esc(o.initiales)}</span><span class="status st-soon">En construction</span></div>
+        <div class="bientot-img" aria-hidden="true"><span class="mk">${picto(o)}</span><span class="status st-soon">En construction</span></div>
         <div class="solution-txt"><b>${esc(o.nom)}</b><span>${esc(o.resume)}</span><span class="solution-pole">${esc(poleReal(o.pole).nom)}</span></div>
       </article>`).join("")}</div>
     </div>
